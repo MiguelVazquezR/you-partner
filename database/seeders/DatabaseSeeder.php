@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Homework;
+use App\Models\SchoolSubject;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,11 +17,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        
+        User::factory()->create([
+            'name' => 'Miguel Vázquez',
+            'email' => 'miguel@t.com',
+            'password' => bcrypt('123123123'),
+        ]);
+        
+        User::factory(10)->create();
+        SchoolSubject::factory(10)->create();
+        Homework::factory(5)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

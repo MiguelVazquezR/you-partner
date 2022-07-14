@@ -23,7 +23,7 @@ class HomeworkFactory extends Factory
             'description' => $this->faker->text(100),
             'title' => $this->faker->sentence(4),
             'delivery_date' => now()->addDays(rand(1,10)),
-            'priority' => $this->faker->randomElement(['Nomrmal', 'Urgente']),
+            'priority' => $this->faker->randomElement(['Normal', 'Urgente']),
             'user_id' => User::all()->random()->id,
             'school_subject_id' => SchoolSubject::all()->random()->id
         ];
