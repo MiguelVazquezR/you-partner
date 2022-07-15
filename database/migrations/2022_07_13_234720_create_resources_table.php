@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             
             $table->morphs('resourceable');
+            $table->string('path');
 
             $table->timestamps();
         });

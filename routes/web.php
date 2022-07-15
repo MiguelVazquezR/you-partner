@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CollaborationController;
+use App\Http\Controllers\HomeworkController;
+use App\Models\Homework;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,10 +35,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::get('/requests', function () {
-        return Inertia::render('Requests/Requests');
-    })->name('requests');
-    Route::get('/collaborations', function () {
-        return Inertia::render('Collaborations/Collaborations');
-    })->name('collaborations');
 });
+
+Route::resource('/homework', HomeworkController::class)->except('show');
+Route::resource('/collaborations', CollaborationController::class)->except('show');

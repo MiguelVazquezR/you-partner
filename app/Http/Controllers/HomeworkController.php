@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Homework;
 use App\Http\Requests\StoreHomeworkRequest;
 use App\Http\Requests\UpdateHomeworkRequest;
+use App\Models\SchoolSubject;
+use Inertia\Inertia;
 
 class HomeworkController extends Controller
 {
@@ -15,7 +17,11 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        //
+        $homework = Homework::where('user_id', auth()->user()->id)
+            ->with(['schoolSubject', 'collaboration', 'resources'])
+            ->get();
+        // return $homework;
+        return Inertia::render('Homework/Index', compact('homework'));
     }
 
     /**
@@ -25,7 +31,8 @@ class HomeworkController extends Controller
      */
     public function create()
     {
-        //
+        $subjects = SchoolSubject::all();
+        return Inertia::render('Homework/Create', compact('subjects'));
     }
 
     /**
@@ -58,7 +65,7 @@ class HomeworkController extends Controller
      */
     public function edit(Homework $homework)
     {
-        //
+        return Inertia::render('Homework/Create', compact('homework'));
     }
 
     /**

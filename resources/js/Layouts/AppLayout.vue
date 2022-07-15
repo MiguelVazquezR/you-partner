@@ -313,15 +313,15 @@ const logout = () => {
                                         Dashboard
                                     </span>
                                 </JetNavLink>
-                                <JetNavLink :href="route('requests')" :active="route().current('requests')">
+                                <JetNavLink :href="route('homework.index')" :active="route().current('homework.*')">
                                     <span class="text-left">
                                         <i class="fa-solid fa-file-pen"></i>
                                     </span>
                                     <span class="mx-4 text-sm font-normal">
-                                        Solicitudes
+                                        Mis tareas
                                     </span>
                                 </JetNavLink>
-                                <JetNavLink :href="route('collaborations')" :active="route().current('collaborations')">
+                                <JetNavLink :href="route('collaborations.index')" :active="route().current('collaborations.*')">
                                     <span class="text-left">
                                         <i class="fa-solid fa-handshake-angle"></i>
                                     </span>

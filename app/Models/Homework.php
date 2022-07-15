@@ -10,12 +10,16 @@ class Homework extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description',
         'title',
+        'description',
         'delivery_date',
         'priority',
         'user_id',
         'school_subject_id'
+    ];
+
+    protected $dates = [
+        'delivery_date'
     ];
 
     // Relationships -------------------
@@ -32,7 +36,7 @@ class Homework extends Model
     /**
      * Get all of the homework's resources.
      */
-    public function resourceable()
+    public function resources()
     {
         return $this->morphMany(Resource::class, 'resourceable');
     }
