@@ -80,9 +80,9 @@ const logout = () => {
           </div>
         </div>
       </aside>
-
       <!-- Page Content -->
       <main class="col-span-5">
+        <!-- nav -->
         <nav class="bg-white border-b border-gray-100">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -291,11 +291,11 @@ const logout = () => {
           </div>
         </div>
         </nav>
+        <!-- content -->
         <div class="overflow-y-auto h-[calc(100vh-3.5rem)]">
           <slot />
         </div>
       </main>
-      
     </div>
   </div>
 </template>
