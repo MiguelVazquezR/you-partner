@@ -1,5 +1,5 @@
 <template>
-  <AppLayout title="Tareas">
+  <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
       <HomeworkTable :homeworks="homework" />
@@ -18,17 +18,13 @@ export default {
     return {
       tabs: [
         {
-          label: "Pendientes",
+          label: "Todo",
+          url: 'collaborations.index'
+        },
+        {
+          label: "Mis colaboraciones",
           url: 'homework.index'
-        },
-        {
-          label: "En colaboracion",
-          url: 'homework.create'
-        },
-        {
-          label: "Terminados",
-          url: 'homework.create'
-        },
+        }
       ]
     }
   },
@@ -43,6 +39,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

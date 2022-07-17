@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Collaboration;
 use App\Http\Requests\StoreCollaborationRequest;
 use App\Http\Requests\UpdateCollaborationRequest;
+use App\Models\Homework;
+use Inertia\Inertia;
 
 class CollaborationController extends Controller
 {
@@ -15,7 +17,11 @@ class CollaborationController extends Controller
      */
     public function index()
     {
-        //
+        $homework = Homework::doesntHave('collaboration')
+            ->with(['schoolSubject', 'resources'])
+            ->paginate();
+        // return $homework;
+        return Inertia::render('Collaborations/Index', compact('homework'));
     }
 
     /**

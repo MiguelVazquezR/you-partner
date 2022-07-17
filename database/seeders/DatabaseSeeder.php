@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         
         User::factory(10)->create();
         SchoolSubject::factory(10)->create();
-        Homework::factory(5)->create();
+        Homework::factory(25)->create();
 
     }
 }

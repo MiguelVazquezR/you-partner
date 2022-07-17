@@ -19,7 +19,7 @@ class HomeworkController extends Controller
     {
         $homework = Homework::where('user_id', auth()->user()->id)
             ->with(['schoolSubject', 'collaboration', 'resources'])
-            ->get();
+            ->paginate();
         // return $homework;
         return Inertia::render('Homework/Index', compact('homework'));
     }
