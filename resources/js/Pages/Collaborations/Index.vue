@@ -2,7 +2,7 @@
   <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
-      <HomeworkTable :homeworks="homework" />
+      <HomeworkTable :homeworks="homework" :filters="filters" />
     </div>
   </AppLayout>
 </template>
@@ -36,6 +36,7 @@ export default {
   },
   props: {
     homework: Object,
+    filters: Object,
   },
 };
 </script>

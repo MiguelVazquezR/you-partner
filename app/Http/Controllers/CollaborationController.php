@@ -6,22 +6,31 @@ use App\Models\Collaboration;
 use App\Http\Requests\StoreCollaborationRequest;
 use App\Http\Requests\UpdateCollaborationRequest;
 use App\Models\Homework;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CollaborationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->all('search');
+
         $homework = Homework::doesntHave('collaboration')
+            ->filter($filters)
             ->with(['schoolSubject', 'resources'])
             ->paginate();
         // return $homework;
-        return Inertia::render('Collaborations/Index', compact('homework'));
+        return Inertia::render('Collaborations/Index', compact('homework', 'filters'));
     }
 
     /**

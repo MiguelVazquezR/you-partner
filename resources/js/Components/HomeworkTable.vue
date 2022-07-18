@@ -1,16 +1,13 @@
 <template>
   <div class="flex justify-between items-center py-1 mt-4">
     <Pagination :pagination="homeworks" />
-    <InputSearch v-model="search" class="mb-2 ml-4 flex-1" />
+    <InputSearch :filters="filters" class="mb-2 ml-4 flex-1" />
   </div>
   <div class="overflow-x-auto text-sm">
     <table class="w-full whitespace-nowrap">
       <tbody>
-        <tr
-          v-for="_homework in homeworks.data"
-          :key="_homework.id"
-          class="focus:outline-none h-16 border border-gray-100 rounded"
-        >
+        <tr v-for="_homework in homeworks.data" :key="_homework.id"
+          class="focus:outline-none h-16 border border-gray-100 rounded">
           <td class="">
             <div class="flex items-center pl-5">
               <p class="font-medium leading-none text-gray-700 mr-2">
@@ -42,8 +39,7 @@
             </div>
           </td>
           <td class="pl-5">
-            <div
-              class="
+            <div class="
                 py-3
                 px-3
                 text-sm
@@ -52,14 +48,12 @@
                 text-red-700
                 bg-red-100
                 rounded
-              "
-            >
+              ">
               Para: 01/01/2022
             </div>
           </td>
           <td class="pl-4">
-            <button
-              class="
+            <button class="
                 focus:ring-2 focus:ring-offset-2 focus:ring-red-300
                 text-sm
                 leading-none
@@ -70,22 +64,16 @@
                 rounded
                 hover:bg-gray-200
                 focus:outline-none
-              "
-            >
+              ">
               View
             </button>
           </td>
           <td>
             <div class="relative px-5 pt-2">
-              <button
-                class="focus:ring-2 rounded-md focus:outline-none"
-                role="button"
-                aria-label="option"
-              >
+              <button class="focus:ring-2 rounded-md focus:outline-none" role="button" aria-label="option">
                 <i class="fa-solid fa-ellipsis"></i>
               </button>
-              <div
-                class="
+              <div class="
                   dropdown-content
                   bg-white
                   shadow
@@ -95,11 +83,8 @@
                   right-0
                   mr-6
                   hidden
-                "
-              >
-                <div
-                  tabindex="0"
-                  class="
+                ">
+                <div tabindex="0" class="
                     focus:outline-none focus:text-indigo-600
                     text-xs
                     w-full
@@ -108,13 +93,10 @@
                     px-4
                     cursor-pointer
                     hover:text-white
-                  "
-                >
+                  ">
                   <p>Edit</p>
                 </div>
-                <div
-                  tabindex="0"
-                  class="
+                <div tabindex="0" class="
                     focus:outline-none focus:text-indigo-600
                     text-xs
                     w-full
@@ -123,8 +105,7 @@
                     px-4
                     cursor-pointer
                     hover:text-white
-                  "
-                >
+                  ">
                   <p>Delete</p>
                 </div>
               </div>
@@ -142,11 +123,6 @@ import Input from "@/Jetstream/Input.vue";
 import InputSearch from "@/Components/Common/InputSearch.vue";
 
 export default {
-  data() {
-    return {
-      search: "",
-    };
-  },
   components: {
     Pagination,
     Input,
@@ -154,6 +130,7 @@ export default {
   },
   props: {
     homeworks: Object,
+    filters: Object,
   },
 };
 </script>

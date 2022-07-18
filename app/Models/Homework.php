@@ -27,6 +27,11 @@ class Homework extends Model
     {
         return $this->belongsTo(SchoolSubject::class);
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function collaboration()
     {
@@ -39,5 +44,19 @@ class Homework extends Model
     public function resources()
     {
         return $this->morphMany(Resource::class, 'resourceable');
+    }
+
+    // query scopes
+    public function scopeFilter($query, $filters)
+    {
+        $query->when($filters["search"], function($query, $search){
+            $query->where('title', 'LIKE', "%$search%")
+                ->orWhereHas('schoolSubject', function($query2) use($search){
+                    $query2->where('name', 'LIKE', "%$search%");
+                })
+                ->orWhereHas('user', function($query2) use($search){
+                    $query2->where('name', 'LIKE', "%$search%");
+                });
+        });
     }
 }

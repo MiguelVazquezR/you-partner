@@ -1,22 +1,37 @@
 <template>
-	<fieldset class="w-full space-y-1 dark:text-gray-100">
+	<fieldset class="w-full space-y-1">
 		<div class="relative">
-			<span class="absolute inset-y-0 left-0 flex items-center pl-2">
-				<button type="button" title="Buscar" class="p-1 focus:outline-none focus:ring">
+			<Input type="search" @keyup.enter="search" v-model="search_text" placeholder="Buscar..."
+				class="py-2 pr-10 text-sm rounded-md w-full" />
+			<span class="absolute inset-y-0 right-0 flex items-center pr-2">
+				<button @click="search" type="button" title="Buscar" class="p-1 focus:outline-none focus:ring">
 					<i class="fa-solid fa-magnifying-glass text-gray-500"></i>
 				</button>
 			</span>
-			<Input type="search" name="text" placeholder="Buscar..." class="py-2 pl-10 text-sm rounded-md w-full" />
 		</div>
 	</fieldset>
 </template>
 
 <script>
 import Input from "@/Jetstream/Input.vue";
+import pickBy from "lodash/pickBy";
 
 export default {
-    components: {
-        Input
-    }
+	data() {
+		return {
+			search_text: this.filters.search,
+		}
+	},
+	components: {
+		Input
+	},
+	methods: {
+		search() {
+			this.$inertia.get('/collaborations', pickBy({ search: this.search_text }), { preserveState: true });
+		}
+	},
+	props: {
+		filters: Object,
+	}
 }
 </script>

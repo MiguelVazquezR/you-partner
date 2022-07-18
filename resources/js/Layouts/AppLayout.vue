@@ -83,10 +83,10 @@ const logout = () => {
       <!-- Page Content -->
       <main class="col-span-5">
         <!-- nav -->
-        <nav class="bg-white border-b border-gray-100">
+        <nav class="bg-white border-b border-gray-100 dark:bg-gray-700">
           <!-- Primary Navigation Menu -->
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-end h-14">
+            <div class="flex justify-end h-12">
               <div class="hidden lg:flex sm:items-center sm:ml-6">
                 <!-- notifications -->
                 <JetDropdown align="right" width="48"> 
@@ -342,7 +342,7 @@ const logout = () => {
           </div>
         </nav>
         <!-- content -->
-        <div class="overflow-y-auto h-[calc(100vh-3.5rem)]">
+        <div class="overflow-y-auto h-[calc(100vh-3rem)]">
           <slot />
         </div>
       </main>
