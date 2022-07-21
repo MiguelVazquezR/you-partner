@@ -38,7 +38,7 @@ const logout = () => {
 
     <JetBanner />
 
-    <div class="overflow-y-hidden h-screen bg-gray-100 grid grid-cols-6">
+    <div class="overflow-y-hidden h-screen bg-gray-100 lg:grid lg:grid-cols-6">
       <aside>
         <!-- sidebar -->
         <div class="h-screen hidden lg:block shadow-lg relative">

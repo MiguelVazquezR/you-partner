@@ -1,0 +1,3 @@
+.btn-primary {
+    @apply px-4 py-2 font-semibold border rounded border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition duration-200;
+}

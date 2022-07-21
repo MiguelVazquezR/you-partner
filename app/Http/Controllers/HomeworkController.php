@@ -6,6 +6,7 @@ use App\Models\Homework;
 use App\Http\Requests\StoreHomeworkRequest;
 use App\Http\Requests\UpdateHomeworkRequest;
 use App\Models\SchoolSubject;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeworkController extends Controller
@@ -20,13 +21,16 @@ class HomeworkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->all('search');
+
         $homework = Homework::where('user_id', auth()->user()->id)
+            ->filter($filters)
             ->with(['schoolSubject', 'collaboration', 'resources'])
             ->paginate();
-        // return $homework;
-        return Inertia::render('Homework/Index', compact('homework'));
+
+        return Inertia::render('Homework/Index', compact('homework', 'filters'));
     }
 
     /**

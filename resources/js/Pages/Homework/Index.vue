@@ -2,7 +2,12 @@
   <AppLayout title="Tareas">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
-      <HomeworkTable :homeworks="homework" />
+      <div class="flex justify-end mt-3">
+        <Link :href="route('homework.create')" class="btn-primary">
+          + Crear 
+        </Link>
+      </div>
+      <HomeworkTable :homeworks="homework" :filters="filters" filterURL="/homework" />
     </div>
   </AppLayout>
 </template>
@@ -14,7 +19,7 @@ import HomeworkTable from "@/Components/HomeworkTable.vue";
 import Tabs from "@/Components/Tabs.vue";
 
 export default {
-  data(){
+  data() {
     return {
       tabs: [
         {
@@ -40,6 +45,7 @@ export default {
   },
   props: {
     homework: Object,
+    filters: Object,
   },
 };
 </script>

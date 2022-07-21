@@ -29,7 +29,7 @@ class CollaborationController extends Controller
             ->filter($filters)
             ->with(['schoolSubject', 'resources'])
             ->paginate();
-        // return $homework;
+
         return Inertia::render('Collaborations/Index', compact('homework', 'filters'));
     }
 

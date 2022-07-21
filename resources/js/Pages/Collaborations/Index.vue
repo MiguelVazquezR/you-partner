@@ -1,8 +1,8 @@
 <template>
   <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" />
-      <HomeworkTable :homeworks="homework" :filters="filters" />
+      <Tabs :tabs="tabs" class="mb-8" />
+      <HomeworkTable :homeworks="homework" :filters="filters" filterURL="/collaborations" />
     </div>
   </AppLayout>
 </template>

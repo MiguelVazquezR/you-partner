@@ -1,17 +1,17 @@
 <template>
-  <div class="flex justify-between items-center py-1 mt-4">
+  <div class="flex justify-between items-center py-1 mt-2">
     <Pagination :pagination="homeworks" />
-    <InputSearch :filters="filters" class="mb-2 ml-4 flex-1" />
+    <InputSearch :filters="filters" :filterURL="filterURL" class="mb-2 ml-4 flex-1" />
   </div>
   <div class="overflow-x-auto text-sm">
-    <table class="w-full whitespace-nowrap">
+    <table v-if="homeworks.data.length" class="w-full whitespace-nowrap">
       <tbody>
-        <tr v-for="_homework in homeworks.data" :key="_homework.id"
+        <tr v-for="homework in homeworks.data" :key="homework.id"
           class="focus:outline-none h-16 border border-gray-100 rounded">
           <td class="">
             <div class="flex items-center pl-5">
               <p class="font-medium leading-none text-gray-700 mr-2">
-                {{ _homework.title }}
+                {{ homework.title }}
               </p>
             </div>
           </td>
@@ -19,7 +19,7 @@
             <div class="flex items-center">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
-                {{ _homework.school_subject.name }}
+                {{ homework.school_subject.name }}
               </p>
             </div>
           </td>
@@ -34,7 +34,7 @@
             <div class="flex items-center">
               <i class="fa-solid fa-paperclip"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
-                {{ _homework.resources.length }}
+                {{ homework.resources.length }}
               </p>
             </div>
           </td>
@@ -114,6 +114,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-else class="text-center text-gray-500 my-3">
+      No hay ningún registro para mostrar
+    </div>
   </div>
 </template>
 
@@ -131,6 +134,7 @@ export default {
   props: {
     homeworks: Object,
     filters: Object,
+    filterURL: String,
   },
 };
 </script>

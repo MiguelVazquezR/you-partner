@@ -27,11 +27,12 @@ export default {
 	},
 	methods: {
 		search() {
-			this.$inertia.get('/collaborations', pickBy({ search: this.search_text }), { preserveState: true });
+			this.$inertia.get(this.filterURL, pickBy({ search: this.search_text }), { preserveState: true });
 		}
 	},
 	props: {
 		filters: Object,
+		filterURL: String
 	}
 }
 </script>
