@@ -27,7 +27,9 @@ class CollaborationController extends Controller
 
         $homework = Homework::doesntHave('collaboration')
             ->filter($filters)
-            ->with(['schoolSubject', 'resources'])
+            ->where('user_id', '<>', auth()->user()->id)
+            ->with(['schoolSubject', 'resources', 'user'])
+            ->latest()
             ->paginate();
 
         return Inertia::render('Collaborations/Index', compact('homework', 'filters'));
