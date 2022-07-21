@@ -15,7 +15,7 @@ class HomeworkController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +28,7 @@ class HomeworkController extends Controller
         $homework = Homework::where('user_id', auth()->user()->id)
             ->filter($filters)
             ->with(['schoolSubject', 'collaboration', 'resources'])
+            ->latest('id')
             ->paginate();
 
         return Inertia::render('Homework/Index', compact('homework', 'filters'));
@@ -50,9 +51,20 @@ class HomeworkController extends Controller
      * @param  \App\Http\Requests\StoreHomeworkRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreHomeworkRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'delivery_date' => 'required',
+            'priority' => 'required',
+            'user_id' => 'required',
+            'school_subject_id' => 'required'
+        ]);
+
+        Homework::create($data);
+
+        return redirect()->route('homework.index');
     }
 
     /**
@@ -74,7 +86,8 @@ class HomeworkController extends Controller
      */
     public function edit(Homework $homework)
     {
-        return Inertia::render('Homework/Create', compact('homework'));
+        $subjects = SchoolSubject::all();
+        return Inertia::render('Homework/Edit', compact('homework', 'subjects'));
     }
 
     /**
@@ -84,9 +97,19 @@ class HomeworkController extends Controller
      * @param  \App\Models\Homework  $homework
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateHomeworkRequest $request, Homework $homework)
+    public function update(Request $request, Homework $homework)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'delivery_date' => 'required',
+            'priority' => 'required',
+            'school_subject_id' => 'required'
+        ]);
+
+        $homework->update($data);
+
+        return redirect()->route('homework.edit', $homework);
     }
 
     /**
@@ -97,6 +120,8 @@ class HomeworkController extends Controller
      */
     public function destroy(Homework $homework)
     {
-        //
+        $homework->delete();
+
+        return redirect()->route('homework.index');
     }
 }

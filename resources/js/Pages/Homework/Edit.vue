@@ -8,17 +8,17 @@
         <span class="ml-2">Atrás</span>
         </Link>
         <p class="text-xl text-indigo-600 ml-6 font-semibold">
-          Crear nueva tarea
+          Editar tarea {{ this.form.id }}
         </p>
       </div>
       <div class="grid grid-cols-2 gap-x-3">
         <div class="mt-3">
           <Label value="Título" />
-          <Input v-model="homework.title" type="text" class="w-full" />
+          <Input v-model="form.title" type="text" class="w-full" />
         </div>
         <div class="mt-3">
           <Label value="Prioridad" />
-          <select v-model="homework.priority" class="input w-full">
+          <select v-model="form.priority" class="input w-full">
             <option value="" selected>-- Seleccione --</option>
             <option value="Normal">Normal</option>
             <option value="Urgente">Urgente</option>
@@ -26,11 +26,11 @@
         </div>
         <div class="mt-3">
           <Label value="Descripción" />
-          <textarea v-model="homework.description" class="input w-full" rows="3"></textarea>
+          <textarea v-model="form.description" class="input w-full" rows="3"></textarea>
         </div>
         <div class="mt-3">
           <Label value="Materia" />
-          <select v-model="homework.school_subject_id" class="input w-full">
+          <select v-model="form.school_subject_id" class="input w-full">
             <option value="" selected>-- Seleccione --</option>
             <option v-for="subject in subjects" :key="subject.id" :value="subject.id">
               {{ subject.name }}
@@ -39,16 +39,21 @@
         </div>
         <div class="mt-3">
           <Label value="Fecha de entrega" />
-          <Input v-model="homework.delivery_date" type="date" class="w-full" />
+          <Input v-model="form.delivery_date" type="date" class="w-full" />
         </div>
         <div class="mt-3">
           <Label value="Archivo" />
           <InputFile class="w-full" />
         </div>
       </div>
-      <button @click="store" class="btn-primary">
-        Crear
-      </button>
+      <div>
+          <button @click="destroy" class="btn-danger mr-3">
+            Eliminar
+          </button>
+          <button @click="update" class="btn-primary">
+            Actualizar
+          </button>
+      </div>
     </div>
   </AppLayout>
 </template>
@@ -59,19 +64,13 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Input from "@/Jetstream/Input.vue";
 import InputFile from "@/Components/Common/InputFile.vue";
 import Label from "@/Jetstream/Label.vue";
-import JetValidationErrors from "@/Jetstream/ValidationErrors.vue"
+import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
+import moment from 'moment';
 
 export default {
   data(){
     return {
-      homework: {
-        title: "",
-        description: "",
-        delivery_date: "",
-        priority: "",
-        user_id: this.$page.props.user.id,
-        school_subject_id: "",
-      }
+      form: this.homework,
     }
   },
   components: {
@@ -85,11 +84,18 @@ export default {
 
   props: {
     subjects: Array,
+    homework: Object,
   },
   methods: {
-    store() {
-      this.$inertia.post(this.route('homework.store'), this.homework)
+    update() {
+      this.$inertia.put(this.route('homework.update', this.form), this.homework)
     },
+    destroy() {
+      this.$inertia.delete(this.route('homework.destroy', this.homework))
+    },
+    deliveryDate(){
+        return moment(this.form.delivery_date).format("YYYY-MM-DD")
+    }
   }
 };
 </script>

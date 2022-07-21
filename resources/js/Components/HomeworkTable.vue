@@ -71,7 +71,9 @@
           <td>
             <div class="relative px-5 pt-2">
               <button class="focus:ring-2 rounded-md focus:outline-none" role="button" aria-label="option">
-                <i class="fa-solid fa-ellipsis"></i>
+                <Link :href="route('homework.edit', homework)">
+                  <i class="fa-solid fa-ellipsis"></i>
+                </Link>
               </button>
               <div class="
                   dropdown-content
@@ -124,12 +126,15 @@
 import Pagination from "@/Components/Pagination.vue";
 import Input from "@/Jetstream/Input.vue";
 import InputSearch from "@/Components/Common/InputSearch.vue";
+import {Link} from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
     Pagination,
     Input,
     InputSearch,
+    InputSearch,
+    Link
   },
   props: {
     homeworks: Object,

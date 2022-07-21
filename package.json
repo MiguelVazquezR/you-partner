@@ -20,5 +20,7 @@
         "vite": "^2.9.11",
         "vue": "^3.2.31"
     },
-    "dependencies": {}
+    "dependencies": {
+        "moment": "^2.29.4"
+    }
 }
