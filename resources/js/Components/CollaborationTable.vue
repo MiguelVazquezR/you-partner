@@ -74,7 +74,7 @@
           <td>
             <div class="relative px-5 pt-2">
               <button class="focus:ring-2 rounded-md focus:outline-none" role="button" aria-label="option">
-                <Link :href="route('homework.edit', homework)">
+                <Link :href="route('homeworks.edit', homework)">
                   <i class="fa-solid fa-ellipsis"></i>
                 </Link>
               </button>

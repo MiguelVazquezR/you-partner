@@ -25,14 +25,14 @@ class CollaborationController extends Controller
     {
         $filters = $request->all('search');
 
-        $homework = Homework::doesntHave('collaboration')
+        $homeworks = Homework::doesntHave('collaboration')
             ->filter($filters)
             ->where('user_id', '<>', auth()->user()->id)
             ->with(['schoolSubject', 'resources', 'user'])
             ->latest()
             ->paginate();
 
-        return Inertia::render('Collaborations/Index', compact('homework', 'filters'));
+        return Inertia::render('Collaborations/Index', compact('homeworks', 'filters'));
     }
 
     /**
@@ -100,4 +100,11 @@ class CollaborationController extends Controller
     {
         //
     }
+
+    // My views ----------------
+    public function myCollaborations()
+    {
+        return Inertia::render('Collaborations/MyCollaborations');
+    }
+
 }

@@ -25,13 +25,14 @@ class HomeworkController extends Controller
     {
         $filters = $request->all('search');
 
-        $homework = Homework::where('user_id', auth()->user()->id)
+        $homeworks = Homework::where('user_id', auth()->user()->id)
             ->filter($filters)
             ->with(['schoolSubject', 'collaboration', 'resources'])
             ->latest('id')
             ->paginate();
 
-        return Inertia::render('Homework/Index', compact('homework', 'filters'));
+
+        return Inertia::render('Homework/Index', compact('homeworks', 'filters'));
     }
 
     /**
@@ -64,7 +65,7 @@ class HomeworkController extends Controller
 
         Homework::create($data);
 
-        return redirect()->route('homework.index');
+        return redirect()->route('homeworks.index');
     }
 
     /**
@@ -109,7 +110,7 @@ class HomeworkController extends Controller
 
         $homework->update($data);
 
-        return redirect()->route('homework.edit', $homework);
+        return redirect()->route('homeworks.edit', $homework);
     }
 
     /**
@@ -122,6 +123,17 @@ class HomeworkController extends Controller
     {
         $homework->delete();
 
-        return redirect()->route('homework.index');
+        return redirect()->route('homeworks.index');
+    }
+
+    // My views --------------------
+    public function onCollaboration()
+    {
+        return Inertia::render('Homework/OnCollaboration');
+    }
+
+    public function finished()
+    {
+        return Inertia::render('Homework/Finished');
     }
 }

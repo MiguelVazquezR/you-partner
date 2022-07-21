@@ -58,8 +58,8 @@ const logout = () => {
                   <span class="mx-4 text-sm font-normal"> Dashboard </span>
                 </JetNavLink>
                 <JetNavLink
-                  :href="route('homework.index')"
-                  :active="route().current('homework.*')"
+                  :href="route('homeworks.index')"
+                  :active="route().current('homeworks.*')"
                 >
                   <span class="text-left">
                     <i class="fa-solid fa-file-pen"></i>

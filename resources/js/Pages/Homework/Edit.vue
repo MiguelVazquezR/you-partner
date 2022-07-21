@@ -3,7 +3,7 @@
     <div class="px-8 mt-3">
       <JetValidationErrors />
       <div class="flex items-center">
-        <Link :href="route('homework.index')" class="flex items-center text-indigo-600">
+        <Link :href="route('homeworks.index')" class="flex items-center text-indigo-600">
         <i class="fas fa-long-arrow-alt-left text-lg"></i>
         <span class="ml-2">Atrás</span>
         </Link>
@@ -88,10 +88,10 @@ export default {
   },
   methods: {
     update() {
-      this.$inertia.put(this.route('homework.update', this.form), this.homework)
+      this.$inertia.put(this.route('homeworks.update', this.form), this.homework)
     },
     destroy() {
-      this.$inertia.delete(this.route('homework.destroy', this.homework))
+      this.$inertia.delete(this.route('homeworks.destroy', this.homework))
     },
     deliveryDate(){
         return moment(this.form.delivery_date).format("YYYY-MM-DD")

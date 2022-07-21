@@ -1,8 +1,8 @@
 <template>
-  <AppLayout title="Colaboraciones">
+  <AppLayout title="Mis colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" class="mb-8" />
-      <CollaborationTable :homeworks="homeworks" :filters="filters" filterURL="/collaborations" />
+        <Tabs :tabs="tabs" />
+        <p class="my-4 ml-6">Mis colaboraciones</p>
     </div>
   </AppLayout>
 </template>
@@ -10,11 +10,10 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import CollaborationTable from "@/Components/CollaborationTable.vue";
 import Tabs from "@/Components/Tabs.vue";
 
 export default {
-  data(){
+  data() {
     return {
       tabs: [
         {
@@ -31,12 +30,7 @@ export default {
   components: {
     AppLayout,
     Link,
-    CollaborationTable,
     Tabs,
-  },
-  props: {
-    homeworks: Object,
-    filters: Object,
   },
 };
 </script>

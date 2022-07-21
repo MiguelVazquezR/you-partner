@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\HomeworkController;
-use App\Models\Homework;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,5 +36,9 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::resource('/homework', HomeworkController::class)->except('show');
+Route::resource('/homeworks', HomeworkController::class)->except('show');
+Route::get('/homeworks/on-collaboration', [HomeworkController::class, 'onCollaboration'])->name('homeworks.on-collaboration');
+Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name('homeworks.finished');
+
 Route::resource('/collaborations', CollaborationController::class)->except('show');
+Route::get('/collaborations/my-collaborations', [CollaborationController::class, 'myCollaborations'])->name('collaborations.my-collaborations');

@@ -4,7 +4,7 @@
     <InputSearch :filters="filters" :filterURL="filterURL" class="mb-2 ml-4 flex-1" />
   </div>
   <div class="overflow-x-auto text-sm">
-    <table v-if="homeworks.data.length" class="w-full whitespace-nowrap">
+    <table v-if="homeworks.data" class="w-full whitespace-nowrap">
       <tbody>
         <tr v-for="homework in homeworks.data" :key="homework.id"
           class="focus:outline-none h-16 border border-gray-100 rounded">
@@ -71,7 +71,7 @@
           <td>
             <div class="relative px-5 pt-2">
               <button class="focus:ring-2 rounded-md focus:outline-none" role="button" aria-label="option">
-                <Link :href="route('homework.edit', homework)">
+                <Link :href="route('homeworks.edit', homework)">
                   <i class="fa-solid fa-ellipsis"></i>
                 </Link>
               </button>
@@ -132,7 +132,6 @@ export default {
   components: {
     Pagination,
     Input,
-    InputSearch,
     InputSearch,
     Link
   },

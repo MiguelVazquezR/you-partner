@@ -3,7 +3,7 @@
     <div class="px-8 mt-3">
       <JetValidationErrors />
       <div class="flex items-center">
-        <Link :href="route('homework.index')" class="flex items-center text-indigo-600">
+        <Link :href="route('homeworks.index')" class="flex items-center text-indigo-600">
         <i class="fas fa-long-arrow-alt-left text-lg"></i>
         <span class="ml-2">Atrás</span>
         </Link>
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     store() {
-      this.$inertia.post(this.route('homework.store'), this.homework)
+      this.$inertia.post(this.route('homeworks.store'), this.homework)
     },
   }
 };
