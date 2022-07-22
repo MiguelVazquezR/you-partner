@@ -77,6 +77,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
+    
+    public function homeworks()
+    {
+        return $this->hasMany(Homework::class);
+    }
 
     public function collaborations()
     {

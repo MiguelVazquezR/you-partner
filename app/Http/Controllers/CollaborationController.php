@@ -100,7 +100,7 @@ class CollaborationController extends Controller
         //
     }
 
-    // My views ----------------
+    // My views (tabs) ----------------
     public function myCollaborations(Request $request)
     {
         $filters = $request->all('search');

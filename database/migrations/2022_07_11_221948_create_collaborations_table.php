@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->float('payment');
             $table->float('tax');
-            $table->string('status')->default('En progreso');
+            $table->string('status')->default('En proceso');
             $table->timestamp('closed_at')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('homework_id')->constrained()->onDelete('cascade');

@@ -8,24 +8,29 @@
     />
   </div>
   <div class="overflow-x-auto text-sm">
-    <table v-if="homeworks.data" class="w-full whitespace-nowrap">
+    <table v-if="homeworks.data.length" class="w-full whitespace-nowrap">
       <tbody>
         <tr
           v-for="homework in homeworks.data"
           :key="homework.id"
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
-          <td v-if="withAvatar">
-            <Avatar :user="homework.user" />
+          <td class="px-3">
+            <i v-if="!homework.collaboration" class="fa-solid fa-bullseye text-red-300" title="Sin colaboración"></i>
+            <i v-else-if="homework.collaboration.status == 'En proceso'" class="fa-solid fa-spinner text-yellow-300" title="En proceso"></i>
+            <i v-else class="fa-solid fa-check text-green-300" title="Terminado"></i>
           </td>
-          <td class="pl-5">
+          <td v-if="withAvatar" class="pr-5">
+            <Avatar :user="homework.collaboration ? homework.collaboration.user : homework.user " />
+          </td>
+          <td>
             <div class="flex items-center pl-5">
               <p class="font-medium leading-none text-gray-700 mr-2">
                 {{ homework.title }}
               </p>
             </div>
           </td>
-          <td class="pl-24">
+          <td class="pl-20">
             <div class="flex items-center">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">

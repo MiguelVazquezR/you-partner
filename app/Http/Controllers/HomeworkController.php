@@ -25,12 +25,12 @@ class HomeworkController extends Controller
     {
         $filters = $request->all('search');
 
-        $homeworks = Homework::where('user_id', auth()->user()->id)
+        $homeworks = auth()->user()->homeworks()
+            ->doesntHave('collaboration')
             ->filter($filters)
             ->with(['schoolSubject', 'collaboration', 'resources'])
             ->latest('id')
             ->paginate();
-
 
         return Inertia::render('Homework/Index', compact('homeworks', 'filters'));
     }
@@ -126,14 +126,36 @@ class HomeworkController extends Controller
         return redirect()->route('homeworks.index');
     }
 
-    // My views --------------------
-    public function onCollaboration()
+    // My views (tabs) --------------------
+    public function onCollaboration(Request $request)
     {
-        return Inertia::render('Homework/OnCollaboration');
+        $filters = $request->all('search');
+
+        $homeworks = auth()->user()->homeworks()
+            ->whereHas('collaboration', function($query){
+                $query->where('status', 'En proceso');
+            })
+            ->filter($filters)
+            ->with(['schoolSubject', 'collaboration' => ['user'], 'resources'])
+            ->latest('id')
+            ->paginate();
+
+        return Inertia::render('Homework/OnCollaboration', compact('homeworks', 'filters'));
     }
 
-    public function finished()
+    public function finished(Request $request)
     {
-        return Inertia::render('Homework/Finished');
+        $filters = $request->all('search');
+
+        $homeworks = auth()->user()->homeworks()
+            ->whereHas('collaboration', function($query){
+                $query->where('status', 'Terminado');
+            })
+            ->filter($filters)
+            ->with(['schoolSubject', 'collaboration' => ['user'], 'resources'])
+            ->latest('id')
+            ->paginate();
+
+        return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
     }
 }
