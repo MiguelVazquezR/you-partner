@@ -31,7 +31,12 @@ export default {
 		}
 	},
 	props: {
-		filters: Object,
+		filters: {
+			type: Object,
+			default: {
+				search: null
+			}
+		},
 		filterURL: String
 	}
 }

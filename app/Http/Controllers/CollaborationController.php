@@ -24,7 +24,6 @@ class CollaborationController extends Controller
     public function index(Request $request)
     {
         $filters = $request->all('search');
-
         $homeworks = Homework::doesntHave('collaboration')
             ->filter($filters)
             ->where('user_id', '<>', auth()->user()->id)
@@ -102,9 +101,16 @@ class CollaborationController extends Controller
     }
 
     // My views ----------------
-    public function myCollaborations()
+    public function myCollaborations(Request $request)
     {
-        return Inertia::render('Collaborations/MyCollaborations');
-    }
+        $filters = $request->all('search');
 
+        $collaborations = Collaboration::where('user_id', auth()->user()->id)
+            ->filter($filters)
+            ->with(['user', 'homework' => ['user']])
+            ->latest()
+            ->paginate();
+
+        return Inertia::render('Collaborations/MyCollaborations', compact('collaborations'));
+    }
 }

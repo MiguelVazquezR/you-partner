@@ -7,7 +7,7 @@
           + Crear 
         </Link>
       </div>
-      <HomeworkTable :homeworks="homeworks" :filters="filters" filterURL="/homeworks" />
+      <HomeworkTable :homeworks="homeworks" :filters="filters" filterURL="/homeworks" canEdit canDelete />
     </div>
   </AppLayout>
 </template>

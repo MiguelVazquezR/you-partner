@@ -1,63 +1,55 @@
 <template>
   <div class="flex justify-between items-center py-1 mt-2">
-    <Pagination :pagination="homeworks" />
+    <Pagination :pagination="collaborations" />
     <InputSearch :filters="filters" :filterURL="filterURL" class="mb-2 ml-4 flex-1" />
+    
   </div>
   <div class="overflow-x-auto text-sm">
-    <table v-if="homeworks.data.length" class="w-full whitespace-nowrap">
+    <table v-if="collaborations.data.length" class="w-full whitespace-nowrap">
       <tbody>
-        <tr v-for="homework in homeworks.data" :key="homework.id"
+        <tr v-for="collaboration in collaborations.data" :key="collaboration.id"
           class="focus:outline-none h-16 border border-gray-100 rounded">
           <td>
-            <Avatar :user="homework.user" />
+            <Avatar :user="collaboration.homework.user" />
           </td>
           <td>
-            <div class="flex items-center pl-5">
+            <div>
               <p class="font-medium leading-none text-gray-700 mr-2">
-                {{ homework.title }}
+                {{ collaboration.homework.title }}
               </p>
             </div>
           </td>
-          <td class="pl-24">
-            <div class="flex items-center">
-              <i class="fa-solid fa-tag"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
-                {{ homework.school_subject.name }}
-              </p>
-            </div>
-          </td>
-
-          <td class="pl-5">
+          <td>
             <div class="flex items-center">
               <i class="fa-solid fa-comment-dots"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">0</p>
             </div>
           </td>
-          <td class="pl-5">
+          <td>
             <div class="flex items-center">
-              <i class="fa-solid fa-paperclip"></i>
+              <i class="fa-solid fa-dollar-sign"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
-                {{ homework.resources.length }}
+                {{ collaboration.payment }} MXN
               </p>
             </div>
           </td>
-          <td class="pl-5">
+          <td>
             <div class="
-                py-3
+                py-2
                 px-3
                 text-sm
                 focus:outline-none
                 leading-none
-                text-red-700
-                bg-red-100
-                rounded
+                text-green-700
+                bg-green-100
+                rounded-lg
               ">
-              Para: 01/01/2022
+              {{ collaboration.status }}
             </div>
           </td>
           <td class="pl-4">
             <button class="
-                focus:ring-2 focus:ring-offset-2 focus:ring-red-300
+                focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
                 text-sm
                 leading-none
                 text-gray-600
@@ -68,53 +60,8 @@
                 hover:bg-gray-200
                 focus:outline-none
               ">
-              View
+              Ver
             </button>
-          </td>
-          <td>
-            <div class="relative px-5 pt-2">
-              <button class="focus:ring-2 rounded-md focus:outline-none" role="button" aria-label="option">
-                <Link :href="route('homeworks.edit', homework)">
-                  <i class="fa-solid fa-ellipsis"></i>
-                </Link>
-              </button>
-              <div class="
-                  dropdown-content
-                  bg-white
-                  shadow
-                  w-24
-                  absolute
-                  z-30
-                  right-0
-                  mr-6
-                  hidden
-                ">
-                <div tabindex="0" class="
-                    focus:outline-none focus:text-indigo-600
-                    text-xs
-                    w-full
-                    hover:bg-indigo-700
-                    py-4
-                    px-4
-                    cursor-pointer
-                    hover:text-white
-                  ">
-                  <p>Edit</p>
-                </div>
-                <div tabindex="0" class="
-                    focus:outline-none focus:text-indigo-600
-                    text-xs
-                    w-full
-                    hover:bg-indigo-700
-                    py-4
-                    px-4
-                    cursor-pointer
-                    hover:text-white
-                  ">
-                  <p>Delete</p>
-                </div>
-              </div>
-            </div>
           </td>
         </tr>
       </tbody>
@@ -138,11 +85,10 @@ export default {
     Avatar,
     Input,
     InputSearch,
-    InputSearch,
     Link
   },
   props: {
-    homeworks: Object,
+    collaborations: Object,
     filters: Object,
     filterURL: String,
   },
