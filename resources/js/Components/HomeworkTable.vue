@@ -96,13 +96,13 @@
               >
                 <i class="fa-solid fa-pen"></i>
               </Link>
-              <Link
+              <button
+                @click="delete_confirm = true; item_to_delete = homework;"
                 v-if="canDelete"
-                :href="route('homeworks.destroy', homework)"
                 class="mr-2 hover:text-red-300"
               >
                 <i class="fa-solid fa-trash"></i>
-              </Link>
+              </button>
             </div>
           </td>
         </tr>
@@ -112,6 +112,24 @@
       No hay ningún registro para mostrar
     </div>
   </div>
+  <ConfirmationModal :show="delete_confirm" @close="delete_confirm = false">
+    <template #title>
+      <div>
+        ¿Deseas continuar?
+      </div>
+    </template>
+    <template #content>
+      <div>
+        Estás a punto de eliminar una tarea, una vez realizado ya no se podrá recuperar
+      </div>
+    </template>
+    <template #footer >
+      <div class="flex justify-end">
+        <DangerButton @click="this.delete()" class="mr-3">Eliminar</DangerButton>
+        <SecondaryButton @click="delete_confirm = false">Cancelar</SecondaryButton>
+      </div>
+    </template>
+  </ConfirmationModal>
 </template>
 
 <script>
@@ -120,15 +138,27 @@ import Avatar from "@/Components/Avatar.vue";
 import Input from "@/Jetstream/Input.vue";
 import InputSearch from "@/Components/Common/InputSearch.vue";
 import { Link } from "@inertiajs/inertia-vue3";
+import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import DangerButton from "@/Jetstream/DangerButton.vue";
+import SecondaryButton from "@/Jetstream/SecondaryButton.vue";
 
 export default {
+  data(){
+    return {
+      delete_confirm: false,
+      item_to_delete: {},
+    }
+  },
   components: {
     Pagination,
     Avatar,
     Input,
     InputSearch,
     Link,
-  },
+    DangerButton,
+    ConfirmationModal,
+    SecondaryButton
+},
   props: {
     homeworks: Object,
     filters: Object,
@@ -137,5 +167,11 @@ export default {
     canDelete: Boolean,
     withAvatar: Boolean,
   },
+  methods: {
+    delete(){
+      this.$inertia.delete(this.route('homeworks.destroy',this.item_to_delete));
+      this.delete_confirm = false;
+    }
+  }
 };
 </script>

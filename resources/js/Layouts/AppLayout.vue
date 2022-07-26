@@ -55,7 +55,7 @@ const logout = () => {
                   <span class="text-left">
                     <i class="fas fa-tachometer-alt"></i>
                   </span>
-                  <span class="mx-4 text-sm font-normal"> Dashboard </span>
+                  <span class="mx-4 text-sm font-normal"> Panel de información </span>
                 </JetNavLink>
                 <JetNavLink
                   :href="route('homeworks.index')"
@@ -101,7 +101,7 @@ const logout = () => {
                         transition
                       "
                     >
-                      <i class="fa-solid fa-bell text-xl text-indigo-400 mx-2"></i>
+                      <i class="fa-solid fa-bell text-lg text-indigo-400 mx-2"></i>
                     </button>
                   </template>
 
@@ -125,7 +125,7 @@ const logout = () => {
                         transition
                       "
                     >
-                      <i class="fa-solid fa-gear text-xl text-indigo-400 mx-2"></i>
+                      <i class="fa-solid fa-gear text-lg text-indigo-400 mx-2"></i>
                     </button>
                   </template>
 
