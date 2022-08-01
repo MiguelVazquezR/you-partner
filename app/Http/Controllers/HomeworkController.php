@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Homework;
 use App\Http\Requests\StoreHomeworkRequest;
 use App\Http\Requests\UpdateHomeworkRequest;
+use App\Models\Resource;
 use App\Models\SchoolSubject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -43,6 +44,7 @@ class HomeworkController extends Controller
     public function create()
     {
         $subjects = SchoolSubject::all();
+
         return Inertia::render('Homework/Create', compact('subjects'));
     }
 
@@ -54,6 +56,7 @@ class HomeworkController extends Controller
      */
     public function store(Request $request)
     {
+        
         $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -62,8 +65,18 @@ class HomeworkController extends Controller
             'user_id' => 'required',
             'school_subject_id' => 'required'
         ]);
+        
+        $homework = Homework::create($data);
 
-        Homework::create($data);
+        if($request->hasFile('resource')) {
+            $path = $request->file('resource')->store('homework-resources');
+
+            Resource::Create([
+                'resourceable_id' => $homework->id,
+                'resourceable_type' => get_class($homework),
+                'path' => $path,
+            ]);
+        }
 
         return redirect()->route('homeworks.index');
     }
@@ -88,7 +101,9 @@ class HomeworkController extends Controller
     public function edit(Homework $homework)
     {
         $subjects = SchoolSubject::all();
-        return Inertia::render('Homework/Edit', compact('homework', 'subjects'));
+        $resources = $homework->resources;
+
+        return Inertia::render('Homework/Edit', compact('homework', 'subjects', 'resources'));
     }
 
     /**

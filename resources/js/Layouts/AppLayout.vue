@@ -2,12 +2,11 @@
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import JetApplicationMark from "@/Jetstream/ApplicationMark.vue";
 import JetBanner from "@/Jetstream/Banner.vue";
 import JetDropdown from "@/Jetstream/Dropdown.vue";
 import JetDropdownLink from "@/Jetstream/DropdownLink.vue";
-import JetNavLink from "@/Jetstream/NavLink.vue";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink.vue";
+import SideBar from "@/Components/SideBar.vue";
 
 defineProps({
   title: String,
@@ -40,45 +39,7 @@ const logout = () => {
 
     <div class="overflow-y-hidden h-screen bg-gray-100 lg:grid lg:grid-cols-6">
       <aside>
-        <!-- sidebar -->
-        <div class="h-screen hidden lg:block shadow-lg relative">
-          <div class="bg-white h-full dark:bg-gray-700">
-            <div class="flex items-center justify-center pt-6">
-              <JetApplicationMark class="block h-9 w-auto" />
-            </div>
-            <nav class="mt-6">
-              <div>
-                <JetNavLink
-                  :href="route('dashboard')"
-                  :active="route().current('dashboard')"
-                >
-                  <span class="text-left">
-                    <i class="fas fa-tachometer-alt"></i>
-                  </span>
-                  <span class="mx-4 text-sm font-normal"> Panel de información </span>
-                </JetNavLink>
-                <JetNavLink
-                  :href="route('homeworks.index')"
-                  :active="route().current('homeworks.*')"
-                >
-                  <span class="text-left">
-                    <i class="fa-solid fa-file-pen"></i>
-                  </span>
-                  <span class="mx-4 text-sm font-normal"> Mis tareas </span>
-                </JetNavLink>
-                <JetNavLink
-                  :href="route('collaborations.index')"
-                  :active="route().current('collaborations.*')"
-                >
-                  <span class="text-left">
-                    <i class="fa-solid fa-handshake-angle"></i>
-                  </span>
-                  <span class="mx-4 text-sm font-normal"> Colaborar! </span>
-                </JetNavLink>
-              </div>
-            </nav>
-          </div>
-        </div>
+       <SideBar />
       </aside>
       <!-- Page Content -->
       <main class="col-span-5">

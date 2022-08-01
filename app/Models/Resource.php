@@ -12,6 +12,7 @@ class Resource extends Model
     protected $fillable = [
         'resourceable_id',
         'resourceable_type',
+        'path',
     ];
 
     // Relationships ------------------------
