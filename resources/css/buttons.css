@@ -5,7 +5,3 @@
 .btn-danger {
     @apply px-2 py-1 font-semibold border rounded border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition duration-200;
 }
-
-.btn-disabled {
-    @apply border-gray-400 text-gray-400 cursor-not-allowed;
-}

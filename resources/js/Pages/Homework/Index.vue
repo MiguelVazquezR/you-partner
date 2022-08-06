@@ -4,11 +4,22 @@
       <Tabs :tabs="tabs" />
       <div class="flex justify-end mt-3">
         <Link :href="route('homeworks.create')" class="btn-primary">
-          + Crear 
+          + Crear
         </Link>
       </div>
-      <HomeworkTable :homeworks="homeworks" :filters="filters" filterURL="/homeworks" canEdit canDelete />
+      <HomeworkTable
+        :homeworks="homeworks"
+        :filters="filters"
+        filterURL="/homeworks"
+        canEdit
+        canDelete
+      />
     </div>
+    <DetailsModal :show="true">
+      <template #title> Título de mi modal </template>
+      <template #content> contenido de mi modal </template>
+      <template #footer> footer de mi modal </template>
+    </DetailsModal>
   </AppLayout>
 </template>
 
@@ -17,6 +28,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import HomeworkTable from "@/Components/HomeworkTable.vue";
 import Tabs from "@/Components/Tabs.vue";
+import DetailsModal from "@/Components/DetailsModal.vue";
 
 export default {
   data() {
@@ -24,24 +36,25 @@ export default {
       tabs: [
         {
           label: "Pendientes",
-          url: 'homeworks.index'
+          url: "homeworks.index",
         },
         {
           label: "En colaboracion",
-          url: 'homeworks.on-collaboration'
+          url: "homeworks.on-collaboration",
         },
         {
           label: "Terminados",
-          url: 'homeworks.finished'
+          url: "homeworks.finished",
         },
-      ]
-    }
+      ],
+    };
   },
   components: {
     AppLayout,
     Link,
     HomeworkTable,
     Tabs,
+    DetailsModal,
   },
   props: {
     homeworks: Object,
@@ -49,6 +62,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

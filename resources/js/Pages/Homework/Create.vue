@@ -74,7 +74,7 @@ export default {
         description: null,
         delivery_date: null,
         priority: "",
-        user_id: this.$page.props.user.id,
+        user_id: 1,//this.$page.props.user.id,
         school_subject_id: "",
         resource: null,
       })
@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     store() {
-      console.log(this.form);
       this.form.post(this.route('homeworks.store'));
     },
   }

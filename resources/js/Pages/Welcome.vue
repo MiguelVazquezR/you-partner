@@ -72,7 +72,7 @@ defineProps({
                   ¡Con tu ayuda lo lograremos!
                 </h1>
                 <p class="mt-4 text-lg text-gray-300">
-                  ¡Colabora con tus compañeros y aprendamos juntos! <br>
+                  ¡Colabora con la comunidad y aprendamos juntos! <br>
                   Aprovecha el tiempo libre para generar ganancias
                 </p>
                 <br><br>
@@ -132,7 +132,7 @@ defineProps({
                   </div>
                   <h6 class="text-xl font-semibold">Genera ganancias</h6>
                   <p class="mt-2 mb-4 text-gray-600">
-                    Colabora con tus compañeros siendo partner y obten ganancias por tu ayuda!
+                    Colabora con la comunidad siendo partner y obten ganancias por tu ayuda!
                   </p>
                 </div>
               </div>
@@ -147,7 +147,7 @@ defineProps({
                   <h6 class="text-xl font-semibold">Seguridad</h6>
                   <p class="mt-2 mb-4 text-gray-600">
                     Tu información estará siempre bien protegida y no se tolerará
-                    ninguna falta de respeto hacia tus compañeros.
+                    ninguna falta de respeto hacia la comunidad.
                   </p>
                 </div>
               </div>
@@ -169,7 +169,7 @@ defineProps({
               </p>
               <p class="text-lg font-light leading-relaxed mt-0 mb-4 text-gray-700">
                 Sólo tienes que registrarte totalmente gratis e ingresar para comenzar a pedir ayuda o colaborar con
-                tus compañeros!
+                la comunidad!
               </p>
               <Link :href="route('register')"
                 class="font-bold text-teal-700 mt-8 text-2xl py-2 px-3 rouded hover:text-teal-500 underline">REGISTRATE!
@@ -189,7 +189,7 @@ defineProps({
                     Colabora y obten beneficios!
                   </h4>
                   <p class="text-md font-light mt-2 text-white">
-                    Sube de nivel colaborando con tus compañeros obten
+                    Sube de nivel colaborando con la comunidad obten
                     multiples beneficios y aumenta tus ganancias.
                   </p>
                 </blockquote>
@@ -290,7 +290,7 @@ defineProps({
               <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
                 En Youpartner Puedes conocer gente del sector estudiantil de todo México e
                 interactuar con ellos. Puedes brindar ayuda con tus conocimientos de cualquier
-                materia y/o pedir apoyp a tus compañeros con cualquier actividad que tengas y así aprender
+                materia y/o pedir apoyp a la comunidad con cualquier actividad que tengas y así aprender
                 todos en colaboración.
               <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">Además puedes generar ingresos con tus
                 colaboraciones desde tu casa!

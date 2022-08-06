@@ -60,9 +60,6 @@
       No hay ningún registro para mostrar
     </div>
   </div>
-  <SideModal :show="details">
-    <div class="h-20">Hola mundo</div>
-  </SideModal>
 </template>
 
 <script>
@@ -70,21 +67,14 @@ import Pagination from "@/Components/Pagination.vue";
 import Avatar from "@/Components/Avatar.vue";
 import Input from "@/Jetstream/Input.vue";
 import InputSearch from "@/Components/Common/InputSearch.vue";
-import SideModal from "@/Components/SideModal.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
-  data() {
-    return {
-      details: true,
-    }
-  },
   components: {
     Pagination,
     Avatar,
     Input,
     InputSearch,
-    SideModal,
     Link,
   },
   props: {
