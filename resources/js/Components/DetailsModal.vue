@@ -33,6 +33,7 @@ const close = () => {
     <div class="px-3 py-2">
       <div class="flex justify-end">
         <button
+          @click="close"
           class="
             ml-auto
             text-gray-400

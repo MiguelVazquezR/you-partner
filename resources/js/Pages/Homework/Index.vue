@@ -13,9 +13,10 @@
         filterURL="/homeworks"
         canEdit
         canDelete
+        @details="showDetails"
       />
     </div>
-    <DetailsModal :show="true">
+    <DetailsModal :show="side_modal" @close="side_modal=false">
       <template #title> Título de mi modal </template>
       <template #content> contenido de mi modal </template>
       <template #footer> footer de mi modal </template>
@@ -33,6 +34,7 @@ import DetailsModal from "@/Components/DetailsModal.vue";
 export default {
   data() {
     return {
+      side_modal: false,
       tabs: [
         {
           label: "Pendientes",
@@ -60,5 +62,10 @@ export default {
     homeworks: Object,
     filters: Object,
   },
+  methods: {
+    showDetails() {
+      this.side_modal = true;
+    }
+  }
 };
 </script>

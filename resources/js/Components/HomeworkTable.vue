@@ -16,12 +16,30 @@
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
           <td class="px-3">
-            <i v-if="!homework.collaboration" class="fa-solid fa-bullseye text-red-300" title="Sin colaboración"></i>
-            <i v-else-if="homework.collaboration.status == 'En proceso'" class="fa-solid fa-spinner text-yellow-300" title="En proceso"></i>
-            <i v-else class="fa-solid fa-check text-green-300" title="Terminado"></i>
+            <i
+              v-if="!homework.collaboration"
+              class="fa-solid fa-bullseye text-red-300"
+              title="Sin colaboración"
+            ></i>
+            <i
+              v-else-if="homework.collaboration.status == 'En proceso'"
+              class="fa-solid fa-spinner text-yellow-300"
+              title="En proceso"
+            ></i>
+            <i
+              v-else
+              class="fa-solid fa-check text-green-300"
+              title="Terminado"
+            ></i>
           </td>
           <td v-if="withAvatar" class="pr-5">
-            <Avatar :user="homework.collaboration ? homework.collaboration.user : homework.user " />
+            <Avatar
+              :user="
+                homework.collaboration
+                  ? homework.collaboration.user
+                  : homework.user
+              "
+            />
           </td>
           <td>
             <div class="flex items-center pl-5">
@@ -70,6 +88,7 @@
           </td>
           <td class="pl-4">
             <button
+              @click="showDetails"
               class="
                 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
                 text-sm
@@ -97,7 +116,10 @@
                 <i class="fa-solid fa-pen"></i>
               </Link>
               <button
-                @click="delete_confirm = true; item_to_delete = homework;"
+                @click="
+                  delete_confirm = true;
+                  item_to_delete = homework;
+                "
                 v-if="canDelete"
                 class="mr-2 hover:text-red-300"
               >
@@ -114,19 +136,22 @@
   </div>
   <ConfirmationModal :show="delete_confirm" @close="delete_confirm = false">
     <template #title>
-      <div>
-        ¿Deseas continuar?
-      </div>
+      <div>¿Deseas continuar?</div>
     </template>
     <template #content>
       <div>
-        Estás a punto de eliminar una tarea, una vez realizado ya no se podrá recuperar
+        Estás a punto de eliminar una tarea, una vez realizado ya no se podrá
+        recuperar
       </div>
     </template>
-    <template #footer >
+    <template #footer>
       <div class="flex justify-end">
-        <DangerButton @click="this.delete()" class="mr-3">Eliminar</DangerButton>
-        <SecondaryButton @click="delete_confirm = false">Cancelar</SecondaryButton>
+        <DangerButton @click="this.delete()" class="mr-3"
+          >Eliminar</DangerButton
+        >
+        <SecondaryButton @click="delete_confirm = false"
+          >Cancelar</SecondaryButton
+        >
       </div>
     </template>
   </ConfirmationModal>
@@ -143,11 +168,11 @@ import DangerButton from "@/Jetstream/DangerButton.vue";
 import SecondaryButton from "@/Jetstream/SecondaryButton.vue";
 
 export default {
-  data(){
+  data() {
     return {
       delete_confirm: false,
       item_to_delete: {},
-    }
+    };
   },
   components: {
     Pagination,
@@ -157,8 +182,8 @@ export default {
     Link,
     DangerButton,
     ConfirmationModal,
-    SecondaryButton
-},
+    SecondaryButton,
+  },
   props: {
     homeworks: Object,
     filters: Object,
@@ -168,10 +193,15 @@ export default {
     withAvatar: Boolean,
   },
   methods: {
-    delete(){
-      this.$inertia.delete(this.route('homeworks.destroy',this.item_to_delete));
+    delete() {
+      this.$inertia.delete(
+        this.route("homeworks.destroy", this.item_to_delete)
+      );
       this.delete_confirm = false;
+    },
+    showDetails() {
+      this.$emit('details')
     }
-  }
+  },
 };
 </script>
