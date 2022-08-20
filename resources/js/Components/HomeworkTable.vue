@@ -42,13 +42,13 @@
             />
           </td>
           <td>
-            <div class="flex items-center pl-5">
+            <div class="flex items-center pl-1">
               <p class="font-medium leading-none text-gray-700 mr-2">
                 {{ homework.title }}
               </p>
             </div>
           </td>
-          <td class="pl-20">
+          <td class="pl-5">
             <div class="flex items-center">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
@@ -56,13 +56,13 @@
               </p>
             </div>
           </td>
-          <td class="pl-5">
+          <td class="pl-2">
             <div class="flex items-center">
               <i class="fa-solid fa-comment-dots"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">0</p>
             </div>
           </td>
-          <td class="pl-5">
+          <td class="pl-2">
             <div class="flex items-center">
               <i class="fa-solid fa-paperclip"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
@@ -70,7 +70,7 @@
               </p>
             </div>
           </td>
-          <td class="pl-5">
+          <td class="pl-2">
             <div
               class="
                 py-3

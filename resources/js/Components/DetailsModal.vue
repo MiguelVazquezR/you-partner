@@ -10,7 +10,7 @@ defineProps({
   },
   maxWidth: {
     type: String,
-    default: "sm",
+    default: "lg",
   },
   closeable: {
     type: Boolean,
@@ -30,8 +30,8 @@ const close = () => {
     :closeable="closeable"
     @close="close"
   >
-    <div class="px-3 py-2">
-      <div class="flex justify-end">
+    <div>
+      <div class="flex justify-end px-1">
         <button
           @click="close"
           class="
@@ -48,12 +48,16 @@ const close = () => {
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="text-lg">
+      <div class="text-lg h-12 px-6">
         <slot name="title" />
       </div>
 
-      <div class="mt-4">
+      <div class="overflow-y-auto h-[calc(100vh-9rem)] px-6">
         <slot name="content" />
+      </div>
+
+      <div class="px-8 py-4 h-12">
+        <slot name="footer" />
       </div>
     </div>
   </SideModal>

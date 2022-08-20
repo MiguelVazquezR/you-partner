@@ -74,14 +74,14 @@ const maxWidthClass = computed(() => {
                 </transition>
 
                 <transition
-                    enter-active-class="ease-out duration-300"
-                    enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-active-class="ease-in duration-200"
-                    leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    enter-active-class="ease-in duration-300"
+                    enter-from-class="translate-x-60"
+                    enter-to-class="translate-x-0"
+                    leave-active-class="ease-out duration-300"
+                    leave-from-class="translate-x-0"
+                    leave-to-class="translate-x-60"
                 >
-                    <div v-show="show" class="bg-white rounded-tl rounded-bl overflow-hidden shadow-xl transform transition-all sm:w-full h-screen sm:ml-auto" :class="maxWidthClass">
+                    <div v-show="show" class="bg-white rounded-tl rounded-bl shadow-xl transform transition-all sm:w-full h-screen sm:ml-auto" :class="maxWidthClass">
                         <slot v-if="show" />
                     </div>
                 </transition>
