@@ -49,7 +49,7 @@
             </div>
           </td>
           <td class="pl-5">
-            <div class="flex items-center">
+            <div class="flex items-center" title="Materia">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
                 {{ homework.school_subject.name }}
@@ -57,16 +57,24 @@
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center">
+            <div class="flex items-center" title="Preguntas o comentarios">
               <i class="fa-solid fa-comment-dots"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">0</p>
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center">
+            <div class="flex items-center" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
                 {{ homework.resources.length }}
+              </p>
+            </div>
+          </td>
+          <td class="pl-2">
+            <div class="flex items-center" title="Solicitudes de colaboración">
+              <i class="fa-solid fa-user"></i>
+              <p class="text-sm leading-none text-gray-600 ml-2">
+                2
               </p>
             </div>
           </td>
