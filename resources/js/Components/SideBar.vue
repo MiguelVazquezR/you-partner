@@ -23,7 +23,7 @@
                         <span class="text-left">
                             <i class="fa-solid fa-handshake-angle"></i>
                         </span>
-                        <span class="mx-4 text-sm font-normal"> Colaborar! </span>
+                        <span class="mx-4 text-sm font-normal"> Colaborar </span>
                     </JetNavLink>
                 </div>
             </nav>

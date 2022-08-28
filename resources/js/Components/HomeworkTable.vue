@@ -88,7 +88,7 @@
           </td>
           <td class="pl-4">
             <button
-              @click="showDetails"
+              @click="showDetails(homework)"
               class="
                 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
                 text-sm
@@ -199,9 +199,9 @@ export default {
       );
       this.delete_confirm = false;
     },
-    showDetails() {
-      this.$emit('details')
-    }
+    showDetails(prop) {
+      this.$emit("details", prop);
+    },
   },
 };
 </script>

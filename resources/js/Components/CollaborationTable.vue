@@ -1,17 +1,31 @@
 <template>
   <div class="flex justify-between items-center py-1 mt-2">
     <Pagination :pagination="collaborations" />
-    <InputSearch :filters="filters" :filterURL="filterURL" class="mb-2 ml-4 flex-1" />
+    <InputSearch
+      :filters="filters"
+      :filterURL="filterURL"
+      class="mb-2 ml-4 flex-1"
+    />
   </div>
   <div class="overflow-x-auto text-sm">
     <table v-if="collaborations.data.length" class="w-full whitespace-nowrap">
       <tbody>
-        <tr v-for="collaboration in collaborations.data" :key="collaboration.id"
-          class="focus:outline-none h-16 border border-gray-100 rounded">
+        <tr
+          v-for="collaboration in collaborations.data"
+          :key="collaboration.id"
+          class="focus:outline-none h-16 border border-gray-100 rounded"
+        >
           <td class="px-3">
-            <i v-if="collaboration.status == 'En proceso'" class="fa-solid fa-spinner text-yellow-300"
-              :title="collaboration.status"></i>
-            <i v-else class="fa-solid fa-check text-green-300" :title="collaboration.status"></i>
+            <i
+              v-if="collaboration.status == 'En proceso'"
+              class="fa-solid fa-spinner text-yellow-300"
+              :title="collaboration.status"
+            ></i>
+            <i
+              v-else
+              class="fa-solid fa-check text-green-300"
+              :title="collaboration.status"
+            ></i>
           </td>
           <td class="pr-5">
             <Avatar :user="collaboration.homework.user" />
@@ -38,7 +52,9 @@
             </div>
           </td>
           <td class="pl-4">
-            <button @click="details = true" class="
+            <button
+              @click="showDetails"
+              class="
                 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
                 text-sm
                 leading-none
@@ -49,7 +65,8 @@
                 rounded
                 hover:bg-gray-200
                 focus:outline-none
-              ">
+              "
+            >
               Ver
             </button>
           </td>
@@ -82,5 +99,10 @@ export default {
     filters: Object,
     filterURL: String,
   },
+  methods:{
+    showDetails() {
+      this.$emit('details')
+    }
+  }
 };
 </script>
