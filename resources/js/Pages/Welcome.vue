@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from "@inertiajs/inertia-vue3";
 
 defineProps({
   canLogin: Boolean,
@@ -11,7 +11,7 @@ defineProps({
 
 <template>
 
-  <Head title="Welcome" />
+  <Head title="Bienvenido" />
   <div class="text-gray-800 antialiased">
     <nav class="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 ">
       <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -402,7 +402,7 @@ defineProps({
                 <ul class="list-unstyled">
                   <li>
                     <a class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline"
-                      href="https://www.creative-tim.com/presentation">Acerca de nosotros</a>
+                      href="#">Acerca de nosotros</a>
                   </li>
 
                 </ul>
@@ -411,16 +411,20 @@ defineProps({
                 <span class="block uppercase text-gray-600 text-sm font-semibold mb-2">Otros recursos</span>
                 <ul class="list-unstyled">
                   <li>
-                    <a class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline"
-                      href="https://creative-tim.com/terms">Terminos y condiciones</a>
+                    <Link :href="route('terms-of-service')"
+                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline">
+                        Términos de servicio
+                    </Link>
+                  </li>
+                  <li>
+                      <Link :href="route('privacy-policy')"
+                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline">
+                        Politicas de Privacidad
+                      </Link>
                   </li>
                   <li>
                     <a class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline"
-                      href="https://creative-tim.com/privacy">Politicas de Privacidad</a>
-                  </li>
-                  <li>
-                    <a class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline"
-                      href="https://creative-tim.com/contact-us">Contáctanos</a>
+                      href="#">Contáctanos</a>
                   </li>
                 </ul>
               </div>

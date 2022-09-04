@@ -42,3 +42,10 @@ Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name
 
 Route::resource('/collaborations', CollaborationController::class)->except('show');
 Route::get('/collaborations/my-collaborations', [CollaborationController::class, 'myCollaborations'])->name('collaborations.my-collaborations');
+
+Route::get('/privacy-policy', function (){
+    return Inertia::render('PrivacyPolicy');
+})->name('privacy-policy');
+Route::get('/terms-of-service', function (){
+    return Inertia::render('TermsOfService');
+})->name('terms-of-service');
