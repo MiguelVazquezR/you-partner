@@ -1,5 +1,5 @@
 <template>
-  Contacto
+  Contacto Angel
 </template>
 
 <script>
