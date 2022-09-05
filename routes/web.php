@@ -49,3 +49,7 @@ Route::get('/privacy-policy', function (){
 Route::get('/terms-of-service', function (){
     return Inertia::render('TermsOfService');
 })->name('terms-of-service');
+Route::get('/contact', function (){
+    return Inertia::render('Contact');
+})->name('contact');
+

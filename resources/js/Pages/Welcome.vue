@@ -423,8 +423,10 @@ defineProps({
                       </Link>
                   </li>
                   <li>
-                    <a class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline"
-                      href="#">Contáctanos</a>
+                    <Link :href="route('contact')"
+                        class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline">
+                        Contáctanos
+                    </Link>
                   </li>
                 </ul>
               </div>
