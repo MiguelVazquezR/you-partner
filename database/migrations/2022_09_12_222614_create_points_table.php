@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('resources', function (Blueprint $table) {
+        Schema::create('points', function (Blueprint $table) {
             $table->id();
-            
-            $table->morphs('resourceable');
-            $table->string('path');
-
+            $table->string('concept');
+            $table->float('value');
+            $table->string('unit',5);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resources');
+        Schema::dropIfExists('points');
     }
 };

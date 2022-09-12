@@ -13,16 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('claims', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->id();
-
-            $table->string('status')->default('Abierto');
-            $table->float('refund')->nullable();
-            $table->text('description')->nullable();
-            $table->text('solution_details')->nullable();
-            $table->text('solution')->nullable();
-            $table->foreignId('collaboration_id')->constrained();
-
+            $table->unsignedMediumInteger('max_points')->default(0);
+            $table->unsignedTinyInteger('tax');
             $table->timestamps();
         });
     }
@@ -34,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('claims');
+        Schema::dropIfExists('levels');
     }
 };

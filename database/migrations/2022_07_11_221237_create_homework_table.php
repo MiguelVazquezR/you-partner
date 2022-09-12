@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->text('description');
             $table->string('title');
-            $table->date('delivery_date');
+            $table->date('limit_date');
             $table->enum('priority', ['Normal', 'Urgente']);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('school_subject_id')->constrained();
