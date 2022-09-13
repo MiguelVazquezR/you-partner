@@ -31,6 +31,9 @@ class User extends Authenticatable
         'school_name',
         'state',
         'birthdate',
+        'level_id',
+        'active',
+        'description',
     ];
 
     protected $dates = [
@@ -86,5 +89,14 @@ class User extends Authenticatable
     public function collaborations()
     {
         return $this->hasMany(Collaboration::class);
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+    public function vouchers()
+    {
+        return $this->hasMany(Vouchers::class);
     }
 }

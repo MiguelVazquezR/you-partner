@@ -13,6 +13,9 @@ class Claim extends Model
         'status',
         'refund',
         'collaboration_id',
+        'description',
+        'solution_details',
+        'solution',
     ];
 
      // Relationships -------------------

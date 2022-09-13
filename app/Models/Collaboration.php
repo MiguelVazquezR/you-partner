@@ -10,12 +10,31 @@ class Collaboration extends Model
     use HasFactory;
 
     protected $fillable = [
-        'payment',
+        'price',
         'tax',
-        'status',
+        'promise_date',
+        'completed_date',
         'closed_at',
+        'approved_at',
+        'cancelled_at',
+        'read_at',
+        'payed_at',
+        'cancel_reason',
+        'completed_comments',
         'user_id',
-        'homework_id'
+        'homework_id',
+    ];
+
+    
+    protected $dates = [
+        'promise_date',
+        'completed_date',
+        'closed_at',
+        'approved_at',
+        'cancelled_at',
+        'read_at',
+        'payed_at',
+
     ];
 
     // Relationships -------------------
