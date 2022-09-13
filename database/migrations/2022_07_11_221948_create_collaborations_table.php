@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('completed_date');
             $table->timestamp('closed_at')->nullable();
             $table->timestamp('approved_at')->nullable();
-            $table->timestamp('cancelled_at')->nullable();
+            $table->timestamp('canceled_at')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamp('payed_at')->nullable();
             $table->text('cancel_reason')->nullable();

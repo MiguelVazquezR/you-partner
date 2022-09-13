@@ -16,7 +16,7 @@ class Collaboration extends Model
         'completed_date',
         'closed_at',
         'approved_at',
-        'cancelled_at',
+        'canceled_at',
         'read_at',
         'payed_at',
         'cancel_reason',
@@ -31,7 +31,7 @@ class Collaboration extends Model
         'completed_date',
         'closed_at',
         'approved_at',
-        'cancelled_at',
+        'canceled_at',
         'read_at',
         'payed_at',
 

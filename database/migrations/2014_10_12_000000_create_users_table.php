@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date("birthdate");
             $table->boolean("active")->default(1);
             $table->text("description")->nullable();
+            $table->boolean("is_admin")->default(0);
 
             $table->rememberToken();
             // $table->foreignId('current_team_id')->nullable();
