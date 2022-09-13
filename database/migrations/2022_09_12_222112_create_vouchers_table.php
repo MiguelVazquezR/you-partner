@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('claims', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
-
-            $table->string('status')->default('Abierto');
-            $table->float('refund')->nullable();
-            $table->text('description')->nullable();
-            $table->text('solution_details')->nullable();
-            $table->text('solution')->nullable();
-            $table->foreignId('collaboration_id')->constrained();
-
+            $table->unsignedFloat('amount');
+            $table->string('code');
+            $table->timestamps('used_at');
+            $table->text('notes');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('claims');
+        Schema::dropIfExists('vouchers');
     }
 };

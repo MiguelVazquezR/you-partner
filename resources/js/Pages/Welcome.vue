@@ -287,7 +287,7 @@ defineProps({
           <div class="text-center">
             <div class="w-full px-4">
               <h2 class="text-4xl font-semibold text-white">¿Qué te ofrece YouPartner?</h2>
-              <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
+              <div class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
                 En Youpartner Puedes conocer gente del sector estudiantil de todo México e
                 interactuar con ellos. Puedes brindar ayuda con tus conocimientos de cualquier
                 materia y/o pedir apoyp a la comunidad con cualquier actividad que tengas y así aprender
@@ -297,7 +297,7 @@ defineProps({
                 Regístrate totalmente gratis, sé parte de nuestra sociedad y comienza
                 a colaborar!
               </p>
-              </p>
+              </div>
             </div>
             <!----------------------------------------------------------------------->
             <div class="flex flex-wrap mt-10 justify-center border-2 p-3 border-white rounded-md bg-gray-700">
