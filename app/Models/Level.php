@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Level extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'max_points',
+        'tax',
+    ];
+
+    
+    // Relationships -------------------
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
+

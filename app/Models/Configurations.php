@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Configurations extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'module',
+        'key',
+        'value',  
+        'notes',  
+    ];
 }

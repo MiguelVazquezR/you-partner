@@ -34,6 +34,8 @@ class UserFactory extends Factory
             'school_name' => $this->faker->sentence(2),
             'state' => $this->faker->sentence(1),
             'birthdate' => $this->faker->date(),
+            'active' => $this->faker->randomElement([1,0]),
+            'description' => $this->faker->text(100),
         ];
     }
 

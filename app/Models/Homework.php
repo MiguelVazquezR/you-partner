@@ -12,14 +12,14 @@ class Homework extends Model
     protected $fillable = [
         'title',
         'description',
-        'delivery_date',
+        'limit_date',
         'priority',
         'user_id',
         'school_subject_id'
     ];
 
     protected $dates = [
-        'delivery_date'
+        'limit_date'
     ];
 
     // Relationships -------------------
