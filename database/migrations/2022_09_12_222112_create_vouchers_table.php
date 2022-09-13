@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedFloat('amount');
             $table->string('code');
-            $table->timestamps('used_at');
+            $table->timestamp('used_at');
             $table->text('notes');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();

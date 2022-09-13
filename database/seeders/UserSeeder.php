@@ -27,8 +27,8 @@ class UserSeeder extends Seeder
                 'school_name' => 'CETI colomos',
                 'state' => 'Jalisco',
                 'birthdate' => '1996-03-13',
-                'active' => 1,
                 'description' => 'Apasionado de las ciencias exactas y programación',
+                'is_admin' => 0,
             ],
             [
                 'name' => 'Ángel Vázquez',
@@ -40,8 +40,8 @@ class UserSeeder extends Seeder
                 'school_name' => 'CETI colomos',
                 'state' => 'Jalisco',
                 'birthdate' => '1996-03-13',
-                'active' => 1,
                 'description' => 'Me gusta la programación y las matemáticas',
+                'is_admin' => 0,
             ],
             [
                 'name' => 'Soporte YP',
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
                 'school_name' => 'You Partner',
                 'state' => 'Jalisco',
                 'birthdate' => '2022-09-13',
-                'active' => 1,
+                'description' => null,
                 'is_admin' => 1,
             ],
         ));

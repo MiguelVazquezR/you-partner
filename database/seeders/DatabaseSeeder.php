@@ -27,6 +27,5 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
         Homework::factory(25)->create();
-
     }
 }
