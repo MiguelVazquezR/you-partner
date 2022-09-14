@@ -4,7 +4,7 @@
             <slot name="title" />
         </div>
         <div class="overflow-auto text-gray-600 pt-1" :class="size == 'sm' ? 'h-22' : 'h-36' ">
-            <div v-if="items.length">
+            <div v-if="items.length" class="text-sm">
                 <slot name="content" />
             </div>
             <div v-else class="text-sm text-center text-gray-400 font-semibold flex flex-col" :class="size == 'sm' ? 'mt-0' : 'mt-10' ">

@@ -2,7 +2,7 @@
   <AppLayout title="Panel de información">
     <div class="px-8 py-5">
       <h1 class="text-gray-500 text-2xl font-bold">Mis tareas</h1>
-      <div class="mt-3 grid grid-cols-4 gap-5">
+      <div class="mt-3 lg:grid grid-cols-4 gap-5 space-y-4 lg:space-y-0">
         <!-- homeworks uploaded this month -->
         <DashboardPanel :items="completed_homeworks">
           <template #title>
@@ -26,21 +26,27 @@
             <h2 class="text-3xl font-bold">
               {{ all_homeworks_uploaded }}
             </h2>
-            <small class="text-gray-400">Desde {{ $page.props.user.created_at }}</small>
+            <small class="text-gray-400"
+              >Desde {{ $page.props.user.created_at }}</small
+            >
           </template>
         </DashboardPanel>
       </div>
-      <div class="mt-3 grid grid-cols-2 gap-5">
+      <div class="mt-3 lg:grid grid-cols-2 gap-5 space-y-4 lg:space-y-0">
         <!-- homeworks about to expire -->
         <DashboardPanel :items="homework_expired" size="lg">
           <template #title>
-            <p>Tareas próximas a vencer</p>
+            <p>Tareas vencidas y próximas a vencer</p>
           </template>
           <template #content>
             <div v-for="item in homework_expired" :key="item.id">
-              {{ item.limit_date }} -
-              <StatusIcon :collaboration="item.collaboration" />
-              {{ item.title }}
+              <div class="grid grid-cols-4 gap-x-3 hover:bg-indigo-50 cursor-pointer px-2 py-1 rounded-md">
+                <span class="col-span-3">
+                  <StatusIcon :collaboration="item.collaboration" />
+                  {{ item.title }}
+                </span>
+                <span class="text-gray-400 text-right">{{ item.id }} días</span>
+              </div>
             </div>
           </template>
         </DashboardPanel>
@@ -51,32 +57,44 @@
           </template>
           <template #content>
             <div v-for="item in unread_messages" :key="item.id">
-              <div class="grid grid-cols-2 gap-x-3">
-              <Avatar :user="item.user" :secondary_info="item.created_at" />
-              <p>{{ item.content }}</p>
+              <div class="grid grid-cols-2 gap-x-3 hover:bg-indigo-50 cursor-pointer px-2 py-1 rounded-md">
+                <Avatar :user="item.user" :secondary_info="item.created_at" />
+                <span class="mt-2 truncate">{{ item.content }}</span>
               </div>
             </div>
           </template>
         </DashboardPanel>
         <!-- homeworks recently completed (last 24 hrs) -->
-        <DashboardPanel :items="completed_homeworks" size="lg">
+        <DashboardPanel :items="homeworks_recently_completed" size="lg">
           <template #title>
             <p>Tareas recientemente completadas</p>
           </template>
           <template #content>
-            <div v-for="item in completed_homeworks" :key="item.id">
-              {{ item.name }}
+            <div v-for="item in homeworks_recently_completed" :key="item.id">
+              <div class="grid grid-cols-4 gap-x-3 hover:bg-indigo-50 cursor-pointer px-2 py-1 rounded-md">
+                <span class="col-span-3">
+                  <StatusIcon :collaboration="item.collaboration" />
+                  {{ item.title }}
+                </span>
+                <span class="text-gray-400 text-right">
+                  <i class="fa-solid fa-paperclip"></i>
+                  1
+                </span>
+              </div>
             </div>
           </template>
         </DashboardPanel>
         <!-- new collaboration applies -->
-        <DashboardPanel :items="completed_homeworks" size="lg">
+        <DashboardPanel :items="apllies_to_collaborate" size="lg">
           <template #title>
             <p>Nuevos aplicantes para colaborar</p>
           </template>
           <template #content>
-            <div v-for="item in completed_homeworks" :key="item.id">
-              {{ item.name }}
+            <div v-for="item in apllies_to_collaborate" :key="item.id">
+              <div class="grid grid-cols-2 gap-x-3 hover:bg-indigo-50 cursor-pointer px-2 py-1 rounded-md">
+                <Avatar :user="item.collaboration.user" :secondary_info="item.collaboration.created_at" />
+                <span class="mt-2 truncate text-sm">{{ item.title }}</span>
+              </div>
             </div>
           </template>
         </DashboardPanel>
@@ -109,6 +127,8 @@ export default {
     homeworks_uploaded_prev_month: String,
     all_homeworks_uploaded: String,
     unread_messages: Array,
+    homeworks_recently_completed: Array,
+    apllies_to_collaborate: Array,
   },
 };
 </script>

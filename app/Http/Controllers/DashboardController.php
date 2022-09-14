@@ -27,13 +27,26 @@ class DashboardController extends Controller
             ->with('user')
             ->get();
 
-        // return $unread_messages;
+        $homeworks_recently_completed = auth()->user()->homeworks()->whereHas('collaboration', function ($q) {
+            $q->whereDate('completed_date', '>=', now())
+                ->whereDate('completed_date', '<', now()->addDays(7));
+        })->with('collaboration')
+        ->get();
+        
+        $apllies_to_collaborate = auth()->user()->homeworks()->whereHas('collaboration', function ($q) {
+            $q->whereNull('read_at');
+        })->with('collaboration.user')
+        ->get();
+
+        // return $apllies_to_collaborate;
         return Inertia::render('Dashboard', compact(
             'homework_expired',
             'homeworks_uploaded_this_month',
             'homeworks_uploaded_prev_month',
             'all_homeworks_uploaded',
             'unread_messages',
+            'homeworks_recently_completed',
+            'apllies_to_collaborate',
         ));
     }
 }

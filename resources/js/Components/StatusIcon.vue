@@ -1,6 +1,6 @@
 <template>
   <i
-    v-if="!collaboration"
+    v-if="!collaboration || !collaboration.approved_at"
     class="fa-solid fa-bullseye text-red-300"
     title="Sin colaboración"
   ></i>
