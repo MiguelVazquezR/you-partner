@@ -22,14 +22,14 @@
               title="Sin colaboración"
             ></i>
             <i
-              v-else-if="homework.collaboration.status == 'En proceso'"
-              class="fa-solid fa-spinner text-yellow-300"
-              title="En proceso"
+              v-else-if="homework.collaboration.completed_date"
+              class="fa-solid fa-check text-green-300"
+              title="Terminado"
             ></i>
             <i
               v-else
-              class="fa-solid fa-check text-green-300"
-              title="Terminado"
+              class="fa-solid fa-spinner text-yellow-300"
+              title="En proceso"
             ></i>
           </td>
           <td v-if="withAvatar" class="pr-5">

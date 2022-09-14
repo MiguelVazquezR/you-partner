@@ -19,8 +19,7 @@ return new class extends Migration
             $table->float('price');
             $table->float('tax');
             $table->date('promise_date');
-            $table->date('completed_date');
-            $table->timestamp('closed_at')->nullable();
+            $table->date('completed_date')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('canceled_at')->nullable();
             $table->timestamp('read_at')->nullable();

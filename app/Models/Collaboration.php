@@ -14,7 +14,6 @@ class Collaboration extends Model
         'tax',
         'promise_date',
         'completed_date',
-        'closed_at',
         'approved_at',
         'canceled_at',
         'read_at',
@@ -29,7 +28,6 @@ class Collaboration extends Model
     protected $dates = [
         'promise_date',
         'completed_date',
-        'closed_at',
         'approved_at',
         'canceled_at',
         'read_at',

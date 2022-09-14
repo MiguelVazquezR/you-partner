@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,7 +38,11 @@ class Homework extends Model
     {
         return $this->hasOne(Collaboration::class);
     }
-
+    
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
     /**
      * Get all of the homework's resources.
      */

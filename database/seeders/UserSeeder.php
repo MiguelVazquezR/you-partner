@@ -29,6 +29,7 @@ class UserSeeder extends Seeder
                 'birthdate' => '1996-03-13',
                 'description' => 'Apasionado de las ciencias exactas y programación',
                 'is_admin' => 0,
+                'created_at' => now(),
             ],
             [
                 'name' => 'Ángel Vázquez',
@@ -42,6 +43,7 @@ class UserSeeder extends Seeder
                 'birthdate' => '1996-03-13',
                 'description' => 'Me gusta la programación y las matemáticas',
                 'is_admin' => 0,
+                'created_at' => now(),
             ],
             [
                 'name' => 'Soporte YP',
@@ -55,6 +57,7 @@ class UserSeeder extends Seeder
                 'birthdate' => '2022-09-13',
                 'description' => null,
                 'is_admin' => 1,
+                'created_at' => now(),
             ],
         ));
     }
