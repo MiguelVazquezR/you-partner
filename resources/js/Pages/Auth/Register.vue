@@ -10,7 +10,11 @@ import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
 
 const form = useForm({
     name: '',
+    birthdate: '',
     email: '',
+    state: '',
+    academic_grade: '',
+    school_name: '',
     password: '',
     password_confirmation: '',
     terms: false,
@@ -28,14 +32,14 @@ const submit = () => {
 
     <JetAuthenticationCard>
         <template #logo>
-            <JetAuthenticationCardLogo />
+            
         </template>
 
-        <JetValidationErrors class="mb-4" />
+        <JetValidationErrors class="mb-2" />
 
         <form @submit.prevent="submit">
             <div>
-                <JetLabel for="name" value="Name" />
+                <JetLabel for="name" value="Nombre" />
                 <JetInput
                     id="name"
                     v-model="form.name"
@@ -47,7 +51,20 @@ const submit = () => {
                 />
             </div>
 
-            <div class="mt-4">
+
+            <div class="mt-1">
+                <JetLabel for="birthdate" value="Fecha de Nacimiento" />
+                <JetInput
+                    id="birthdate"
+                    v-model="form.birthdate"
+                    type="date"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                />
+            </div>
+
+            <div class="mt-1">
                 <JetLabel for="email" value="Email" />
                 <JetInput
                     id="email"
@@ -58,7 +75,34 @@ const submit = () => {
                 />
             </div>
 
-            <div class="mt-4">
+            <div class="mt-1">
+            <JetLabel for="state" value="Estado" />
+            <select name="state"  v-model="form.state" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
+                <option value="value1">Value 1</option>
+                <option value="value2" selected>Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
+            </div>
+
+            <div class="mt-1">
+            <JetLabel for="academic_grade" value="Grado Académico" />
+            <select name="academic_grade"  v-model="form.academic_grade" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
+                <option value="value1">Value 1</option>
+                <option value="value2" selected>Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
+            </div>
+
+            <div class="mt-1">
+            <JetLabel for="school_name" value="Nombre de Escuela" />
+            <select name="school_name"  v-model="form.school_name" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
+                <option value="value1">Value 1</option>
+                <option value="value2" selected>Value 2</option>
+                <option value="value3">Value 3</option>
+            </select>
+            </div>
+
+            <div class="mt-1">
                 <JetLabel for="password" value="Password" />
                 <JetInput
                     id="password"
@@ -70,8 +114,8 @@ const submit = () => {
                 />
             </div>
 
-            <div class="mt-4">
-                <JetLabel for="password_confirmation" value="Confirm Password" />
+            <div class="mt-1">
+                <JetLabel for="password_confirmation" value="Confirmar Password" />
                 <JetInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"

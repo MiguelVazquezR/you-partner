@@ -37,7 +37,7 @@ const logout = () => {
 
     <JetBanner />
 
-    <div class="overflow-y-hidden h-screen bg-gray-100 lg:grid lg:grid-cols-6">
+    <div class="overflow-y-hidden h-screen bg-gray-200 lg:grid lg:grid-cols-6">
       <aside>
        <SideBar />
       </aside>
