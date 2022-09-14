@@ -27,7 +27,7 @@ class CollaborationController extends Controller
         $homeworks = Homework::doesntHave('collaboration')
             ->filter($filters)
             ->where('user_id', '<>', auth()->user()->id)
-            ->with(['schoolSubject', 'resources', 'user'])
+            ->with(['schoolSubject', 'user'])
             ->latest()
             ->paginate();
 

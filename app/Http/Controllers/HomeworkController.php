@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Homework;
 use App\Http\Requests\StoreHomeworkRequest;
 use App\Http\Requests\UpdateHomeworkRequest;
-use App\Models\Resource;
 use App\Models\SchoolSubject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -29,7 +28,7 @@ class HomeworkController extends Controller
         $homeworks = auth()->user()->homeworks()
             ->doesntHave('collaboration')
             ->filter($filters)
-            ->with(['schoolSubject', 'collaboration', 'resources'])
+            ->with(['schoolSubject', 'collaboration'])
             ->latest('id')
             ->paginate();
 
@@ -68,15 +67,6 @@ class HomeworkController extends Controller
         
         $homework = Homework::create($data);
 
-        if($request->hasFile('resource')) {
-            $path = $request->file('resource')->store('homework-resources');
-
-            Resource::Create([
-                'resourceable_id' => $homework->id,
-                'resourceable_type' => get_class($homework),
-                'path' => $path,
-            ]);
-        }
 
         return redirect()->route('homeworks.index');
     }
@@ -101,9 +91,8 @@ class HomeworkController extends Controller
     public function edit(Homework $homework)
     {
         $subjects = SchoolSubject::all();
-        $resources = $homework->resources;
 
-        return Inertia::render('Homework/Edit', compact('homework', 'subjects', 'resources'));
+        return Inertia::render('Homework/Edit', compact('homework', 'subjects'));
     }
 
     /**
@@ -151,7 +140,7 @@ class HomeworkController extends Controller
                 $query->where('status', 'En proceso');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'collaboration' => ['user'], 'resources'])
+            ->with(['schoolSubject', 'collaboration' => ['user'],])
             ->latest('id')
             ->paginate();
 
@@ -167,7 +156,7 @@ class HomeworkController extends Controller
                 $query->where('status', 'Terminado');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'collaboration' => ['user'], 'resources'])
+            ->with(['schoolSubject', 'collaboration' => ['user']])
             ->latest('id')
             ->paginate();
 

@@ -41,10 +41,6 @@ class Homework extends Model
     /**
      * Get all of the homework's resources.
      */
-    public function resources()
-    {
-        return $this->morphMany(Resource::class, 'resourceable');
-    }
 
     // query scopes
     public function scopeFilter($query, $filters)

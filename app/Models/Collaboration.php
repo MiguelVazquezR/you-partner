@@ -51,11 +51,6 @@ class Collaboration extends Model
     /**
      * Get all of the collaboration's resources.
      */
-    public function resourceable()
-    {
-        return $this->morphMany(Resource::class, 'resourceable');
-    }
-
     // query scopes
     public function scopeFilter($query, $filters)
     {

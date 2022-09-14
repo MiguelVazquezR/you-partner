@@ -66,7 +66,7 @@
             <div class="flex items-center" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
-                {{ homework.resources.length }}
+                0
               </p>
             </div>
           </td>
