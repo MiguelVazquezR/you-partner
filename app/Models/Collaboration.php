@@ -45,6 +45,11 @@ class Collaboration extends Model
     {
         return $this->belongsTo(Homework::class);
     }
+    
+    public function claim()
+    {
+        return $this->hasOne(Claim::class);
+    }
 
     /**
      * Get all of the collaboration's resources.

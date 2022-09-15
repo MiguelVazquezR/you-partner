@@ -7,7 +7,7 @@
         :alt="user.name"
       />
       <div class="flex flex-col">
-        <p class="text-gray-600 font-semibold text-xs">{{ user.name }}</p>
+        <p class="text-gray-600 font-semibold text-xs truncate">{{ user.name }}</p>
         <small v-if="secondary_info" class="text-xs text-gray-400">{{ secondary_info }}</small>
       </div>
     </div>

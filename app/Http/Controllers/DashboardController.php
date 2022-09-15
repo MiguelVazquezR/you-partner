@@ -37,8 +37,17 @@ class DashboardController extends Controller
             $q->whereNull('read_at');
         })->with('collaboration.user')
         ->get();
+        
+        $collaborations_in_process = auth()->user()->collaborations()->whereNotNull('approved_at')
+        ->whereNull('completed_date')
+        ->with('homework')
+        ->get();
+        
+        $collaborations_to_approve = auth()->user()->collaborations()->whereNull('approved_at')
+        ->with('homework', 'claim')
+        ->get();
 
-        // return $apllies_to_collaborate;
+        // return $collaborations_to_approve;
         return Inertia::render('Dashboard', compact(
             'homework_expired',
             'homeworks_uploaded_this_month',
@@ -47,6 +56,8 @@ class DashboardController extends Controller
             'unread_messages',
             'homeworks_recently_completed',
             'apllies_to_collaborate',
+            'collaborations_in_process',
+            'collaborations_to_approve',
         ));
     }
 }

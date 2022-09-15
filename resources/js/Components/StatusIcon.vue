@@ -1,4 +1,5 @@
 <template>
+  {{ statusComputed }}
   <i
     v-if="!collaboration || !collaboration.approved_at"
     class="fa-solid fa-bullseye text-red-300"
@@ -17,5 +18,24 @@ export default {
   props: {
     collaboration: Object,
   },
+  computed:{
+    statusComputed() {
+      if(!this.collaboration) {
+        return 1; //no collaboration
+      } else if(!this.collaboration.approved_at) {
+        if(this.collaboration.user_id === $page.props.user.id) {
+          return 2; //to approve
+        }else {
+          return 1; //no collaboration
+        }
+      } else if(!this.collaboration.completed_date) {
+        return 3; //in process
+      } else if(this.collaboration.claim) {
+        return 5; //with claim
+      } else {
+        return 4; //Completed
+      }
+    }
+  }
 };
 </script>
