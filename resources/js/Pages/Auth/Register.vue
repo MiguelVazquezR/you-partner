@@ -77,7 +77,7 @@ const submit = () => {
 
             <div class="mt-1">
             <JetLabel for="state" value="Estado" />
-            <select name="state"  v-model="form.state" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
+            <select name="state"  v-model="form.state" class="h-[2.5rem] mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
                 <option value="value1">Value 1</option>
                 <option value="value2" selected>Value 2</option>
                 <option value="value3">Value 3</option>
@@ -86,7 +86,7 @@ const submit = () => {
 
             <div class="mt-1">
             <JetLabel for="academic_grade" value="Grado Académico" />
-            <select name="academic_grade"  v-model="form.academic_grade" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
+            <select name="academic_grade"  v-model="form.academic_grade" class=" h-[2.5rem] mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
                 <option value="value1">Value 1</option>
                 <option value="value2" selected>Value 2</option>
                 <option value="value3">Value 3</option>
@@ -95,7 +95,7 @@ const submit = () => {
 
             <div class="mt-1">
             <JetLabel for="school_name" value="Nombre de Escuela" />
-            <select name="school_name"  v-model="form.school_name" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
+            <select name="school_name"  v-model="form.school_name" class="h-[2.5rem] mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-sm" required>
                 <option value="value1">Value 1</option>
                 <option value="value2" selected>Value 2</option>
                 <option value="value3">Value 3</option>
@@ -131,19 +131,19 @@ const submit = () => {
                     <div class="flex items-center">
                         <JetCheckbox id="terms" v-model:checked="form.terms" name="terms" />
 
-                        <div class="ml-2">
+                        <div class="ml-1">
                             I agree to the <a target="_blank" :href="route('terms-of-service')" class="underline text-sm text-gray-600 hover:text-gray-900">Terms of Service</a> and <a target="_blank" :href="route('privacy-policy')" class="underline text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
                         </div>
                     </div>
                 </JetLabel>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-2">
                 <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900">
                     Already registered?
                 </Link>
 
-                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <JetButton class="ml-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </JetButton>
             </div>

@@ -6,7 +6,7 @@
       <slot name="logo" />
     </div>
 
-    <div class="relative mt-24">
+    <div class="relative mt-20">
       <div
         class="w-32 h-32 rounded-full bg-gray-300 opacity-90 absolute -top-16 right-0 border border-indigo-400"
       >

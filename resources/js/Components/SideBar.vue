@@ -25,6 +25,18 @@
                         </span>
                         <span class="mx-4 text-sm font-normal"> Colaborar </span>
                     </JetNavLink>
+                    <JetNavLink :href="route('ranking.index')" :active="route().current('ranking.*')">
+                        <span class="text-left">
+                            <i class="fa-solid fa-ranking-star"></i>
+                        </span>
+                        <span class="mx-4 text-sm font-normal"> Ranking </span>
+                    </JetNavLink>
+                    <JetNavLink :href="route('admin.finances')" :active="route().current('admin.*')">
+                        <span class="text-left">
+                            <i class="fa-solid fa-user-secret"></i>
+                        </span>
+                        <span class="mx-4 text-sm font-normal"> Administrador </span>
+                    </JetNavLink>
                 </div>
             </nav>
         </div>
