@@ -157,12 +157,12 @@
             <template #content>
               <div class="font-bold flex justify-between items-center">
                 <span class="text-2xl"> ${{ profit_month }} </span>
-                <span class="text-red-500 text-xl">
-                  <i class="fa-solid fa-caret-down"></i>
-                  50%
+                <span class="text-xl" :class="KPIPercentage[0]">
+                  <i :class="KPIPercentage[1]" ></i>
+                  {{ KPIPercentage[2] }}%
                 </span>
               </div>
-              <small class="text-gray-400"> Mes pasado: $6,800.00 </small>
+              <small class="text-gray-400"> Mes pasado: ${{ profit_last_month }} </small>
             </template>
           </DashboardPanelSmall>
           <!-- money locked -->
@@ -172,9 +172,9 @@
             </template>
             <template #content>
               <div class="font-bold flex justify-between items-center">
-                <span class="text-2xl"> $342.00 </span>
+                <span class="text-2xl"> ${{ money_locked }} </span>
               </div>
-              <small class="text-gray-400"> De 1 colaboración(es) </small>
+              <small class="text-gray-400"> De {{money_locked_collaborations}} colaboración(es) </small>
             </template>
           </DashboardPanelSmall>
           <!-- Total profit -->
@@ -184,9 +184,9 @@
             </template>
             <template #content>
               <div class="font-bold flex justify-between items-center">
-                <span class="text-2xl"> $15,890.15 </span>
+                <span class="text-2xl"> ${{total_profit}} </span>
               </div>
-              <small class="text-gray-400"> Desde 22 Julio, 2021 </small>
+              <small class="text-gray-400"> Desde {{$page.props.user.created_at.split('T')[0]}} </small>
             </template>
           </DashboardPanelSmall>
         </div>
@@ -335,6 +335,24 @@ export default {
     StatusIcon,
     Avatar,
   },
+  computed: {
+    KPIPercentage(){
+      let icon;
+      let color;
+
+      if(this.profit_month > this.profit_last_month){
+        icon = 'fa-solid fa-caret-up';
+        color = 'text-green-500';
+      } 
+      else {
+        icon = 'fa-solid fa-caret-down';
+        color = 'text-red-500';
+      }
+      let percentage = (this.profit_month/this.profit_last_month)*100;
+      percentage = Math.round(percentage * 10) / 10
+      return [color, icon, percentage];
+    }
+  },
   props: {
     homework_expired: Array,
     homeworks_uploaded_this_month: String,
@@ -348,6 +366,10 @@ export default {
     unread_messages_c: Array,
     collaborations_claims: Array,
     profit_month: String,
+    profit_last_month: String,
+    money_locked_collaborations: String,
+    money_locked: String,
+    total_profit: String,
   },
 };
 </script>

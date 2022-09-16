@@ -46,6 +46,7 @@ class DashboardController extends Controller
 
         // My collaborations
         $payed_month = auth()->user()->collaborations()->whereMonth('completed_date', now()->month)
+        ->whereNotNull('payed_at')
         ->get('price')->sum('price');
         $refund_month = Claim::whereHas('collaboration', function($q){
             $q->where('user_id', auth()->user()->id);
@@ -53,6 +54,30 @@ class DashboardController extends Controller
         ->whereMonth('created_at', now()->month)
         ->get('refund')->sum('refund');
         $profit_month = number_format(($payed_month - $refund_month), 2);
+        
+        $payed_last_month = auth()->user()->collaborations()->whereMonth('completed_date', now()->subMonths(1))
+        ->get('price')->sum('price');
+        $refund_last_month = Claim::whereHas('collaboration', function($q){
+            $q->where('user_id', auth()->user()->id);
+        })
+        ->whereMonth('created_at', now()->subMonths(1))
+        ->get('refund')->sum('refund');
+        $profit_last_month = number_format(($payed_last_month - $refund_last_month), 2);
+
+        $money_locked_collaborations = auth()->user()->collaborations()->whereNotNull('completed_date')->whereNull('payed_at')
+        ->get('price')->count();
+        $money_locked = auth()->user()->collaborations()->whereNotNull('completed_date')->whereNull('payed_at')
+        ->get('price')->sum('price');
+        $money_locked = number_format($money_locked, 2);
+
+        $total_payed = auth()->user()->collaborations()
+        ->whereNotNull('payed_at')
+        ->get('price')->sum('price');
+        $total_refund = Claim::whereHas('collaboration', function($q){
+            $q->where('user_id', auth()->user()->id);
+        })
+        ->get('refund')->sum('refund');
+        $total_profit = number_format(($total_payed - $total_refund), 2);
 
         $collaborations_in_process = auth()->user()->collaborations()->whereNotNull('approved_at')
             ->whereNull('completed_date')
@@ -96,6 +121,10 @@ class DashboardController extends Controller
             'unread_messages_c',
             'collaborations_claims',
             'profit_month',
+            'profit_last_month',
+            'money_locked_collaborations',
+            'money_locked',
+            'total_profit',
         ));
     }
 }
