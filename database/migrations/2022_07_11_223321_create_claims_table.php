@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->string('status')->default('Abierto');
             $table->float('refund')->nullable();
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->text('solution_details')->nullable();
             $table->text('solution')->nullable();
             $table->foreignId('collaboration_id')->constrained();

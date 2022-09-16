@@ -66,7 +66,7 @@
           <!-- new comments or questions -->
           <DashboardPanel :items="unread_messages">
             <template #title>
-              <p>Nuevos comentarios y/o preguntas</p>
+              <p>Mensajes sin leer de mis tareas</p>
             </template>
             <template #content>
               <div v-for="item in unread_messages" :key="item.id">
@@ -156,7 +156,7 @@
             </template>
             <template #content>
               <div class="font-bold flex justify-between items-center">
-                <span class="text-2xl"> $3,400.00 </span>
+                <span class="text-2xl"> ${{ profit_month }} </span>
                 <span class="text-red-500 text-xl">
                   <i class="fa-solid fa-caret-down"></i>
                   50%
@@ -257,43 +257,13 @@
               </div>
             </template>
           </DashboardPanel>
-          <!-- homeworks recently completed (last 24 hrs) -->
-          <DashboardPanel :items="homeworks_recently_completed">
+          <!-- unread messages -->
+          <DashboardPanel :items="unread_messages_c">
             <template #title>
-              <p>Tareas recientemente completadas</p>
+              <p>Mensajes sin leer de mis colaboraciones</p>
             </template>
             <template #content>
-              <div v-for="item in homeworks_recently_completed" :key="item.id">
-                <div
-                  class="
-                    grid grid-cols-4
-                    gap-x-3
-                    hover:bg-indigo-50
-                    cursor-pointer
-                    px-2
-                    py-1
-                    rounded-md
-                  "
-                >
-                  <span class="col-span-3">
-                    <StatusIcon :collaboration="item.collaboration" />
-                    {{ item.title }}
-                  </span>
-                  <span class="text-gray-400 text-right">
-                    <i class="fa-solid fa-paperclip"></i>
-                    1
-                  </span>
-                </div>
-              </div>
-            </template>
-          </DashboardPanel>
-          <!-- new collaboration applies -->
-          <DashboardPanel :items="apllies_to_collaborate">
-            <template #title>
-              <p>Nuevos aplicantes para colaborar</p>
-            </template>
-            <template #content>
-              <div v-for="item in apllies_to_collaborate" :key="item.id">
+              <div v-for="item in unread_messages_c" :key="item.id">
                 <div
                   class="
                     grid grid-cols-2
@@ -305,11 +275,41 @@
                     rounded-md
                   "
                 >
-                  <Avatar
-                    :user="item.collaboration.user"
-                    :secondary_info="item.collaboration.created_at"
-                  />
-                  <span class="mt-2 truncate text-sm">{{ item.title }}</span>
+                  <Avatar :user="item.user" :secondary_info="item.created_at" />
+                  <span class="mt-2 truncate">{{ item.content }}</span>
+                </div>
+              </div>
+            </template>
+          </DashboardPanel>
+          <!-- new collaboration applies -->
+          <DashboardPanel :items="collaborations_claims">
+            <template #title>
+              <p>Reclamos abiertos</p>
+            </template>
+            <template #content>
+              <div v-for="item in collaborations_claims" :key="item.id">
+                <div
+                  class="
+                    grid grid-cols-4
+                    gap-x-3
+                    hover:bg-indigo-50
+                    cursor-pointer
+                    px-2
+                    py-1
+                    rounded-md
+                  "
+                >
+                  <span class="col-span-3 truncate">
+                    <StatusIcon :collaboration="item" />
+                    {{ item.homework.title }}
+                  </span>
+                  <span class="text-gray-400 text-right"
+                    ><i
+                      class="fa-solid fa-calendar-day"
+                      title="Fecha de creación"
+                    ></i>
+                    {{ item.created_at.split("T")[0] }}</span
+                  >
                 </div>
               </div>
             </template>
@@ -345,6 +345,9 @@ export default {
     apllies_to_collaborate: Array,
     collaborations_in_process: Array,
     collaborations_to_approve: Array,
+    unread_messages_c: Array,
+    collaborations_claims: Array,
+    profit_month: String,
   },
 };
 </script>

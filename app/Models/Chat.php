@@ -10,7 +10,8 @@ class Chat extends Model
     use HasFactory;
 
     protected $fillable = [
-        'active'
+        'active',
+        'homework_id'
     ];
 
     // Relationships -----------------------

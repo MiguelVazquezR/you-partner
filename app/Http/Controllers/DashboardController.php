@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Claim;
 use App\Models\Homework;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -22,6 +23,11 @@ class DashboardController extends Controller
 
         $chats_ids = auth()->user()->chats->pluck('id');
         $unread_messages = Message::whereIn('chat_id', $chats_ids)
+            ->whereHas('chat', function ($q) {
+                $q->whereHas('homework', function ($q2) {
+                    $q2->where('user_id', auth()->user()->id);
+                });
+            })
             ->where('user_id', '!=', auth()->user()->id)
             ->whereNull('read_at')
             ->with('user')
@@ -31,23 +37,52 @@ class DashboardController extends Controller
             $q->whereDate('completed_date', '>=', now())
                 ->whereDate('completed_date', '<', now()->addDays(7));
         })->with('collaboration')
-        ->get();
-        
+            ->get();
+
         $apllies_to_collaborate = auth()->user()->homeworks()->whereHas('collaboration', function ($q) {
             $q->whereNull('read_at');
         })->with('collaboration.user')
-        ->get();
-        
-        $collaborations_in_process = auth()->user()->collaborations()->whereNotNull('approved_at')
-        ->whereNull('completed_date')
-        ->with('homework')
-        ->get();
-        
-        $collaborations_to_approve = auth()->user()->collaborations()->whereNull('approved_at')
-        ->with('homework', 'claim')
-        ->get();
+            ->get();
 
-        // return $collaborations_to_approve;
+        // My collaborations
+        $payed_month = auth()->user()->collaborations()->whereMonth('completed_date', now()->month)
+        ->get('price')->sum('price');
+        $refund_month = Claim::whereHas('collaboration', function($q){
+            $q->where('user_id', auth()->user()->id);
+        })
+        ->whereMonth('created_at', now()->month)
+        ->get('refund')->sum('refund');
+        $profit_month = number_format(($payed_month - $refund_month), 2);
+
+        $collaborations_in_process = auth()->user()->collaborations()->whereNotNull('approved_at')
+            ->whereNull('completed_date')
+            ->with('homework')
+            ->get();
+
+        $collaborations_to_approve = auth()->user()->collaborations()->whereNull('approved_at')
+            ->with('homework')
+            ->get();
+
+        $collaborations_claims = auth()->user()->collaborations()
+            ->whereHas('claim', function ($q) {
+                $q->whereNull('solution');
+            })
+            ->with('homework', 'claim')
+            ->get();
+
+        $chats_ids = auth()->user()->chats->pluck('id');
+        $unread_messages_c = Message::whereIn('chat_id', $chats_ids)
+            ->whereHas('chat', function ($q) {
+                $q->whereHas('homework', function ($q2) {
+                    $q2->where('user_id', '!=', auth()->user()->id);
+                });
+            })
+            ->where('user_id', '!=', auth()->user()->id)
+            ->whereNull('read_at')
+            ->with('user')
+            ->get();
+
+        // return $profit_month;
         return Inertia::render('Dashboard', compact(
             'homework_expired',
             'homeworks_uploaded_this_month',
@@ -58,6 +93,9 @@ class DashboardController extends Controller
             'apllies_to_collaborate',
             'collaborations_in_process',
             'collaborations_to_approve',
+            'unread_messages_c',
+            'collaborations_claims',
+            'profit_month',
         ));
     }
 }
