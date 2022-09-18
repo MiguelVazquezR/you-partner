@@ -58,7 +58,7 @@
                   </span>
                   <span class="text-gray-400 text-right"
                     >{{ item.id }} días</span
-                  >
+                  > 
                 </div>
               </div>
             </template>

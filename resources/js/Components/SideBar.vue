@@ -2,8 +2,8 @@
     <!-- sidebar -->
     <div class="h-screen hidden lg:block shadow-lg relative">
         <div class="bg-white h-full dark:bg-gray-700">
-            <div class="flex items-center justify-center pt-4">
-                <JetApplicationMark class="block h-12 w-auto" />
+            <div class="flex items-center justify-center pt-12 pb-2">
+                <JetApplicationMark class="block h-14 w-auto" />
             </div>
             <nav class="mt-6">
                 <div>

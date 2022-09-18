@@ -3,6 +3,92 @@
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
+<!-- --------BODY START------------------- -->
+    <div class="grid grid-cols-2 gap-4 py-4 px-4">
+
+<!-- --------PANEL 1 START------------------- -->
+      <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-2 border-b max-h-60">
+        
+        <h3 class="text-indigo-500 text-center">Ingresos</h3>
+        <h3 class="text-indigo-500 text-center">Egresos</h3>
+        <hr class="col-span-full">
+      
+        <!-- -----------IGRESOS COL START--------------- --> 
+        <div class="overflow-y-auto grid grid-cols-2">
+          <div>
+            <ul class="text-left">
+          <li>Tareas</li>
+          <li>examenes</li>
+          <li>taxes</li>
+          <li>Tareas</li>
+          <li>examenes</li>
+          <li>taxes</li>
+          <li>Tareas</li>
+          <li>examenes</li>
+          <li>taxes</li>
+           </ul>
+          </div>
+          <div>
+            <ul class="text-center">
+          <li>$45,000</li>
+          <li>$5,000</li>
+          <li>$9,500</li>
+          <li>$45,000</li>
+          <li>$5,000</li>
+          <li>$9,500</li>
+          <li>$45,000</li>
+          <li>$5,000</li>
+          <li>$9,500</li>
+           </ul>
+          </div>
+        </div>
+        <!-- -----------IGRESOS COL END--------------- --> 
+
+          <!-- ---------EGRESOS COL START----------------------- -->
+       <div class="overflow-y-auto grid grid-cols-2 col-start-2">
+          <div>
+            <ul class="text-left">
+          <li>Tareas</li>
+          <li>examenes</li>
+          <li>taxes</li>
+          <li>Tareas</li>
+          <li>examenes</li>
+         
+           </ul>
+          </div>
+          <div>
+            <ul class="text-center">
+          <li>$45,000</li>
+          <li>$5,000</li>
+          <li>$9,500</li>
+          <li>$45,000</li>
+          <li>$5,000</li>
+         
+           </ul>
+          </div>
+        </div>
+          <!-- -------EGRESOS COL END------------------------- -->
+
+     <!-- ---------------------->
+             <br>
+     <div class="col-start-2 text-right">
+        <span class="text-indigo-500">
+          Utilidad Bruta:
+        </span>
+     </div>
+    <!-- ---------------------->
+
+      </div>
+<!-- --------PANEL 1 END------------------- -->
+
+<!-- --------PANEL 2 START------------------- -->
+        <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-2 border-b ">
+          tyklj
+      </div>
+ <!-- --------PANEL 2 END------------------- -->     
+
+    </div>
+ <!-- --------BODY END------------------- -->   
   </AppLayout>
 </template>
 
@@ -10,6 +96,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
+import DashboardPanel from "@/Components/DashboardPanel.vue";
 
 export default {
   data() {
@@ -41,6 +128,7 @@ export default {
   components: {
     AppLayout,
     Tabs,
+    DashboardPanel,
   },
 };
 </script>
