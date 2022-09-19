@@ -64,8 +64,12 @@ export default {
       side_modal: false,
       tabs: [
         {
-          label: "Pendientes",
+          label: "Todas",
           url: "homeworks.index",
+        },
+        {
+          label: "Pendientes",
+          url: "homeworks.no-collaboration",
         },
         {
           label: "En colaboracion",

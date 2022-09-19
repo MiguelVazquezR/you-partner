@@ -16,21 +16,7 @@
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
           <td class="px-3">
-            <i
-              v-if="!homework.collaboration"
-              class="fa-solid fa-bullseye text-red-300"
-              title="Sin colaboración"
-            ></i>
-            <i
-              v-else-if="homework.collaboration.completed_date"
-              class="fa-solid fa-check text-green-300"
-              title="Terminado"
-            ></i>
-            <i
-              v-else
-              class="fa-solid fa-spinner text-yellow-300"
-              title="En proceso"
-            ></i>
+            <StatusIcon :collaboration="homework.collaboration" />
           </td>
           <td v-if="withAvatar" class="pr-5">
             <Avatar
@@ -174,6 +160,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import DangerButton from "@/Jetstream/DangerButton.vue";
 import SecondaryButton from "@/Jetstream/SecondaryButton.vue";
+import StatusIcon from "@/Components/StatusIcon.vue";
 
 export default {
   data() {
@@ -191,6 +178,7 @@ export default {
     DangerButton,
     ConfirmationModal,
     SecondaryButton,
+    StatusIcon,
   },
   props: {
     homeworks: Object,

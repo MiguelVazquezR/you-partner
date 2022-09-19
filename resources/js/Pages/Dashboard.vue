@@ -41,7 +41,8 @@
             </template>
             <template #content>
               <div v-for="item in homework_expired" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index') + '?search=' + item.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -58,8 +59,8 @@
                   </span>
                   <span class="text-gray-400 text-right"
                     >{{ item.id }} días</span
-                  > 
-                </div>
+                  >
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -70,7 +71,8 @@
             </template>
             <template #content>
               <div v-for="item in unread_messages" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index') + '?search=' + item.chat.homework.title"
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -83,7 +85,7 @@
                 >
                   <Avatar :user="item.user" :secondary_info="item.created_at" />
                   <span class="mt-2 truncate">{{ item.content }}</span>
-                </div>
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -94,7 +96,8 @@
             </template>
             <template #content>
               <div v-for="item in homeworks_recently_completed" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index')+'?search='+item.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -113,7 +116,7 @@
                     <i class="fa-solid fa-paperclip"></i>
                     1
                   </span>
-                </div>
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -124,7 +127,8 @@
             </template>
             <template #content>
               <div v-for="item in apllies_to_collaborate" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index')+'?search='+item.title"
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -140,7 +144,7 @@
                     :secondary_info="item.collaboration.created_at"
                   />
                   <span class="mt-2 truncate text-sm">{{ item.title }}</span>
-                </div>
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -158,11 +162,13 @@
               <div class="font-bold flex justify-between items-center">
                 <span class="text-2xl"> ${{ profit_month }} </span>
                 <span class="text-xl" :class="KPIPercentage[0]">
-                  <i :class="KPIPercentage[1]" ></i>
+                  <i :class="KPIPercentage[1]"></i>
                   {{ KPIPercentage[2] }}%
                 </span>
               </div>
-              <small class="text-gray-400"> Mes pasado: ${{ profit_last_month }} </small>
+              <small class="text-gray-400">
+                Mes pasado: ${{ profit_last_month }}
+              </small>
             </template>
           </DashboardPanelSmall>
           <!-- money locked -->
@@ -174,7 +180,9 @@
               <div class="font-bold flex justify-between items-center">
                 <span class="text-2xl"> ${{ money_locked }} </span>
               </div>
-              <small class="text-gray-400"> De {{money_locked_collaborations}} colaboración(es) </small>
+              <small class="text-gray-400">
+                De {{ money_locked_collaborations }} colaboración(es)
+              </small>
             </template>
           </DashboardPanelSmall>
           <!-- Total profit -->
@@ -184,9 +192,11 @@
             </template>
             <template #content>
               <div class="font-bold flex justify-between items-center">
-                <span class="text-2xl"> ${{total_profit}} </span>
+                <span class="text-2xl"> ${{ total_profit }} </span>
               </div>
-              <small class="text-gray-400"> Desde {{$page.props.user.created_at.split('T')[0]}} </small>
+              <small class="text-gray-400">
+                Desde {{ $page.props.user.created_at.split("T")[0] }}
+              </small>
             </template>
           </DashboardPanelSmall>
         </div>
@@ -326,6 +336,7 @@ import DashboardPanel from "@/Components/DashboardPanel.vue";
 import DashboardPanelSmall from "@/Components/DashboardPanelSmall.vue";
 import StatusIcon from "@/Components/StatusIcon.vue";
 import Avatar from "@/Components/Avatar.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
@@ -334,24 +345,24 @@ export default {
     DashboardPanelSmall,
     StatusIcon,
     Avatar,
+    Link,
   },
   computed: {
-    KPIPercentage(){
+    KPIPercentage() {
       let icon;
       let color;
 
-      if(this.profit_month > this.profit_last_month){
-        icon = 'fa-solid fa-caret-up';
-        color = 'text-green-500';
-      } 
-      else {
-        icon = 'fa-solid fa-caret-down';
-        color = 'text-red-500';
+      if (this.profit_month > this.profit_last_month) {
+        icon = "fa-solid fa-caret-up";
+        color = "text-green-500";
+      } else {
+        icon = "fa-solid fa-caret-down";
+        color = "text-red-500";
       }
-      let percentage = (this.profit_month/this.profit_last_month)*100;
-      percentage = Math.round(percentage * 10) / 10
+      let percentage = (this.profit_month / this.profit_last_month) * 100;
+      percentage = Math.round(percentage * 10) / 10;
       return [color, icon, percentage];
-    }
+    },
   },
   props: {
     homework_expired: Array,

@@ -16,17 +16,7 @@
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
           <td class="px-3">
-            <i
-              v-if="collaboration.status == 'En proceso'"
-              class="fa-solid fa-spinner text-yellow-300"
-              :title="collaboration.status"
-            ></i>
-            <i
-              v-else
-              class="fa-solid fa-check text-green-300"
-              :title="collaboration.status"
-            ></i>
-          </td>
+             <StatusIcon :collaboration="collaboration" />
           <td class="pr-5">
             <Avatar :user="collaboration.homework.user" />
           </td>

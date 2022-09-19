@@ -26,7 +26,6 @@ class HomeworkController extends Controller
         $filters = $request->all('search');
 
         $homeworks = auth()->user()->homeworks()
-            ->doesntHave('collaboration')
             ->filter($filters)
             ->with(['schoolSubject', 'collaboration'])
             ->latest('id')
@@ -131,6 +130,20 @@ class HomeworkController extends Controller
     }
 
     // My views (tabs) --------------------
+    public function noCollaboration(Request $request)
+    {
+        $filters = $request->all('search');
+
+        $homeworks = auth()->user()->homeworks()
+            ->doesntHave('collaboration')
+            ->filter($filters)
+            ->with(['schoolSubject', 'collaboration'])
+            ->latest('id')
+            ->paginate();
+
+        return Inertia::render('Homework/NoCollaboration', compact('homeworks', 'filters'));
+    }
+    
     public function onCollaboration(Request $request)
     {
         $filters = $request->all('search');

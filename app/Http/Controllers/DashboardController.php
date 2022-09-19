@@ -30,12 +30,12 @@ class DashboardController extends Controller
             })
             ->where('user_id', '!=', auth()->user()->id)
             ->whereNull('read_at')
-            ->with('user')
+            ->with('user', 'chat.homework')
             ->get();
 
         $homeworks_recently_completed = auth()->user()->homeworks()->whereHas('collaboration', function ($q) {
-            $q->whereDate('completed_date', '>=', now())
-                ->whereDate('completed_date', '<', now()->addDays(7));
+            $q->whereDate('completed_date', '>=', now()->subDays(7))
+                ->whereDate('completed_date', '<', now());
         })->with('collaboration')
             ->get();
 
@@ -107,7 +107,7 @@ class DashboardController extends Controller
             ->with('user')
             ->get();
 
-        // return $profit_month;
+        // return $homeworks_recently_completed;
         return Inertia::render('Dashboard', compact(
             'homework_expired',
             'homeworks_uploaded_this_month',

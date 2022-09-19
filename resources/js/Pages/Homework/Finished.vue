@@ -63,9 +63,13 @@ export default {
     return {
       side_modal: false,
       tabs: [
+       {
+          label: "Todas",
+          url: "homeworks.index",
+        },
         {
           label: "Pendientes",
-          url: "homeworks.index",
+          url: "homeworks.no-collaboration",
         },
         {
           label: "En colaboracion",
