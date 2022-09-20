@@ -3,6 +3,9 @@
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
+
+    <ClaimsTable :claims="claims" />
+
   </AppLayout>
 </template>
 
@@ -10,6 +13,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
+import ClaimsTable from "@/Components/ClaimsTable.vue";
 
 export default {
   data() {
@@ -41,6 +45,10 @@ export default {
   components: {
     AppLayout,
     Tabs,
+    ClaimsTable,
   },
+  props:{
+    claims: Object,
+  }
 };
 </script>
