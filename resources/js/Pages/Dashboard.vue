@@ -195,7 +195,7 @@
                 <span class="text-2xl"> ${{ total_profit }} </span>
               </div>
               <small class="text-gray-400">
-                Desde {{ $page.props.user.created_at.split("T")[0] }}
+                Desde {{ $page.props.user.created_at }}
               </small>
             </template>
           </DashboardPanelSmall>
@@ -228,7 +228,7 @@
                       class="fa-solid fa-calendar-day"
                       title="Fecha promesa"
                     ></i>
-                    {{ item.promise_date.split("T")[0] }}</span
+                    {{ item.promise_date }}</span
                   >
                 </div>
               </div>
@@ -261,7 +261,7 @@
                       class="fa-solid fa-calendar-day"
                       title="Fecha aplicación"
                     ></i>
-                    {{ item.created_at.split("T")[0] }}</span
+                    {{ item.created_at }}</span
                   >
                 </div>
               </div>
@@ -318,7 +318,7 @@
                       class="fa-solid fa-calendar-day"
                       title="Fecha de creación"
                     ></i>
-                    {{ item.created_at.split("T")[0] }}</span
+                    {{ item.created_at }}</span
                   >
                 </div>
               </div>

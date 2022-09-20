@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\HomeworkResource;
 use App\Models\Claim;
 use App\Models\Homework;
 use App\Models\Message;
@@ -12,14 +13,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $homework_no_collaborations = auth()->user()->homeworks()->whereDate('limit_date', '<=', now()->addDays(3))->whereDoesntHave('collaboration')->get();
-        $homework_expired = $homework_no_collaborations->merge(auth()->user()->homeworks()->whereDate('limit_date', '<=', now()->addDays(3))->whereHas('collaboration', function ($q) {
-            $q->whereNull('completed_date');
-        })->with('schoolSubject', 'collaboration')->get());
+        $homeworks = auth()->user()->homeworks()->with('schoolSubject', 'collaboration')->get();
+        $homework_expired = $homeworks->filter(fn ($item) => is_null($item?->collaboration?->completed_date) && $item->limit_date <= now()->addDays(3))->values();
+        $homeworks_uploaded_this_month = $homeworks->filter(fn ($item) => $item->created_at->month == now()->month )->count();
+        $homeworks_uploaded_prev_month = $homeworks->filter(fn ($item) => $item->created_at->month == now()->subMonth(1)->month )->count();
+        $all_homeworks_uploaded = $homeworks->count();
+        $homeworks_recently_completed = $homeworks->filter(fn ($item) => $item?->collaboration?->completed_date >= now()->subDays(7) && $item?->collaboration?->completed_date < now())->values();
 
-        $homeworks_uploaded_this_month = auth()->user()->homeworks()->whereMonth('created_at', now()->month)->get()->count();
-        $homeworks_uploaded_prev_month = auth()->user()->homeworks()->whereMonth('created_at', now()->subMonth(1)->month)->get()->count();
-        $all_homeworks_uploaded = auth()->user()->homeworks->count();
+        // $homework_no_collaborations = auth()->user()->homeworks()->whereDate('limit_date', '<=', now()->addDays(3))->whereDoesntHave('collaboration')->with('schoolSubject', 'collaboration')->get();
+        // $homework_expired = $homework_no_collaborations->merge(auth()->user()->homeworks()->whereDate('limit_date', '<=', now()->addDays(3))->whereHas('collaboration', function ($q) {
+        //     $q->whereNull('completed_date');
+        // })->with('schoolSubject', 'collaboration', 'user', 'chats')->get());
+
+        // $homeworks_uploaded_this_month = auth()->user()->homeworks()->whereMonth('created_at', now()->month)->get()->count();
+        // $homeworks_uploaded_prev_month = auth()->user()->homeworks()->whereMonth('created_at', now()->subMonth(1)->month)->get()->count();
 
         $chats_ids = auth()->user()->chats->pluck('id');
         $unread_messages = Message::whereIn('chat_id', $chats_ids)
@@ -33,11 +40,11 @@ class DashboardController extends Controller
             ->with('user', 'chat.homework')
             ->get();
 
-        $homeworks_recently_completed = auth()->user()->homeworks()->whereHas('collaboration', function ($q) {
-            $q->whereDate('completed_date', '>=', now()->subDays(7))
-                ->whereDate('completed_date', '<', now());
-        })->with('collaboration')
-            ->get();
+        // $homeworks_recently_completed = auth()->user()->homeworks()->whereHas('collaboration', function ($q) {
+        //     $q->whereDate('completed_date', '>=', now()->subDays(7))
+        //         ->whereDate('completed_date', '<', now());
+        // })->with('collaboration')
+        //     ->get();
 
         $apllies_to_collaborate = auth()->user()->homeworks()->whereHas('collaboration', function ($q) {
             $q->whereNull('read_at');
@@ -107,7 +114,7 @@ class DashboardController extends Controller
             ->with('user')
             ->get();
 
-        // return $homeworks_recently_completed;
+        // return $homeworks_uploaded_this_month->count();
         return Inertia::render('Dashboard', compact(
             'homework_expired',
             'homeworks_uploaded_this_month',

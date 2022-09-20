@@ -43,9 +43,6 @@ class Homework extends Model
     {
         return $this->hasMany(Chat::class);
     }
-    /**
-     * Get all of the homework's resources.
-     */
 
     // query scopes
     public function scopeFilter($query, $filters)
