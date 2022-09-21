@@ -28,7 +28,7 @@
                 {{ all_homeworks_uploaded }}
               </h2>
               <small class="text-gray-400"
-                >Desde {{ $page.props.user.created_at }}</small
+                >Desde {{ $page.props.user.created_at.special }}</small
               >
             </template>
           </DashboardPanelSmall>
@@ -83,7 +83,7 @@
                     rounded-md
                   "
                 >
-                  <Avatar :user="item.user" :secondary_info="item.created_at" />
+                  <Avatar :user="item.user" :secondary_info="item.created_at.relative" />
                   <span class="mt-2 truncate">{{ item.content }}</span>
                 </Link>
               </div>
@@ -141,7 +141,7 @@
                 >
                   <Avatar
                     :user="item.collaboration.user"
-                    :secondary_info="item.collaboration.created_at"
+                    :secondary_info="item.collaboration.created_at.relative"
                   />
                   <span class="mt-2 truncate text-sm">{{ item.title }}</span>
                 </Link>
@@ -195,7 +195,7 @@
                 <span class="text-2xl"> ${{ total_profit }} </span>
               </div>
               <small class="text-gray-400">
-                Desde {{ $page.props.user.created_at.split("T")[0] }}
+                Desde {{ $page.props.user.created_at.split('T')[0] }}
               </small>
             </template>
           </DashboardPanelSmall>
@@ -208,7 +208,8 @@
             </template>
             <template #content>
               <div v-for="item in collaborations_in_process" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -228,9 +229,9 @@
                       class="fa-solid fa-calendar-day"
                       title="Fecha promesa"
                     ></i>
-                    {{ item.promise_date.split("T")[0] }}</span
+                    {{ item.promise_date }}</span
                   >
-                </div>
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -241,7 +242,8 @@
             </template>
             <template #content>
               <div v-for="item in collaborations_to_approve" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -253,6 +255,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
+                    {{item.completed_date}}
                     <StatusIcon :collaboration="item" />
                     {{ item.homework.title }}
                   </span>
@@ -261,9 +264,9 @@
                       class="fa-solid fa-calendar-day"
                       title="Fecha aplicación"
                     ></i>
-                    {{ item.created_at.split("T")[0] }}</span
+                    {{ item.created_at.relative }}</span
                   >
-                </div>
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -274,7 +277,8 @@
             </template>
             <template #content>
               <div v-for="item in unread_messages_c" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index')"
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -285,9 +289,9 @@
                     rounded-md
                   "
                 >
-                  <Avatar :user="item.user" :secondary_info="item.created_at" />
+                  <Avatar :user="item.user" :secondary_info="item.created_at.relative" />
                   <span class="mt-2 truncate">{{ item.content }}</span>
-                </div>
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -298,7 +302,8 @@
             </template>
             <template #content>
               <div v-for="item in collaborations_claims" :key="item.id">
-                <div
+                <Link
+                  :href="route('homeworks.index')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -318,9 +323,9 @@
                       class="fa-solid fa-calendar-day"
                       title="Fecha de creación"
                     ></i>
-                    {{ item.created_at.split("T")[0] }}</span
+                    {{ item.created_at.relative }}</span
                   >
-                </div>
+                </Link>
               </div>
             </template>
           </DashboardPanel>
@@ -366,9 +371,9 @@ export default {
   },
   props: {
     homework_expired: Array,
-    homeworks_uploaded_this_month: String,
-    homeworks_uploaded_prev_month: String,
-    all_homeworks_uploaded: String,
+    homeworks_uploaded_this_month: Number,
+    homeworks_uploaded_prev_month: Number,
+    all_homeworks_uploaded: Number,
     unread_messages: Array,
     homeworks_recently_completed: Array,
     apllies_to_collaborate: Array,
@@ -378,7 +383,7 @@ export default {
     collaborations_claims: Array,
     profit_month: String,
     profit_last_month: String,
-    money_locked_collaborations: String,
+    money_locked_collaborations: Number,
     money_locked: String,
     total_profit: String,
   },

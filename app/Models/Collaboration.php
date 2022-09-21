@@ -51,9 +51,9 @@ class Collaboration extends Model
         return $this->hasOne(Claim::class);
     }
 
-    /**
-     * Get all of the collaboration's resources.
-     */
+    // accessors and mutators
+
+
     // query scopes
     public function scopeFilter($query, $filters)
     {

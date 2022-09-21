@@ -102,10 +102,49 @@ class User extends Authenticatable
     }
 
     // methods
+
+    public function monthlyEarnings($month)
+    {
+        $collaborations = $this->collaborations()->get();
+        $payed_month = $collaborations->filter(fn ($item) => $item->completed_date?->month == $month && $item->payed_at)->sum('price');
+        $refund_month = Claim::whereHas('collaboration', function ($q) {
+            $q->where('user_id', $this->id);
+        })
+            ->whereMonth('created_at', $month)
+            ->get('refund')->sum('refund');
+
+        return number_format(($payed_month - $refund_month), 2);
+    }
+    
+    public function totalEarnings()
+    {
+        $collaborations = $this->collaborations()->get();
+        $payed = $collaborations->filter(fn ($item) => $item->payed_at)->sum('price');
+        $refund = Claim::whereHas('collaboration', function ($q) {
+            $q->where('user_id', $this->id);
+        })->get('refund')->sum('refund');
+
+        return number_format(($payed - $refund), 2);
+    }
+
+    public function collaborationsWithMoneyLocked()
+    {
+        $collaborations = $this->collaborations()->get();
+        return $collaborations->filter(fn ($item) => $item->completed_date && !$item->payed_at)->values();
+    }
+
+    public function moneyLocked()
+    {
+        $total = $this->collaborationsWithMoneyLocked()->sum('price');
+        return number_format($total, 2);
+    }
+
+=======
     public function claims()
     {
         return Claim::whereHas('collaboration.homework', function ($q) {
             $q->where('user_id', $this->id);
         })->get();
     }
+
 }

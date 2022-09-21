@@ -36,8 +36,8 @@ export default {
     statusComputed() {
       if (!this.collaboration) {
         return 0; //no collaboration
-      } else if (!this.collaboration.approved_at) {
-        if (this.collaboration.user_id === this.$page.props.user.id) {
+      } else if (!this.collaboration.approved_at.string) {
+        if (this.collaboration.user.id === this.$page.props.user.id) {
           return 1; //to approve
         } else {
           return 0; //no collaboration
