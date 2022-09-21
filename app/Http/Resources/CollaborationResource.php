@@ -43,7 +43,13 @@ class CollaborationResource extends JsonResource
             'cancel_reason' => $this->cancel_reason,
             'completed_comments' => $this->completed_comments,
             'user' =>  $this->whenLoaded('user'),
+            'claim' =>  $this->whenLoaded('claim'),
             'homework' => HomeworkResource::make($this->whenLoaded('homework')),
+            'created_at' => [
+                'relative' => $this->created_at?->diffForHumans(),
+                'string' => $this->created_at?->toDateTimeString(),
+                'special' => $this->created_at?->isoFormat('DD MMMM, YYYY'),
+            ],
         ];
     }
 }
