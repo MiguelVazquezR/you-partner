@@ -50,6 +50,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'is_admin',
     ];
 
     /**
@@ -101,6 +102,7 @@ class User extends Authenticatable
     }
 
     // methods
+
     public function monthlyEarnings($month)
     {
         $collaborations = $this->collaborations()->get();
@@ -135,6 +137,14 @@ class User extends Authenticatable
     {
         $total = $this->collaborationsWithMoneyLocked()->sum('price');
         return number_format($total, 2);
+    }
+
+=======
+    public function claims()
+    {
+        return Claim::whereHas('collaboration.homework', function ($q) {
+            $q->where('user_id', $this->id);
+        })->get();
     }
 
 }

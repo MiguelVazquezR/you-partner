@@ -31,12 +31,12 @@
         <!-- ---------VALUE 1 START---------------------------- -->
           <div class="col-start-2">
             <ul class="text-center">
-          <li class="my-1"><input type="number" class="input h-[2rem] w-28">%</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">%</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">%</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">%</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">%</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">%</li>
+          <li class="my-1"><input type="number" class="input !h-[2rem] w-28">%</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">%</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">%</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">%</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">%</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">%</li>
            </ul>
           </div> 
           
@@ -69,7 +69,7 @@
         <!-- ---------VALUE 3 START---------------------------- -->
           <div class="col-start-2">
             <ul class="text-center">
-          <li class="my-1"><input type="number" class="input h-[2rem] w-28">  Calific. minimas</li>
+          <li class="my-1"><input type="number" class="input !h-[2rem] w-28">  Calific. minimas</li>
            </ul>
           </div> 
 <!-- ---------VALUE 3 END---------------------------- -->
@@ -114,11 +114,11 @@
         <!-- ---------VALUE 2 START---------------------------- -->
           <div class="col-start-2">
             <ul class="text-center">
-          <li class="my-1"><input type="number" class="input h-[2rem] w-28">%/$</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">PT</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">PT</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">PT</li>
-          <li class="my-2"><input type="number" class="input h-[2rem] w-28">PT</li>
+          <li class="my-1"><input type="number" class="input !h-[2rem] w-28">%/$</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">PT</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">PT</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">PT</li>
+          <li class="my-2"><input type="number" class="input !h-[2rem] w-28">PT</li>
            </ul>
           </div> 
 <!-- ---------VALUE 2 END---------------------------- -->
@@ -147,7 +147,7 @@
         <!-- ---------VALUE 4 START---------------------------- -->
           <div class="col-start-2">
             <ul class="text-center">
-          <li class="my-1"><input type="number" class="input h-[2rem] w-28">  Calific. minimas</li>
+          <li class="my-1"><input type="number" class="input !h-[2rem] w-28">  Calific. minimas</li>
            </ul>
           </div> 
 <!-- ---------VALUE 4 END---------------------------- -->

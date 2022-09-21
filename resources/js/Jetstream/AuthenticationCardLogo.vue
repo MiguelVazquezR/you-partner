@@ -5,6 +5,6 @@ import JetApplicationLogo from '@/Jetstream/ApplicationLogo.vue';
 
 <template>
     <Link :href="'/'">
-        <JetApplicationLogo />
+      
     </Link>
 </template>

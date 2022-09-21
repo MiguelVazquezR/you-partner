@@ -3,6 +3,11 @@
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
+
+  <div class="overflow-y-auto max-h-[85%]">
+    <UsersTable :users="users" />
+  </div>
+
   </AppLayout>
 </template>
 
@@ -10,6 +15,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
+import UsersTable from "@/Components/UsersTable.vue";
 
 export default {
   data() {
@@ -41,6 +47,10 @@ export default {
   components: {
     AppLayout,
     Tabs,
+    UsersTable,
   },
+  props:{
+    users: Object,
+  }
 };
 </script>
