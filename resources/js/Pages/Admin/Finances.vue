@@ -48,11 +48,11 @@
        <div class="overflow-y-auto grid grid-cols-2 col-start-2">
           <div>
             <ul class="text-left">
-          <li>Tareas</li>
-          <li>examenes</li>
-          <li>taxes</li>
-          <li>Tareas</li>
-          <li>examenes</li>
+          <li class="pl-3">Tareas</li>
+          <li class="pl-3">examenes</li>
+          <li class="pl-3">taxes</li>
+          <li class="pl-3">Tareas</li>
+          <li class="pl-3">examenes</li>
          
            </ul>
           </div>

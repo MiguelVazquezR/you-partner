@@ -50,6 +50,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'is_admin',
     ];
 
     /**
@@ -75,12 +76,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Chat::class);
     }
-    
+
     public function messages()
     {
         return $this->hasMany(Message::class);
     }
-    
+
     public function homeworks()
     {
         return $this->hasMany(Homework::class);
@@ -98,5 +99,13 @@ class User extends Authenticatable
     public function vouchers()
     {
         return $this->hasMany(Vouchers::class);
+    }
+
+    // methods
+    public function claims()
+    {
+        return Claim::whereHas('collaboration.homework', function ($q) {
+            $q->where('user_id', $this->id);
+        })->get();
     }
 }
