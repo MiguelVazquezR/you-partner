@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\Claim;
 use App\Models\Collaboration;
 use App\Models\User;
@@ -11,33 +12,39 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function finances(){
+    public function finances()
+    {
 
         return Inertia::render('Admin/Finances');
     }
 
-    public function configurations(){
+    public function configurations()
+    {
 
         return Inertia::render('Admin/Configurations');
     }
 
-    public function claims(){
-        
+    public function claims()
+    {
+
         $claims = Claim::with(['collaboration.homework' => ['schoolSubject', 'user']])->paginate();
-        return Inertia::render('Admin/Claims', compact('claims')) ;
+        return Inertia::render('Admin/Claims', compact('claims'));
     }
 
-    public function notifications(){
+    public function notifications()
+    {
 
         return Inertia::render('Admin/Notifications');
     }
 
-    public function users(){
+    public function users()
+    {
 
         $users = User::with('level', 'collaborations')->paginate();
-
-        // return $users;
-
-        return Inertia::render('Admin/Users',compact('users'));
+        
+        // return UserResource::collection($users);
+        return Inertia::render('Admin/Users', [
+            'users' => UserResource::collection($users)
+        ]);
     }
 }

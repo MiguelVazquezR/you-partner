@@ -39,35 +39,40 @@
           </td>
           <td class="pl-2">
             <div class="flex items-center">
-              <i
-                class="fa-solid fa-right-to-bracket text-lg"
-                title="Se unió el..."
-              ></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
-                {{ user.created_at }}
-              </p>
+              <i class="fa-solid fa-circle-exclamation text-red-500 text-xl" title="Reclamos"></i>
+              <p class="text-sm leading-none text-gray-600 ml-2"> {{ user.claims.length }} </p>
             </div>
           </td>
-          <td class="pl-2">
+           <td class="pl-2">
             <div class="flex items-center">
               <i class="fa-solid fa-angles-up text-lg text-green-600" title="Nivel"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">{{ 0 }}</p>
             </div>
           </td>
           <td class="pl-2">
+            <div class="flex items-center">
+              <i
+                class="fa-solid fa-right-to-bracket text-lg"
+                title="Se unió el..."
+              ></i>
+              <span class="text-sm leading-none text-gray-600 ml-2">
+                {{ user.created_at }}
+              </span>
+            </div>
+          </td>
+         
+          <td class="pl-2">
             <div
               class="
                 py-3
-                px-3
                 text-sm
                 focus:outline-none
                 leading-none
-                text-red-700
-                bg-red-100
                 rounded
               "
             >
-              Para: 01/01/2022
+            <i class="fa-solid fa-cake-candles text-lg text-sky-300"></i>
+              {{user.birthdate}}
             </div>
           </td>
           <td class="pl-4">
