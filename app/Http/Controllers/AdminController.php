@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Claim;
+use App\Models\Collaboration;
+use App\Models\User;
 use Inertia\Inertia;
 
 use Illuminate\Http\Request;
@@ -18,8 +22,9 @@ class AdminController extends Controller
     }
 
     public function claims(){
-
-        return Inertia::render('Admin/Claims');
+        
+        $claims = Claim::with(['collaboration.homework' => ['schoolSubject', 'user']])->paginate();
+        return Inertia::render('Admin/Claims', compact('claims')) ;
     }
 
     public function notifications(){
@@ -29,6 +34,10 @@ class AdminController extends Controller
 
     public function users(){
 
-        return Inertia::render('Admin/Users');
+        $users = User::with('level', 'collaborations')->paginate();
+
+        // return $users;
+
+        return Inertia::render('Admin/Users',compact('users'));
     }
 }
