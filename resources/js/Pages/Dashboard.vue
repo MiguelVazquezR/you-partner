@@ -28,7 +28,7 @@
                 {{ all_homeworks_uploaded }}
               </h2>
               <small class="text-gray-400"
-                >Desde {{ $page.props.user.created_at.special }}</small
+                >Desde {{ $page.props.user.created_at.split('T')[0] }}</small
               >
             </template>
           </DashboardPanelSmall>
@@ -54,7 +54,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item.collaboration" />
+                    <StatusIcon :status="item.status" />
                     {{ item.title }}
                   </span>
                   <span class="text-gray-400 text-right"
@@ -109,7 +109,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item.collaboration" />
+                    <StatusIcon :status="item.status" />
                     {{ item.title }}
                   </span>
                   <span class="text-gray-400 text-right">
@@ -128,7 +128,7 @@
             <template #content>
               <div v-for="item in apllies_to_collaborate" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')+'?search='+item.title"
+                  :href="route('homeworks.index')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -140,10 +140,10 @@
                   "
                 >
                   <Avatar
-                    :user="item.collaboration.user"
-                    :secondary_info="item.collaboration.created_at.relative"
+                    :user="item.user"
+                    :secondary_info="item.created_at.relative"
                   />
-                  <span class="mt-2 truncate text-sm">{{ item.title }}</span>
+                  <span class="mt-2 truncate text-sm">{{ item.homework.title }}</span>
                 </Link>
               </div>
             </template>
@@ -221,7 +221,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item" />
+                    <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
                   <span class="text-gray-400 text-right"
@@ -256,7 +256,7 @@
                 >
                   <span class="col-span-3 truncate">
                     {{item.completed_date}}
-                    <StatusIcon :collaboration="item" />
+                    <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
                   <span class="text-gray-400 text-right"
@@ -315,7 +315,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item" />
+                    <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
                   <span class="text-gray-400 text-right"

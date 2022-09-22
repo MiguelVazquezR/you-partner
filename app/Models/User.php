@@ -139,7 +139,6 @@ class User extends Authenticatable
         return number_format($total, 2);
     }
 
-=======
     public function claims()
     {
         return Claim::whereHas('collaboration.homework', function ($q) {

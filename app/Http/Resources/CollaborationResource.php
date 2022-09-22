@@ -50,6 +50,7 @@ class CollaborationResource extends JsonResource
                 'string' => $this->created_at?->toDateTimeString(),
                 'special' => $this->created_at?->isoFormat('DD MMMM, YYYY'),
             ],
+            'status' => $this->status()
         ];
     }
 }

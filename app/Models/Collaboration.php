@@ -24,7 +24,7 @@ class Collaboration extends Model
         'homework_id',
     ];
 
-    
+
     protected $dates = [
         'promise_date',
         'completed_date',
@@ -45,14 +45,20 @@ class Collaboration extends Model
     {
         return $this->belongsTo(Homework::class);
     }
-    
+
     public function claim()
     {
         return $this->hasOne(Claim::class);
     }
 
-    // accessors and mutators
-
+    // methods
+    public function status()
+    {
+        if (!$this->approved_at) return 1; //waiting approve
+        elseif (!$this->completed_date) return 2; //in process
+        elseif ($this->claim?->count()) return 4; //claim
+        else return 3; //complete
+    }
 
     // query scopes
     public function scopeFilter($query, $filters)
@@ -67,5 +73,14 @@ class Collaboration extends Model
                         });
                 });
         });
+    }
+
+    public function scopeNewAppliesTo($query, $user)
+    {
+        $query->whereNull('read_at')
+            ->whereNull('canceled_at')
+            ->whereHas('homework', function ($q) use ($user){
+                $q->where('user_id', $user);
+            });
     }
 }

@@ -16,7 +16,7 @@
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
           <td class="px-3">
-            <StatusIcon :collaboration="homework.collaboration" />
+            <StatusIcon :status="homework.status" />
           </td>
           <td v-if="withAvatar" class="pr-5">
             <Avatar
@@ -35,72 +35,50 @@
             </div>
           </td>
           <td class="pl-5">
-            <div class="flex items-center" title="Materia">
+            <div class="flex items-center text-gray-600" title="Materia">
               <i class="fa-solid fa-tag"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
+              <p class="text-sm leading-none ml-2">
                 {{ homework.school_subject.name }}
               </p>
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center" title="Preguntas o comentarios">
+            <div class="flex items-center"
+            :class="unreadMessages(homework) ? 'text-indigo-500' : 'text-gray-600'"
+             title="Preguntas o comentarios">
               <i class="fa-solid fa-comment-dots"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
+              <p class="text-sm leading-none ml-2">{{ messagesFrom(homework).length }}</p>
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center" title="Archivos adjuntos">
+            <div class="flex items-center text-gray-600" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
-                0
-              </p>
+              <p class="text-sm leading-none ml-2">0</p>
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center" title="Solicitudes de colaboración">
+            <div class="flex items-center text-gray-600" title="Solicitudes de colaboración">
               <i class="fa-solid fa-user"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
-                2
-              </p>
+              <p class="text-sm leading-none ml-2">{{ homework.collaborations.length }}</p>
             </div>
           </td>
           <td class="pl-2">
             <div
-              class="
-                py-3
-                px-3
-                text-sm
-                focus:outline-none
-                leading-none
-                text-red-700
-                bg-red-100
-                rounded
-              "
+              class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
+              :class="homework.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
+              :title="'Prioridad: ' + homework.priority"
             >
-              Para: 01/01/2022
+              Límite: {{ homework.limit_date }}
             </div>
           </td>
-          <td class="pl-4">
+          <td>
             <button
               @click="showDetails(homework)"
-              class="
-                focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
-                text-sm
-                leading-none
-                text-gray-600
-                mr-4
-                py-3
-                px-5
-                bg-gray-100
-                rounded
-                hover:bg-gray-200
-                focus:outline-none
-              "
-            >
+              class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 text-sm leading-none text-gray-600 mr-4 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
               Ver
             </button>
           </td>
-          <td class="pl-5" v-if="canDelete && canEdit">
+          <td v-if="canDelete && canEdit">
             <div class="flex items-center text-xs text-gray-300">
               <Link
                 v-if="canEdit"
@@ -198,6 +176,25 @@ export default {
     showDetails(prop) {
       this.$emit("details", prop);
     },
+    messagesFrom(homework) {
+      let messages = [];
+      if (homework.chats.length) {
+        const user_id = this.$page.props.user.id;
+        homework.chats.forEach(function(chat){
+          let message_temp = chat.messages.filter(function(message) {
+            return message.user_id != user_id;
+          })
+          messages.push(message_temp);
+        })
+      }
+      return messages;
+    },
+    unreadMessages(homework) {
+      const messages = this.messagesFrom(homework);
+      if(messages.length) {
+       return messages.some((message) => !message[0].read_at);
+      }
+    }
   },
 };
 </script>

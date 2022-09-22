@@ -2,13 +2,13 @@
   <i
     class="fa-solid mr-1"
     :class="{
-      'fa-bullseye text-red-300': state == 0,
-      'fa-clock text-sky-300': state == 1,
-      'fa-spinner text-amber-200': state == 2,
-      'fa-check text-green-300': state == 3,
-      'fa-circle-exclamation text-red-500': state == 4,
+      'fa-bullseye text-red-300': status == 0,
+      'fa-clock text-sky-300': status == 1,
+      'fa-spinner text-amber-200': status == 2,
+      'fa-check text-green-300': status == 3,
+      'fa-circle-exclamation text-red-500': status == 4,
     }"
-    :title="titles[state]"
+    :title="titles[status]"
   ></i>
 </template>
 
@@ -16,7 +16,6 @@
 export default {
   data() {
     return {
-      state: 0,
       titles: [
         "Sin colaboración",
         "Esperando aprobación",
@@ -27,28 +26,9 @@ export default {
     };
   },
   props: {
-    collaboration: Object,
-  },
-  mounted() {
-    this.state = this.statusComputed;
-  },
-  computed: {
-    statusComputed() {
-      if (!this.collaboration) {
-        return 0; //no collaboration
-      } else if (!this.collaboration.approved_at.string) {
-        if (this.collaboration.user.id === this.$page.props.user.id) {
-          return 1; //to approve
-        } else {
-          return 0; //no collaboration
-        }
-      } else if (!this.collaboration.completed_date) {
-        return 2; //in process
-      } else if (this.collaboration.claim) {
-        return 4; //with claim
-      } else {
-        return 3; //Completed
-      }
+    status: {
+      type: Number,
+      default: 0,
     },
   },
 };
