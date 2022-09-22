@@ -7,8 +7,23 @@ use Inertia\Inertia;
 
 class RankingController extends Controller
 {
-    public function index(){
+    public function byCollaborations(){
 
-        return Inertia::render('Ranking/Index');
+        return Inertia::render('Ranking/ByCollaborations');
+    }
+
+    public function byHomeworks(){
+
+        return Inertia::render('Ranking/ByHomeworks');
+    }
+
+    public function byPoints(){
+
+        return Inertia::render('Ranking/ByPoints');
+    }
+
+    public function byRatings(){
+
+        return Inertia::render('Ranking/ByRatings');
     }
 }
