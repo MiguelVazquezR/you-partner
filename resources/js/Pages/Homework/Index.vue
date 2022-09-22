@@ -3,9 +3,7 @@
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
       <div class="flex justify-end mt-3">
-        <Link :href="route('homeworks.create')" class="btn-primary">
-          + Crear
-        </Link>
+        <Link :href="route('homeworks.create')" class="btn-primary">+ Crear</Link>
       </div>
       <HomeworkTable
         :homeworks="homeworks"
@@ -27,8 +25,10 @@
               <i class="fa-solid fa-tag"></i>
               {{ homework_detail.school_subject.name }}
             </small>
-            <small class="text-xs px-2 bg-red-100 text-red-400 rounded-md">
-              Entrega: {{ homework_detail.delivery_date.split("T")[0] }}
+            <small class="text-xs px-2 rounded-md"
+              :class="homework_detail.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
+              :title="'Prioridad: ' + homework_detail.priority">
+              Entrega: {{ homework_detail.limit_date }}
             </small>
           </div>
         </div>
@@ -37,33 +37,24 @@
         <section class="mt-3">
           <div>
             <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-circle-info mr-2"></i>
+              <span>Descripción</span>
+            </h1>
+            <div>
+              <p class="text-sm text-gray-500">{{ homework_detail.description }}</p>
+            </div>
+          </div>
+          <div class="mt-5">
+            <h1 class="text-lg text-gray-600">
               <i class="fa-solid fa-comment-dots mr-2"></i>
               <span>Preguntas y comentarios</span>
             </h1>
             <div
-              class="
-                border
-                rounded-md
-                border-dotted
-                max-h-[35vh]
-                min-h-[10vh]
-                overflow-y-auto
-                px-1
-                py-2
-                divide-y
-              "
-            >
+              class="border rounded-md border-dotted max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
               <div
                 v-for="item in [1, 2]"
                 :key="item"
-                class="
-                  grid grid-cols-2
-                  gap-x-2
-                  hover:bg-gray-100
-                  cursor-pointer
-                  rounded
-                "
-              >
+                class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded">
                 <Avatar
                   :user="$page.props.user"
                   secondary_info="Hace 3 horas"
@@ -87,30 +78,12 @@
             </h1>
             <div class="mt-1">
               <div
-                class="
-                  border
-                  rounded-md
-                  border-dotted
-                  max-h-[35vh]
-                  min-h-[10vh]
-                  overflow-y-auto
-                  px-1
-                  py-2
-                  divide-y
-                "
-              >
+                class="border rounded-md border-dotted  max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
                 <div
                   @click="dialog_modal = true"
                   v-for="item in [1, 2]"
                   :key="item"
-                  class="
-                    grid grid-cols-2
-                    gap-x-2
-                    hover:bg-gray-100
-                    cursor-pointer
-                    rounded
-                  "
-                >
+                  class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded">
                   <Avatar
                     :user="$page.props.user"
                     secondary_info="Hace 3 horas"
@@ -132,14 +105,7 @@
             </h1>
             <div class="mt-1">
               <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
+                class="cursor-pointer hover:scale-105 transition duration-100 inline-block">
                 <i class="fa-solid fa-file-pdf text-red-600 text-2xl mr-2"></i>
                 <span class="text-red-800 text-sm"
                   >Tarea 4.5 Ecuaciones diferenciales</span

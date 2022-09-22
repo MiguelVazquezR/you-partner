@@ -31,27 +31,5 @@ export default {
       default: 0,
     },
   },
-  // mounted() {
-  //   this.state = this.statusComputed;
-  // },
-  // computed: {
-  //   statusComputed() {
-  //     if (!this.collaboration) {
-  //       return 0; //no collaboration
-  //     } else if (!this.collaboration.approved_at.string) {
-  //       if (this.collaboration.user.id === this.$page.props.user.id) {
-  //         return 1; //to approve
-  //       } else {
-  //         return 0; //no collaboration
-  //       }
-  //     } else if (!this.collaboration.completed_date) {
-  //       return 2; //in process
-  //     } else if (this.collaboration.claim) {
-  //       return 4; //with claim
-  //     } else {
-  //       return 3; //Completed
-  //     }
-  //   },
-  // },
 };
 </script>
