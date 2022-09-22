@@ -39,6 +39,11 @@ class Homework extends Model
         return $this->hasMany(Collaboration::class);
     }
     
+    public function approvedCollaboration()
+    {
+        return $this->hasMany(Collaboration::class)->whereNotNull('approved_at');
+    }
+
     public function chats()
     {
         return $this->hasMany(Chat::class);

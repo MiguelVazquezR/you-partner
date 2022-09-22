@@ -128,7 +128,7 @@
             <template #content>
               <div v-for="item in apllies_to_collaborate" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')+'?search='+item.title"
+                  :href="route('homeworks.index')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -140,10 +140,10 @@
                   "
                 >
                   <Avatar
-                    :user="item.collaboration.user"
-                    :secondary_info="item.collaboration.created_at.relative"
+                    :user="item.user"
+                    :secondary_info="item.created_at.relative"
                   />
-                  <span class="mt-2 truncate text-sm">{{ item.title }}</span>
+                  <span class="mt-2 truncate text-sm">{{ item.homework.title }}</span>
                 </Link>
               </div>
             </template>

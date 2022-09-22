@@ -54,12 +54,10 @@ class Collaboration extends Model
     // methods
     public function status()
     {
-        // !$this->approved
-
         if (!$this->approved_at) return 1; //waiting approve
         elseif (!$this->completed_date) return 2; //in process
-        elseif (!$this->claim->count()) return 3; //complete
-        else return 4; //claim
+        elseif ($this->claim?->count()) return 4; //claim
+        else return 3; //complete
     }
 
     // query scopes
@@ -75,5 +73,14 @@ class Collaboration extends Model
                         });
                 });
         });
+    }
+
+    public function scopeNewAppliesTo($query, $user)
+    {
+        $query->whereNull('read_at')
+            ->whereNull('canceled_at')
+            ->whereHas('homework', function ($q) use ($user){
+                $q->where('user_id', $user);
+            });
     }
 }

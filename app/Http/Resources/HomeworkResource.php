@@ -23,7 +23,8 @@ class HomeworkResource extends JsonResource
             'priority' => $this->priority,
             'user' =>  $this->whenLoaded('user'),
             'school_subject' => $this->whenLoaded('schoolSubject'),
-            'collaboration' => CollaborationResource::make($this->whenLoaded('collaboration')),
+            'collaborations' => CollaborationResource::collection($this->whenLoaded('collaborations')),
+            // 'approved_collaboration' => CollaborationResource::make($this->whenLoaded('approvedCollaboration')),
             'chats' => $this->whenLoaded('chats'),
             'status' => $this->status()
         ];
