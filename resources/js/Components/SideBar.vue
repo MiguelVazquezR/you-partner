@@ -25,7 +25,7 @@
                         </span>
                         <span class="mx-4 text-sm font-normal"> Colaborar </span>
                     </JetNavLink>
-                    <JetNavLink :href="route('ranking.index')" :active="route().current('ranking.*')">
+                    <JetNavLink :href="route('ranking.byCollaborations')" :active="route().current('ranking.*')">
                         <span class="text-left">
                             <i class="fa-solid fa-ranking-star"></i>
                         </span>

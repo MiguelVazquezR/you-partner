@@ -45,7 +45,10 @@ Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name
 Route::resource('/collaborations', CollaborationController::class)->except('show');
 Route::get('/collaborations/my-collaborations', [CollaborationController::class, 'myCollaborations'])->name('collaborations.my-collaborations');
 
-Route::get('/ranking', [RankingController::class,'index'])->name('ranking.index');
+Route::get('/ranking/by-collaborations', [RankingController::class,'byCollaborations'])->name('ranking.byCollaborations');
+Route::get('/ranking/by-homeworks', [RankingController::class,'byHomeworks'])->name('ranking.byHomeworks');
+Route::get('/ranking/by-points', [RankingController::class,'byPoints'])->name('ranking.byPoints');
+Route::get('/ranking/by-ratings', [RankingController::class,'byRatings'])->name('ranking.byRatings');
 
 Route::get('/admin/finances', [AdminController::class,'finances'])->name('admin.finances');
 Route::get('/admin/configurations', [AdminController::class,'configurations'])->name('admin.configurations');
