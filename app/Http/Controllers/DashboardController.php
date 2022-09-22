@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $homeworks = auth()->user()->homeworks()->with('schoolSubject', 'collaboration.user')->get();
+        $homeworks = auth()->user()->homeworks()->with('schoolSubject', 'collaborations.user')->get();
         $collaborations = auth()->user()->collaborations()->with('homework', 'user', 'claim')->get();
 
         // return CollaborationResource::collection($collaborations->filter(fn ($item) => !$item->approved_at)->values());
@@ -26,7 +26,7 @@ class DashboardController extends Controller
             'homeworks_recently_completed' => HomeworkResource::collection($homeworks->filter(fn ($item) => $item?->collaboration?->completed_date >= now()->subDays(7) && $item?->collaboration?->completed_date < now())->values()),
             'apllies_to_collaborate' => HomeworkResource::collection($homeworks->filter(fn ($item) => $item?->collaboration && is_null($item?->collaboration?->read_at))->values()),
             'collaborations_in_process' => CollaborationResource::collection($collaborations->filter(fn ($item) => $item->approved_at && !$item->completed_date)->values()),
-            'collaborations_to_approve' => CollaborationResource::collection($collaborations->filter(fn ($item) => !$item->approved_at)->values()),
+            'collaborations_to_approve' => CollaborationResource::collection($collaborations->filter(fn ($item) => !$item->approved_at && !$item->canceled_at)->values()),
             'collaborations_claims' => CollaborationResource::collection($collaborations->filter(fn ($item) => $item->claim && !$item->claim->solution)->values()),
             'unread_messages_c' => MessageResource::collection(Message::unread('collaborations')->with('user')->get()),
             'profit_month' => auth()->user()->monthlyEarnings(now()->month),

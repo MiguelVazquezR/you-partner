@@ -19,12 +19,13 @@ class HomeworkResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'limit_date' => $this->limit_date->isoFormat('DD MMMM, YYYY'),
+            'limit_date' => $this->limit_date->isoFormat('DD MMM, YYYY'),
             'priority' => $this->priority,
             'user' =>  $this->whenLoaded('user'),
             'school_subject' => $this->whenLoaded('schoolSubject'),
             'collaboration' => CollaborationResource::make($this->whenLoaded('collaboration')),
-            'chats' => $this->whenLoaded('chats')
+            'chats' => $this->whenLoaded('chats'),
+            'status' => $this->status()
         ];
     }
 }

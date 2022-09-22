@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Homework;
 use App\Http\Requests\StoreHomeworkRequest;
 use App\Http\Requests\UpdateHomeworkRequest;
+use App\Http\Resources\HomeworkResource;
 use App\Models\SchoolSubject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -25,11 +26,13 @@ class HomeworkController extends Controller
     {
         $filters = $request->all('search');
 
-        $homeworks = auth()->user()->homeworks()
+        $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
             ->filter($filters)
-            ->with(['schoolSubject', 'collaboration'])
+            ->with(['schoolSubject', 'collaborations'])
             ->latest('id')
-            ->paginate();
+            ->paginate());
+
+        // return $homeworks;
 
         return Inertia::render('Homework/Index', compact('homeworks', 'filters'));
     }
@@ -54,7 +57,7 @@ class HomeworkController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -63,7 +66,7 @@ class HomeworkController extends Controller
             'user_id' => 'required',
             'school_subject_id' => 'required'
         ]);
-        
+
         $homework = Homework::create($data);
 
 
@@ -134,28 +137,29 @@ class HomeworkController extends Controller
     {
         $filters = $request->all('search');
 
-        $homeworks = auth()->user()->homeworks()
-            ->doesntHave('collaboration')
+        $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
+            ->doesntHave('collaborations')
             ->filter($filters)
-            ->with(['schoolSubject', 'collaboration'])
+            ->with('schoolSubject', 'collaborations.user')
             ->latest('id')
-            ->paginate();
+            ->paginate());
 
         return Inertia::render('Homework/NoCollaboration', compact('homeworks', 'filters'));
     }
-    
+
     public function onCollaboration(Request $request)
     {
         $filters = $request->all('search');
 
-        $homeworks = auth()->user()->homeworks()
-            ->whereHas('collaboration', function($query){
-                $query->where('status', 'En proceso');
+        $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
+            ->whereHas('collaborations', function ($query) {
+                $query->whereNotNull('approved_at')
+                    ->whereNull('completed_date');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'collaboration' => ['user'],])
+            ->with('schoolSubject', 'collaborations.user')
             ->latest('id')
-            ->paginate();
+            ->paginate());
 
         return Inertia::render('Homework/OnCollaboration', compact('homeworks', 'filters'));
     }
@@ -164,14 +168,14 @@ class HomeworkController extends Controller
     {
         $filters = $request->all('search');
 
-        $homeworks = auth()->user()->homeworks()
-            ->whereHas('collaboration', function($query){
-                $query->where('status', 'Terminado');
+        $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
+            ->whereHas('collaborations', function ($query) {
+                $query->whereNotNull('completed_date');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'collaboration' => ['user']])
+            ->with('schoolSubject', 'collaborations.user')
             ->latest('id')
-            ->paginate();
+            ->paginate());
 
         return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
     }

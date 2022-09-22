@@ -34,14 +34,24 @@ class Homework extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function collaboration()
+    public function collaborations()
     {
-        return $this->hasOne(Collaboration::class);
+        return $this->hasMany(Collaboration::class);
     }
     
     public function chats()
     {
         return $this->hasMany(Chat::class);
+    }
+
+    // methods
+    public function status()
+    {
+        $collaboration_approved = $this->collaborations()->whereNotNull('approved_at');
+        if ( !$collaboration_approved->get('id')->count() ) return 0; //no collaboration
+        elseif ( !$collaboration_approved->WhereNotNull('completed_date')->get('id')->count() ) return 2; //in process
+        elseif ( !$collaboration_approved->has('claim')->get('id')->count() ) return 3; //complete
+        else return 4; //claim
     }
 
     // query scopes

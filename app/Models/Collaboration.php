@@ -24,7 +24,7 @@ class Collaboration extends Model
         'homework_id',
     ];
 
-    
+
     protected $dates = [
         'promise_date',
         'completed_date',
@@ -45,14 +45,22 @@ class Collaboration extends Model
     {
         return $this->belongsTo(Homework::class);
     }
-    
+
     public function claim()
     {
         return $this->hasOne(Claim::class);
     }
 
-    // accessors and mutators
+    // methods
+    public function status()
+    {
+        // !$this->approved
 
+        if (!$this->approved_at) return 1; //waiting approve
+        elseif (!$this->completed_date) return 2; //in process
+        elseif (!$this->claim->count()) return 3; //complete
+        else return 4; //claim
+    }
 
     // query scopes
     public function scopeFilter($query, $filters)

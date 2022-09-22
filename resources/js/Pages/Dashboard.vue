@@ -28,7 +28,7 @@
                 {{ all_homeworks_uploaded }}
               </h2>
               <small class="text-gray-400"
-                >Desde {{ $page.props.user.created_at.special }}</small
+                >Desde {{ $page.props.user.created_at.split('T')[0] }}</small
               >
             </template>
           </DashboardPanelSmall>
@@ -54,7 +54,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item.collaboration" />
+                    <StatusIcon :status="item.status" />
                     {{ item.title }}
                   </span>
                   <span class="text-gray-400 text-right"
@@ -109,7 +109,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item.collaboration" />
+                    <StatusIcon :status="item.status" />
                     {{ item.title }}
                   </span>
                   <span class="text-gray-400 text-right">
@@ -221,7 +221,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item" />
+                    <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
                   <span class="text-gray-400 text-right"
@@ -256,7 +256,7 @@
                 >
                   <span class="col-span-3 truncate">
                     {{item.completed_date}}
-                    <StatusIcon :collaboration="item" />
+                    <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
                   <span class="text-gray-400 text-right"
@@ -315,7 +315,7 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    <StatusIcon :collaboration="item" />
+                    <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
                   <span class="text-gray-400 text-right"

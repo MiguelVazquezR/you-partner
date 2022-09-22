@@ -16,7 +16,7 @@
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
           <td class="px-3">
-            <StatusIcon :collaboration="homework.collaboration" />
+            <StatusIcon :status="homework.status" />
           </td>
           <td v-if="withAvatar" class="pr-5">
             <Avatar
@@ -51,36 +51,25 @@
           <td class="pl-2">
             <div class="flex items-center" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
-                0
-              </p>
+              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
             </div>
           </td>
           <td class="pl-2">
             <div class="flex items-center" title="Solicitudes de colaboración">
               <i class="fa-solid fa-user"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
-                2
-              </p>
+              <p class="text-sm leading-none text-gray-600 ml-2">2</p>
             </div>
           </td>
           <td class="pl-2">
             <div
-              class="
-                py-3
-                px-3
-                text-sm
-                focus:outline-none
-                leading-none
-                text-red-700
-                bg-red-100
-                rounded
-              "
+              class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
+              :class="homework.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
+              :title="'Prioridad: ' + homework.priority"
             >
-              Para: 01/01/2022
+              Límite: {{ homework.limit_date }}
             </div>
           </td>
-          <td class="pl-4">
+          <td>
             <button
               @click="showDetails(homework)"
               class="
@@ -100,7 +89,7 @@
               Ver
             </button>
           </td>
-          <td class="pl-5" v-if="canDelete && canEdit">
+          <td v-if="canDelete && canEdit">
             <div class="flex items-center text-xs text-gray-300">
               <Link
                 v-if="canEdit"
