@@ -17,20 +17,20 @@ export default {
     return {
       tabs: [
         {
-          label: "Colaboraciones",
-          url: "ranking.byCollaborations",
+          label: "Ranking",
+          url: "ranking.index",
         },
         {
-          label: "Tareas subidas",
-          url: "ranking.byHomeworks",
+          label: "Premios",
+          url: "ranking.awards",
         },
         {
-          label: "Puntos",
-          url: "ranking.byPoints",
+          label: "Motivacion",
+          url: "ranking.motivation",
         },
         {
-          label: "Calificaciones",
-          url: "ranking.byRatings",
+          label: "Niveles",
+          url: "ranking.levels",
         },
       ],
     };

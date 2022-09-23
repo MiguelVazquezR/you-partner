@@ -25,7 +25,7 @@
                         </span>
                         <span class="mx-4 text-sm font-normal"> Colaborar </span>
                     </JetNavLink>
-                    <JetNavLink :href="route('ranking.byCollaborations')" :active="route().current('ranking.*')">
+                    <JetNavLink :href="route('ranking.index')" :active="route().current('ranking.*')">
                         <span class="text-left">
                             <i class="fa-solid fa-ranking-star"></i>
                         </span>
@@ -36,6 +36,12 @@
                             <i class="fa-solid fa-user-secret"></i>
                         </span>
                         <span class="mx-4 text-sm font-normal"> Administrador </span>
+                    </JetNavLink>
+                    <JetNavLink :href="route('library.index')" :active="route().current('library.*')">
+                        <span class="text-left">
+                            <i class="fa-solid fa-book"></i>
+                        </span>
+                        <span class="mx-4 text-sm font-normal"> Biblioteca </span>
                     </JetNavLink>
                 </div>
             </nav>

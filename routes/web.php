@@ -4,6 +4,7 @@ use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\RankingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,16 +46,19 @@ Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name
 Route::resource('/collaborations', CollaborationController::class)->except('show');
 Route::get('/collaborations/my-collaborations', [CollaborationController::class, 'myCollaborations'])->name('collaborations.my-collaborations');
 
-Route::get('/ranking/by-collaborations', [RankingController::class,'byCollaborations'])->name('ranking.byCollaborations');
-Route::get('/ranking/by-homeworks', [RankingController::class,'byHomeworks'])->name('ranking.byHomeworks');
-Route::get('/ranking/by-points', [RankingController::class,'byPoints'])->name('ranking.byPoints');
-Route::get('/ranking/by-ratings', [RankingController::class,'byRatings'])->name('ranking.byRatings');
+Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
+Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');
+Route::get('/ranking/motivation', [RankingController::class,'motivation'])->name('ranking.motivation');
+Route::get('/ranking/levels', [RankingController::class,'levels'])->name('ranking.levels');
 
 Route::get('/admin/finances', [AdminController::class,'finances'])->name('admin.finances');
 Route::get('/admin/configurations', [AdminController::class,'configurations'])->name('admin.configurations');
 Route::get('/admin/claims', [AdminController::class,'claims'])->name('admin.claims');
 Route::get('/admin/notifications', [AdminController::class,'notifications'])->name('admin.notifications');
 Route::get('/admin/users', [AdminController::class,'users'])->name('admin.users');
+
+
+Route::get('/library', [LibraryController::class,'index'])->name('library.index');
 
 Route::get('/privacy-policy', function (){
     return Inertia::render('PrivacyPolicy');
