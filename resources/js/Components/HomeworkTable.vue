@@ -57,7 +57,9 @@
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center text-gray-600" title="Solicitudes de colaboración">
+            <div class="flex items-center" 
+            :class="unreadCollaborations(homework) ? 'text-indigo-500' : 'text-gray-600'"
+            title="Solicitudes de colaboración">
               <i class="fa-solid fa-user"></i>
               <p class="text-sm leading-none ml-2">{{ homework.collaborations.length }}</p>
             </div>
@@ -194,7 +196,12 @@ export default {
       if(messages.length) {
        return messages.some((message) => !message[0].read_at);
       }
-    }
+    },
+    unreadCollaborations(homework) {
+      if(homework.collaborations.length) {
+       return homework.collaborations.some((collaboration) => !collaboration.read_at.relative);
+      }
+    },
   },
 };
 </script>

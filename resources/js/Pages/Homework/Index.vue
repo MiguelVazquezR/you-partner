@@ -52,19 +52,20 @@
             <div
               class="border rounded-md border-dotted max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
               <div
-                v-for="item in [1, 2]"
+                v-for="item in homework_detail.chats"
                 :key="item"
-                class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded">
-                <Avatar
-                  :user="$page.props.user"
-                  secondary_info="Hace 3 horas"
-                />
-                <p class="text-xs text-gray-600">
-                  Hola amigo he visto tu tarea y yo puedo ayudarte...
-                </p>
+                class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
+                :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !getLastMessage(excludeMyMessages(item.messages))[0].read_at}">                
+                  <Avatar class="inline-block"
+                    :user="getLastMessage(excludeMyMessages(item.messages))[0].user"
+                    :secondary_info="getLastMessage(excludeMyMessages(item.messages))[0].created_at"
+                  />
+                  <p class="text-xs text-gray-600 truncate">
+                    {{ getLastMessage(excludeMyMessages(item.messages))[0].content }}
+                  </p>
               </div>
               <p
-                v-if="![1, 2].length"
+                v-if="!homework_detail.chats.length"
                 class="text-center text-gray-400 text-xs pt-3"
               >
                 No tienes ningún comentario o pregunta
@@ -81,16 +82,17 @@
                 class="border rounded-md border-dotted  max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
                 <div
                   @click="dialog_modal = true"
-                  v-for="item in [1, 2]"
+                  v-for="item in homework_detail.collaborations"
                   :key="item"
-                  class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded">
+                  class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
+                  :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !item.read_at.relative}">
                   <Avatar
-                    :user="$page.props.user"
-                    secondary_info="Hace 3 horas"
+                    :user="item.user"
+                    :secondary_info="item.created_at.relative"
                   />
                 </div>
                 <p
-                  v-if="![1, 2].length"
+                  v-if="!homework_detail.collaborations.length"
                   class="text-center text-gray-400 text-xs pt-3"
                 >
                   No tienes ninguna solicitud
@@ -264,6 +266,15 @@ export default {
       this.homework_detail = event;
       this.side_modal = true;
     },
+    excludeMyMessages(messages) {
+      return messages.filter(
+        (message) => message.user_id !== this.$page.props.user.id
+        );
+    },
+    getLastMessage(array) {
+      if(array.length) return array.slice(-1);
+      return null;
+    }
   },
 };
 </script>
