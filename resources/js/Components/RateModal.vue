@@ -2,16 +2,16 @@
     <div class="">
         <h1 class="text-center text-indigo-500 font-semibold">Puntuar Colaboración</h1>
         <!-- <p> {{ collaboration.homework.title }} </p> -->
-        <p> {{ 'TITULO DE TAREA' }} </p>
+        <p class="text-sm"> {{ 'TITULO DE TAREA' }} </p>
         <br>
         <div class="grid grid-cols-2">
-            <div class="col-start-1">
+            <div class="col-start-1 text-sm">
                 <p>Fecha límite de entrega:</p>
                 <p>Empezado el:</p>
                 <p>Entregado el:</p>
                 <p>Costo:</p>
             </div>        
-            <div class="col-start-2">
+            <div class="col-start-2 text-sm">
                 <p>30 sep., 2022</p>
                 <p>26 sep., 2022</p>
                 <p>29 sep., 2022</p>
