@@ -57,8 +57,10 @@
                     <StatusIcon :status="item.status" />
                     {{ item.title }}
                   </span>
-                  <span class="text-gray-400 text-right"
-                    >{{ item.id }} días</span
+                  <span class="text-gray-400 text-right" title="Fecha límite">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    {{ item.limit_date }}
+                  </span
                   >
                 </Link>
               </div>
@@ -224,11 +226,8 @@
                     <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
-                  <span class="text-gray-400 text-right"
-                    ><i
-                      class="fa-solid fa-calendar-day"
-                      title="Fecha promesa"
-                    ></i>
+                  <span class="text-gray-400 text-right" title="Fecha promesa">
+                    <i class="fa-solid fa-calendar-day"></i>
                     {{ item.promise_date }}</span
                   >
                 </Link>
@@ -259,11 +258,8 @@
                     <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
-                  <span class="text-gray-400 text-right"
-                    ><i
-                      class="fa-solid fa-calendar-day"
-                      title="Fecha aplicación"
-                    ></i>
+                  <span class="text-gray-400 text-right" title="Fecha aplicación">
+                    <i class="fa-solid fa-calendar-day"></i>
                     {{ item.created_at.relative }}</span
                   >
                 </Link>
@@ -318,11 +314,8 @@
                     <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
-                  <span class="text-gray-400 text-right"
-                    ><i
-                      class="fa-solid fa-calendar-day"
-                      title="Fecha de creación"
-                    ></i>
+                  <span class="text-gray-400 text-right" title="Fecha de creación">
+                    <i class="fa-solid fa-calendar-day"></i>
                     {{ item.created_at.relative }}</span
                   >
                 </Link>

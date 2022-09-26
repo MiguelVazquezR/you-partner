@@ -52,6 +52,7 @@
             <div
               class="border rounded-md border-dotted max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
               <div
+                @click="messages_modal = true"
                 v-for="item in homework_detail.chats"
                 :key="item"
                 class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
@@ -81,7 +82,7 @@
               <div
                 class="border rounded-md border-dotted  max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
                 <div
-                  @click="dialog_modal = true"
+                  @click="applicants_modal = true"
                   v-for="item in homework_detail.collaborations"
                   :key="item"
                   class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
@@ -120,20 +121,20 @@
         </div>
       </template>
     </DetailsModal>
-    <DialogModal :show="dialog_modal" @close="dialog_modal = false">
-      <template #title>Title</template>
-      <template #content> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
-      Delectus sequi quas quia asperiores inventore laborum, doloremque quasi aliquam nobis eaque quis amet reiciendis beatae? Doloremque ipsa officia, delectus odit optio nostrum suscipit beatae autem explicabo modi earum repellendus!
-      Consequatur, architecto consequuntur nesciunt voluptate quidem aliquam officia quibusdam dolor omnis a et ut est voluptatem itaque voluptas minus. Fugit ducimus minima quisquam voluptate dolores maxime. Unde incidunt ducimus minus?
-      Accusantium natus, quisquam delectus expedita provident facilis ullam et nihil deserunt iste temporibus est corrupti suscipit soluta veritatis, porro velit aliquam maiores necessitatibus vel! Odio ad accusamus unde quibusdam et?
-      Facere aliquid ut labore mollitia a praesentium quia! Repellat eligendi quos, odit eum recusandae sed quam odio consequatur impedit. Eveniet ex laboriosam architecto nesciunt earum iste dolorem, impedit necessitatibus enim. 
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati enim nemo fugiat, vel corrupti quam harum omnis laborum reprehenderit, doloremque corporis magnam numquam a illo unde qui, ipsum adipisci cupiditate!
-      Consequatur modi corporis fugit dolorum veniam voluptatibus non adipisci? Tempore consequuntur recusandae dolor aliquam molestias necessitatibus ut a eos quasi, reiciendis cupiditate aliquid quo natus dolorem laudantium. Id, perferendis eum.
-      Quod necessitatibus omnis veritatis ea quisquam molestiae incidunt, corporis nostrum porro voluptatibus praesentium fugit alias expedita suscipit neque ducimus inventore nihil sunt eum doloremque. Nihil animi nostrum ullam facilis eaque.
-      Ullam sit accusamus nihil quibusdam, quaerat repellat. Alias, amet sequi sint libero quaerat optio, quis aliquid voluptas totam hic accusamus voluptates velit fuga repudiandae minus quasi error incidunt. Quisquam, quia!
-      Consectetur et, distinctio alias expedita dicta illo. Obcaecati vitae nesciunt molestiae fuga quibusdam ipsum debitis odio dolores. Eius quae impedit voluptas. Ea vitae, hic dicta harum veritatis quas quam ad.
+    <!-- messages -->
+    <DialogModal :show="messages_modal" @close="messages_modal = false">
+      <template #title>Mensajes</template>
+      <template #content> 
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
       </template>
-      
+      <template #footer>Footer</template>
+    </DialogModal>
+    <!-- applicants -->
+    <DialogModal :show="applicants_modal" @close="applicants_modal = false">
+      <template #title>Aplicantes</template>
+      <template #content> 
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
+      </template>
       <template #footer>Footer</template>
     </DialogModal>
   </AppLayout>
@@ -154,7 +155,8 @@ export default {
     return {
       homework_detail: {},
       side_modal: false,
-      dialog_modal: false,
+      messages_modal: false,
+      applicants_modal: false,
       tabs: [
         {
           label: "Todas",
