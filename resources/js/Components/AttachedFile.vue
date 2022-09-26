@@ -1,5 +1,5 @@
 <template>
-  <p
+  <a :href="url" target="_blank"
     class="cursor-pointer hover:scale-105 transition duration-100 inline-block"
   >
     <i
@@ -10,12 +10,8 @@
           extension === 'doc' || extension === 'docx',
         'fa-file-powerpoint text-orange-500': extension === 'ppt',
         'fa-file-excel text-green-600':
-          extension === 'xlc' || extension === 'clv',
-        'fa-file-image text-sky-500':
-          extension === 'png' ||
-          extension === 'jpeg' ||
-          extension === 'jpg' ||
-          extension === 'bmp',
+          extension === 'xls' || extension === 'xlsx',
+        'fa-file-image text-sky-500': image_allowed.includes(extension),
       }"
     ></i>
     <span
@@ -24,23 +20,25 @@
         'text-red-800': extension === 'pdf',
         'text-blue-800': extension === 'doc' || extension === 'docx',
         'text-orange-700': extension === 'ppt',
-        'text-green-800': extension === 'xlc' || extension === 'clv',
-        'text-sky-800':
-          extension === 'png' ||
-          extension === 'jpeg' ||
-          extension === 'jpg' ||
-          extension === 'bmp',
+        'text-green-800': extension === 'xls' || extension === 'xlsx',
+        'text-sky-800': image_allowed.includes(extension),
       }"
       >{{ name }}</span
     >
-  </p>
+  </a>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      image_allowed: ["png", "jpeg", "jpg", "bmp"],
+    };
+  },
   props: {
     name: String,
     extension: String,
+    url: String,
   },
 };
 </script>

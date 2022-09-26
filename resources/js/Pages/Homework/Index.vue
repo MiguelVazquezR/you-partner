@@ -105,82 +105,8 @@
               <i class="fa-solid fa-paperclip mr-2"></i>
               <span>Archivos adjuntos</span>
             </h1>
-            <div class="mt-1">
-              <p
-                class="cursor-pointer hover:scale-105 transition duration-100 inline-block">
-                <i class="fa-solid fa-file-pdf text-red-600 text-2xl mr-2"></i>
-                <span class="text-red-800 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="fa-solid fa-file-word text-blue-600 text-2xl mr-2"
-                ></i>
-                <span class="text-blue-800 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="
-                    fa-solid fa-file-powerpoint
-                    text-orange-500 text-2xl
-                    mr-2
-                  "
-                ></i>
-                <span class="text-orange-700 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="fa-solid fa-file-excel text-green-600 text-2xl mr-2"
-                ></i>
-                <span class="text-green-800 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="fa-solid fa-file-image text-sky-500 text-2xl mr-2"
-                ></i>
-                <span class="text-sky-700 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
+            <div class="mt-1 flex flex-col">
+                <AttachedFile v-for="(file, index) in files" :key="index" :name="file.name" :extension="file.extension" :href="file.url" />
             </div>
           </div>
         </section>
@@ -221,6 +147,7 @@ import Tabs from "@/Components/Tabs.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
 import Avatar from "@/Components/Avatar.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
 
 export default {
   data() {
@@ -246,6 +173,23 @@ export default {
           url: "homeworks.finished",
         },
       ],
+      files: [
+        {
+          name: "Tarea 4.6, parcial 2",
+          extension: "pdf",
+          url: "https://google.com"
+        },
+        {
+          name: "base de datos",
+          extension: "xls",
+          url: "https://google.com"
+        },
+        {
+          name: "Presentación de los temas",
+          extension: "ppt",
+          url: "https://google.com"
+        }
+      ]
     };
   },
   components: {
@@ -256,6 +200,7 @@ export default {
     DetailsModal,
     Avatar,
     DialogModal,
+    AttachedFile,
   },
   props: {
     homeworks: Object,
