@@ -126,6 +126,8 @@ export default {
   props: {
     users: Object,
   },
-  methods: {},
+  methods: {
+    
+  },
 };
 </script>

@@ -3,6 +3,10 @@
  <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
+  
+    <div>
+      <RateModal />
+    </div>
   </AppLayout>
 </template>
 
@@ -10,6 +14,8 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
+import RatingStars from "@/Components/RatingStars.vue";
+import RateModal from "@/Components/RateModal.vue";
 
 
 export default {
@@ -38,6 +44,8 @@ export default {
   components: {
     AppLayout,
     Tabs,
+    RatingStars,
+    RateModal,
   }
 };
 </script>
