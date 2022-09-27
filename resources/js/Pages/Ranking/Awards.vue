@@ -4,14 +4,20 @@
       <Tabs :tabs="tabs" />
     </div>
   
-    <div>
+    <div class="border-2 border-black">
       <RateModal />
     </div>
-    <div>
+    <div class="border-2 border-black">
       <MessagesModal />    
     </div>
-    <div>
+    <div class="border-2 border-black">
       <CollaborationModal />    
+    </div>
+    <div class="border-2 border-black">
+      <PaymentModal />    
+    </div>
+    <div class="border-2 border-black">
+      <ClaimModal />    
     </div>
   </AppLayout>
 </template>
@@ -24,6 +30,8 @@ import RatingStars from "@/Components/RatingStars.vue";
 import RateModal from "@/Components/RateModal.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import CollaborationModal from "@/Components/CollaborationModal.vue";
+import PaymentModal from "@/Components/PaymentModal.vue";
+import ClaimModal from "@/Components/ClaimModal.vue";
 
 
 export default {
@@ -56,6 +64,8 @@ export default {
     RateModal,
     MessagesModal,
     CollaborationModal,
+    PaymentModal,
+    ClaimModal,
   }
 };
 </script>
