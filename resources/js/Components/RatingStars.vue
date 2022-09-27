@@ -5,7 +5,7 @@
 
     </div>
     <div v-if="rate!=0">
-        <i v-for="(star, index) in stars" :key="star" @mouseover="pos=star" @click="rate=pos;" class="fa-regular fa-star text-2xl"
+        <i v-for="(star, index) in stars" :key="star" @mouseover="pos=star" @click="rate=pos;" class="fa-regular fa-star text-xl text-gray-500"
         :class="index < rate ? 'text-yellow-500' : ''"></i>
     </div>
 

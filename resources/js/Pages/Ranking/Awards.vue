@@ -7,6 +7,12 @@
     <div>
       <RateModal />
     </div>
+    <div>
+      <MessagesModal />    
+    </div>
+    <div>
+      <CollaborationModal />    
+    </div>
   </AppLayout>
 </template>
 
@@ -16,6 +22,8 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import RatingStars from "@/Components/RatingStars.vue";
 import RateModal from "@/Components/RateModal.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
+import CollaborationModal from "@/Components/CollaborationModal.vue";
 
 
 export default {
@@ -46,6 +54,8 @@ export default {
     Tabs,
     RatingStars,
     RateModal,
+    MessagesModal,
+    CollaborationModal,
   }
 };
 </script>
