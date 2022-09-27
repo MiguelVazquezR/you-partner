@@ -2,6 +2,7 @@ import './bootstrap';
 import '../css/app.css';
 import '../css/buttons.css';
 import '../css/inputs.css';
+import '../css/base.css';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
@@ -22,4 +23,4 @@ createInertiaApp({
     },
 });
 
-InertiaProgress.init({ color: '#4B5563' });
+InertiaProgress.init({ color: '#4B5563', showSpinner: true });

@@ -11,23 +11,11 @@
           Crear nueva tarea
         </p>
       </div>
-      <form @submit.prevent="store">
-        <div class="grid grid-cols-2 gap-x-3">
+      <form @submit.prevent="store" class="mt-6">
+        <div class="lg:grid grid-cols-2 gap-x-3 section-container">
           <div class="mt-3">
             <Label value="Título" />
             <Input v-model="form.title" type="text" class="w-full" />
-          </div>
-          <div class="mt-3">
-            <Label value="Prioridad" />
-            <select v-model="form.priority" class="input w-full">
-              <option value="" selected>-- Seleccione --</option>
-              <option value="Normal">Normal</option>
-              <option value="Urgente">Urgente</option>
-            </select>
-          </div>
-          <div class="mt-3">
-            <Label value="Descripción" />
-            <textarea v-model="form.description" class="input w-full" rows="3"></textarea>
           </div>
           <div class="mt-3">
             <Label value="Materia" />
@@ -38,22 +26,38 @@
               </option>
             </select>
           </div>
-          <div class="mt-3">
-            <Label value="Fecha de entrega" />
-            <Input v-model="form.delivery_date" type="date" class="w-full" />
+          <div class="mt-3 col-span-2">
+            <Label value="Descripción" />
+            <textarea v-model="form.description" class="input w-full !h-20"></textarea>
           </div>
           <div class="mt-3">
-            <Label value="Archivo" />
-            <InputFile class="w-full" @input="form.resource = $event.target.files[0]" />
+            <Label value="Prioridad" />
+            <select v-model="form.priority" class="input w-full">
+              <option value="" selected>-- Seleccione --</option>
+              <option value="Normal">Normal</option>
+              <option value="Urgente">Urgente</option>
+            </select>
+          </div>
+          <div class="mt-3">
+            <Label value="Fecha límite de entrega" />
+            <Input v-model="form.limit_date" type="date" class="w-full" />
+          </div>
+          <div class="mt-3 col-span-2 w-1/2 mx-auto">
+            <Label value="Archivos o recursos de la tarea" />
+            <FileUploader @input="form.resources = $event.target.files" />
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
+            <!-- <InputFile class="w-full" @input="form.resource = $event.target.files[0]" />
+            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+              {{ form.progress.percentage }}%
+            </progress> -->
           </div>
         </div>
-        <button type="submit" v-if="!form.processing" class="btn-primary">
+        <button type="submit" v-if="!form.processing" class="btn-primary mt-4">
           Crear
         </button>
-        <p v-else class="text-sm text-gray-400">Cargando...</p>
+        <p v-else class="text-sm text-gray-400 mt-4">Cargando...</p>
       </form>
     </div>
   </AppLayout>
@@ -64,6 +68,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import Input from "@/Jetstream/Input.vue";
 import InputFile from "@/Components/Common/InputFile.vue";
+import FileUploader from "@/Components/Common/FileUploader.vue";
 import Label from "@/Jetstream/Label.vue";
 import JetValidationErrors from "@/Jetstream/ValidationErrors.vue"
 
@@ -72,11 +77,11 @@ export default {
     const form = useForm({
         title: null,
         description: null,
-        delivery_date: null,
+        limit_date: null,
         priority: "",
         user_id: 1,//this.$page.props.user.id,
         school_subject_id: "",
-        resource: null,
+        resources: null,
       })
 
       return {form}
@@ -85,6 +90,7 @@ export default {
     AppLayout,
     Input,
     InputFile,
+    FileUploader,
     Label,
     JetValidationErrors,
     Link,

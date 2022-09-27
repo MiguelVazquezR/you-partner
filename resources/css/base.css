@@ -1,0 +1,3 @@
+.section-container {
+    @apply px-6 py-4 rounded-lg bg-white shadow-lg;
+}

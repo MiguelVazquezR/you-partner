@@ -28,7 +28,7 @@ class HomeworkController extends Controller
 
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
             ->filter($filters)
-            ->with(['schoolSubject', 'collaborations', 'chats.messages.user'])
+            ->with(['schoolSubject', 'collaborations.user', 'chats.messages.user'])
             ->latest('id')
             ->paginate());
 
@@ -55,21 +55,14 @@ class HomeworkController extends Controller
      * @param  \App\Http\Requests\StoreHomeworkRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreHomeworkRequest $request)
     {
+        dd($request->resources);
+        $homework = Homework::create($request->validated());
 
-        $data = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'delivery_date' => 'required',
-            'priority' => 'required',
-            'user_id' => 'required',
-            'school_subject_id' => 'required'
-        ]);
-
-        $homework = Homework::create($data);
-
-
+        foreach($request->resources as $resource)
+            $homework->addMedia($resource->getRealPath())->toMediaCollection();
+        
         return redirect()->route('homeworks.index');
     }
 

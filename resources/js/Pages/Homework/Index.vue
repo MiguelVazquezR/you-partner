@@ -52,19 +52,21 @@
             <div
               class="border rounded-md border-dotted max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
               <div
-                v-for="item in [1, 2]"
+                @click="messages_modal = true"
+                v-for="item in homework_detail.chats"
                 :key="item"
-                class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded">
-                <Avatar
-                  :user="$page.props.user"
-                  secondary_info="Hace 3 horas"
-                />
-                <p class="text-xs text-gray-600">
-                  Hola amigo he visto tu tarea y yo puedo ayudarte...
-                </p>
+                class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
+                :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !getLastMessage(excludeMyMessages(item.messages))[0].read_at}">                
+                  <Avatar class="inline-block"
+                    :user="getLastMessage(excludeMyMessages(item.messages))[0].user"
+                    :secondary_info="getLastMessage(excludeMyMessages(item.messages))[0].created_at"
+                  />
+                  <p class="text-xs text-gray-600 truncate">
+                    {{ getLastMessage(excludeMyMessages(item.messages))[0].content }}
+                  </p>
               </div>
               <p
-                v-if="![1, 2].length"
+                v-if="!homework_detail.chats.length"
                 class="text-center text-gray-400 text-xs pt-3"
               >
                 No tienes ningún comentario o pregunta
@@ -80,17 +82,18 @@
               <div
                 class="border rounded-md border-dotted  max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
                 <div
-                  @click="dialog_modal = true"
-                  v-for="item in [1, 2]"
+                  @click="applicants_modal = true"
+                  v-for="item in homework_detail.collaborations"
                   :key="item"
-                  class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded">
+                  class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
+                  :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !item.read_at.relative}">
                   <Avatar
-                    :user="$page.props.user"
-                    secondary_info="Hace 3 horas"
+                    :user="item.user"
+                    :secondary_info="item.created_at.relative"
                   />
                 </div>
                 <p
-                  v-if="![1, 2].length"
+                  v-if="!homework_detail.collaborations.length"
                   class="text-center text-gray-400 text-xs pt-3"
                 >
                   No tienes ninguna solicitud
@@ -103,82 +106,8 @@
               <i class="fa-solid fa-paperclip mr-2"></i>
               <span>Archivos adjuntos</span>
             </h1>
-            <div class="mt-1">
-              <p
-                class="cursor-pointer hover:scale-105 transition duration-100 inline-block">
-                <i class="fa-solid fa-file-pdf text-red-600 text-2xl mr-2"></i>
-                <span class="text-red-800 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="fa-solid fa-file-word text-blue-600 text-2xl mr-2"
-                ></i>
-                <span class="text-blue-800 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="
-                    fa-solid fa-file-powerpoint
-                    text-orange-500 text-2xl
-                    mr-2
-                  "
-                ></i>
-                <span class="text-orange-700 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="fa-solid fa-file-excel text-green-600 text-2xl mr-2"
-                ></i>
-                <span class="text-green-800 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
-              <p
-                class="
-                  cursor-pointer
-                  hover:scale-105
-                  transition
-                  duration-100
-                  inline-block
-                "
-              >
-                <i
-                  class="fa-solid fa-file-image text-sky-500 text-2xl mr-2"
-                ></i>
-                <span class="text-sky-700 text-sm"
-                  >Tarea 4.5 Ecuaciones diferenciales</span
-                >
-              </p>
+            <div class="mt-1 flex flex-col">
+                <AttachedFile v-for="(file, index) in files" :key="index" :name="file.name" :extension="file.extension" :href="file.url" />
             </div>
           </div>
         </section>
@@ -192,20 +121,20 @@
         </div>
       </template>
     </DetailsModal>
-    <DialogModal :show="dialog_modal" @close="dialog_modal = false">
-      <template #title>Title</template>
-      <template #content> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
-      Delectus sequi quas quia asperiores inventore laborum, doloremque quasi aliquam nobis eaque quis amet reiciendis beatae? Doloremque ipsa officia, delectus odit optio nostrum suscipit beatae autem explicabo modi earum repellendus!
-      Consequatur, architecto consequuntur nesciunt voluptate quidem aliquam officia quibusdam dolor omnis a et ut est voluptatem itaque voluptas minus. Fugit ducimus minima quisquam voluptate dolores maxime. Unde incidunt ducimus minus?
-      Accusantium natus, quisquam delectus expedita provident facilis ullam et nihil deserunt iste temporibus est corrupti suscipit soluta veritatis, porro velit aliquam maiores necessitatibus vel! Odio ad accusamus unde quibusdam et?
-      Facere aliquid ut labore mollitia a praesentium quia! Repellat eligendi quos, odit eum recusandae sed quam odio consequatur impedit. Eveniet ex laboriosam architecto nesciunt earum iste dolorem, impedit necessitatibus enim. 
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati enim nemo fugiat, vel corrupti quam harum omnis laborum reprehenderit, doloremque corporis magnam numquam a illo unde qui, ipsum adipisci cupiditate!
-      Consequatur modi corporis fugit dolorum veniam voluptatibus non adipisci? Tempore consequuntur recusandae dolor aliquam molestias necessitatibus ut a eos quasi, reiciendis cupiditate aliquid quo natus dolorem laudantium. Id, perferendis eum.
-      Quod necessitatibus omnis veritatis ea quisquam molestiae incidunt, corporis nostrum porro voluptatibus praesentium fugit alias expedita suscipit neque ducimus inventore nihil sunt eum doloremque. Nihil animi nostrum ullam facilis eaque.
-      Ullam sit accusamus nihil quibusdam, quaerat repellat. Alias, amet sequi sint libero quaerat optio, quis aliquid voluptas totam hic accusamus voluptates velit fuga repudiandae minus quasi error incidunt. Quisquam, quia!
-      Consectetur et, distinctio alias expedita dicta illo. Obcaecati vitae nesciunt molestiae fuga quibusdam ipsum debitis odio dolores. Eius quae impedit voluptas. Ea vitae, hic dicta harum veritatis quas quam ad.
+    <!-- messages -->
+    <DialogModal :show="messages_modal" @close="messages_modal = false">
+      <template #title>Mensajes</template>
+      <template #content> 
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
       </template>
-      
+      <template #footer>Footer</template>
+    </DialogModal>
+    <!-- applicants -->
+    <DialogModal :show="applicants_modal" @close="applicants_modal = false">
+      <template #title>Aplicantes</template>
+      <template #content> 
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
+      </template>
       <template #footer>Footer</template>
     </DialogModal>
   </AppLayout>
@@ -219,13 +148,15 @@ import Tabs from "@/Components/Tabs.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
 import Avatar from "@/Components/Avatar.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
 
 export default {
   data() {
     return {
       homework_detail: {},
       side_modal: false,
-      dialog_modal: false,
+      messages_modal: false,
+      applicants_modal: false,
       tabs: [
         {
           label: "Todas",
@@ -244,6 +175,23 @@ export default {
           url: "homeworks.finished",
         },
       ],
+      files: [
+        {
+          name: "Tarea 4.6, parcial 2",
+          extension: "pdf",
+          url: "https://google.com"
+        },
+        {
+          name: "base de datos",
+          extension: "xls",
+          url: "https://google.com"
+        },
+        {
+          name: "Presentación de los temas",
+          extension: "ppt",
+          url: "https://google.com"
+        }
+      ]
     };
   },
   components: {
@@ -254,6 +202,7 @@ export default {
     DetailsModal,
     Avatar,
     DialogModal,
+    AttachedFile,
   },
   props: {
     homeworks: Object,
@@ -264,6 +213,15 @@ export default {
       this.homework_detail = event;
       this.side_modal = true;
     },
+    excludeMyMessages(messages) {
+      return messages.filter(
+        (message) => message.user_id !== this.$page.props.user.id
+        );
+    },
+    getLastMessage(array) {
+      if(array.length) return array.slice(-1);
+      return null;
+    }
   },
 };
 </script>
