@@ -114,10 +114,6 @@
                     <StatusIcon :status="item.status" />
                     {{ item.title }}
                   </span>
-                  <span class="text-gray-400 text-right">
-                    <i class="fa-solid fa-paperclip"></i>
-                    1
-                  </span>
                 </Link>
               </div>
             </template>

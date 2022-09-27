@@ -106,9 +106,12 @@
               <i class="fa-solid fa-paperclip mr-2"></i>
               <span>Archivos adjuntos</span>
             </h1>
-            <div class="mt-1 flex flex-col">
-                <AttachedFile v-for="(file, index) in files" :key="index" :name="file.name" :extension="file.extension" :href="file.url" />
+            <div v-if="homework_detail.media.length" class="mt-1 flex flex-col">
+                <AttachedFile v-for="(file, index) in homework_detail.media" :key="index" :name="file.name" :extension="file.mime_type.split('/')[1]" :href="file.original_url" />
             </div>
+            <p v-else class="text-center text-gray-400 text-xs pt-3">
+                  No hay recursos para esta tarea
+            </p>
           </div>
         </section>
       </template>
@@ -175,23 +178,6 @@ export default {
           url: "homeworks.finished",
         },
       ],
-      files: [
-        {
-          name: "Tarea 4.6, parcial 2",
-          extension: "pdf",
-          url: "https://google.com"
-        },
-        {
-          name: "base de datos",
-          extension: "xls",
-          url: "https://google.com"
-        },
-        {
-          name: "Presentación de los temas",
-          extension: "ppt",
-          url: "https://google.com"
-        }
-      ]
     };
   },
   components: {

@@ -26,6 +26,7 @@ class HomeworkResource extends JsonResource
             'collaborations' => CollaborationResource::collection($this->whenLoaded('collaborations')),
             // 'approved_collaboration' => CollaborationResource::make($this->whenLoaded('approvedCollaboration')),
             'chats' => $this->whenLoaded('chats'),
+            'media' => $this->getMedia()->all(),
             'status' => $this->status()
         ];
     }
