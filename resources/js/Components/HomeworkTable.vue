@@ -53,7 +53,7 @@
           <td class="pl-2">
             <div class="flex items-center text-gray-600" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
-              <p class="text-sm leading-none ml-2">0</p>
+              <p class="text-sm leading-none ml-2">{{ homework.media.length }}</p>
             </div>
           </td>
           <td class="pl-2">

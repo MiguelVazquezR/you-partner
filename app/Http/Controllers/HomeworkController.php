@@ -57,12 +57,9 @@ class HomeworkController extends Controller
      */
     public function store(StoreHomeworkRequest $request)
     {
-        dd($request->resources);
         $homework = Homework::create($request->validated());
+        $homework->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection() );
 
-        foreach($request->resources as $resource)
-            $homework->addMedia($resource->getRealPath())->toMediaCollection();
-        
         return redirect()->route('homeworks.index');
     }
 

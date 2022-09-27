@@ -48,7 +48,7 @@
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
-            <!-- <InputFile class="w-full" @input="form.resource = $event.target.files[0]" />
+            <!-- <InputFile class="w-full" @input="form.resources = $event.target.files[0]" />
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress> -->
