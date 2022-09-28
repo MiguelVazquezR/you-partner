@@ -145,5 +145,9 @@ class User extends Authenticatable
             $q->where('user_id', $this->id);
         })->get();
     }
-
+    
+    public function canceledCollaborations()
+    {
+        return $this->collaborations()->whereNotNull('canceled_at')->whereNotNull('cancel_reason')->get();
+    }
 }

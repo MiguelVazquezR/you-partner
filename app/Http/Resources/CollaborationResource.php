@@ -42,7 +42,7 @@ class CollaborationResource extends JsonResource
             ],
             'cancel_reason' => $this->cancel_reason,
             'completed_comments' => $this->completed_comments,
-            'user' =>  $this->whenLoaded('user'),
+            'user' =>  UserResource::make($this->whenLoaded('user')),
             'claim' =>  $this->whenLoaded('claim'),
             'homework' => HomeworkResource::make($this->whenLoaded('homework')),
             'created_at' => [

@@ -28,7 +28,7 @@ class HomeworkController extends Controller
 
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
             ->filter($filters)
-            ->with(['schoolSubject', 'collaborations.user', 'chats.messages.user'])
+            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats.messages.user'])
             ->latest('id')
             ->paginate());
 

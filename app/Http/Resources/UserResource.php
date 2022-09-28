@@ -26,9 +26,14 @@ class UserResource extends JsonResource
             'level' => $this->whenLoaded('level'),
             'active' => $this->active ? 'Si' : 'No',
             'description' => $this->description,
-            'collaborations' => $this->whenLoaded('collaborations'),
+            'collaborations' => CollaborationResource::collection($this->whenLoaded('collaborations')),
             'claims' => $this->claims(),
-            'created_at' => $this->created_at->isoFormat('DD MMM, YYYY hh:mm a'),
+            'canceled_collaborations' => $this->canceledCollaborations(),
+            'created_at' => [
+                'relative' => $this->created_at?->diffForHumans(),
+                'string' => $this->created_at?->toDateTimeString(),
+                'special' => $this->created_at?->isoFormat('DD MMMM, YYYY'),
+            ],
         ];
     }
 }
