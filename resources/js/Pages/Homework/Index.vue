@@ -52,16 +52,16 @@
             <div
               class="border rounded-md border-dotted max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
               <div
-                @click="dialog_modal = true; show_messages = true"
+                @click="dialog_modal = true; show_messages = true; chat_to_show = item"
                 v-for="item in homework_detail.chats"
-                :key="item"
+                :key="item.id"
                 class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
-                :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !getLastMessage(excludeMyMessages(item.messages))[0].read_at}">                
+                :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !getLastMessage(excludeMyMessages(item.messages))[0].read_at.relative}">                
                   <Avatar class="inline-block"
                     :user="getLastMessage(excludeMyMessages(item.messages))[0].user"
-                    :secondary_info="getLastMessage(excludeMyMessages(item.messages))[0].created_at"
+                    :secondary_info="getLastMessage(excludeMyMessages(item.messages))[0].created_at.relative"
                   />
-                  <p class="text-xs text-gray-600 truncate">
+                  <p class="text-xs text-gray-600 truncate pt-2">
                     {{ getLastMessage(excludeMyMessages(item.messages))[0].content }}
                   </p>
               </div>
@@ -129,15 +129,15 @@
       <template #title>
         <div v-if="show_messages" class="font-bold text-gray-600">
           Mensajes <br>
-          {{ homework_detail.title }}
+          <span class="text-indigo-500 font-normal"> {{ homework_detail.title }} </span>
         </div>
         <div v-else-if="show_applicants" class="font-bold text-gray-600">
           Aplicantes a colaborar <br>
-          {{ homework_detail.title }}
+          <span class="text-indigo-500 font-normal"> {{ homework_detail.title }} </span>
         </div>
       </template>
       <template #content> 
-        <MessagesModal v-if="show_messages" />
+        <MessagesModal :chat="chat_to_show" v-if="show_messages" />
         <CollaborationModal :collaboration="applicant_collaboration" v-else-if="show_applicants" />
       </template>
       <template #footer></template>
@@ -166,6 +166,7 @@ export default {
       show_applicants: false,
       show_messages: false,
       applicant_collaboration: null,
+      chat_to_show: null,
       tabs: [
         {
           label: "Todas",
@@ -209,7 +210,7 @@ export default {
     },
     excludeMyMessages(messages) {
       return messages.filter(
-        (message) => message.user_id !== this.$page.props.user.id
+        (message) => message.user.id !== this.$page.props.user.id
         );
     },
     getLastMessage(array) {

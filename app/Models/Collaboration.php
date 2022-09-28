@@ -50,6 +50,11 @@ class Collaboration extends Model
     {
         return $this->hasOne(Claim::class);
     }
+    
+    public function rate()
+    {
+        return $this->hasOne(Rate::class);
+    }
 
     // methods
     public function status()

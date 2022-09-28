@@ -27,13 +27,16 @@ class UserResource extends JsonResource
             'active' => $this->active ? 'Si' : 'No',
             'description' => $this->description,
             'collaborations' => CollaborationResource::collection($this->whenLoaded('collaborations')),
-            'claims' => $this->claims(),
+            'claims_by_user' => $this->claimsByUser(),
+            'claims_to_user' => $this->claimsToUser(),
             'canceled_collaborations' => $this->canceledCollaborations(),
             'created_at' => [
                 'relative' => $this->created_at?->diffForHumans(),
                 'string' => $this->created_at?->toDateTimeString(),
                 'special' => $this->created_at?->isoFormat('DD MMMM, YYYY'),
             ],
+            'rate_average' => $this->getRateAverage() ?? 'Sin calificaciones',
+            'chats' => ChatResource::collection($this->whenLoaded('chats')),
         ];
     }
 }

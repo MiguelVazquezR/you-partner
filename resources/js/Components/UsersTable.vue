@@ -40,7 +40,7 @@
           <td class="pl-2">
             <div class="flex items-center">
               <i class="fa-solid fa-circle-exclamation text-red-500 text-xl" title="Reclamos"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2"> {{ user.claims.length }} </p>
+              <p class="text-sm leading-none text-gray-600 ml-2"> {{ user.claims_by_user.length }} </p>
             </div>
           </td>
            <td class="pl-2">

@@ -24,8 +24,7 @@ class HomeworkResource extends JsonResource
             'user' =>  $this->whenLoaded('user'),
             'school_subject' => $this->whenLoaded('schoolSubject'),
             'collaborations' => CollaborationResource::collection($this->whenLoaded('collaborations')),
-            // 'approved_collaboration' => CollaborationResource::make($this->whenLoaded('approvedCollaboration')),
-            'chats' => $this->whenLoaded('chats'),
+            'chats' => ChatResource::collection($this->whenLoaded('chats')),
             'media' => $this->getMedia()->all(),
             'status' => $this->status()
         ];

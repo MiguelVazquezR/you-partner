@@ -1,39 +1,40 @@
 <template>
   <div class="">
-    <h1 class="text-center text-indigo-500 font-semibold">
-      Preguntas y Comentarios
-    </h1>
-    <!-- <p> {{ collaboration.homework.title }} </p> -->
-    <p class="text-sm">{{ "TITULO DE LA SOLICITUD O TAREA" }}</p>
-    <br />
     <div>
-      <div class="grid grid-cols-2">
-        <div class="col-start-1">AVATAR DE LA OTRA PERSONA</div>
-        <div class="col-start-2 text-end">AVATAR DE USTED</div>
+      <div class="flex justify-between">
+        <Avatar :user="getTheOtherUser" />
+        <Avatar :user="$page.props.user" />
       </div>
-      <hr />
       <div
-        id="cuerpo-chat"
-        class="border border-gray-300 overflow-y-auto h-64 w-2/3 rounded-md mx-auto text-sm"
+        class="
+          border border-gray-300
+          overflow-y-auto
+          h-64
+          rounded-md
+          mx-auto
+          text-sm
+        "
       >
-        <div class="bg-indigo-200 max-w-md rounded-lg text-left my-2 mx-3 p-2">
-          {{
-            "Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona Mensaje o comentario de la otra persona "
-          }}
+        <div
+          v-for="message in chat.messages"
+          :key="message.id"
+          class="flex"
+          :class="{'justify-end': message.user.id === $page.props.user.id}"
+        >
+        <div class="max-w-[14rem] lg:max-w-md rounded-lg my-1 mx-3 p-2" :class="message.user.id === $page.props.user.id ? 'bg-indigo-200 text-right' : 'bg-gray-200'">
+          {{ message.content }}
         </div>
-        <div class="bg-red-200 max-w-md rounded-lg text-right my-2 mx-3 p-2 ml-auto">
-          {{
-            "Mensaje o comentario tuyo Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque soluta laborum ratione architecto, porro aliquid reprehenderit magni, fugit natus quia repellat. Voluptates dolorum commodi quisquam fugiat nostrum voluptatibus sequi animi."
-          }}
         </div>
       </div>
-      <div class="text-center">
-      <input
-        type="text"
-        class="input w-1/2 my-5"
-        placeholder="Escribe tu mensaje aquí..."
-      />
-      <button class="btn-primary mx-3"><i class="fa-solid fa-paper-plane"></i></button>
+      <div class="text-center flex items-center mt-2">
+        <input
+          type="text"
+          class="input flex-1 mr-3"
+          placeholder="Escribe tu mensaje aquí..."
+        />
+        <button class="btn-primary grow-0">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
       </div>
     </div>
     <br />
@@ -45,15 +46,17 @@ import Avatar from "@/Components/Avatar.vue";
 import RatingStars from "@/Components/RatingStars.vue";
 
 export default {
-  data() {
-    return {};
-  },
   components: {
     Avatar,
   },
   props: {
-    collaboration: Object,
-    user: Object,
+    chat: Object,
+  },
+  computed: {
+    getTheOtherUser() {
+      const auth_user_id = this.$page.props.user.id;
+      return this.chat.users.filter((user) => user.id != auth_user_id)[0];
+    },
   },
 };
 </script>
