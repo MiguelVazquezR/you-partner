@@ -19,6 +19,15 @@
     <div class="border-2 border-black">
       <ClaimModal />    
     </div>
+    <div class="border-2 border-black">
+      <SendHomeworkModal />    
+    </div>
+    <div class="border-2 border-black">
+      <CancelColabModal />    
+    </div>
+    <div class="border-2 border-black">
+      <ApplyCollaborationModal />    
+    </div>
   </AppLayout>
 </template>
 
@@ -32,6 +41,9 @@ import MessagesModal from "@/Components/MessagesModal.vue";
 import CollaborationModal from "@/Components/CollaborationModal.vue";
 import PaymentModal from "@/Components/PaymentModal.vue";
 import ClaimModal from "@/Components/ClaimModal.vue";
+import SendHomeworkModal from "@/Components/SendHomeworkModal.vue";
+import CancelColabModal from "@/Components/CancelColabModal.vue";
+import ApplyCollaborationModal from "@/Components/ApplyCollaborationModal.vue";
 
 
 export default {
@@ -66,6 +78,9 @@ export default {
     CollaborationModal,
     PaymentModal,
     ClaimModal,
+    SendHomeworkModal,
+    CancelColabModal,
+    ApplyCollaborationModal,
   }
 };
 </script>

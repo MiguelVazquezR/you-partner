@@ -13,7 +13,7 @@
       class="w-px h-px opacity-0 overflow-hidden absolute"
       @change="onChange"
       ref="file"
-      accept=".pdf,.jpg,.jpeg,.png"
+      accept=".pdf,.jpg,.jpeg,.png,.xls,.ppt,.zip,.doc,.docx,.xslx,.txt"
     />
 
     <label for="assetsFieldHandle" class="block cursor-pointer text-sm text-center">
