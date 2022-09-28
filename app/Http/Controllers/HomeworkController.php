@@ -6,6 +6,7 @@ use App\Models\Homework;
 use App\Http\Requests\StoreHomeworkRequest;
 use App\Http\Requests\UpdateHomeworkRequest;
 use App\Http\Resources\HomeworkResource;
+use App\Models\Message;
 use App\Models\SchoolSubject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -60,7 +61,7 @@ class HomeworkController extends Controller
         $homework = Homework::create($request->validated());
         $homework->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection() );
 
-        return redirect()->route('homeworks.index');
+        return redirect()->route('homeworks.index');//->with('message', 'Se ha creado la tarea correctamente!');
     }
 
     /**
@@ -168,5 +169,10 @@ class HomeworkController extends Controller
             ->paginate());
 
         return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $message = Message::create($request->all());
     }
 }

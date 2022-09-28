@@ -19,23 +19,37 @@
           v-for="message in chat.messages"
           :key="message.id"
           class="flex"
-          :class="{'justify-end': message.user.id === $page.props.user.id}"
+          :class="{ 'justify-end': message.user.id === $page.props.user.id }"
         >
-        <div class="max-w-[14rem] lg:max-w-md rounded-lg my-1 mx-3 p-2" :class="message.user.id === $page.props.user.id ? 'bg-indigo-200 text-right' : 'bg-gray-200'">
-          {{ message.content }}
-        </div>
+          <div
+            class="max-w-[14rem] lg:max-w-md rounded-lg my-1 mx-3 p-2 pb-0"
+            :class="
+              message.user.id === $page.props.user.id
+                ? 'bg-indigo-200 text-right'
+                : 'bg-gray-200'
+            "
+          >
+            <p>{{ message.content }}</p>
+            <span class="text-[11px] text-gray-500">{{
+              message.created_at.relative
+            }}</span>
+          </div>
         </div>
       </div>
-      <div class="text-center flex items-center mt-2">
+      <form
+        @submit.prevent="form.post(route('homeworks.send-message'))"
+        class="text-center flex items-center mt-2"
+      >
         <input
+          v-model="form.content"
           type="text"
           class="input flex-1 mr-3"
           placeholder="Escribe tu mensaje aquí..."
         />
-        <button class="btn-primary grow-0">
+        <button type="submit" class="btn-primary">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
-      </div>
+      </form>
     </div>
     <br />
   </div>
@@ -43,9 +57,18 @@
 
 <script>
 import Avatar from "@/Components/Avatar.vue";
-import RatingStars from "@/Components/RatingStars.vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
+  data() {
+    const form = useForm({
+      content: null,
+      chat_id: this.chat.id,
+      user_id: this.$page.props.user.id,
+    });
+
+    return { form };
+  },
   components: {
     Avatar,
   },

@@ -48,10 +48,6 @@
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
-            <!-- <InputFile class="w-full" @input="form.resources = $event.target.files[0]" />
-            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-              {{ form.progress.percentage }}%
-            </progress> -->
           </div>
         </div>
         <button type="submit" v-if="!form.processing" class="btn-primary mt-4">
@@ -79,7 +75,7 @@ export default {
         description: null,
         limit_date: null,
         priority: "",
-        user_id: 1,//this.$page.props.user.id,
+        user_id: this.$page.props.user.id,
         school_subject_id: "",
         resources: null,
       })

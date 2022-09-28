@@ -248,7 +248,31 @@ const logout = () => {
                 :href="route('dashboard')"
                 :active="route().current('dashboard')"
               >
-                Dashboard
+                Panel de información
+              </JetResponsiveNavLink>
+              <JetResponsiveNavLink
+                :href="route('homeworks.index')"
+                :active="route().current('homeworks.*')"
+              >
+                Mis tareas
+              </JetResponsiveNavLink>
+              <JetResponsiveNavLink
+                :href="route('collaborations.index')"
+                :active="route().current('collaborations.*')"
+              >
+                Colaborar
+              </JetResponsiveNavLink>
+              <JetResponsiveNavLink
+                :href="route('ranking.index')"
+                :active="route().current('ranking.*')"
+              >
+                Ranking
+              </JetResponsiveNavLink>
+              <JetResponsiveNavLink
+                :href="route('library.index')"
+                :active="route().current('library.*')"
+              >
+                Biblioteca
               </JetResponsiveNavLink>
             </div>
 
