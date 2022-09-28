@@ -12,17 +12,15 @@
 				</div>
 				<div>
 					<h4 class="font-bold">{{'Nombre del colaborador'}}</h4>
-                     <h4 class="text-center text-lg text-indigo-500">{{'Titulo de la tarea'}}</h4>
+          <h4 class="text-center text-lg text-indigo-500">{{'Titulo de la tarea'}}</h4>
 				</div>
 			</div>
 		</div>
 
         <div class="p-3 text-center">
         <textarea class="input !h-28 w-3/4" placeholder="Escribe un comentario"></textarea>
-             <div>
-        <input type="file" class="border-2 border-dashed p-10 mt-4">
-
-         </div>
+               
+       <!-- <FileUploader /> -->
 
         </div>
     <div class="text-center">   
@@ -36,6 +34,7 @@
 <script>
 import Avatar from "@/Components/Avatar.vue";
 import RatingStars from "@/Components/RatingStars.vue";
+import FileUploader from "@/Components/Common/FileUploader.vue";
 
 export default {
   data() {
@@ -44,6 +43,7 @@ export default {
   components: {
     Avatar,
     RatingStars,
+    FileUploader,
   },
   props: {
     collaboration: Object,
