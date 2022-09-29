@@ -6,14 +6,7 @@
         <Avatar :user="$page.props.user" />
       </div>
       <div
-        class="
-          border border-gray-300
-          overflow-y-auto
-          h-64
-          rounded-md
-          mx-auto
-          text-sm
-        "
+        class="border border-gray-300 overflow-y-auto h-64 rounded-md mx-auto"
       >
         <div
           v-for="message in chat.messages"
@@ -29,23 +22,24 @@
                 : 'bg-gray-200'
             "
           >
-            <p>{{ message.content }}</p>
+            <p class="text-[13px]" style="white-space: pre-line;">{{ message.content }}</p>
             <span class="text-[11px] text-gray-500">{{
               message.created_at.relative
             }}</span>
           </div>
         </div>
+        <span id="final"></span>
       </div>
       <form
-        @submit.prevent="form.post(route('homeworks.send-message'))"
+        @submit.prevent="sendMessage"
         class="text-center flex items-center mt-2"
       >
-        <input
-          v-model="form.content"
-          type="text"
-          class="input flex-1 mr-3"
+        <textarea
+          v-model.lazy="form.content"
+          class="input flex-1 mr-3 !h-16"
           placeholder="Escribe tu mensaje aquí..."
-        />
+        >
+        </textarea>
         <button type="submit" class="btn-primary">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
@@ -80,6 +74,26 @@ export default {
       const auth_user_id = this.$page.props.user.id;
       return this.chat.users.filter((user) => user.id != auth_user_id)[0];
     },
+  },
+  methods: {
+    sendMessage() {
+      if (this.form.content)
+        axios
+          .post(route("homeworks.send-message"), this.form)
+          .then((response) => {
+            this.chat.messages.push(response.data);
+            this.form.content = "";
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    scrollToFinal() {
+      document.getElementById("final").scrollIntoView(true);
+    },
+  },
+  updated() {
+    this.scrollToFinal();
   },
 };
 </script>
