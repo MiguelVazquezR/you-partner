@@ -16,6 +16,10 @@ class Message extends Model
         'read_at',
     ];
 
+    protected $dates = [
+        'read_at'
+    ];
+
     // Relationships -------------------
     public function user()
     {

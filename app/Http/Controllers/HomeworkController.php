@@ -171,11 +171,4 @@ class HomeworkController extends Controller
 
         return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
     }
-
-    public function sendMessage(Request $request)
-    {
-        $message = Message::create($request->all());
-
-        return new MessageResource(Message::with('user')->find($message->id));
-    }
 }

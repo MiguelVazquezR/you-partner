@@ -52,6 +52,7 @@
 <script>
 import Avatar from "@/Components/Avatar.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { nextTick } from '@vue/runtime-core';
 
 export default {
   data() {
@@ -79,7 +80,7 @@ export default {
     sendMessage() {
       if (this.form.content)
         axios
-          .post(route("homeworks.send-message"), this.form)
+          .post(route("chat.send-message"), this.form)
           .then((response) => {
             this.chat.messages.push(response.data);
             this.form.content = "";
