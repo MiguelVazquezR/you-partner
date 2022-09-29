@@ -52,16 +52,16 @@
             <div
               class="border rounded-md border-dotted max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
               <div
-                @click="messages_modal = true"
+                @click="dialog_modal = true; show_messages = true; chat_to_show = item"
                 v-for="item in homework_detail.chats"
-                :key="item"
+                :key="item.id"
                 class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
-                :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !getLastMessage(excludeMyMessages(item.messages))[0].read_at}">                
+                :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !getLastMessage(excludeMyMessages(item.messages))[0].read_at.relative}">                
                   <Avatar class="inline-block"
                     :user="getLastMessage(excludeMyMessages(item.messages))[0].user"
-                    :secondary_info="getLastMessage(excludeMyMessages(item.messages))[0].created_at"
+                    :secondary_info="getLastMessage(excludeMyMessages(item.messages))[0].created_at.relative"
                   />
-                  <p class="text-xs text-gray-600 truncate">
+                  <p class="text-xs text-gray-600 truncate pt-2">
                     {{ getLastMessage(excludeMyMessages(item.messages))[0].content }}
                   </p>
               </div>
@@ -82,7 +82,7 @@
               <div
                 class="border rounded-md border-dotted  max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
                 <div
-                  @click="applicants_modal = true"
+                  @click="dialog_modal = true; show_applicants = true; applicant_collaboration = item"
                   v-for="item in homework_detail.collaborations"
                   :key="item"
                   class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
@@ -125,20 +125,22 @@
       </template>
     </DetailsModal>
     <!-- messages -->
-    <DialogModal :show="messages_modal" @close="messages_modal = false">
-      <template #title>Mensajes</template>
-      <template #content> 
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
+    <DialogModal :show="dialog_modal" @close="dialog_modal = false; show_applicants = false; show_messages = false">
+      <template #title>
+        <div v-if="show_messages" class="font-bold text-gray-600">
+          Mensajes <br>
+          <span class="text-indigo-500 font-normal"> {{ homework_detail.title }} </span>
+        </div>
+        <div v-else-if="show_applicants" class="font-bold text-gray-600">
+          Aplicantes a colaborar <br>
+          <span class="text-indigo-500 font-normal"> {{ homework_detail.title }} </span>
+        </div>
       </template>
-      <template #footer>Footer</template>
-    </DialogModal>
-    <!-- applicants -->
-    <DialogModal :show="applicants_modal" @close="applicants_modal = false">
-      <template #title>Aplicantes</template>
       <template #content> 
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
+        <MessagesModal :chat="chat_to_show" v-if="show_messages" />
+        <CollaborationModal :collaboration="applicant_collaboration" v-else-if="show_applicants" />
       </template>
-      <template #footer>Footer</template>
+      <template #footer></template>
     </DialogModal>
   </AppLayout>
 </template>
@@ -152,14 +154,19 @@ import DetailsModal from "@/Components/DetailsModal.vue";
 import Avatar from "@/Components/Avatar.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
+import CollaborationModal from "@/Components/CollaborationModal.vue";
 
 export default {
   data() {
     return {
       homework_detail: {},
       side_modal: false,
-      messages_modal: false,
-      applicants_modal: false,
+      dialog_modal: false,
+      show_applicants: false,
+      show_messages: false,
+      applicant_collaboration: null,
+      chat_to_show: null,
       tabs: [
         {
           label: "Todas",
@@ -189,6 +196,8 @@ export default {
     Avatar,
     DialogModal,
     AttachedFile,
+    MessagesModal,
+    CollaborationModal,
   },
   props: {
     homeworks: Object,
@@ -201,7 +210,7 @@ export default {
     },
     excludeMyMessages(messages) {
       return messages.filter(
-        (message) => message.user_id !== this.$page.props.user.id
+        (message) => message.user.id !== this.$page.props.user.id
         );
     },
     getLastMessage(array) {

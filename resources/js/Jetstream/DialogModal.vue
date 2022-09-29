@@ -41,6 +41,9 @@ const close = () => {
             hover:text-red-400 hover:bg-gray-200
             w-8
             h-8
+            flex
+            items-center
+            justify-center
             rounded-full
             transition-colors
             duration-200

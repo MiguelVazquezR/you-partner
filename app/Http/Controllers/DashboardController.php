@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $homeworks = auth()->user()->homeworks()->with('schoolSubject', 'collaborations.user')->get();
         $collaborations = auth()->user()->collaborations()->with('homework', 'user', 'claim')->get();
 
-        // return CollaborationResource::collection(Collaboration::newAppliesTo(auth()->user()->id)->with('homework', 'user')->get());
+        // return $collaborations;
         return Inertia::render('Dashboard', [
             'homework_expired' => HomeworkResource::collection($homeworks->filter(fn ($item) => $item?->status() != 3 && $item->limit_date <= now()->addDays(3))->values()),
             'homeworks_uploaded_this_month' => $homeworks->filter(fn ($item) => $item->created_at->month == now()->month)->count(),

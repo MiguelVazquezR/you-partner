@@ -183,10 +183,9 @@ export default {
       if (homework.chats.length) {
         const user_id = this.$page.props.user.id;
         homework.chats.forEach(function(chat){
-          let message_temp = chat.messages.filter(function(message) {
-            return message.user_id != user_id;
+          chat.messages.forEach(function(message) {
+            if(message.user.id != user_id) messages.push(message);
           })
-          messages.push(message_temp);
         })
       }
       return messages;
@@ -194,7 +193,7 @@ export default {
     unreadMessages(homework) {
       const messages = this.messagesFrom(homework);
       if(messages.length) {
-       return messages.some((message) => !message[0].read_at);
+       return messages.some((message) => !message.read_at.special);
       }
     },
     unreadCollaborations(homework) {

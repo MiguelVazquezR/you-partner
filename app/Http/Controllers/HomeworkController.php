@@ -6,6 +6,8 @@ use App\Models\Homework;
 use App\Http\Requests\StoreHomeworkRequest;
 use App\Http\Requests\UpdateHomeworkRequest;
 use App\Http\Resources\HomeworkResource;
+use App\Http\Resources\MessageResource;
+use App\Models\Message;
 use App\Models\SchoolSubject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -28,7 +30,7 @@ class HomeworkController extends Controller
 
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
             ->filter($filters)
-            ->with(['schoolSubject', 'collaborations.user', 'chats.messages.user'])
+            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
@@ -58,9 +60,9 @@ class HomeworkController extends Controller
     public function store(StoreHomeworkRequest $request)
     {
         $homework = Homework::create($request->validated());
-        $homework->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection() );
+        $homework->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
 
-        return redirect()->route('homeworks.index');
+        return redirect()->route('homeworks.index'); //->with('message', 'Se ha creado la tarea correctamente!');
     }
 
     /**
@@ -168,5 +170,12 @@ class HomeworkController extends Controller
             ->paginate());
 
         return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $message = Message::create($request->all());
+
+        return new MessageResource(Message::with('user')->find($message->id));
     }
 }

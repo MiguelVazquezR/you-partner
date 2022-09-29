@@ -139,11 +139,34 @@ class User extends Authenticatable
         return number_format($total, 2);
     }
 
-    public function claims()
+    public function claimsByUser()
     {
         return Claim::whereHas('collaboration.homework', function ($q) {
             $q->where('user_id', $this->id);
         })->get();
     }
+    
+    public function claimsToUser()
+    {
+        return Claim::whereHas('collaboration', function ($q) {
+            $q->where('user_id', $this->id);
+        })->get();
+    }
 
+    public function canceledCollaborations()
+    {
+        return $this->collaborations()->whereNotNull('canceled_at')->whereNotNull('cancel_reason')->get();
+    }
+
+    public function ratesToUser()
+    {
+        return Rate::whereHas('collaboration', function ($q) {
+            $q->where('user_id', $this->id);
+        })->get();
+    }
+
+    public function getRateAverage()
+    {
+        $this->ratesToUser()->avg('stars');
+    }
 }
