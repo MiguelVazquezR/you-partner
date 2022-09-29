@@ -79,7 +79,7 @@ export default {
           label: "Terminados",
           url: "homeworks.finished",
         },
-         {
+        {
           label: "Reclamos",
           url: "homeworks.claims",
         },

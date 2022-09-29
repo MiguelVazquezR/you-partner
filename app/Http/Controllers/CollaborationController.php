@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Collaboration;
 use App\Http\Requests\StoreCollaborationRequest;
 use App\Http\Requests\UpdateCollaborationRequest;
+use App\Http\Resources\HomeworkResource;
 use App\Models\Homework;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,12 +25,12 @@ class CollaborationController extends Controller
     public function index(Request $request)
     {
         $filters = $request->all('search');
-        $homeworks = Homework::doesntHave('collaboration')
+        $homeworks = HomeworkResource::collection(Homework::doesntHave('collaborations')
             ->filter($filters)
             ->where('user_id', '<>', auth()->user()->id)
-            ->with(['schoolSubject', 'user'])
+            ->with('schoolSubject', 'user','media')
             ->latest()
-            ->paginate();
+            ->paginate());
 
         return Inertia::render('Collaborations/Index', compact('homeworks', 'filters'));
     }

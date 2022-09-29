@@ -132,7 +132,7 @@ class HomeworkController extends Controller
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
             ->doesntHave('collaborations')
             ->filter($filters)
-            ->with('schoolSubject', 'collaborations.user')
+            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
@@ -170,6 +170,22 @@ class HomeworkController extends Controller
             ->paginate());
 
         return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
+    }
+    
+    public function claims(Request $request)
+    {
+        $filters = $request->all('search');
+
+        $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
+            ->whereHas('collaborations', function ($query) {
+                $query->whereNotNull('completed_date');
+            })
+            ->filter($filters)
+            ->with('schoolSubject', 'collaborations.user')
+            ->latest('id')
+            ->paginate());
+
+        return Inertia::render('Homework/Claims', compact('homeworks', 'filters'));
     }
 
     public function sendMessage(Request $request)

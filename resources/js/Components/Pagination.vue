@@ -1,12 +1,12 @@
 <template>
-  <nav v-if="pagination.links.length > 3" aria-label="Pagination" class="
+  <nav v-if="pagination.meta.links.length > 3" aria-label="Pagination" class="
       inline-flex
       -space-x-px
       rounded-md
       shadow-sm
       mb-2
     ">
-    <template v-for="(link, key) in pagination.links">
+    <template v-for="(link, key) in pagination.meta.links">
       <div :key="key" v-if="link.url == null" class="
           inline-flex
           items-center
