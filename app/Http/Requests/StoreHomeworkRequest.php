@@ -26,7 +26,7 @@ class StoreHomeworkRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'limit_date' => 'required',
+            'limit_date' => 'required|after:yesterday',
             'priority' => 'required',
             'user_id' => 'required',
             'school_subject_id' => 'required'
