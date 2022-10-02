@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\LibraryController;
@@ -42,10 +43,10 @@ Route::resource('/homeworks', HomeworkController::class)->except('show');
 Route::get('/homeworks/no-collaboration', [HomeworkController::class, 'noCollaboration'])->name('homeworks.no-collaboration');
 Route::get('/homeworks/on-collaboration', [HomeworkController::class, 'onCollaboration'])->name('homeworks.on-collaboration');
 Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name('homeworks.finished');
-Route::post('/homeworks/send-message', [HomeworkController::class, 'sendMessage'])->name('homeworks.send-message');
 
 Route::resource('/collaborations', CollaborationController::class)->except('show');
 Route::get('/collaborations/my-collaborations', [CollaborationController::class, 'myCollaborations'])->name('collaborations.my-collaborations');
+Route::post('/collaborations/read-collaboration', [CollaborationController::class, 'readCollaboration'])->name('collaborations.read-collaboration');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');
@@ -70,4 +71,7 @@ Route::get('/terms-of-service', function (){
 Route::get('/contact', function (){
     return Inertia::render('Contact');
 })->name('contact');
+
+Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
+Route::post('/chat/read-messages', [ChatController::class, 'readMessage'])->name('chat.read-message');
 
