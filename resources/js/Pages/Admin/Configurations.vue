@@ -206,6 +206,10 @@ export default {
           label: "Usuarios",
           url: "admin.users",
         },
+        {
+          label: "Errores",
+          url: "admin.errors",
+        },
       ],
     };
   },

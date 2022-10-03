@@ -59,6 +59,7 @@ Route::get('/admin/configurations', [AdminController::class,'configurations'])->
 Route::get('/admin/claims', [AdminController::class,'claims'])->name('admin.claims');
 Route::get('/admin/notifications', [AdminController::class,'notifications'])->name('admin.notifications');
 Route::get('/admin/users', [AdminController::class,'users'])->name('admin.users');
+Route::get('/admin/errors', [AdminController::class,'errors'])->name('admin.errors');
 
 
 Route::get('/library', [LibraryController::class,'index'])->name('library.index');
