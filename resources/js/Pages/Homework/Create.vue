@@ -53,7 +53,7 @@
         <button type="submit" v-if="!form.processing" class="btn-primary mt-4">
           Crear
         </button>
-        <p v-else class="text-sm text-gray-400 mt-4">Cargando...</p>
+        <p v-else class="text-sm text-gray-400 mt-4">Cargando..</p>
       </form>
     </div>
   </AppLayout>
