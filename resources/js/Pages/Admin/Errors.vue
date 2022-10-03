@@ -4,7 +4,6 @@
       <Tabs :tabs="tabs" />
     </div>
 
-    <ClaimsTable :claims="claims" />
 
   </AppLayout>
 </template>
@@ -13,7 +12,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
-import ClaimsTable from "@/Components/ClaimsTable.vue";
+
 
 export default {
   data() {
@@ -49,10 +48,9 @@ export default {
   components: {
     AppLayout,
     Tabs,
-    ClaimsTable,
   },
   props:{
-    claims: Object,
+    users: Object,
   }
 };
 </script>

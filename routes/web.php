@@ -4,6 +4,7 @@ use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ErrorReportController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\RankingController;
@@ -62,9 +63,13 @@ Route::get('/admin/configurations', [AdminController::class,'configurations'])->
 Route::get('/admin/claims', [AdminController::class,'claims'])->name('admin.claims');
 Route::get('/admin/notifications', [AdminController::class,'notifications'])->name('admin.notifications');
 Route::get('/admin/users', [AdminController::class,'users'])->name('admin.users');
+Route::get('/admin/errors', [AdminController::class,'errors'])->name('admin.errors');
 
 
 Route::get('/library', [LibraryController::class,'index'])->name('library.index');
+
+
+Route::get('/errors', [ErrorReportController::class,'index'])->name('errors.index');
 
 Route::get('/privacy-policy', function (){
     return Inertia::render('PrivacyPolicy');

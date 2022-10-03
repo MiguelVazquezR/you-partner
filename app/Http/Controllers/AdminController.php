@@ -47,4 +47,9 @@ class AdminController extends Controller
             'users' => UserResource::collection($users)
         ]);
     }
+    public function errors()
+    {
+
+        return Inertia::render('Admin/Errors');
+    }
 }
