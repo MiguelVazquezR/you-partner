@@ -3,7 +3,9 @@
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
       <div class="flex justify-end mt-3">
-        <Link :href="route('homeworks.create')" class="btn-primary">+ Crear</Link>
+        <Link :href="route('homeworks.create')" class="btn-primary"
+          >+ Crear</Link
+        >
       </div>
       <HomeworkTable
         :homeworks="homeworks"
@@ -25,9 +27,15 @@
               <i class="fa-solid fa-tag"></i>
               {{ homework_detail.school_subject.name }}
             </small>
-            <small class="text-xs px-2 rounded-md"
-              :class="homework_detail.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
-              :title="'Prioridad: ' + homework_detail.priority">
+            <small
+              class="text-xs px-2 rounded-md"
+              :class="
+                homework_detail.priority === 'Urgente'
+                  ? 'text-red-700 bg-red-100'
+                  : 'text-green-700 bg-green-100'
+              "
+              :title="'Prioridad: ' + homework_detail.priority"
+            >
               Entrega: {{ homework_detail.limit_date }}
             </small>
           </div>
@@ -41,7 +49,9 @@
               <span>Descripción</span>
             </h1>
             <div>
-              <p class="text-sm text-gray-500">{{ homework_detail.description }}</p>
+              <p class="text-sm text-gray-500">
+                {{ homework_detail.description }}
+              </p>
             </div>
           </div>
           <div class="mt-5">
@@ -49,57 +59,20 @@
               <i class="fa-solid fa-comment-dots mr-2"></i>
               <span>Preguntas y comentarios</span>
             </h1>
-            <div
-              class="border rounded-md border-dotted max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
-              <div
-                @click="dialog_modal = true; show_messages = true; chat_to_show = item"
-                v-for="item in homework_detail.chats"
-                :key="item.id"
-                class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
-                :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !getLastMessage(excludeMyMessages(item.messages))[0].read_at.relative}">                
-                  <Avatar class="inline-block"
-                    :user="getLastMessage(excludeMyMessages(item.messages))[0].user"
-                    :secondary_info="getLastMessage(excludeMyMessages(item.messages))[0].created_at.relative"
-                  />
-                  <p class="text-xs text-gray-600 truncate pt-2">
-                    {{ getLastMessage(excludeMyMessages(item.messages))[0].content }}
-                  </p>
-              </div>
-              <p
-                v-if="!homework_detail.chats.length"
-                class="text-center text-gray-400 text-xs pt-3"
-              >
-                No tienes ningún comentario o pregunta
-              </p>
-            </div>
+            <ChatList
+              :chats="homework_detail.chats"
+              @showChat="showChat($event)"
+            />
           </div>
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
               <i class="fa-solid fa-handshake-angle mr-2"></i>
               <span>Solicitudes de colaboración</span>
             </h1>
-            <div class="mt-1">
-              <div
-                class="border rounded-md border-dotted  max-h-[35vh] min-h-[10vh] overflow-y-auto px-1 py-2 divide-y">
-                <div
-                  @click="dialog_modal = true; show_applicants = true; applicant_collaboration = item"
-                  v-for="item in homework_detail.collaborations"
-                  :key="item"
-                  class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
-                  :class="{'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold': !item.read_at.relative}">
-                  <Avatar
-                    :user="item.user"
-                    :secondary_info="item.created_at.relative"
-                  />
-                </div>
-                <p
-                  v-if="!homework_detail.collaborations.length"
-                  class="text-center text-gray-400 text-xs pt-3"
-                >
-                  No tienes ninguna solicitud
-                </p>
-              </div>
-            </div>
+            <CollaborationApplicants
+              :collaborations="homework_detail.collaborations"
+              @showApplicant="showApplicant($event)"
+            />
           </div>
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
@@ -107,10 +80,16 @@
               <span>Archivos adjuntos</span>
             </h1>
             <div v-if="homework_detail.media.length" class="mt-1 flex flex-col">
-                <AttachedFile v-for="(file, index) in homework_detail.media" :key="index" :name="file.name" :extension="file.mime_type.split('/')[1]" :href="file.original_url" />
+              <AttachedFile
+                v-for="(file, index) in homework_detail.media"
+                :key="index"
+                :name="file.name"
+                :extension="file.mime_type.split('/')[1]"
+                :href="file.original_url"
+              />
             </div>
             <p v-else class="text-center text-gray-400 text-xs pt-3">
-                  No hay recursos para esta tarea
+              No hay recursos para esta tarea
             </p>
           </div>
         </section>
@@ -125,20 +104,34 @@
       </template>
     </DetailsModal>
     <!-- messages -->
-    <DialogModal :show="dialog_modal" @close="dialog_modal = false; show_applicants = false; show_messages = false">
+    <DialogModal
+      :show="dialog_modal"
+      @close="
+        dialog_modal = false;
+        show_applicants = false;
+        show_chat = false;
+      "
+    >
       <template #title>
-        <div v-if="show_messages" class="font-bold text-gray-600">
-          Mensajes <br>
-          <span class="text-indigo-500 font-normal"> {{ homework_detail.title }} </span>
+        <div v-if="show_chat" class="font-bold text-gray-600">
+          Mensajes <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
         </div>
         <div v-else-if="show_applicants" class="font-bold text-gray-600">
-          Aplicantes a colaborar <br>
-          <span class="text-indigo-500 font-normal"> {{ homework_detail.title }} </span>
+          Aplicantes a colaborar <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
         </div>
       </template>
-      <template #content> 
-        <MessagesModal :chat="chat_to_show" v-if="show_messages" />
-        <CollaborationModal :collaboration="applicant_collaboration" v-else-if="show_applicants" />
+      <template #content>
+        <MessagesModal :chat="chat_to_show" v-if="show_chat" />
+        <CollaborationModal
+          :collaboration="applicant_collaboration"
+          v-else-if="show_applicants"
+        />
       </template>
       <template #footer></template>
     </DialogModal>
@@ -156,6 +149,8 @@ import DialogModal from "@/Jetstream/DialogModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import CollaborationModal from "@/Components/CollaborationModal.vue";
+import CollaborationApplicants from "@/Components/CollaborationApplicants.vue";
+import ChatList from "@/Components/ChatList.vue";
 
 export default {
   data() {
@@ -164,7 +159,7 @@ export default {
       side_modal: false,
       dialog_modal: false,
       show_applicants: false,
-      show_messages: false,
+      show_chat: false,
       applicant_collaboration: null,
       chat_to_show: null,
       tabs: [
@@ -202,6 +197,8 @@ export default {
     AttachedFile,
     MessagesModal,
     CollaborationModal,
+    CollaborationApplicants,
+    ChatList,
   },
   props: {
     homeworks: Object,
@@ -212,15 +209,16 @@ export default {
       this.homework_detail = event;
       this.side_modal = true;
     },
-    excludeMyMessages(messages) {
-      return messages.filter(
-        (message) => message.user.id !== this.$page.props.user.id
-        );
+    showChat(item) {
+      this.chat_to_show = item;
+      this.dialog_modal = true;
+      this.show_chat = true;
     },
-    getLastMessage(array) {
-      if(array.length) return array.slice(-1);
-      return null;
-    }
+    showApplicant(item) {
+      this.applicant_collaboration = item;
+      this.dialog_modal = true;
+      this.show_applicants = true;
+    },
   },
 };
 </script>

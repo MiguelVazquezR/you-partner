@@ -19,11 +19,6 @@ class HomeworkController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $filters = $request->all('search');
@@ -34,16 +29,9 @@ class HomeworkController extends Controller
             ->latest('id')
             ->paginate());
 
-        // return $homeworks;
-
         return Inertia::render('Homework/Index', compact('homeworks', 'filters'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $subjects = SchoolSubject::all();
@@ -51,12 +39,6 @@ class HomeworkController extends Controller
         return Inertia::render('Homework/Create', compact('subjects'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreHomeworkRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreHomeworkRequest $request)
     {
         $homework = Homework::create($request->validated());
@@ -65,28 +47,12 @@ class HomeworkController extends Controller
         return redirect()->route('homeworks.index'); //->with('message', 'Se ha creado la tarea correctamente!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Homework  $homework
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Homework $homework)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Homework  $homework
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Homework $homework)
     {
         $subjects = SchoolSubject::all();
+        $media = $homework->getMedia()->all();
 
-        return Inertia::render('Homework/Edit', compact('homework', 'subjects'));
+        return Inertia::render('Homework/Edit', compact('homework', 'subjects', 'media'));
     }
 
     /**
@@ -171,7 +137,7 @@ class HomeworkController extends Controller
 
         return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
     }
-    
+
     public function claims(Request $request)
     {
         $filters = $request->all('search');
