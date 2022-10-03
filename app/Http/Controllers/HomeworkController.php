@@ -64,6 +64,7 @@ class HomeworkController extends Controller
      */
     public function update(Request $request, Homework $homework)
     {
+        dd($request->all());
         $data = $request->validate([
             'title' => 'required',
             'description' => 'required',

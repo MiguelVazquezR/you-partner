@@ -96,7 +96,9 @@
       </template>
       <template #footer>
         <div class="flex">
-          <Link :href="route('homeworks.create')" class="btn-primary">Editar</Link>
+          <Link :href="route('homeworks.edit', homework_detail)" class="btn-primary"
+            >Editar
+          </Link>
           <button @click="side_modal = false" class="btn-secondary mx-6">
             Cerrar
           </button>
@@ -179,7 +181,7 @@ export default {
           label: "Terminados",
           url: "homeworks.finished",
         },
-         {
+        {
           label: "Reclamos",
           url: "homeworks.claims",
         },
@@ -205,8 +207,8 @@ export default {
     filters: Object,
   },
   methods: {
-    showDetails(event) {
-      this.homework_detail = event;
+    showDetails(item) {
+      this.homework_detail = item;
       this.side_modal = true;
     },
     showChat(item) {

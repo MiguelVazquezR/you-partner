@@ -120,11 +120,11 @@
     </template>
     <template #footer>
       <div class="flex justify-end">
-        <DangerButton @click="this.delete()" class="mr-3"
-          >Eliminar</DangerButton
+        <button @click="this.delete()" class="btn-danger mr-2"
+          >Eliminar</button
         >
-        <SecondaryButton @click="delete_confirm = false"
-          >Cancelar</SecondaryButton
+        <button class="btn-secondary" @click="delete_confirm = false"
+          >Cancelar</button
         >
       </div>
     </template>
