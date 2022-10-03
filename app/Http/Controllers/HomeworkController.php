@@ -171,7 +171,7 @@ class HomeworkController extends Controller
 
         return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
     }
-    
+
     public function claims(Request $request)
     {
         $filters = $request->all('search');

@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Collaboration;
 use App\Http\Requests\StoreCollaborationRequest;
 use App\Http\Requests\UpdateCollaborationRequest;
+
 use App\Http\Resources\HomeworkResource;
+
+use App\Http\Resources\CollaborationResource;
+
 use App\Models\Homework;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -113,5 +117,16 @@ class CollaborationController extends Controller
             ->paginate();
 
         return Inertia::render('Collaborations/MyCollaborations', compact('collaborations'));
+    }
+
+    // Other methods
+    public function readCollaboration(Request $request)
+    {
+        $collaboration = Collaboration::with('user.collaborations')->find($request->collaboration_id);
+        $collaboration->update(['read_at' => now()]);
+
+        // dd($collaboration);
+
+        return new CollaborationResource($collaboration);
     }
 }
