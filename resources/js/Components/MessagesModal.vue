@@ -22,13 +22,15 @@
                 : 'bg-gray-200'
             "
           >
-            <p class="text-[13px]" style="white-space: pre-line;">{{ message.content }}</p>
+            <p class="text-[13px]" style="white-space: pre-line">
+              {{ message.content }}
+            </p>
             <span class="text-[11px] text-gray-500">{{
               message.created_at.relative
             }}</span>
           </div>
         </div>
-        <span id="final"></span>
+        <span ref="bottom" class="mt-20"></span>
       </div>
       <form
         @submit.prevent="sendMessage"
@@ -40,7 +42,10 @@
           placeholder="Escribe tu mensaje aquí..."
         >
         </textarea>
-        <button type="submit" class="btn-primary">
+        <button
+          type="submit"
+          class="btn-primary"
+        >
           <i class="fa-solid fa-paper-plane"></i>
         </button>
       </form>
@@ -52,7 +57,6 @@
 <script>
 import Avatar from "@/Components/Avatar.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { nextTick } from '@vue/runtime-core';
 
 export default {
   data() {
@@ -78,7 +82,7 @@ export default {
   },
   methods: {
     sendMessage() {
-      if (this.form.content)
+      if (this.form.content) {
         axios
           .post(route("chat.send-message"), this.form)
           .then((response) => {
@@ -88,13 +92,14 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+      }
     },
-    scrollToFinal() {
-      document.getElementById("final").scrollIntoView(true);
+    scrollToBottom() {
+      this.$refs.bottom.scrollIntoView({ behavior: "smooth" });
     },
   },
   updated() {
-    this.scrollToFinal();
+    this.scrollToBottom();
   },
 };
 </script>
