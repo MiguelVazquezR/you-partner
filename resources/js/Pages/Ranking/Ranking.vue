@@ -17,23 +17,13 @@
         <hr class="mx-5">
 
       <ul class="my-4">
-        <li class="flex items-center"><i class="fa-solid fa-trophy text-amber-500 text-3xl mx-4 my-1"></i><span class="mr-1 bg-gray-300 rounded-md w-[60%] text-amber-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span> </li>
-        <li class="flex items-center"><i class="fa-solid fa-trophy text-gray-500 text-3xl mx-4 my-1"></i><span class="mr-1 bg-gray-300 rounded-md w-[60%] text-gray-600 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><i class="fa-solid fa-trophy text-amber-700 text-3xl mx-4 my-1 mb-3"></i><span class=" mr-1 bg-gray-300 rounded-md w-[60%] text-amber-700 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><span class="flex items-center justify-center ml-4 my-2 w-7 h-7 rounded-full bg-gray-600 text-center text-white">4</span><span class="mr-1 ml-5 bg-gray-300 rounded-md w-[60%] text-gray-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><span class="flex items-center justify-center ml-4 my-2 w-7 h-7 rounded-full bg-gray-600 text-center text-white">5</span><span class="mr-1 ml-5 bg-gray-300 rounded-md w-[60%] text-gray-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><span class="flex items-center justify-center ml-4 my-2 w-7 h-7 rounded-full bg-gray-600 text-center text-white">6</span><span class="mr-1 ml-5 bg-gray-300 rounded-md w-[60%] text-gray-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><span class="flex items-center justify-center ml-4 my-2 w-7 h-7 rounded-full bg-gray-600 text-center text-white">7</span><span class="mr-1 ml-5 bg-gray-300 rounded-md w-[60%] text-gray-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><span class="flex items-center justify-center ml-4 my-2 w-7 h-7 rounded-full bg-gray-600 text-center text-white">8</span><span class="mr-1 ml-5 bg-gray-300 rounded-md w-[60%] text-gray-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><span class="flex items-center justify-center ml-4 my-2 w-7 h-7 rounded-full bg-gray-600 text-center text-white">9</span><span class="mr-1 ml-5 bg-gray-300 rounded-md w-[60%] text-gray-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
-        <li class="flex items-center"><span class="flex items-center justify-center ml-4 my-2 w-7 h-7 rounded-full bg-gray-600 text-center text-white">10</span><span class="mr-1 ml-5 bg-gray-300 rounded-md w-[60%] text-gray-500 font-bold p-1">Angel Vázquez</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">158</span></li>
+        <li v-for="(place,index) in top_ten" :key="place.id" class="flex items-center"><i :class="rankProps(index).icon +' '+ rankProps(index).color" class="text-3xl mx-4 my-1"></i><span :class="rankProps(index).color" class="mr-1 bg-gray-300 rounded-md w-[60%] font-bold p-1">{{place.name}}</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">{{ place.points }}</span> </li>
       </ul>
-      
         </div>
 
 
-<!-- ------------FINAL DEL PANEL 2---------------------- -->
-    <div class="my-6 mx-4 rounded-lg max-h-screen col-start-2">
+<!-- ------------INICIO DEL PANEL 2---------------------- -->
+    <div class="my-6 mx-4 rounded-lg max-h-screen lg:grid-cols-2 sm:grid-cols-1">
         <h2 class="text-indigo-500 text-md font-bold text-center mt-2">TOP 3</h2>
         <hr class="mx-5">
 
@@ -129,11 +119,96 @@ export default {
           url: "ranking.levels",
         },
       ],
+      top_ten:[
+        {
+          name:'Angel Vazquez',
+          points:200,
+          rank:1,
+        },
+        {
+          name:'Miguel Vazquez',
+          points:189,
+          rank:2,
+        },
+        {
+          name:'Jose Perez',
+          points:180,
+          rank:3,
+        },
+        {
+          name:'Rebeca Gomez',
+          points:170,
+          rank:4,
+        },
+        {
+          name:'Gerardo Sant',
+          points:164,
+          rank:5,
+        },
+        {
+          name:'Gerardo Sant',
+          points:164,
+          rank:6,
+        },
+        {
+          name:'Gerardo Sant',
+          points:164,
+          rank:7,
+        },
+        {
+          name:'Gerardo Sant',
+          points:164,
+          rank:8,
+        },
+        {
+          name:'Gerardo Sant',
+          points:164,
+          rank:9,
+        },
+        {
+          name:'Gerardo Sant',
+          points:164,
+          rank:10,
+        },
+      ],
+      top_three:[
+        {
+          name:'Angel Vazquez',
+          points:200,
+          rank:1,
+        },
+        {
+          name:'Miguel Vazquez',
+          points:189,
+          rank:2,
+        },
+        {
+          name:'Jose Perez',
+          points:180,
+          rank:3,
+        },
+      ],
     };
   },
   components: {
     AppLayout,
     Tabs,
+  },
+  methods:{
+    rankProps(index){
+        if(this.top_ten[index].rank==1){
+          return {icon:'fa-solid fa-trophy', color:'text-amber-500'};
+         }
+        if(this.top_ten[index].rank==2){
+          return {icon:'fa-solid fa-trophy', color:'text-gray-500'};
+        }
+        if(this.top_ten[index].rank==3){
+          return {icon:'fa-solid fa-trophy', color:'text-amber-700'};
+        }
+        if(this.top_ten[index].rank>3){
+          return {icon:'fa-solid fa-medal', color:'text-gray-500'};
+        }
+    }
   }
 };
 </script>

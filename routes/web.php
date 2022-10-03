@@ -44,6 +44,10 @@ Route::get('/homeworks/no-collaboration', [HomeworkController::class, 'noCollabo
 Route::get('/homeworks/on-collaboration', [HomeworkController::class, 'onCollaboration'])->name('homeworks.on-collaboration');
 Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name('homeworks.finished');
 
+Route::get('/homeworks/claims', [HomeworkController::class, 'claims'])->name('homeworks.claims');
+Route::post('/homeworks/send-message', [HomeworkController::class, 'sendMessage'])->name('homeworks.send-message');
+
+
 Route::resource('/collaborations', CollaborationController::class)->except('show');
 Route::get('/collaborations/my-collaborations', [CollaborationController::class, 'myCollaborations'])->name('collaborations.my-collaborations');
 Route::post('/collaborations/read-collaboration', [CollaborationController::class, 'readCollaboration'])->name('collaborations.read-collaboration');

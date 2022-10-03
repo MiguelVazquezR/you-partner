@@ -2,14 +2,14 @@
   <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" class="mb-8" />
-      <HomeworkTable
+      <AvailableCollaborationsTable 
         :homeworks="homeworks"
         :filters="filters"
         filterURL="/collaborations"
-        withAvatar
         @details="showDetails"
       />
     </div>
+
   </AppLayout>
   <DetailsModal :show="side_modal" @close="side_modal = false">
     <template #title> Título de mi modal </template>
@@ -53,9 +53,9 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import HomeworkTable from "@/Components/HomeworkTable.vue";
 import Tabs from "@/Components/Tabs.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
+import AvailableCollaborationsTable from "@/Components/AvailableCollaborationsTable.vue";
 
 export default {
   data() {
@@ -76,9 +76,9 @@ export default {
   components: {
     AppLayout,
     Link,
-    HomeworkTable,
     Tabs,
     DetailsModal,
+    AvailableCollaborationsTable,
   },
   props: {
     homeworks: Object,

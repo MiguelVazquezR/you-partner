@@ -179,8 +179,8 @@
       </template>
       <template #footer>
         <div class="flex">
-          <button class="btn-primary mr-3">Editar</button>
-          <button @click="side_modal = false" class="btn-secondary">
+          <Link :href="route('homeworks.create')" class="btn-primary">Editar</Link>
+          <button @click="side_modal = false" class="btn-secondary mx-6">
             Cerrar
           </button>
         </div>
@@ -259,6 +259,10 @@ export default {
         {
           label: "Terminados",
           url: "homeworks.finished",
+        },
+         {
+          label: "Reclamos",
+          url: "homeworks.claims",
         },
       ],
     };
