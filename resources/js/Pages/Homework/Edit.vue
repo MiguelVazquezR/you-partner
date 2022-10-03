@@ -1,5 +1,5 @@
 <template>
-  <AppLayout title="Crear Tarea">
+  <AppLayout title="Editar tarea">
     <div class="px-8 mt-3">
       <JetValidationErrors />
       <div class="flex items-center">
@@ -8,26 +8,14 @@
         <span class="ml-2">Atrás</span>
         </Link>
         <p class="text-xl text-indigo-600 ml-6 font-semibold">
-          Editar tarea {{ this.form.id }}
+          Editar tarea {{form.id}}
         </p>
       </div>
-      <form @submit.prevent="update">
-        <div class="grid grid-cols-2 gap-x-3">
+      <form @submit.prevent="update" class="mt-6">
+        <div class="lg:grid grid-cols-2 gap-x-3 section-container">
           <div class="mt-3">
             <Label value="Título" />
             <Input v-model="form.title" type="text" class="w-full" />
-          </div>
-          <div class="mt-3">
-            <Label value="Prioridad" />
-            <select v-model="form.priority" class="input w-full">
-              <option value="" selected>-- Seleccione --</option>
-              <option value="Normal">Normal</option>
-              <option value="Urgente">Urgente</option>
-            </select>
-          </div>
-          <div class="mt-3">
-            <Label value="Descripción" />
-            <textarea v-model="form.description" class="input w-full" rows="3"></textarea>
           </div>
           <div class="mt-3">
             <Label value="Materia" />
@@ -38,28 +26,50 @@
               </option>
             </select>
           </div>
-          <div class="mt-3">
-            <Label value="Fecha de entrega" />
-            <Input v-model="form.delivery_date" type="date" class="w-full" />
+          <div class="mt-3 col-span-2">
+            <Label value="Descripción" />
+            <textarea v-model="form.description" class="input w-full !h-20"></textarea>
           </div>
           <div class="mt-3">
-            <Label value="Archivo" />
-            <InputFile class="w-full" @input="form.resources = $event.target.files[0]" />
+            <Label value="Prioridad" />
+            <select v-model="form.priority" class="input w-full">
+              <option value="" selected>-- Seleccione --</option>
+              <option value="Normal">Normal</option>
+              <option value="Urgente">Urgente</option>
+            </select>
+          </div>
+          <div class="mt-3">
+            <Label value="Fecha límite de entrega" />
+            <Input v-model="form.limit_date.split('T')[0]" type="date" class="w-full" />
+          </div>
+          <div class="mt-3">
+            <Label value="Archivos subidos" />
+            <div class="flex flex-col" v-for="(file, index) in media" :key="file.id">
+              <a :href="file.original_url" target="_blank" class="text-sm text-indigo-500 hover:underline">{{ file.name }}
+                <button
+                  @click="removeFile(index)"
+                  title="Remover archivo"
+                >
+                <span class="text-gray-500 ml-2 font-bold text-xs hover:text-red-500"><i class="fa-solid fa-trash-can"></i></span>
+                </button>
+              </a>
+            </div>
+          </div>
+          <div class="mt-3">
+            <Label value="Archivos o recursos de la tarea" />
+            <FileUploader @input="form.resources = $event.target.files" />
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
-            <a v-if="resources.length" :href="'../../../storage/' + resources[0].path" class="text-blue-400 underline" target="_blank">Recursos</a>
           </div>
         </div>
-        <div>
-          <button @click="destroy" class="btn-danger mr-3">
-            Eliminar
-          </button>
-          <button type="submit" v-if="!form.processing" class="btn-primary">
-            Actualizar
-          </button>
-          <p v-else class="text-sm text-gray-400">Cargando...</p>
-        </div>
+        <button type="submit" v-if="!form.processing" class="btn-primary mt-4 mr-2">
+          Actualizar
+        </button>
+        <button v-if="!form.processing" class="btn-danger mt-4">
+          Eliminar
+        </button>
+        <p v-else class="text-sm text-gray-400 mt-4">Cargando...</p>
       </form>
     </div>
   </AppLayout>
@@ -69,15 +79,16 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Input from "@/Jetstream/Input.vue";
-import InputFile from "@/Components/Common/InputFile.vue";
+import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import FileUploader from "@/Components/Common/FileUploader.vue";
 import Label from "@/Jetstream/Label.vue";
 import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
-import moment from 'moment';
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   data() {
-    const form = useForm(this.homework);
+    let form = useForm(this.homework);
+    form.resources = null;
 
     return {
       form
@@ -86,7 +97,8 @@ export default {
   components: {
     AppLayout,
     Input,
-    InputFile,
+    ConfirmationModal,
+    FileUploader,
     Label,
     JetValidationErrors,
     Link,
@@ -96,6 +108,7 @@ export default {
     subjects: Array,
     homework: Object,
     resources: Array,
+    media: Array,
   },
   methods: {
     update() {
@@ -103,7 +116,7 @@ export default {
         _method: 'put',
         title: this.form.title,
         description: this.form.description,
-        delivery_date: this.form.delivery_date,
+        limit_date: this.form.limit_date,
         priority: this.form.priority,
         user_id: this.$page.props.user.id,
         school_subject_id: this.form.school_subject_id,
@@ -113,9 +126,6 @@ export default {
     destroy() {
       this.$inertia.delete(this.route('homeworks.destroy', this.homework))
     },
-    deliveryDate() {
-      return moment(this.form.delivery_date).format("YYYY-MM-DD")
-    }
   }
 };
 </script>

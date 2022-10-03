@@ -59,103 +59,20 @@
               <i class="fa-solid fa-comment-dots mr-2"></i>
               <span>Preguntas y comentarios</span>
             </h1>
-            <div
-              class="
-                border
-                rounded-md
-                border-dotted
-                max-h-[35vh]
-                min-h-[10vh]
-                overflow-y-auto
-                px-1
-                py-2
-                divide-y
-              "
-            >
-              <div
-                @click="openMessages(item, index)"
-                v-for="(item, index) in homework_detail.chats"
-                :key="item.id"
-                class="
-                  grid grid-cols-2
-                  gap-x-2
-                  hover:bg-gray-100
-                  cursor-pointer
-                  rounded
-                "
-                :class="{
-                  'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold':
-                    isAnyUnread(item.messages),
-                }"
-              >
-                <Avatar
-                  class="inline-block"
-                  :user="getLast(excludeMyMessages(item.messages))[0].user"
-                  :secondary_info="
-                    getLast(excludeMyMessages(item.messages))[0].created_at
-                      .relative
-                  "
-                />
-                <p class="text-xs text-gray-600 truncate pt-2">
-                  {{ getLast(excludeMyMessages(item.messages))[0].content }}
-                </p>
-              </div>
-              <p
-                v-if="!homework_detail.chats.length"
-                class="text-center text-gray-400 text-xs pt-3"
-              >
-                No tienes ningún comentario o pregunta
-              </p>
-            </div>
+            <ChatList
+              :chats="homework_detail.chats"
+              @showChat="showChat($event)"
+            />
           </div>
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
               <i class="fa-solid fa-handshake-angle mr-2"></i>
               <span>Solicitudes de colaboración</span>
             </h1>
-            <div class="mt-1">
-              <div
-                class="
-                  border
-                  rounded-md
-                  border-dotted
-                  max-h-[35vh]
-                  min-h-[10vh]
-                  overflow-y-auto
-                  px-1
-                  py-2
-                  divide-y
-                "
-              >
-                <div
-                  @click="openCollaborationApplicant(item, index)"
-                  v-for="(item, index) in homework_detail.collaborations"
-                  :key="item"
-                  class="
-                    grid grid-cols-2
-                    gap-x-2
-                    hover:bg-gray-100
-                    cursor-pointer
-                    rounded
-                  "
-                  :class="{
-                    'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold':
-                      !item.read_at.relative,
-                  }"
-                >
-                  <Avatar
-                    :user="item.user"
-                    :secondary_info="item.created_at.relative"
-                  />
-                </div>
-                <p
-                  v-if="!homework_detail.collaborations.length"
-                  class="text-center text-gray-400 text-xs pt-3"
-                >
-                  No tienes ninguna solicitud
-                </p>
-              </div>
-            </div>
+            <CollaborationApplicants
+              :collaborations="homework_detail.collaborations"
+              @showApplicant="showApplicant($event)"
+            />
           </div>
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
@@ -192,11 +109,11 @@
       @close="
         dialog_modal = false;
         show_applicants = false;
-        show_messages = false;
+        show_chat = false;
       "
     >
       <template #title>
-        <div v-if="show_messages" class="font-bold text-gray-600">
+        <div v-if="show_chat" class="font-bold text-gray-600">
           Mensajes <br />
           <span class="text-indigo-500 font-normal">
             {{ homework_detail.title }}
@@ -210,7 +127,7 @@
         </div>
       </template>
       <template #content>
-        <MessagesModal :chat="chat_to_show" v-if="show_messages" />
+        <MessagesModal :chat="chat_to_show" v-if="show_chat" />
         <CollaborationModal
           :collaboration="applicant_collaboration"
           v-else-if="show_applicants"
@@ -232,6 +149,8 @@ import DialogModal from "@/Jetstream/DialogModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import CollaborationModal from "@/Components/CollaborationModal.vue";
+import CollaborationApplicants from "@/Components/CollaborationApplicants.vue";
+import ChatList from "@/Components/ChatList.vue";
 
 export default {
   data() {
@@ -240,7 +159,7 @@ export default {
       side_modal: false,
       dialog_modal: false,
       show_applicants: false,
-      show_messages: false,
+      show_chat: false,
       applicant_collaboration: null,
       chat_to_show: null,
       tabs: [
@@ -278,6 +197,8 @@ export default {
     AttachedFile,
     MessagesModal,
     CollaborationModal,
+    CollaborationApplicants,
+    ChatList,
   },
   props: {
     homeworks: Object,
@@ -288,55 +209,15 @@ export default {
       this.homework_detail = event;
       this.side_modal = true;
     },
-    excludeMyMessages(messages) {
-      return messages.filter(
-        (message) => message.user.id !== this.$page.props.user.id
-      );
-    },
-    getLast(array) {
-      if (array.length) return array.slice(-1);
-      return null;
-    },
-    isAnyUnread(messages) {
-      if (messages.length) {
-        return this.excludeMyMessages(messages).some((message) => !message.read_at.special);
-      }
-    },
-    openMessages(item, index) {
+    showChat(item) {
       this.chat_to_show = item;
-      if (this.isAnyUnread(item.messages)) {
-        axios
-          .post(route("chat.read-message"), { chat_id: this.chat_to_show.id })
-          .then((response) => {
-            this.homework_detail.chats[index] = response.data;
-            this.dialog_modal = true;
-            this.show_messages = true;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        this.dialog_modal = true;
-        this.show_messages = true;
-      }
+      this.dialog_modal = true;
+      this.show_chat = true;
     },
-    openCollaborationApplicant(item, index) {
+    showApplicant(item) {
       this.applicant_collaboration = item;
-      if (item.read_at.string === null) {
-        axios
-          .post(route("collaborations.read-collaboration"), { collaboration_id: this.applicant_collaboration.id })
-          .then((response) => {
-            this.homework_detail.collaborations[index] = response.data;
-            this.dialog_modal = true;
-            this.show_applicants = true;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        this.dialog_modal = true;
-        this.show_applicants = true;
-      }
+      this.dialog_modal = true;
+      this.show_applicants = true;
     },
   },
 };
