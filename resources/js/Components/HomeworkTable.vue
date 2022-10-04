@@ -166,7 +166,10 @@ export default {
     filterURL: String,
     canEdit: Boolean,
     canDelete: Boolean,
-    withAvatar: Boolean,
+    withAvatar: {
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
     delete() {

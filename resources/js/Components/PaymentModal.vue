@@ -4,8 +4,7 @@
       container
       flex flex-col
       w-full
-      max-w-lg
-      p-6
+      px-4
       mx-auto
       divide-y
       rounded-md
