@@ -47,6 +47,7 @@ Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name
 
 Route::get('/homeworks/claims', [HomeworkController::class, 'claims'])->name('homeworks.claims');
 Route::post('/homeworks/send-message', [HomeworkController::class, 'sendMessage'])->name('homeworks.send-message');
+Route::post('/homeworks/delete-file', [HomeworkController::class, 'deleteFile'])->name('homeworks.delete-file');
 
 
 Route::resource('/collaborations', CollaborationController::class)->except('show');

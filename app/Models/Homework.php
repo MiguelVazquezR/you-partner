@@ -74,4 +74,12 @@ class Homework extends Model implements HasMedia
                 });
         });
     }
+
+    // query scopes
+    public function scopeNoCollaborationApproved($query)
+    {
+        $query->whereHas('collaborations', function ($q){
+            $q->whereNull('approved_at');
+        })->orDoesntHave('collaborations');
+    }
 }

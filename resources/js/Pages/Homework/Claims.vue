@@ -6,7 +6,8 @@
         :homeworks="homeworks"
         :filters="filters"
         filterURL="/homeworks/finished"
-        withAvatar
+        canEdit
+        canDelete
         @details="showDetails"
       />
     </div>
