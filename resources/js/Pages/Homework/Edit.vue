@@ -107,9 +107,6 @@
         >
           Actualizar
         </button>
-        <button v-if="!form.processing" class="btn-danger mt-4">
-          Eliminar
-        </button>
         <p v-else class="text-sm text-gray-400 mt-4">Cargando...</p>
       </form>
     </div>
@@ -123,7 +120,7 @@
         continuar?
       </template>
       <template #footer>
-        <button class="btn-danger">Si, eliminar</button>
+        <button class="btn-danger" @click="deleteFile">Si, eliminar</button>
         <button class="btn-secondary ml-2" @click="show_confirmation = false">
           Cancelar
         </button>
@@ -193,6 +190,20 @@ export default {
     },
     destroy() {
       this.form.delete(this.route("homeworks.destroy", this.homework));
+    },
+    deleteFile() {
+      this.show_confirmation = false;
+      axios
+        .post(route("homeworks.delete-file"), {
+          file_id: this.media[this.file_to_delete].id,
+          homework_id: this.homework.id
+        })
+        .then(() => {
+          this.media.splice(this.file_to_delete, 1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
