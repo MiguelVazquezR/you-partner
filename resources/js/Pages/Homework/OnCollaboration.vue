@@ -5,8 +5,9 @@
       <HomeworkTable
         :homeworks="homeworks"
         :filters="filters"
+        canDelete
+        canEdit
         filterURL="/homeworks/on-collaboration"
-        withAvatar
         @details="showDetails"
       />
     </div>

@@ -13,7 +13,7 @@ class UpdateHomeworkRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class UpdateHomeworkRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'description' => 'required',
+            'limit_date' => 'required|after:yesterday',
+            'priority' => 'required',
+            'school_subject_id' => 'required'
         ];
     }
 }

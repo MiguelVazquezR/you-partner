@@ -55,34 +55,14 @@ class HomeworkController extends Controller
         return Inertia::render('Homework/Edit', compact('homework', 'subjects', 'media'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateHomeworkRequest  $request
-     * @param  \App\Models\Homework  $homework
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Homework $homework)
+    public function update(UpdateHomeworkRequest $request, Homework $homework)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'delivery_date' => 'required',
-            'priority' => 'required',
-            'school_subject_id' => 'required'
-        ]);
+        $homework->update($request->validated());
+        $homework->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
 
-        $homework->update($data);
-
-        return redirect()->route('homeworks.edit', $homework);
+        return redirect()->route('homeworks.index'); //->with('message', 'Se ha creado la tarea correctamente!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Homework  $homework
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Homework $homework)
     {
         $homework->delete();
@@ -96,7 +76,7 @@ class HomeworkController extends Controller
         $filters = $request->all('search');
 
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
-            ->doesntHave('collaborations')
+            ->noCollaborationApproved()
             ->filter($filters)
             ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
@@ -115,7 +95,7 @@ class HomeworkController extends Controller
                     ->whereNull('completed_date');
             })
             ->filter($filters)
-            ->with('schoolSubject', 'collaborations.user')
+            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
@@ -128,10 +108,11 @@ class HomeworkController extends Controller
 
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
             ->whereHas('collaborations', function ($query) {
-                $query->whereNotNull('completed_date');
+                $query->doesntHave('claim')
+                    ->whereNotNull('completed_date');
             })
             ->filter($filters)
-            ->with('schoolSubject', 'collaborations.user')
+            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
@@ -144,10 +125,10 @@ class HomeworkController extends Controller
 
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
             ->whereHas('collaborations', function ($query) {
-                $query->whereNotNull('completed_date');
+                $query->Has('claim');
             })
             ->filter($filters)
-            ->with('schoolSubject', 'collaborations.user')
+            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
@@ -159,5 +140,12 @@ class HomeworkController extends Controller
         $message = Message::create($request->all());
 
         return new MessageResource(Message::with('user')->find($message->id));
+    }
+
+    public function deleteFile(Request $request)
+    {
+        Homework::find($request->homework_id)->deleteMedia($request->file_id);
+
+        return response()->json(['success' => 'success'], 200);
     }
 }

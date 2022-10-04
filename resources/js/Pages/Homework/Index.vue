@@ -96,7 +96,9 @@
       </template>
       <template #footer>
         <div class="flex">
-          <Link :href="route('homeworks.create')" class="btn-primary">Editar</Link>
+          <Link :href="route('homeworks.edit', homework_detail)" class="btn-primary"
+            >Editar
+          </Link>
           <button @click="side_modal = false" class="btn-secondary mx-6">
             Cerrar
           </button>
@@ -125,12 +127,24 @@
             {{ homework_detail.title }}
           </span>
         </div>
+        <div v-else-if="show_payment" class="font-bold text-gray-600">
+          Pagar colaboración <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
+        </div>
       </template>
       <template #content>
         <MessagesModal :chat="chat_to_show" v-if="show_chat" />
         <CollaborationModal
           :collaboration="applicant_collaboration"
           v-else-if="show_applicants"
+          @accepted="showPayment"
+        />
+        <PaymentModal
+          :collaboration="applicant_collaboration"
+          v-else-if="show_payment"
+          @cancel="show_payment = false; show_applicants = true"
         />
       </template>
       <template #footer></template>
@@ -149,6 +163,7 @@ import DialogModal from "@/Jetstream/DialogModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import CollaborationModal from "@/Components/CollaborationModal.vue";
+import PaymentModal from "@/Components/PaymentModal.vue";
 import CollaborationApplicants from "@/Components/CollaborationApplicants.vue";
 import ChatList from "@/Components/ChatList.vue";
 
@@ -179,7 +194,7 @@ export default {
           label: "Terminados",
           url: "homeworks.finished",
         },
-         {
+        {
           label: "Reclamos",
           url: "homeworks.claims",
         },
@@ -197,6 +212,7 @@ export default {
     AttachedFile,
     MessagesModal,
     CollaborationModal,
+    PaymentModal,
     CollaborationApplicants,
     ChatList,
   },
@@ -205,8 +221,8 @@ export default {
     filters: Object,
   },
   methods: {
-    showDetails(event) {
-      this.homework_detail = event;
+    showDetails(item) {
+      this.homework_detail = item;
       this.side_modal = true;
     },
     showChat(item) {
@@ -218,6 +234,10 @@ export default {
       this.applicant_collaboration = item;
       this.dialog_modal = true;
       this.show_applicants = true;
+    },
+    showPayment() {
+      this.show_applicants = false;
+      this.show_payment = true;
     },
   },
 };

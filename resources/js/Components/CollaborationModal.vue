@@ -70,7 +70,7 @@
       </div>
     </div>
   <div class="text-center">
-    <button class="btn-primary mx-2 my-4">Aceptar Colaboración</button>
+    <button class="btn-primary mx-2 my-4" @click="$emit('accepted')">Aceptar Colaboración</button>
     <!-- <button class="btn-secondary mx-2">Comentar</button> -->
   </div>
 </template>
