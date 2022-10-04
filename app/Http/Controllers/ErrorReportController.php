@@ -11,8 +11,8 @@ class ErrorReportController extends Controller
     public function index(Request $request)
     {
         $filters = $request->all('search');
-        $errors = ErrorReportModel::all()
-            ->filter($filters)
+        $errors = ErrorReportModel::
+            filter($filters)
             ->with('user')
             ->latest()
             ->paginate();
