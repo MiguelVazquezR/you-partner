@@ -18,8 +18,9 @@
           <td class="px-3">
              <i class="fa-solid fa-bug text-green-700"></i>
              <i class="fa-solid fa-thumbtack text-blue-600"></i>
+          </td>
           <td class="pr-5">
-            <Avatar :user="user" />
+            <Avatar :user="error.user" />
           </td>
           <td>
             <div>
@@ -30,7 +31,7 @@
           </td>
           <td class="pl-4">
             <button
-              @click="showDetails"
+              @click="showDetails(error)"
               class="
                 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
                 text-sm
@@ -77,8 +78,8 @@ export default {
     filterURL: String,
   },
   methods:{
-    showDetails() {
-      this.$emit('details')
+    showDetails(prop) {
+      this.$emit('details',prop);
     }
   }
 };

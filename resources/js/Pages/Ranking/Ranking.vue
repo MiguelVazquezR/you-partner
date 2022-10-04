@@ -17,7 +17,12 @@
         <hr class="mx-5">
 
       <ul class="my-4">
-        <li v-for="(place,index) in top_ten" :key="place.id" class="flex items-center"><i :class="rankProps(index).icon +' '+ rankProps(index).color" class="text-3xl mx-4 my-1"></i><span :class="rankProps(index).color" class="mr-1 bg-gray-300 rounded-md w-[60%] font-bold p-1">{{place.name}}</span> <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">{{ place.points }}</span> </li>
+        <li v-for="(place,index) in top_ten" :key="place.id" class="flex items-center"><i :class="rankProps(index).icon +' '+ rankProps(index).color" class="text-3xl mx-4 my-1"></i>
+        <div class="">
+					<img src="https://source.unsplash.com/100x100/?portrait" alt="" class="object-cover w-9 h-9 rounded-full dark:bg-gray-500">
+				</div>
+        <span :class="rankProps(index).color" class="mr-1 bg-gray-300 rounded-md w-[60%] font-bold p-1">{{place.name}}</span>
+         <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">{{ place.points }}</span> </li>
       </ul>
         </div>
 
@@ -29,7 +34,7 @@
 
       <div class="grid grid-cols-2 grid-rows-2">
         
-          <div class="bg-amber-300 rounded-lg my-3 ml-4 row-span-2 shadow-xl">
+          <div class="bg-gradient-to-r from-sky-500 to-indigo-500 rounded-lg my-3 ml-4 row-span-2 shadow-xl">
               <h1 class="text-center my-2">TOP 1</h1>
               <div class="w-[60%] h-[45%] border-2 border-white mx-auto">
                     foto de la persona
@@ -43,7 +48,7 @@
               </div>
           </div>
 
-          <div class="h-48 w-[85%] bg-gray-400 rounded-lg my-3 ml-4 grid grid-cols-5 shadow-xl">
+          <div class="h-48 w-72 bg-gradient-to-r from-gray-400 to-gray-700 rounded-lg my-3 ml-4 grid grid-cols-5 shadow-xl">
 
               <h1 class="text-left mt-2">2</h1>
               <div class="w-[60%] h-[60%] border-2 border-white mx-3 col-start-1 col-span-2">
@@ -59,7 +64,7 @@
 
           </div>
 
-          <div class="h-48 w-[85%] bg-yellow-600 rounded-lg my-3 ml-4 grid grid-cols-5 shadow-xl">
+          <div class="h-48 w-72 bg-gradient-to-r from-amber-500 to-amber-700 rounded-lg my-3 ml-4 grid grid-cols-5 shadow-xl">
 
               <h1 class="text-left mt-2">3</h1>
               <div class="w-[60%] h-[60%] border-2 border-white mx-3 col-start-1 col-span-2">

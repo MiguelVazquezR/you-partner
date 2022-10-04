@@ -10,6 +10,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
+import DropupButton from "@/Components/DropupButton.vue";
 
 
 export default {
@@ -38,6 +39,7 @@ export default {
   components: {
     AppLayout,
     Tabs,
+    DropupButton,
   }
 };
 </script>

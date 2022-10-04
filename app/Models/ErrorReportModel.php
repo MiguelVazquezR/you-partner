@@ -13,5 +13,23 @@ class ErrorReportModel extends Model
         'subject',
         'content',
         'user_id',
+        'is_error',
     ];
+
+    //relationships
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // query scopes
+    public function scopeFilter($query, $filters)
+    {
+        $query->when($filters["search"], function ($query, $search) {
+            $query->where('subject', 'LIKE', "%$search%")
+                ->orWhereHas('user', function ($query2) use ($search) {
+                    $query2->where('name', 'LIKE', "%$search%");
+                });
+        });
+    }
 }

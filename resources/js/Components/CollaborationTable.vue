@@ -17,6 +17,7 @@
         >
           <td class="px-3">
              <StatusIcon :collaboration="collaboration" />
+          </td> 
           <td class="pr-5">
             <Avatar :user="collaboration.homework.user" />
           </td>
