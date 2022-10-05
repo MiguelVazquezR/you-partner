@@ -18,6 +18,10 @@ const form = useForm({
     _method: 'PUT',
     name: props.user.name,
     email: props.user.email,
+    academic_grade: props.user.academic_grade,
+    state: props.user.state,
+    school_name: props.user.school_name,
+    description: props.user.description,
     photo: null,
 });
 
@@ -79,11 +83,11 @@ const clearPhotoFileInput = () => {
 <template>
     <JetFormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            Información de Perfil
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Actualiza la información de tu perfil y tu Email.
         </template>
 
         <template #form>
@@ -101,7 +105,7 @@ const clearPhotoFileInput = () => {
 
                 <!-- Current Profile Photo -->
                 <div v-show="! photoPreview" class="mt-2">
-                    <img :src="user.profile_photo_url" :alt="user.name" class="rounded-full h-20 w-20 object-cover">
+                    <img :src="user.profile_photo_url" :alt="user.name" class="rounded-full h-28 w-28 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -113,7 +117,7 @@ const clearPhotoFileInput = () => {
                 </div>
 
                 <JetSecondaryButton class="mt-2 mr-2" type="button" @click.prevent="selectNewPhoto">
-                    Select A New Photo
+                    Selecciona una nueva foto
                 </JetSecondaryButton>
 
                 <JetSecondaryButton
@@ -122,7 +126,7 @@ const clearPhotoFileInput = () => {
                     class="mt-2"
                     @click.prevent="deletePhoto"
                 >
-                    Remove Photo
+                    Eliminar foto
                 </JetSecondaryButton>
 
                 <JetInputError :message="form.errors.photo" class="mt-2" />
@@ -130,7 +134,7 @@ const clearPhotoFileInput = () => {
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="name" value="Name" />
+                <JetLabel for="name" value="Nombre" />
                 <JetInput
                     id="name"
                     v-model="form.name"
@@ -139,6 +143,63 @@ const clearPhotoFileInput = () => {
                     autocomplete="name"
                 />
                 <JetInputError :message="form.errors.name" class="mt-2" />
+            </div>
+            <!-- academic_grade -->
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="academic_grade" value="Grado Académico" />
+                <JetInput
+                    id="academic"
+                    v-model="form.academic_grade"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <JetInputError :message="form.errors.name" class="mt-2" />
+            </div>
+            <!-- state -->
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="state" value="Estado" />
+                <JetInput
+                    id="state"
+                    v-model="form.state"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <JetInputError :message="form.errors.name" class="mt-2" />
+            </div>
+            <!-- school_name -->
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="school_name" value="Escuela" />
+                <JetInput
+                    id="school_name"
+                    v-model="form.school_name"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <JetInputError :message="form.errors.name" class="mt-2" />
+            </div>
+
+            <!-- Description -->
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="description" value="Descripción" />
+                <JetInput
+                    id="description"
+                    v-model="form.description"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <JetInputError :message="form.errors.name" class="mt-2" />
+            </div>
+
+            <!--se unió -->
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="description" value="Se unió" />
+                <p class="mt-1">{{ props.user.created_at.split('T',[1]) }}</p> 
+            </div>
+
+            <!--Borthdate -->
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="birthdate" value="Cumpleaños" />
+                <p class="mt-1">{{ props.user.birthdate.split('T',[1])}}</p> 
             </div>
 
             <!-- Email -->
@@ -176,11 +237,11 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <JetActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
+                Guardado.
             </JetActionMessage>
 
             <JetButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Guardar
             </JetButton>
         </template>
     </JetFormSection>

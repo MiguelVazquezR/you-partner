@@ -2,7 +2,8 @@
   <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" class="mb-8" />
-      <AvailableCollaborationsTable
+    </div>
+      <AvailableCollaborationsTable 
         :homeworks="homeworks"
         :filters="filters"
         filterURL="/collaborations"
@@ -10,6 +11,8 @@
       />
     </div>
     <DetailsModal :show="side_modal" @close="side_modal = false">
+  </AppLayout>
+  <DetailsModal :show="side_modal" @close="side_modal = false">
       <template #title>
         <div class="flex flex-col">
           <h1 class="text-indigo-600 text-xl font-semibold">
