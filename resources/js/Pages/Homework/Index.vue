@@ -105,13 +105,14 @@
         </div>
       </template>
     </DetailsModal>
-    <!-- messages -->
+    <!-- Modal -->
     <DialogModal
       :show="dialog_modal"
       @close="
         dialog_modal = false;
         show_applicants = false;
         show_chat = false;
+        show_payment = false;
       "
     >
       <template #title>

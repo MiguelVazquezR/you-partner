@@ -2,16 +2,14 @@
   <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" class="mb-8" />
-      <AvailableCollaborationsTable 
+      <AvailableCollaborationsTable
         :homeworks="homeworks"
         :filters="filters"
         filterURL="/collaborations"
         @details="showDetails($event)"
       />
     </div>
-
-  </AppLayout>
-  <DetailsModal :show="side_modal" @close="side_modal = false">
+    <DetailsModal :show="side_modal" @close="side_modal = false">
       <template #title>
         <div class="flex flex-col">
           <h1 class="text-indigo-600 text-xl font-semibold">
@@ -31,7 +29,7 @@
               "
               :title="'Prioridad: ' + homework_detail.priority"
             >
-              Entrega: {{ homework_detail.limit_date }}
+              Límite: {{ homework_detail.limit_date }}
             </small>
           </div>
         </div>
@@ -49,7 +47,6 @@
               </p>
             </div>
           </div>
-
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
               <i class="fa-solid fa-paperclip mr-2"></i>
@@ -72,18 +69,55 @@
       </template>
       <template #footer>
         <div class="flex">
-        <DropupButton>
-        <template #links>
-          <a href="#mensajes" class="dropup-link">Mensajes</a>
-          <a href="#colaborar" class="dropup-link">Colaborar</a>
-        </template>
-        </DropupButton>
+          <DropupButton>
+            <template #links>
+              <span @click="prepairChat" class="dropup-link">Mensajes</span>
+              <span @click="showCollaborate" class="dropup-link"
+                >Colaborar</span
+              >
+            </template>
+          </DropupButton>
           <button @click="side_modal = false" class="btn-secondary mx-2">
             Cerrar
           </button>
         </div>
       </template>
     </DetailsModal>
+    <!-- Modal -->
+    <DialogModal
+      :show="dialog_modal"
+      @close="
+        dialog_modal = false;
+        show_collaborate = false;
+        show_chat = false;
+      "
+    >
+      <template #title>
+        <div v-if="show_chat" class="font-bold text-gray-600">
+          Mensajes <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
+        </div>
+        <div v-else-if="show_collaborate" class="font-bold text-gray-600">
+          Aplicar a colaborar <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
+        </div>
+      </template>
+      <template #content>
+        <MessagesModal :chat="chat" v-if="show_chat" />
+        <!-- <div v-if="show_chat">{{ homework_detail }}</div> -->
+        <ApplyCollaborationModal
+          :homework_owner="homework_detail.user"
+          v-else-if="show_collaborate"
+          @cancel="hideModal"
+        />
+      </template>
+      <template #footer></template>
+    </DialogModal>
+  </AppLayout>
 </template>
 
 <script>
@@ -93,11 +127,18 @@ import Tabs from "@/Components/Tabs.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
 import AvailableCollaborationsTable from "@/Components/AvailableCollaborationsTable.vue";
 import DropupButton from "@/Components/DropupButton.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
+import ApplyCollaborationModal from "@/Components/ApplyCollaborationModal.vue";
+import DialogModal from "@/Jetstream/DialogModal.vue";
 
 export default {
   data() {
     return {
       homework_detail: {},
+      chat: {},
+      dialog_modal: false,
+      show_collaborate: false,
+      show_chat: false,
       side_modal: false,
       tabs: [
         {
@@ -118,16 +159,65 @@ export default {
     DetailsModal,
     AvailableCollaborationsTable,
     DropupButton,
+    MessagesModal,
+    ApplyCollaborationModal,
+    DialogModal,
   },
   props: {
     homeworks: Object,
     filters: Object,
   },
-  methods:{
-     showDetails(item) {
+  methods: {
+    showDetails(item) {
       this.homework_detail = item;
       this.side_modal = true;
     },
-  }
+    showCollaborate() {
+      this.show_collaborate = true;
+      this.dialog_modal = true;
+    },
+    prepairChat() {
+      const chat = this.searchChat();
+      // console.log(chat);
+      if(chat === undefined) {
+        this.createChat();
+      }else {
+        this.chat = chat;
+      }
+      // this.showChat();
+    },
+    showChat() {
+      this.show_chat = true;
+      this.dialog_modal = true;
+    },
+    searchChat() {
+      const auth_user_id = this.$page.props.user.id;
+      if (this.homework_detail.chats.length) {
+        return this.homework_detail.chats.find((chat) =>
+          chat.users.some((user) => user.id === auth_user_id)
+        );
+      }
+      return undefined;
+    },
+    createChat() {
+      axios
+        .post(route("chat.store"), {
+          homework_owner_id: this.homework_detail.user.id,
+          homework_id: this.homework_detail.id,
+        })
+        .then((response) => {
+          this.chat = response.data;
+          // this.homework_details.chats = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    hideModal() {
+      this.show_collaborate = false;
+      this.show_chat = false;
+      this.dialog_modal = false;
+    },
+  },
 };
 </script>

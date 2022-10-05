@@ -18,27 +18,27 @@ class CollaborationResource extends JsonResource
             'id' => $this->id,
             'price' => $this->price,
             'tax' => $this->tax,
-            'promise_date' => $this->promise_date?->isoFormat('DD MMMM, YYYY'),
-            'completed_date' => $this->completed_date?->isoFormat('DD MMMM, YYYY'),
+            'promise_date' => $this->promise_date?->isoFormat('DD MMM, YYYY'),
+            'completed_date' => $this->completed_date?->isoFormat('DD MMM, YYYY'),
             'approved_at' => [
                 'relative' => $this->approved_at?->diffForHumans(),
                 'string' => $this->approved_at?->toDateTimeString(),
-                'special' => $this->approved_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->approved_at?->isoFormat('DD MMM, YYYY'),
             ],
             'canceled_at' => [
                 'relative' => $this->canceled_at?->diffForHumans(),
                 'string' => $this->canceled_at?->toDateTimeString(),
-                'special' => $this->canceled_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->canceled_at?->isoFormat('DD MMM, YYYY'),
             ],
             'read_at' => [
                 'relative' => $this->read_at?->diffForHumans(),
                 'string' => $this->read_at?->toDateTimeString(),
-                'special' => $this->read_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->read_at?->isoFormat('DD MMM, YYYY'),
             ],
             'payed_at' => [
                 'relative' => $this->payed_at?->diffForHumans(),
                 'string' => $this->payed_at?->toDateTimeString(),
-                'special' => $this->payed_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->payed_at?->isoFormat('DD MMM, YYYY'),
             ],
             'cancel_reason' => $this->cancel_reason,
             'completed_comments' => $this->completed_comments,
@@ -48,7 +48,7 @@ class CollaborationResource extends JsonResource
             'created_at' => [
                 'relative' => $this->created_at?->diffForHumans(),
                 'string' => $this->created_at?->toDateTimeString(),
-                'special' => $this->created_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->created_at?->isoFormat('DD MMM, YYYY'),
             ],
             'status' => $this->status()
         ];

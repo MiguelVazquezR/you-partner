@@ -82,6 +82,7 @@ Route::get('/contact', function (){
     return Inertia::render('Contact');
 })->name('contact');
 
+Route::resource('chat', ChatController::class);
 Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
 Route::post('/chat/read-messages', [ChatController::class, 'readMessage'])->name('chat.read-message');
 

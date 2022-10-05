@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateCollaborationRequest;
 use App\Http\Resources\HomeworkResource;
 
 use App\Http\Resources\CollaborationResource;
-
+use App\Models\Chat;
 use App\Models\Homework;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,21 +21,16 @@ class CollaborationController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $filters = $request->all('search');
-        $homeworks = HomeworkResource::collection(Homework::doesntHave('collaborations')
+        $homeworks = HomeworkResource::collection(Homework::noCollaborationApproved()
             ->filter($filters)
             ->where('user_id', '<>', auth()->user()->id)
-            ->with('schoolSubject', 'user','media')
+            ->with(['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']])
             ->latest()
             ->paginate());
-
+       
         return Inertia::render('Collaborations/Index', compact('homeworks', 'filters'));
     }
 

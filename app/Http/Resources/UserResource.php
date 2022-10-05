@@ -21,7 +21,7 @@ class UserResource extends JsonResource
             'academic_grade' => $this->academic_grade,
             'school_name' => $this->school_name,
             'state' => $this->state,
-            'birthdate' => $this->birthdate->isoFormat('DD MMMM, YYYY'),
+            'birthdate' => $this->birthdate->isoFormat('DD MMM, YYYY'),
             'profile_photo_url' => $this->profile_photo_url,
             'level' => $this->whenLoaded('level'),
             'active' => $this->active ? 'Si' : 'No',
@@ -33,7 +33,7 @@ class UserResource extends JsonResource
             'created_at' => [
                 'relative' => $this->created_at?->diffForHumans(),
                 'string' => $this->created_at?->toDateTimeString(),
-                'special' => $this->created_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->created_at?->isoFormat('DD MMM, YYYY'),
             ],
             'rate_average' => $this->getRateAverage() ?? 'Sin calificaciones',
             'chats' => ChatResource::collection($this->whenLoaded('chats')),
