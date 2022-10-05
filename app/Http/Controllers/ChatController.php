@@ -27,9 +27,12 @@ class ChatController extends Controller
         //
     }
 
-    public function store(StoreChatRequest $request)
+    public function store(Request $request)
     {
-        dd($request);
+        $chat = Chat::create(['homework_id' => $request->homework_id]);
+        $chat->users()->attach([auth()->id(), $request->homework_owner_id]);
+
+        return new ChatResource(Chat::with('users', 'messages.user')->find($chat->id));
     }
 
     public function show(Chat $chat)

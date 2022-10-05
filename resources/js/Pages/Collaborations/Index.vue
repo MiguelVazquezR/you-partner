@@ -178,13 +178,13 @@ export default {
     },
     prepairChat() {
       const chat = this.searchChat();
-      // console.log(chat);
-      if(chat === undefined) {
+      if (chat === undefined) {
         this.createChat();
-      }else {
+      } else {
         this.chat = chat;
+        this.homework_detail.chats = [chat];
+        this.showChat();
       }
-      // this.showChat();
     },
     showChat() {
       this.show_chat = true;
@@ -199,19 +199,18 @@ export default {
       }
       return undefined;
     },
-    createChat() {
-      axios
-        .post(route("chat.store"), {
+    async createChat() {
+      try {
+        const response = await axios.post(route("chat.store"), {
           homework_owner_id: this.homework_detail.user.id,
           homework_id: this.homework_detail.id,
-        })
-        .then((response) => {
-          this.chat = response.data;
-          // this.homework_details.chats = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
         });
+        this.chat = response.data;
+        this.homework_detail.chats = [response.data];
+        this.showChat();
+      } catch (error) {
+        console.log(error);
+      }
     },
     hideModal() {
       this.show_collaborate = false;
