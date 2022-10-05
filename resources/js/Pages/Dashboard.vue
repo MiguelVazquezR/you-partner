@@ -60,8 +60,7 @@
                   <span class="text-gray-400 text-right" title="Fecha límite">
                     <i class="fa-solid fa-calendar-day"></i>
                     {{ item.limit_date }}
-                  </span
-                  >
+                  </span>
                 </Link>
               </div>
             </template>
@@ -113,6 +112,10 @@
                   <span class="col-span-3 truncate">
                     <StatusIcon :status="item.status" />
                     {{ item.title }}
+                  </span>
+                  <span class="text-gray-400 text-right" title="Completado el">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    {{ item.approved_collaboration.completed_date }}
                   </span>
                 </Link>
               </div>

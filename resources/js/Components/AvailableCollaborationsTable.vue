@@ -23,7 +23,7 @@
           </td>
           <td>
             <div class="flex items-center pl-1">
-              <p class="font-medium leading-none text-gray-700 mr-2">
+              <p class="font-medium leading-none text-gray-700 mr-2 truncate">
                 {{ homework.title }}
               </p>
             </div>

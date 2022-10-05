@@ -7,6 +7,11 @@ use Inertia\Inertia;
 
 class RankingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function ranking(){
 
         return Inertia::render('Ranking/Ranking');

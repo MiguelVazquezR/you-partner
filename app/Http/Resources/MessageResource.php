@@ -22,12 +22,12 @@ class MessageResource extends JsonResource
             'read_at' => [
                 'relative' => $this->read_at?->diffForHumans(),
                 'string' => $this->read_at?->toDateTimeString(),
-                'special' => $this->read_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->read_at?->isoFormat('DD MMM, YYYY'),
             ],
             'created_at' => [
                 'relative' => $this->created_at?->diffForHumans(),
                 'string' => $this->created_at?->toDateTimeString(),
-                'special' => $this->created_at?->isoFormat('DD MMMM, YYYY'),
+                'special' => $this->created_at?->isoFormat('DD MMM, YYYY'),
             ],
         ];
     }

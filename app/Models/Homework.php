@@ -43,7 +43,7 @@ class Homework extends Model implements HasMedia
     
     public function approvedCollaboration()
     {
-        return $this->hasMany(Collaboration::class)->whereNotNull('approved_at');
+        return $this->collaborations()->whereNotNull('approved_at')->first();
     }
 
     public function chats()

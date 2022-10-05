@@ -12,77 +12,44 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreChatRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreChatRequest $request)
+    public function store(Request $request)
     {
-        //
+        $chat = Chat::create(['homework_id' => $request->homework_id]);
+        $chat->users()->attach([auth()->id(), $request->homework_owner_id]);
+
+        return new ChatResource(Chat::with('users', 'messages.user')->find($chat->id));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function show(Chat $chat)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Chat $chat)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateChatRequest  $request
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateChatRequest $request, Chat $chat)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Chat $chat)
     {
         //

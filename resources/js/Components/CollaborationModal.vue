@@ -69,7 +69,7 @@
         <p class="my-1 text-green-600">${{ collaboration.price }}</p>
       </div>
     </div>
-  <div class="text-center">
+  <div class="text-right">
     <button class="btn-primary mx-2 my-4" @click="$emit('accepted')">Aceptar Colaboración</button>
     <!-- <button class="btn-secondary mx-2">Comentar</button> -->
   </div>
