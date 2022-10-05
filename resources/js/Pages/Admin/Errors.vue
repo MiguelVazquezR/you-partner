@@ -7,7 +7,7 @@
         :errors="errors"
         :filters="filters"
         filterURL="/errors"
-        @details="showDetails"/>
+        @details="showDetails($event)"/>
         
   </AppLayout>
 
@@ -61,6 +61,7 @@ import DetailsModal from "@/Components/DetailsModal.vue";
 export default {
   data() {
     return {
+      error_detail:{},
         side_modal: false,
       tabs: [
         {
@@ -101,7 +102,8 @@ export default {
     errors: Object,
   },
   methods:{
-    showDetails() {
+    showDetails(item) {
+      this.error_detail=item;
       this.side_modal = true;
     },
   }

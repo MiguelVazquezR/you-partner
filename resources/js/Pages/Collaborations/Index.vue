@@ -2,13 +2,13 @@
   <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" class="mb-8" />
+    </div>
       <AvailableCollaborationsTable 
         :homeworks="homeworks"
         :filters="filters"
         filterURL="/collaborations"
         @details="showDetails($event)"
       />
-    </div>
 
   </AppLayout>
   <DetailsModal :show="side_modal" @close="side_modal = false">
