@@ -5,7 +5,7 @@
       <CollaborationTable
         :collaborations="collaborations"
         :filters="filters"
-        filterURL="/collaborations/approve-pendent"
+        filterURL="/collaborations/in-process"
         @details="showDetails"
       />
     </div>
@@ -76,8 +76,8 @@
         <DropupButton>
           <template #links>
             <span @click="prepairChat" class="dropup-link">Mensajes</span>
-            <span @click="show_confirmation = true" class="dropup-link"
-              >Dejar de aplicar</span
+            <span @click="showSendHomework" class="dropup-link"
+              >Enviar Tarea</span
             >
           </template>
         </DropupButton>
@@ -90,10 +90,7 @@
   <!-- Modal -->
   <DialogModal
     :show="dialog_modal"
-    @close="
-      dialog_modal = false;
-      show_chat = false;
-    "
+    @close="hideModal"
   >
     <template #title>
       <div v-if="show_chat" class="font-bold text-gray-600">
@@ -102,9 +99,16 @@
           {{ collaboration_detail.homework.title }}
         </span>
       </div>
+      <div v-else-if="show_send_homework" class="font-bold text-gray-600">
+        Enviar tarea <br />
+        <span class="text-indigo-500 font-normal">
+          {{ collaboration_detail.homework.title }}
+        </span>
+      </div>
     </template>
     <template #content>
       <MessagesModal :chat="chat" v-if="show_chat" />
+      <SendHomeworkModal :homework_owner="collaboration_detail.homework.user" v-else-if="show_send_homework" />
     </template>
     <template #footer></template>
   </DialogModal>
@@ -134,6 +138,7 @@ import CollaborationTable from "@/Components/CollaborationTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
+import SendHomeworkModal from "@/Components/SendHomeworkModal.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
 import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 
@@ -144,6 +149,7 @@ export default {
       chat: {},
       dialog_modal: false,
       show_chat: false,
+      show_send_homework: false,
       side_modal: false,
       show_confirmation: false,
       tabs: [
@@ -178,6 +184,7 @@ export default {
     DetailsModal,
     DropupButton,
     MessagesModal,
+    SendHomeworkModal,
     DialogModal,
     ConfirmationModal,
   },
@@ -203,6 +210,10 @@ export default {
       this.show_chat = true;
       this.dialog_modal = true;
     },
+    showSendHomework() {
+      this.show_send_homework = true;
+      this.dialog_modal = true;
+    },
     searchChat() {
       const auth_user_id = this.$page.props.user.id;
       if (this.collaboration_detail.homework.chats.length) {
@@ -226,7 +237,7 @@ export default {
       }
     },
     hideModal() {
-      this.show_collaborate = false;
+      this.show_send_homework = false;
       this.show_chat = false;
       this.dialog_modal = false;
     },

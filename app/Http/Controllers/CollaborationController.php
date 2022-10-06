@@ -63,7 +63,8 @@ class CollaborationController extends Controller
 
     public function destroy(Collaboration $collaboration)
     {
-        //
+        $collaboration->delete();
+        return redirect()->route('collaborations.approve-pendent');
     }
 
     // My views (tabs) ----------------
@@ -81,13 +82,26 @@ class CollaborationController extends Controller
         return Inertia::render('Collaborations/ApprovePendent', compact('collaborations'));
     }
 
+    public function inProcess(Request $request)
+    {
+        $filters = $request->all('search');
+
+        $collaborations = CollaborationResource::collection(Collaboration::where('user_id', auth()->id())
+            ->whereNotNull('approved_at')
+            ->whereNull('completed_date')
+            ->filter($filters)
+            ->with(['user', 'homework' => ['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']]])
+            ->latest()
+            ->paginate());
+
+        return Inertia::render('Collaborations/InProcess', compact('collaborations'));
+    }
+
     // Other methods
     public function readCollaboration(Request $request)
     {
         $collaboration = Collaboration::with('user.collaborations')->find($request->collaboration_id);
         $collaboration->update(['read_at' => now()]);
-
-        // dd($collaboration);
 
         return new CollaborationResource($collaboration);
     }
