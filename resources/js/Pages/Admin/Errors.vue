@@ -85,7 +85,7 @@ export default {
           url: "admin.users",
         },
         {
-          label: "Errores",
+          label: "Errores/Sugerencias",
           url: "admin.errors",
         },
       ],

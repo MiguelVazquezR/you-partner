@@ -19,7 +19,7 @@
                     <i class="fa-solid fa-angles-up text-sm text-gray-400" title="Nivel"> 3 </i>
             </div>
             <div class="w-full h-2 bg-blue-200 rounded-full">
-                <div class="w-2/3 h-full text-center text-xs text-white hover:bg-indigo-500 bg-indigo-600 rounded-full">
+                <div class="w-2/3 h-full text-center text-xs text-white bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full">
                 </div>
             </div>
     </div>

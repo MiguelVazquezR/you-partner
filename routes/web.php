@@ -8,6 +8,8 @@ use App\Http\Controllers\ErrorReportController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\RankingController;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -71,6 +73,11 @@ Route::get('/library', [LibraryController::class,'index'])->name('library.index'
 
 
 Route::get('/errors', [ErrorReportController::class,'index'])->name('errors.index');
+
+Route::get('/profile/{user}', function (User $user){
+    return Inertia::render('ProfileUser', [new UserResource($user)]);
+})->name('profile-view');
+
 
 Route::get('/privacy-policy', function (){
     return Inertia::render('PrivacyPolicy');
