@@ -5,7 +5,7 @@
       <div class="flex items-center justify-center pt-12 pb-2">
         <JetApplicationMark class="block h-14 w-auto" />
       </div>
-      <nav class="mt-6">
+      <nav class="mt-12">
         <div>
           <JetNavLink
             :href="route('dashboard')"
