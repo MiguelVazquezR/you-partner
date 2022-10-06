@@ -69,8 +69,7 @@ class Collaboration extends Model
     public function scopeFilter($query, $filters)
     {
         $query->when($filters["search"], function ($query, $search) {
-            $query->where('status', 'LIKE', "%$search%")
-                ->orWhere('payment', 'LIKE', "%$search%")
+            $query->where('price', 'LIKE', "%$search%")
                 ->orWhereHas('homework', function ($query2) use ($search) {
                     $query2->where('title', 'LIKE', "%$search%")
                         ->orwhereHas('user', function ($query3) use ($search) {

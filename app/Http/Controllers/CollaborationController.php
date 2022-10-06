@@ -23,10 +23,11 @@ class CollaborationController extends Controller
 
     public function index(Request $request)
     {
+        $exclude_if_i_applied_to_collaborate = true;
         $filters = $request->all('search');
-        $homeworks = HomeworkResource::collection(Homework::noCollaborationApproved()
+        $homeworks = HomeworkResource::collection(Homework::noCollaborationApproved($exclude_if_i_applied_to_collaborate)
             ->filter($filters)
-            ->where('user_id', '<>', auth()->user()->id)
+            ->where('user_id', '<>', auth()->id())
             ->with(['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']])
             ->latest()
             ->paginate());
@@ -34,84 +35,66 @@ class CollaborationController extends Controller
         return Inertia::render('Collaborations/Index', compact('homeworks', 'filters'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCollaborationRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreCollaborationRequest $request)
     {
-        //
+        Collaboration::create($request->validated());
+        return redirect()->route('collaborations.approve-pendent'); //->with('message', 'Aplicaste a una colaboración. Espera la aprobación');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Collaboration  $collaboration
-     * @return \Illuminate\Http\Response
-     */
     public function show(Collaboration $collaboration)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Collaboration  $collaboration
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Collaboration $collaboration)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCollaborationRequest  $request
-     * @param  \App\Models\Collaboration  $collaboration
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateCollaborationRequest $request, Collaboration $collaboration)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Collaboration  $collaboration
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Collaboration $collaboration)
     {
-        //
+        $collaboration->delete();
+        return redirect()->route('collaborations.approve-pendent');
     }
 
     // My views (tabs) ----------------
-    public function myCollaborations(Request $request)
+    public function approvePendent(Request $request)
     {
         $filters = $request->all('search');
 
-        $collaborations = Collaboration::where('user_id', auth()->user()->id)
+        $collaborations = CollaborationResource::collection(Collaboration::where('user_id', auth()->id())
+            ->whereNull('approved_at')
             ->filter($filters)
-            ->with(['user', 'homework' => ['user']])
+            ->with(['user', 'homework' => ['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']]])
             ->latest()
-            ->paginate();
+            ->paginate());
 
-        return Inertia::render('Collaborations/MyCollaborations', compact('collaborations'));
+        return Inertia::render('Collaborations/ApprovePendent', compact('collaborations'));
+    }
+
+    public function inProcess(Request $request)
+    {
+        $filters = $request->all('search');
+
+        $collaborations = CollaborationResource::collection(Collaboration::where('user_id', auth()->id())
+            ->whereNotNull('approved_at')
+            ->whereNull('completed_date')
+            ->filter($filters)
+            ->with(['user', 'homework' => ['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']]])
+            ->latest()
+            ->paginate());
+
+        return Inertia::render('Collaborations/InProcess', compact('collaborations'));
     }
 
     // Other methods
@@ -119,8 +102,6 @@ class CollaborationController extends Controller
     {
         $collaboration = Collaboration::with('user.collaborations')->find($request->collaboration_id);
         $collaboration->update(['read_at' => now()]);
-
-        // dd($collaboration);
 
         return new CollaborationResource($collaboration);
     }

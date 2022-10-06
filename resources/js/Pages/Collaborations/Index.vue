@@ -2,8 +2,7 @@
   <AppLayout title="Colaboraciones">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" class="mb-8" />
-    </div>
-      <AvailableCollaborationsTable 
+      <AvailableCollaborationsTable
         :homeworks="homeworks"
         :filters="filters"
         filterURL="/collaborations"
@@ -11,8 +10,6 @@
       />
     </div>
     <DetailsModal :show="side_modal" @close="side_modal = false">
-  </AppLayout>
-  <DetailsModal :show="side_modal" @close="side_modal = false">
       <template #title>
         <div class="flex flex-col">
           <h1 class="text-indigo-600 text-xl font-semibold">
@@ -111,8 +108,8 @@
       </template>
       <template #content>
         <MessagesModal :chat="chat" v-if="show_chat" />
-        <!-- <div v-if="show_chat">{{ homework_detail }}</div> -->
         <ApplyCollaborationModal
+          :homework_id="homework_detail.id"
           :homework_owner="homework_detail.user"
           v-else-if="show_collaborate"
           @cancel="hideModal"
@@ -145,12 +142,24 @@ export default {
       side_modal: false,
       tabs: [
         {
-          label: "Disponible",
+          label: "Disponibles",
           url: "collaborations.index",
         },
         {
-          label: "Mis colaboraciones",
-          url: "collaborations.my-collaborations",
+          label: "Esperando aprobación",
+          url: "collaborations.approve-pendent",
+        },
+        {
+          label: "En proceso",
+          url: "collaborations.in-process",
+        },
+        {
+          label: "Completados",
+          url: "collaborations.completed",
+        },
+        {
+          label: "Reclamos",
+          url: "collaborations.claims",
         },
       ],
     };
@@ -159,12 +168,12 @@ export default {
     AppLayout,
     Link,
     Tabs,
-    DetailsModal,
     AvailableCollaborationsTable,
+    DetailsModal,
     DropupButton,
     MessagesModal,
-    ApplyCollaborationModal,
     DialogModal,
+    ApplyCollaborationModal,
   },
   props: {
     homeworks: Object,
@@ -185,7 +194,6 @@ export default {
         this.createChat();
       } else {
         this.chat = chat;
-        this.homework_detail.chats = [chat];
         this.showChat();
       }
     },

@@ -76,10 +76,13 @@ class Homework extends Model implements HasMedia
     }
 
     // query scopes
-    public function scopeNoCollaborationApproved($query)
+    public function scopeNoCollaborationApproved($query, $collaboration_doesnt_applied_by_me = false)
     {
-        $query->whereHas('collaborations', function ($q){
-            $q->whereNull('approved_at');
+        $query->whereHas('collaborations', function ($q) use ($collaboration_doesnt_applied_by_me){
+            $q->whereNull('approved_at')
+                ->when($collaboration_doesnt_applied_by_me, function ($query) {
+                    $query->where('user_id', '<>', auth()->id());
+                });
         })->orDoesntHave('collaborations');
     }
 }
