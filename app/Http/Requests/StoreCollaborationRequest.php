@@ -13,7 +13,7 @@ class StoreCollaborationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class StoreCollaborationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'price' => 'required|numeric|min:50',
+            'promise_date' => 'required|date|after:yesterday',
+            'homework_id' => 'required|numeric|min:1',
+            // 'user_id' => CollaborationObserver,
+            // 'tax' => CollaborationObserver,
         ];
     }
 }

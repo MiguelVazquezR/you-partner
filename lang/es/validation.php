@@ -144,5 +144,7 @@ return [
         'delivery_date' => 'fecha de entrega',
         'priority' => 'prioridad',
         'school_subject_id' => 'materia',
+        'price' => 'costo',
+        'promise_date' => 'fecha promesa',
     ],
 ];

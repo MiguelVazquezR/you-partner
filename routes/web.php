@@ -51,7 +51,10 @@ Route::post('/homeworks/delete-file', [HomeworkController::class, 'deleteFile'])
 
 
 Route::resource('/collaborations', CollaborationController::class)->except('show');
-Route::get('/collaborations/my-collaborations', [CollaborationController::class, 'myCollaborations'])->name('collaborations.my-collaborations');
+Route::get('/collaborations/approve-pendent', [CollaborationController::class, 'approvePendent'])->name('collaborations.approve-pendent');
+Route::get('/collaborations/in-process', [CollaborationController::class, 'inProcess'])->name('collaborations.in-process');
+Route::get('/collaborations/completed', [CollaborationController::class, 'completed'])->name('collaborations.completed');
+Route::get('/collaborations/claims', [CollaborationController::class, 'claims'])->name('collaborations.claims');
 Route::post('/collaborations/read-collaboration', [CollaborationController::class, 'readCollaboration'])->name('collaborations.read-collaboration');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');

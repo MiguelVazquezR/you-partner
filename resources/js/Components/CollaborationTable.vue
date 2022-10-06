@@ -16,7 +16,7 @@
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
           <td class="px-3">
-             <StatusIcon :collaboration="collaboration" />
+             <StatusIcon :status="collaboration.status" />
           </td> 
           <td class="pr-5">
             <Avatar :user="collaboration.homework.user" />
@@ -28,23 +28,40 @@
               </p>
             </div>
           </td>
+          <td class="pl-5">
+            <div class="flex items-center text-gray-600" title="Materia">
+              <i class="fa-solid fa-tag"></i>
+              <p class="text-sm leading-none ml-2">
+                {{ collaboration.homework.school_subject.name }}
+              </p>
+            </div>
+          </td>
           <td>
-            <div class="flex items-center">
+            <div class="flex items-center mr-2" title="Mensajes">
               <i class="fa-solid fa-comment-dots"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">0</p>
             </div>
           </td>
           <td>
-            <div class="flex items-center">
+            <div class="flex items-center" title="Cobrado">
               <i class="fa-solid fa-dollar-sign"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
-                {{ collaboration.payment }} MXN
+              <p class="text-sm leading-none text-gray-600">
+                {{ collaboration.price }} MXN
               </p>
+            </div>
+          </td>
+          <td class="pl-2">
+            <div
+              class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
+              :class="collaboration.homework.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
+              :title="'Prioridad: ' + collaboration.homework.priority"
+            >
+              Límite: {{ collaboration.homework.limit_date }}
             </div>
           </td>
           <td class="pl-4">
             <button
-              @click="showDetails"
+              @click="showDetails(collaboration)"
               class="
                 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
                 text-sm
@@ -73,6 +90,7 @@
 <script>
 import Pagination from "@/Components/Pagination.vue";
 import Avatar from "@/Components/Avatar.vue";
+import StatusIcon from "@/Components/StatusIcon.vue";
 import Input from "@/Jetstream/Input.vue";
 import InputSearch from "@/Components/Common/InputSearch.vue";
 import { Link } from "@inertiajs/inertia-vue3";
@@ -81,6 +99,7 @@ export default {
   components: {
     Pagination,
     Avatar,
+    StatusIcon,
     Input,
     InputSearch,
     Link,
@@ -91,8 +110,8 @@ export default {
     filterURL: String,
   },
   methods:{
-    showDetails() {
-      this.$emit('details')
+    showDetails(item) {
+      this.$emit('details', item)
     }
   }
 };
