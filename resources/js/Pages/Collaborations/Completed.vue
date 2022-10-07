@@ -88,7 +88,10 @@
     </template>
   </DetailsModal>
   <!-- Modal -->
-  <DialogModal :show="dialog_modal" @close="hideModal">
+  <DialogModal
+    :show="dialog_modal"
+    @close="hideModal"
+  >
     <template #title>
       <div v-if="show_chat" class="font-bold text-gray-600">
         Mensajes <br />
@@ -105,11 +108,7 @@
     </template>
     <template #content>
       <MessagesModal :chat="chat" v-if="show_chat" />
-      <SendHomeworkModal
-        :collaboration="collaboration_detail"
-        v-else-if="show_send_homework"
-        @cancel="hideModal"
-      />
+      <SendHomeworkModal :homework_owner="collaboration_detail.homework.user" v-else-if="show_send_homework" />
     </template>
     <template #footer></template>
   </DialogModal>
@@ -244,9 +243,7 @@ export default {
     },
     deleteCollaboration() {
       try {
-        this.$inertia.delete(
-          route("collaborations.destroy", this.collaboration_detail)
-        );
+        this.$inertia.delete(route("collaborations.destroy", this.collaboration_detail));
         this.show_confirmation = false;
         this.side_modal = false;
       } catch (error) {

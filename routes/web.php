@@ -58,6 +58,7 @@ Route::get('/collaborations/in-process', [CollaborationController::class, 'inPro
 Route::get('/collaborations/completed', [CollaborationController::class, 'completed'])->name('collaborations.completed');
 Route::get('/collaborations/claims', [CollaborationController::class, 'claims'])->name('collaborations.claims');
 Route::post('/collaborations/read-collaboration', [CollaborationController::class, 'readCollaboration'])->name('collaborations.read-collaboration');
+Route::post('/collaborations/update-p', [CollaborationController::class, 'updateP'])->name('collaborations.update-p');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');

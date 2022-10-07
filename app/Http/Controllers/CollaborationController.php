@@ -28,10 +28,10 @@ class CollaborationController extends Controller
         $homeworks = HomeworkResource::collection(Homework::noCollaborationApproved($exclude_if_i_applied_to_collaborate)
             ->filter($filters)
             ->where('user_id', '<>', auth()->id())
-            ->with(['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']])
+            ->with(['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']])
             ->latest()
             ->paginate());
-       
+
         return Inertia::render('Collaborations/Index', compact('homeworks', 'filters'));
     }
 
@@ -58,7 +58,26 @@ class CollaborationController extends Controller
 
     public function update(UpdateCollaborationRequest $request, Collaboration $collaboration)
     {
-        //
+        $validated_data = $request->validated();
+        $collaboration->update([
+            'completed_comments' => $validated_data->completed_comments,
+            'completed_date' => now()->toDateString(),
+        ]);
+    }
+    
+    /**
+     * update collaboration with multiple resources
+     */
+    public function updateP(UpdateCollaborationRequest $request)
+    {
+        $collaboration = Collaboration::find($request->collaboration_id);
+        $validated_data = $request->validated();
+        $collaboration->update([
+            'completed_comments' => $validated_data['completed_comments'],
+            'completed_date' => now()->toDateString(),
+        ]);
+        $collaboration->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
+        return redirect()->route('collaborations.completed')->with('message', 'Colaboración completada');
     }
 
     public function destroy(Collaboration $collaboration)
@@ -75,7 +94,7 @@ class CollaborationController extends Controller
         $collaborations = CollaborationResource::collection(Collaboration::where('user_id', auth()->id())
             ->whereNull('approved_at')
             ->filter($filters)
-            ->with(['user', 'homework' => ['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']]])
+            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']]])
             ->latest()
             ->paginate());
 
@@ -90,11 +109,40 @@ class CollaborationController extends Controller
             ->whereNotNull('approved_at')
             ->whereNull('completed_date')
             ->filter($filters)
-            ->with(['user', 'homework' => ['schoolSubject', 'user','media', 'chats' => ['users', 'messages.user']]])
+            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']]])
             ->latest()
             ->paginate());
 
         return Inertia::render('Collaborations/InProcess', compact('collaborations'));
+    }
+
+    public function completed(Request $request)
+    {
+        $filters = $request->all('search');
+
+        $collaborations = CollaborationResource::collection(Collaboration::where('user_id', auth()->id())
+            ->doesntHave('claim')
+            ->whereNotNull('completed_date')
+            ->filter($filters)
+            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']]])
+            ->latest('completed_date')
+            ->paginate());
+
+        return Inertia::render('Collaborations/Completed', compact('collaborations'));
+    }
+    
+    public function claims(Request $request)
+    {
+        $filters = $request->all('search');
+
+        $collaborations = CollaborationResource::collection(Collaboration::where('user_id', auth()->id())
+            ->has('claim')
+            ->filter($filters)
+            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']]])
+            ->latest()
+            ->paginate());
+
+        return Inertia::render('Collaborations/Claims', compact('collaborations'));
     }
 
     // Other methods
