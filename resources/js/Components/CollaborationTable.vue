@@ -36,9 +36,15 @@
               </p>
             </div>
           </td>
-          <td>
+          <td v-if="!collaboration.claim" class="pl-2">
             <div class="flex items-center mr-2" title="Mensajes">
               <i class="fa-solid fa-comment-dots"></i>
+              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
+            </div>
+          </td>
+          <td v-else class="pl-2">
+            <div class="flex items-center mr-2" title="Mensajes de soporte">
+              <i class="fa-solid fa-headset"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">0</p>
             </div>
           </td>
@@ -50,7 +56,15 @@
               </p>
             </div>
           </td>
-          <td class="pl-2">
+          <td v-if="collaboration.claim?.refund" class="pl-2">
+            <div class="flex items-center text-red-700" title="Penalizado">
+              -<i class="fa-solid fa-dollar-sign"></i>
+              <p class="text-sm leading-none">
+              {{ collaboration.claim.refund }} MXN
+              </p>
+            </div>
+          </td>
+          <td v-if="!collaboration.claim" class="pl-2">
             <div
               class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
               :class="collaboration.homework.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
@@ -58,6 +72,18 @@
             >
               Límite: {{ collaboration.homework.limit_date }}
             </div>
+          </td>
+          <td class="pl-2" v-if="collaboration.claim">
+            <span
+              v-if="collaboration.claim?.solution"
+              class="rounded-full px-2 py-1 bg-green-100 text-green-600 text-xs"
+              >Cerrado</span
+            >
+            <span
+              v-else
+              class="rounded-full px-2 py-px bg-red-100 text-red-600 text-xs"
+              >Abierto</span
+            >
           </td>
           <td class="pl-4">
             <button

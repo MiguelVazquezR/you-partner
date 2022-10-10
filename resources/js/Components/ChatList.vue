@@ -12,54 +12,63 @@
       divide-y
     "
   >
-    <div
-      @click="openMessages(item, index)"
-      v-for="(item, index) in chats"
-      :key="item.id"
-      class="grid grid-cols-2 gap-x-2 hover:bg-gray-100 cursor-pointer rounded"
-      :class="{
-        'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold':
-          isAnyUnread(item.messages),
-      }"
-    >
-      <Avatar
-        class="inline-block"
-        :user="getLast(excludeMyMessages(item.messages))[0].user"
-        :secondary_info="
-          getLast(excludeMyMessages(item.messages))[0].created_at.relative
+    <template v-for="(item, index) in chats" :key="item.id">
+      <div
+        v-if="item.messages.length"
+        @click="openMessages(item, index)"
+        class="
+          grid grid-cols-2
+          gap-x-2
+          hover:bg-gray-100
+          cursor-pointer
+          rounded
         "
-      />
-      <p class="text-xs text-gray-600 truncate pt-2">
-        {{ getLast(excludeMyMessages(item.messages))[0].content }}
-      </p>
-    </div>
-    <p
-      v-if="!chats.length"
-      class="text-center text-gray-400 text-xs pt-3"
-    >
+        :class="{
+          'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold':
+            isAnyUnread(item.messages),
+        }"
+      >
+        <Avatar
+          class="inline-block"
+          :user="getLast(excludeMyMessages(item.messages)).user"
+          :secondary_info="
+            getLast(excludeMyMessages(item.messages)).created_at.relative
+          "
+        />
+        <p class="text-xs text-gray-600 truncate pt-2">
+          {{ getLast(excludeMyMessages(item.messages)).content }}
+        </p>
+      </div>
+    </template>
+    <p v-if="!somethingToShow" class="text-center text-gray-400 text-xs pt-3">
       No tienes ningún comentario o pregunta
     </p>
   </div>
 </template>
 
 <script>
-import Avatar from '@/Components/Avatar.vue';
+import Avatar from "@/Components/Avatar.vue";
 
 export default {
-  props:{
-    chats: Array
+  props: {
+    chats: Array,
   },
-  components:{
+  components: {
     Avatar,
   },
-  methods:{
+  computed: {
+    somethingToShow() {
+      return this.chats?.some(chat => chat.messages.length);
+    },
+  },
+  methods: {
     excludeMyMessages(messages) {
       return messages.filter(
         (message) => message.user.id !== this.$page.props.user.id
       );
     },
     getLast(array) {
-      if (array.length) return array.slice(-1);
+      if (array.length) return array.slice(-1)[0];
       return null;
     },
     isAnyUnread(messages) {
@@ -82,6 +91,6 @@ export default {
       }
       this.$emit("showChat", item);
     },
-  }
+  },
 };
 </script>

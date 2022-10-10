@@ -46,7 +46,6 @@ Route::resource('/homeworks', HomeworkController::class)->except('show');
 Route::get('/homeworks/no-collaboration', [HomeworkController::class, 'noCollaboration'])->name('homeworks.no-collaboration');
 Route::get('/homeworks/on-collaboration', [HomeworkController::class, 'onCollaboration'])->name('homeworks.on-collaboration');
 Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name('homeworks.finished');
-
 Route::get('/homeworks/claims', [HomeworkController::class, 'claims'])->name('homeworks.claims');
 Route::post('/homeworks/send-message', [HomeworkController::class, 'sendMessage'])->name('homeworks.send-message');
 Route::post('/homeworks/delete-file', [HomeworkController::class, 'deleteFile'])->name('homeworks.delete-file');
@@ -59,6 +58,7 @@ Route::get('/collaborations/completed', [CollaborationController::class, 'comple
 Route::get('/collaborations/claims', [CollaborationController::class, 'claims'])->name('collaborations.claims');
 Route::post('/collaborations/read-collaboration', [CollaborationController::class, 'readCollaboration'])->name('collaborations.read-collaboration');
 Route::post('/collaborations/update-p', [CollaborationController::class, 'updateP'])->name('collaborations.update-p');
+Route::put('/collaborations/approve/{collaboration}', [CollaborationController::class, 'approve'])->name('collaborations.approve');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');

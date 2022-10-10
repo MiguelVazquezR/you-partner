@@ -28,7 +28,7 @@ class HomeworkController extends Controller
             ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
-
+        // return $homeworks;
         return Inertia::render('Homework/Index', compact('homeworks', 'filters'));
     }
 

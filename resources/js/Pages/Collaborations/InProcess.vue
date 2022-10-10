@@ -140,6 +140,7 @@ import DetailsModal from "@/Components/DetailsModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import SendHomeworkModal from "@/Components/SendHomeworkModal.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
 import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 
@@ -188,6 +189,7 @@ export default {
     SendHomeworkModal,
     DialogModal,
     ConfirmationModal,
+    AttachedFile,
   },
   props: {
     collaborations: Object,

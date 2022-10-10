@@ -73,6 +73,10 @@ export default {
     const form = useForm({
         title: null,
         description: null,
+        limit_date: null,
+        priority: "",
+        user_id: this.$page.props.user.id,
+        school_subject_id: "",
         resources: null,
       })
 

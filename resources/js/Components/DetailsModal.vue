@@ -48,7 +48,7 @@ const close = () => {
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="text-lg h-12 px-6">
+      <div class="text-lg min-h-[3rem] px-6">
         <slot name="title" />
       </div>
 
@@ -56,7 +56,7 @@ const close = () => {
         <slot name="content" />
       </div>
 
-      <div class="px-8 py-4 h-12">
+      <div class="px-8 py-2 h-12">
         <slot name="footer" />
       </div>
     </div>

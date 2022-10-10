@@ -58,13 +58,9 @@ class CollaborationController extends Controller
 
     public function update(UpdateCollaborationRequest $request, Collaboration $collaboration)
     {
-        $validated_data = $request->validated();
-        $collaboration->update([
-            'completed_comments' => $validated_data->completed_comments,
-            'completed_date' => now()->toDateString(),
-        ]);
+        //
     }
-    
+
     /**
      * update collaboration with multiple resources
      */
@@ -130,7 +126,7 @@ class CollaborationController extends Controller
 
         return Inertia::render('Collaborations/Completed', compact('collaborations'));
     }
-    
+
     public function claims(Request $request)
     {
         $filters = $request->all('search');
@@ -138,7 +134,7 @@ class CollaborationController extends Controller
         $collaborations = CollaborationResource::collection(Collaboration::where('user_id', auth()->id())
             ->has('claim')
             ->filter($filters)
-            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']]])
+            ->with(['claim', 'user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']]])
             ->latest()
             ->paginate());
 
@@ -152,5 +148,12 @@ class CollaborationController extends Controller
         $collaboration->update(['read_at' => now()]);
 
         return new CollaborationResource($collaboration);
+    }
+
+    public function approve(Collaboration $collaboration)
+    {
+        $collaboration->update(['approved_at' => now()]);
+
+        return redirect()->route('homeworks.on-collaboration');
     }
 }

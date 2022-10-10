@@ -210,7 +210,7 @@
             <template #content>
               <div v-for="item in collaborations_in_process" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')+'?search='+item.homework.title"
+                  :href="route('collaborations.in-process')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -241,7 +241,7 @@
             <template #content>
               <div v-for="item in collaborations_to_approve" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')+'?search='+item.homework.title"
+                  :href="route('collaborations.approve-pendent')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -273,7 +273,7 @@
             <template #content>
               <div v-for="item in unread_messages_c" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')"
+                  :href="route('collaborations.index')"
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -298,7 +298,7 @@
             <template #content>
               <div v-for="item in collaborations_claims" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')+'?search='+item.homework.title"
+                  :href="route('collaborations.claims')+'?search='+item.homework.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
