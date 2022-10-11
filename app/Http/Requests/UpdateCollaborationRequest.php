@@ -13,7 +13,7 @@ class UpdateCollaborationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateCollaborationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'completed_comments' => 'required|max:250',
+            'resources' => 'required',
         ];
     }
 }

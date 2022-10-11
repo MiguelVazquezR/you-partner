@@ -21,17 +21,24 @@
             <i class="fa-solid fa-tag"></i>
             {{ collaboration_detail.homework.school_subject.name }}
           </small>
-          <small
-            class="text-xs px-2 rounded-md"
-            :class="
-              collaboration_detail.homework.priority === 'Urgente'
-                ? 'text-red-700 bg-red-100'
-                : 'text-green-700 bg-green-100'
-            "
-            :title="'Prioridad: ' + collaboration_detail.homework.priority"
-          >
-            Límite: {{ collaboration_detail.homework.limit_date }}
-          </small>
+          <div class="flex flex-col space-y-1">
+            <small
+              class="text-xs px-2 rounded-md"
+              :class="
+                collaboration_detail.homework.priority === 'Urgente'
+                  ? 'text-red-700 bg-red-100'
+                  : 'text-green-700 bg-green-100'
+              "
+              :title="'Prioridad: ' + collaboration_detail.homework.priority"
+            >
+              Límite: {{ collaboration_detail.homework.limit_date }}
+            </small>
+            <small
+              class="text-xs px-2 rounded-md text-green-700 bg-green-100"
+            >
+              Entregado: {{ collaboration_detail.completed_date }}
+            </small>
+          </div>
         </div>
       </div>
     </template>
@@ -58,8 +65,8 @@
             class="mt-1 flex flex-col"
           >
             <AttachedFile
-              v-for="(file, index) in collaboration_detail.homework.media"
-              :key="index"
+              v-for="file in collaboration_detail.homework.media"
+              :key="file.id"
               :name="file.name"
               :extension="file.mime_type.split('/')[1]"
               :href="file.original_url"
@@ -69,6 +76,21 @@
             No hay recursos para esta tarea
           </p>
         </div>
+        <div class="mt-6">
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-paperclip mr-2"></i>
+            <span>Resultados de la tarea</span>
+          </h1>
+          <div class="mt-1 flex flex-col">
+            <AttachedFile
+              v-for="file in collaboration_detail.media"
+              :key="file.id"
+              :name="file.name"
+              :extension="file.mime_type.split('/')[1]"
+              :href="file.original_url"
+            />
+          </div>
+        </div>
       </section>
     </template>
     <template #footer>
@@ -76,9 +98,6 @@
         <DropupButton>
           <template #links>
             <span @click="prepairChat" class="dropup-link">Mensajes</span>
-            <span @click="showSendHomework" class="dropup-link"
-              >Enviar Tarea</span
-            >
           </template>
         </DropupButton>
         <button @click="side_modal = false" class="btn-secondary mx-2">
@@ -88,7 +107,10 @@
     </template>
   </DetailsModal>
   <!-- Modal -->
-  <DialogModal :show="dialog_modal" @close="hideModal">
+  <DialogModal
+    :show="dialog_modal"
+    @close="hideModal"
+  >
     <template #title>
       <div v-if="show_chat" class="font-bold text-gray-600">
         Mensajes <br />
@@ -96,39 +118,12 @@
           {{ collaboration_detail.homework.title }}
         </span>
       </div>
-      <div v-else-if="show_send_homework" class="font-bold text-gray-600">
-        Enviar tarea <br />
-        <span class="text-indigo-500 font-normal">
-          {{ collaboration_detail.homework.title }}
-        </span>
-      </div>
     </template>
     <template #content>
       <MessagesModal :chat="chat" v-if="show_chat" />
-      <SendHomeworkModal
-        :collaboration="collaboration_detail"
-        v-else-if="show_send_homework"
-        @cancel="hideModal"
-      />
     </template>
     <template #footer></template>
   </DialogModal>
-  <!-- confirmation -->
-  <ConfirmationModal
-    :show="show_confirmation"
-    @close="show_confirmation = false"
-  >
-    <template #title> Dejar de aplicar para colaboración </template>
-    <template #content>
-      ¿Segura(o) que quieres dejar de aplicar para colaborar en esta tarea?
-    </template>
-    <template #footer>
-      <button class="btn-danger" @click="deleteCollaboration">Si</button>
-      <button class="btn-secondary ml-2" @click="show_confirmation = false">
-        Cancelar
-      </button>
-    </template>
-  </ConfirmationModal>
 </template>
 
 <script>
@@ -139,10 +134,8 @@ import CollaborationTable from "@/Components/CollaborationTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
-import SendHomeworkModal from "@/Components/SendHomeworkModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
-import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 
 export default {
   data() {
@@ -186,9 +179,7 @@ export default {
     DetailsModal,
     DropupButton,
     MessagesModal,
-    SendHomeworkModal,
     DialogModal,
-    ConfirmationModal,
     AttachedFile,
   },
   props: {
@@ -243,17 +234,6 @@ export default {
       this.show_send_homework = false;
       this.show_chat = false;
       this.dialog_modal = false;
-    },
-    deleteCollaboration() {
-      try {
-        this.$inertia.delete(
-          route("collaborations.destroy", this.collaboration_detail)
-        );
-        this.show_confirmation = false;
-        this.side_modal = false;
-      } catch (error) {
-        console.log(error);
-      }
     },
   },
 };

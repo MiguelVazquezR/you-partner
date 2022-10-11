@@ -54,8 +54,8 @@
             </h1>
             <div v-if="homework_detail.media.length" class="mt-1 flex flex-col">
               <AttachedFile
-                v-for="(file, index) in homework_detail.media"
-                :key="index"
+                v-for="file in homework_detail.media"
+                :key="file.id"
                 :name="file.name"
                 :extension="file.mime_type.split('/')[1]"
                 :href="file.original_url"
@@ -129,6 +129,7 @@ import AvailableCollaborationsTable from "@/Components/AvailableCollaborationsTa
 import DropupButton from "@/Components/DropupButton.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import ApplyCollaborationModal from "@/Components/ApplyCollaborationModal.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
 
 export default {
@@ -174,6 +175,7 @@ export default {
     MessagesModal,
     DialogModal,
     ApplyCollaborationModal,
+    AttachedFile,
   },
   props: {
     homeworks: Object,

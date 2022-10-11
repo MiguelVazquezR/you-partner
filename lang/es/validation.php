@@ -146,5 +146,7 @@ return [
         'school_subject_id' => 'materia',
         'price' => 'costo',
         'promise_date' => 'fecha promesa',
+        'resources' => 'recursos/archivos',
+        'completed_comments' => 'comentarios',
     ],
 ];
