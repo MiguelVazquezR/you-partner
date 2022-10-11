@@ -32,6 +32,8 @@ class Chat extends Model
 
     public function unreadMessages()
     {
-        return $this->hasMany(Message::class)->whereNull('read_at');
+        return $this->hasMany(Message::class)
+            ->whereNull('read_at')
+            ->where('user_id', '<>', auth()->id());
     }
 }

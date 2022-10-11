@@ -5,47 +5,85 @@
       <HomeworkTable
         :homeworks="homeworks"
         :filters="filters"
-        canDelete
-        canEdit
         filterURL="/homeworks/on-collaboration"
         @details="showDetails"
       />
     </div>
     <DetailsModal :show="side_modal" @close="side_modal = false">
-      <template #title> Título de mi modal </template>
+      <template #title>
+        <div class="flex flex-col">
+          <h1 class="text-indigo-600 text-xl font-semibold">
+            {{ homework_detail.title }}
+          </h1>
+          <div class="flex justify-between">
+            <small class="text-indigo-400 text-xs">
+              <i class="fa-solid fa-tag"></i>
+              {{ homework_detail.school_subject.name }}
+            </small>
+            <small
+              class="text-xs px-2 rounded-md"
+              :class="
+                homework_detail.priority === 'Urgente'
+                  ? 'text-red-700 bg-red-100'
+                  : 'text-green-700 bg-green-100'
+              "
+              :title="'Prioridad: ' + homework_detail.priority"
+            >
+              Entrega: {{ homework_detail.limit_date }}
+            </small>
+          </div>
+        </div>
+      </template>
       <template #content>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non quo autem
-        illo excepturi consectetur expedita possimus, omnis reprehenderit
-        dignissimos corrupti repudiandae modi similique, optio quos sit?
-        Aspernatur rerum eos deserunt! Lorem, ipsum dolor sit amet consectetur
-        adipisicing elit. Animi quaerat id possimus debitis ea alias ducimus
-        libero. Vitae quae deserunt quas aspernatur veritatis provident debitis,
-        exercitationem temporibus quasi optio sunt. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quia veniam quibusdam, sit deleniti neque
-        voluptates atque omnis commodi ea asperiores cumque, aspernatur deserunt
-        eos autem repudiandae magni inventore aperiam beatae. Quam repellat
-        quisquam veritatis voluptas saepe debitis voluptate, at pariatur
-        distinctio a sequi error eveniet dignissimos atque ducimus nisi
-        assumenda magni officiis, nihil, fugiat necessitatibus neque autem. Sed,
-        tempora consectetur. Minima aspernatur nihil quibusdam molestiae
-        accusamus suscipit ducimus illo cum nostrum unde est aperiam fuga quos
-        dignissimos provident nemo nam consequatur, odio aliquid numquam rerum,
-        praesentium veritatis doloremque explicabo! Possimus? Lorem ipsum dolor
-        sit amet consectetur adipisicing elit. Expedita aperiam, dicta delectus
-        cumque nulla amet soluta vero ullam, culpa harum unde id quis enim
-        reiciendis? Animi ducimus provident molestiae dicta! Excepturi
-        blanditiis nemo optio ea error, earum iure quas dolores autem porro
-        maiores ratione a iste hic nisi tempora soluta aut minus pariatur?
-        Excepturi nam voluptate praesentium, placeat totam ad? Consequuntur nam
-        fuga deleniti aspernatur cupiditate quam excepturi obcaecati ipsa,
-        voluptatum omnis quasi sed sint nisi accusantium pariatur nulla porro
-        dignissimos. Culpa doloremque labore magni possimus, blanditiis ducimus
-        similique eaque!
+        <section class="mt-3">
+          <div>
+            <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-circle-info mr-2"></i>
+              <span>Descripción</span>
+            </h1>
+            <div>
+              <p class="text-sm text-gray-500">
+                {{ homework_detail.description }}
+              </p>
+            </div>
+          </div>
+          <div class="mt-6">
+            <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-handshake-angle mr-2"></i>
+              <span>Colaborador</span>
+            </h1>
+            <Avatar :user="homework_detail.approved_collaboration.user" />
+          </div>
+          <div class="mt-6">
+            <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-paperclip mr-2"></i>
+              <span>Archivos adjuntos</span>
+            </h1>
+            <div v-if="homework_detail.media.length" class="mt-1 flex flex-col">
+              <AttachedFile
+                v-for="(file, index) in homework_detail.media"
+                :key="index"
+                :name="file.name"
+                :extension="file.mime_type.split('/')[1]"
+                :href="file.original_url"
+              />
+            </div>
+            <p v-else class="text-center text-gray-400 text-xs pt-3">
+              No hay recursos para esta tarea
+            </p>
+          </div>
+        </section>
       </template>
       <template #footer>
         <div class="flex">
-          <button class="btn-primary mr-3">Guardar</button>
-          <button class="btn-secondary">Cancelar</button>
+          <Link
+            :href="route('homeworks.edit', homework_detail)"
+            class="btn-primary"
+            >Editar
+          </Link>
+          <button @click="side_modal = false" class="btn-secondary mx-6">
+            Cerrar
+          </button>
         </div>
       </template>
     </DetailsModal>
@@ -58,11 +96,19 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import HomeworkTable from "@/Components/HomeworkTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
+import Avatar from "@/Components/Avatar.vue";
+import DialogModal from "@/Jetstream/DialogModal.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
 
 export default {
   data() {
     return {
+      homework_detail: {},
       side_modal: false,
+      dialog_modal: false,
+      show_chat: false,
+      chat: null,
       tabs: [
         {
           label: "Todas",
@@ -80,7 +126,7 @@ export default {
           label: "Terminados",
           url: "homeworks.finished",
         },
-         {
+        {
           label: "Reclamos",
           url: "homeworks.claims",
         },
@@ -93,14 +139,24 @@ export default {
     Tabs,
     HomeworkTable,
     DetailsModal,
+    Avatar,
+    DialogModal,
+    AttachedFile,
+    MessagesModal,
   },
   props: {
     homeworks: Object,
     filters: Object,
   },
   methods: {
-    showDetails() {
+    showDetails(item) {
+      this.homework_detail = item;
       this.side_modal = true;
+    },
+    showChat(item) {
+      this.chat_to_show = item;
+      this.dialog_modal = true;
+      this.show_chat = true;
     },
   },
 };

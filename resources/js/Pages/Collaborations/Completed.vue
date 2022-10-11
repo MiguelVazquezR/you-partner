@@ -33,9 +33,7 @@
             >
               Límite: {{ collaboration_detail.homework.limit_date }}
             </small>
-            <small
-              class="text-xs px-2 rounded-md text-green-700 bg-green-100"
-            >
+            <small class="text-xs px-2 rounded-md text-green-700 bg-green-100">
               Entregado: {{ collaboration_detail.completed_date }}
             </small>
           </div>
@@ -107,10 +105,7 @@
     </template>
   </DetailsModal>
   <!-- Modal -->
-  <DialogModal
-    :show="dialog_modal"
-    @close="hideModal"
-  >
+  <DialogModal :show="dialog_modal" @close="hideModal">
     <template #title>
       <div v-if="show_chat" class="font-bold text-gray-600">
         Mensajes <br />
@@ -191,18 +186,48 @@ export default {
       this.collaboration_detail = item;
       this.side_modal = true;
     },
+    showChat() {
+      this.show_chat = true;
+      this.dialog_modal = true;
+    },
     prepairChat() {
       const chat = this.searchChat();
       if (chat === undefined) {
         this.createChat();
       } else {
-        this.chat = chat;
-        this.showChat();
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
       }
     },
-    showChat() {
-      this.show_chat = true;
-      this.dialog_modal = true;
+    excludeMyMessages(messages) {
+      return messages.filter(
+        (message) => message.user.id !== this.$page.props.user.id
+      );
+    },
+    isAnyUnread(messages) {
+      if (messages.length) {
+        return this.excludeMyMessages(messages).some(
+          (message) => !message.read_at.special
+        );
+      }
+    },
+    markAsRead(chat) {
+      axios
+        .post(route("chat.read-message"), {
+          chat_id: chat.id,
+        })
+        .then((response) => {
+          this.homework_detail.chats = [response.data];
+          this.chat = response.data;
+          this.showChat();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     showSendHomework() {
       this.show_send_homework = true;
