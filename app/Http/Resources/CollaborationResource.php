@@ -45,6 +45,7 @@ class CollaborationResource extends JsonResource
             'user' =>  UserResource::make($this->whenLoaded('user')),
             'claim' =>  ClaimResource::make($this->whenLoaded('claim')),
             'homework' => HomeworkResource::make($this->whenLoaded('homework')),
+            'rate' => RateResource::make($this->whenLoaded('rate')),
             'created_at' => [
                 'relative' => $this->created_at?->diffForHumans(),
                 'string' => $this->created_at?->toDateTimeString(),

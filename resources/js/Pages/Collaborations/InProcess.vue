@@ -200,18 +200,48 @@ export default {
       this.collaboration_detail = item;
       this.side_modal = true;
     },
+    showChat() {
+      this.show_chat = true;
+      this.dialog_modal = true;
+    },
     prepairChat() {
       const chat = this.searchChat();
       if (chat === undefined) {
         this.createChat();
       } else {
-        this.chat = chat;
-        this.showChat();
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
       }
     },
-    showChat() {
-      this.show_chat = true;
-      this.dialog_modal = true;
+    excludeMyMessages(messages) {
+      return messages.filter(
+        (message) => message.user.id !== this.$page.props.user.id
+      );
+    },
+    isAnyUnread(messages) {
+      if (messages.length) {
+        return this.excludeMyMessages(messages).some(
+          (message) => !message.read_at.special
+        );
+      }
+    },
+    markAsRead(chat) {
+      axios
+        .post(route("chat.read-message"), {
+          chat_id: chat.id,
+        })
+        .then((response) => {
+          this.homework_detail.chats = [response.data];
+          this.chat = response.data;
+          this.showChat();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     showSendHomework() {
       this.show_send_homework = true;
@@ -229,7 +259,7 @@ export default {
     async createChat() {
       try {
         const response = await axios.post(route("chat.store"), {
-          homework_owner_id: this.collaboration_detail.homework.user.id,
+          chat_mate_id: this.collaboration_detail.homework.user.id,
           homework_id: this.collaboration_detail.homework.id,
         });
         this.chat = response.data;

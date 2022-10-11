@@ -6,8 +6,6 @@
         :homeworks="homeworks"
         :filters="filters"
         filterURL="/homeworks/finished"
-        canEdit
-        canDelete
         @details="showDetails"
       />
     </div>
@@ -78,7 +76,7 @@ export default {
         },
         {
           label: "Terminados",
-          url: "homeworks.finished",
+          url: "homeworks.completed",
         },
         {
           label: "Reclamos",

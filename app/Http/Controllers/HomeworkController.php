@@ -95,14 +95,14 @@ class HomeworkController extends Controller
                     ->whereNull('completed_date');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
+            ->with(['user', 'schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
         return Inertia::render('Homework/OnCollaboration', compact('homeworks', 'filters'));
     }
 
-    public function finished(Request $request)
+    public function completed(Request $request)
     {
         $filters = $request->all('search');
 
@@ -112,11 +112,11 @@ class HomeworkController extends Controller
                     ->whereNotNull('completed_date');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
+            ->with(['schoolSubject', 'collaborations' => ['user.collaborations', 'rate'], 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
-        return Inertia::render('Homework/Finished', compact('homeworks', 'filters'));
+            return Inertia::render('Homework/Completed', compact('homeworks', 'filters'));
     }
 
     public function claims(Request $request)
