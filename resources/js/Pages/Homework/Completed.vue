@@ -1,12 +1,12 @@
 <template>
-  <AppLayout title="Colaboraciones">
+  <AppLayout title="Mis tareas terminadas">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" class="mb-8" />
-      <AvailableCollaborationsTable
+      <Tabs :tabs="tabs" />
+      <HomeworkTable
         :homeworks="homeworks"
         :filters="filters"
-        filterURL="/collaborations"
-        @details="showDetails($event)"
+        filterURL="/homeworks/completed"
+        @details="showDetails"
       />
     </div>
     <DetailsModal :show="side_modal" @close="side_modal = false">
@@ -49,13 +49,48 @@
           </div>
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-handshake-angle mr-2"></i>
+              <span>Colaborador</span>
+            </h1>
+            <Avatar
+              :user="homework_detail.approved_collaboration.user"
+              :secondary_info="
+                'Entregó el: ' +
+                homework_detail.approved_collaboration.completed_date
+              "
+            />
+          </div>
+          <div class="mt-6">
+            <h1 class="text-lg text-gray-600">
               <i class="fa-solid fa-paperclip mr-2"></i>
               <span>Archivos adjuntos</span>
             </h1>
             <div v-if="homework_detail.media.length" class="mt-1 flex flex-col">
               <AttachedFile
-                v-for="file in homework_detail.media"
-                :key="file.id"
+                v-for="(file, index) in homework_detail.media"
+                :key="index"
+                :name="file.name"
+                :extension="file.mime_type.split('/')[1]"
+                :href="file.original_url"
+              />
+            </div>
+            <p v-else class="text-center text-gray-400 text-xs pt-3">
+              No hay recursos para esta tarea
+            </p>
+          </div>
+          <div class="mt-6">
+            <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-paperclip mr-2"></i>
+              <span>Resultados de la tarea</span>
+            </h1>
+            <div
+              v-if="homework_detail.approved_collaboration.media.length"
+              class="mt-1 flex flex-col"
+            >
+              <AttachedFile
+                v-for="(file, index) in homework_detail.approved_collaboration
+                  .media"
+                :key="index"
                 :name="file.name"
                 :extension="file.mime_type.split('/')[1]"
                 :href="file.original_url"
@@ -71,10 +106,10 @@
         <div class="flex">
           <DropupButton>
             <template #links>
-              <span @click="prepairChat" class="dropup-link">Mensajes</span>
-              <span @click="showCollaborate" class="dropup-link"
-                >Colaborar</span
-              >
+              <button @click="prepairChat" class="dropup-link">Mensajes</button>
+              <button class="dropup-link">Liberar pago a colaborador</button>
+              <button @click="showRate" class="dropup-link">Calificar colaboración</button>
+              <button class="dropup-link">Meter reclamo</button>
             </template>
           </DropupButton>
           <button @click="side_modal = false" class="btn-secondary mx-2">
@@ -86,11 +121,7 @@
     <!-- Modal -->
     <DialogModal
       :show="dialog_modal"
-      @close="
-        dialog_modal = false;
-        show_collaborate = false;
-        show_chat = false;
-      "
+      @close="hideModal"
     >
       <template #title>
         <div v-if="show_chat" class="font-bold text-gray-600">
@@ -99,8 +130,8 @@
             {{ homework_detail.title }}
           </span>
         </div>
-        <div v-else-if="show_collaborate" class="font-bold text-gray-600">
-          Aplicar a colaborar <br />
+        <div v-if="show_rate" class="font-bold text-gray-600">
+          Calificar colaboración <br />
           <span class="text-indigo-500 font-normal">
             {{ homework_detail.title }}
           </span>
@@ -108,12 +139,7 @@
       </template>
       <template #content>
         <MessagesModal :chat="chat" v-if="show_chat" />
-        <ApplyCollaborationModal
-          :homework_id="homework_detail.id"
-          :homework_owner="homework_detail.user"
-          v-else-if="show_collaborate"
-          @cancel="hideModal"
-        />
+        <RateModal :homework="homework_detail" v-if="show_rate" />
       </template>
       <template #footer></template>
     </DialogModal>
@@ -124,43 +150,43 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
+import HomeworkTable from "@/Components/HomeworkTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
-import AvailableCollaborationsTable from "@/Components/AvailableCollaborationsTable.vue";
-import DropupButton from "@/Components/DropupButton.vue";
-import MessagesModal from "@/Components/MessagesModal.vue";
-import ApplyCollaborationModal from "@/Components/ApplyCollaborationModal.vue";
-import AttachedFile from "@/Components/AttachedFile.vue";
+import Avatar from "@/Components/Avatar.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
+import DropupButton from "@/Components/DropupButton.vue";
+import RateModal from "@/Components/RateModal.vue";
 
 export default {
   data() {
     return {
       homework_detail: {},
-      chat: {},
-      dialog_modal: false,
-      show_collaborate: false,
-      show_chat: false,
       side_modal: false,
+      dialog_modal: false,
+      show_chat: false,
+      chat: null,
       tabs: [
         {
-          label: "Disponibles",
-          url: "collaborations.index",
+          label: "Todas",
+          url: "homeworks.index",
         },
         {
-          label: "Esperando aprobación",
-          url: "collaborations.approve-pendent",
+          label: "Pendientes",
+          url: "homeworks.no-collaboration",
         },
         {
-          label: "En proceso",
-          url: "collaborations.in-process",
+          label: "En colaboracion",
+          url: "homeworks.on-collaboration",
         },
         {
-          label: "Completados",
-          url: "collaborations.completed",
+          label: "Terminados",
+          url: "homeworks.completed",
         },
         {
           label: "Reclamos",
-          url: "collaborations.claims",
+          url: "homeworks.claims",
         },
       ],
     };
@@ -169,13 +195,14 @@ export default {
     AppLayout,
     Link,
     Tabs,
-    AvailableCollaborationsTable,
+    HomeworkTable,
     DetailsModal,
-    DropupButton,
-    MessagesModal,
+    Avatar,
     DialogModal,
-    ApplyCollaborationModal,
     AttachedFile,
+    MessagesModal,
+    DropupButton,
+    RateModal,
   },
   props: {
     homeworks: Object,
@@ -186,16 +213,16 @@ export default {
       this.homework_detail = item;
       this.side_modal = true;
     },
-    showCollaborate() {
-      this.show_collaborate = true;
-      this.dialog_modal = true;
-    },
-     showChat() {
+    showChat() {
       this.show_chat = true;
       this.dialog_modal = true;
     },
+    showRate() {
+      this.show_rate = true;
+      this.dialog_modal = true;
+    },
     prepairChat() {
-      const chat = this.searchChat();
+      const chat = this.searchChatwithOwner();
       if (chat === undefined) {
         this.createChat();
       } else {
@@ -233,7 +260,7 @@ export default {
           console.log(error);
         });
     },
-    searchChat() {
+    searchChatwithOwner() {
       const auth_user_id = this.$page.props.user.id;
       if (this.homework_detail.chats.length) {
         return this.homework_detail.chats.find((chat) =>
@@ -245,7 +272,7 @@ export default {
     async createChat() {
       try {
         const response = await axios.post(route("chat.store"), {
-          chat_mate_id: this.homework_detail.user.id,
+          chat_mate_id: this.homework_detail.approved_collaboration.user.id,
           homework_id: this.homework_detail.id,
         });
         this.chat = response.data;
@@ -256,7 +283,7 @@ export default {
       }
     },
     hideModal() {
-      this.show_collaborate = false;
+      this.show_rate = false;
       this.show_chat = false;
       this.dialog_modal = false;
     },

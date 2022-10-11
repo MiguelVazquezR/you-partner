@@ -259,7 +259,7 @@ export default {
     async createChat() {
       try {
         const response = await axios.post(route("chat.store"), {
-          homework_owner_id: this.collaboration_detail.homework.user.id,
+          chat_mate_id: this.collaboration_detail.homework.user.id,
           homework_id: this.collaboration_detail.homework.id,
         });
         this.chat = response.data;

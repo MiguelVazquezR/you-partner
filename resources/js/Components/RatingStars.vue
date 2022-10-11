@@ -1,11 +1,11 @@
 <template>
     <div v-if="rate==0">
-        <i v-for="(star, index) in stars" :key="star" @click="rate=pos;" @mouseover="pos=star" @mouseout="pos=0" class="fa-regular fa-star text-xl text-gray-500"
+        <i v-for="(star, index) in stars" :key="star" @click="rate=pos;" @mouseover="pos=star" @mouseout="pos=0" class="fa-regular fa-star text-xl text-gray-400 cursor-pointer"
         :class="index < pos ? 'text-yellow-500' : ''"></i>
 
     </div>
     <div v-if="rate!=0">
-        <i v-for="(star, index) in stars" :key="star" @mouseover="pos=star" @click="rate=pos;" class="fa-regular fa-star text-xl text-gray-500"
+        <i v-for="(star, index) in stars" :key="star" @mouseover="pos=star" @click="rate=pos;" class="fa-regular fa-star text-xl text-gray-400 cursor-pointer"
         :class="index < rate ? 'text-yellow-500' : ''"></i>
     </div>
 

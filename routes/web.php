@@ -45,7 +45,7 @@ Route::middleware([
 Route::resource('/homeworks', HomeworkController::class)->except('show');
 Route::get('/homeworks/no-collaboration', [HomeworkController::class, 'noCollaboration'])->name('homeworks.no-collaboration');
 Route::get('/homeworks/on-collaboration', [HomeworkController::class, 'onCollaboration'])->name('homeworks.on-collaboration');
-Route::get('/homeworks/finished', [HomeworkController::class, 'finished'])->name('homeworks.finished');
+Route::get('/homeworks/completed', [HomeworkController::class, 'completed'])->name('homeworks.completed');
 Route::get('/homeworks/claims', [HomeworkController::class, 'claims'])->name('homeworks.claims');
 Route::post('/homeworks/send-message', [HomeworkController::class, 'sendMessage'])->name('homeworks.send-message');
 Route::post('/homeworks/delete-file', [HomeworkController::class, 'deleteFile'])->name('homeworks.delete-file');
