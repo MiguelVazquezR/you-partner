@@ -100,6 +100,35 @@
               No hay recursos para esta tarea
             </p>
           </div>
+          <div class="mt-6">
+            <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-star mr-2"></i>
+              <span>Calificación de colaboración</span>
+            </h1>
+            <div
+              v-if="homework_detail.approved_collaboration.rate"
+              class="mt-1 flex flex-col"
+            >
+              <div>
+                <template v-for="n in 5" :key="n">
+                  <i
+                    class="fa-solid fa-star"
+                    :class="
+                      n <= homework_detail.approved_collaboration.rate.stars
+                        ? 'text-yellow-500'
+                        : 'text-gray-400'
+                    "
+                  ></i>
+                </template>
+              </div>
+              <p class="mt-px text-sm">
+                {{ homework_detail.approved_collaboration.rate.comments }}
+              </p>
+            </div>
+            <p v-else class="text-center text-gray-400 text-xs pt-3">
+              No has calificado la colaboración
+            </p>
+          </div>
         </section>
       </template>
       <template #footer>
@@ -108,7 +137,13 @@
             <template #links>
               <button @click="prepairChat" class="dropup-link">Mensajes</button>
               <button class="dropup-link">Liberar pago a colaborador</button>
-              <button @click="showRate" class="dropup-link">Calificar colaboración</button>
+              <button
+                v-if="!homework_detail.approved_collaboration.rate"
+                @click="showRate"
+                class="dropup-link"
+              >
+                Calificar colaboración
+              </button>
               <button class="dropup-link">Meter reclamo</button>
             </template>
           </DropupButton>
@@ -119,10 +154,7 @@
       </template>
     </DetailsModal>
     <!-- Modal -->
-    <DialogModal
-      :show="dialog_modal"
-      @close="hideModal"
-    >
+    <DialogModal :show="dialog_modal" @close="hideModal">
       <template #title>
         <div v-if="show_chat" class="font-bold text-gray-600">
           Mensajes <br />
@@ -139,7 +171,11 @@
       </template>
       <template #content>
         <MessagesModal :chat="chat" v-if="show_chat" />
-        <RateModal :homework="homework_detail" v-if="show_rate" />
+        <RateModal
+          :homework="homework_detail"
+          v-if="show_rate"
+          @cancel="hideModal"
+        />
       </template>
       <template #footer></template>
     </DialogModal>

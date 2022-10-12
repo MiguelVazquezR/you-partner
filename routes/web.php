@@ -8,6 +8,7 @@ use App\Http\Controllers\ErrorReportController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\RateController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -50,7 +51,6 @@ Route::get('/homeworks/claims', [HomeworkController::class, 'claims'])->name('ho
 Route::post('/homeworks/send-message', [HomeworkController::class, 'sendMessage'])->name('homeworks.send-message');
 Route::post('/homeworks/delete-file', [HomeworkController::class, 'deleteFile'])->name('homeworks.delete-file');
 
-
 Route::resource('/collaborations', CollaborationController::class)->except('show');
 Route::get('/collaborations/approve-pendent', [CollaborationController::class, 'approvePendent'])->name('collaborations.approve-pendent');
 Route::get('/collaborations/in-process', [CollaborationController::class, 'inProcess'])->name('collaborations.in-process');
@@ -72,16 +72,13 @@ Route::get('/admin/notifications', [AdminController::class,'notifications'])->na
 Route::get('/admin/users', [AdminController::class,'users'])->name('admin.users');
 Route::get('/admin/errors', [AdminController::class,'errors'])->name('admin.errors');
 
-
 Route::get('/library', [LibraryController::class,'index'])->name('library.index');
-
 
 Route::get('/errors', [ErrorReportController::class,'index'])->name('errors.index');
 
 Route::get('/profile/{user}', function (User $user){
     return Inertia::render('ProfileUser', [new UserResource($user)]);
 })->name('profile-view');
-
 
 Route::get('/privacy-policy', function (){
     return Inertia::render('PrivacyPolicy');
@@ -97,3 +94,4 @@ Route::resource('chat', ChatController::class);
 Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
 Route::post('/chat/read-messages', [ChatController::class, 'readMessage'])->name('chat.read-message');
 
+Route::resource('rates', RateController::class)->middleware('auth');
