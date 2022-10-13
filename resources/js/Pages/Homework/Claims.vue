@@ -80,7 +80,7 @@
           </h1>
           <div class="mt-1 flex flex-col">
             <AttachedFile
-              v-for="file in homework_detail.media"
+              v-for="file in homework_detail.approved_collaboration.media"
               :key="file.id"
               :name="file.name"
               :extension="file.mime_type.split('/')[1]"
@@ -104,7 +104,7 @@
             >
           </h1>
           <div class="mt-1 flex flex-col">
-            <ClaimView :homework="homework_detail" />
+            <ClaimView :collaboration="homework_detail.approved_collaboration" />
           </div>
         </div>
       </section>
@@ -138,7 +138,7 @@ import DialogModal from "@/Jetstream/DialogModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
-import RateModal from "@/Components/RateModal.vue";
+import ClaimView from "@/Components/ClaimView.vue";
 
 export default {
   data() {
@@ -185,7 +185,7 @@ export default {
     AttachedFile,
     MessagesModal,
     DropupButton,
-    RateModal,
+    ClaimView
   },
   props: {
     homeworks: Object,

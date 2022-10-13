@@ -128,7 +128,7 @@ class HomeworkController extends Controller
                 $query->Has('claim');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'user', 'collaborations'=>['user.collaborations','claim'], 'chats' => ['users', 'messages.user']])
+            ->with(['schoolSubject', 'user', 'collaborations'=> ['user.collaborations','claim'], 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
             
