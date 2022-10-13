@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRateRequest;
+use App\Http\Resources\RateResource;
 use App\Models\Rate;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -22,9 +23,9 @@ class RateController extends Controller
 
     public function store(StoreRateRequest $request)
     {
-        Rate::create($request->Validated());
+        $rate = Rate::create($request->Validated());
 
-        return redirect()->route('homeworks.completed')->with('message', 'Se ha enviado la calificación. Gracias por tus comentarios');
+        return response()->json(['rate' => new RateResource($rate)]);
     }
 
     public function show(Rate $rate)

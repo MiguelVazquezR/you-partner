@@ -59,6 +59,7 @@ Route::get('/collaborations/claims', [CollaborationController::class, 'claims'])
 Route::post('/collaborations/read-collaboration', [CollaborationController::class, 'readCollaboration'])->name('collaborations.read-collaboration');
 Route::post('/collaborations/update-p', [CollaborationController::class, 'updateP'])->name('collaborations.update-p');
 Route::put('/collaborations/approve/{collaboration}', [CollaborationController::class, 'approve'])->name('collaborations.approve');
+Route::put('/collaborations/release-payment/{collaboration}', [CollaborationController::class, 'releasePayment'])->name('collaborations.release-payment');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');

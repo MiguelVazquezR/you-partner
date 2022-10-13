@@ -46,7 +46,7 @@
       ></textarea>
     </div>
     <div class="text-right pt-3">
-      <button @click="rate" v-if="!form.processing" class="btn-primary mr-2">
+      <button @click="processing = true; rate()" v-if="!processing" class="btn-primary mr-2">
         Calificar
       </button>
       <button v-else class="btn-primary mr-2" disabled>
@@ -67,13 +67,16 @@ import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   data() {
-    const form = useForm({
+    const form = {
       stars: 0,
       comments: "",
       collaboration_id: this.homework.approved_collaboration.id,
-    });
+    };
 
-    return { form };
+    return {
+      form,
+      processing: false,
+    };
   },
   components: {
     Avatar,
@@ -84,10 +87,14 @@ export default {
     homework: Object,
   },
   methods: {
-    rate() {
-      this.form.post(route('rates.store'), {
-        onSuccess: () => this.$emit('cancel'),
-      });
+    async rate() {
+      try {
+        const response = await axios.post(route("rates.store"), this.form);
+        this.processing = false;
+        this.$emit("rated", response.data.rate);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

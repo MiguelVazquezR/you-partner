@@ -156,4 +156,15 @@ class CollaborationController extends Controller
 
         return redirect()->route('homeworks.on-collaboration');
     }
+
+    public function releasePayment(Collaboration $collaboration)
+    {
+        $collaboration->update(['payed_at' => now()]);
+
+        return response()->json(['payed_at' => [
+            'relative' => now()->diffForHumans(),
+            'string' => now()->toDateTimeString(),
+            'special' => now()->isoFormat('DD MMM, YYYY'),
+        ]]);
+    }
 }
