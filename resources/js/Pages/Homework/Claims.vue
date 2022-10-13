@@ -5,48 +5,125 @@
       <HomeworkTable
         :homeworks="homeworks"
         :filters="filters"
-        filterURL="/homeworks/finished"
+        filterURL="/homeworks/claims"
         @details="showDetails"
       />
     </div>
     <DetailsModal :show="side_modal" @close="side_modal = false">
-      <template #title> Título de mi modal </template>
-      <template #content>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non quo autem
-        illo excepturi consectetur expedita possimus, omnis reprehenderit
-        dignissimos corrupti repudiandae modi similique, optio quos sit?
-        Aspernatur rerum eos deserunt! Lorem, ipsum dolor sit amet consectetur
-        adipisicing elit. Animi quaerat id possimus debitis ea alias ducimus
-        libero. Vitae quae deserunt quas aspernatur veritatis provident debitis,
-        exercitationem temporibus quasi optio sunt. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Quia veniam quibusdam, sit deleniti neque
-        voluptates atque omnis commodi ea asperiores cumque, aspernatur deserunt
-        eos autem repudiandae magni inventore aperiam beatae. Quam repellat
-        quisquam veritatis voluptas saepe debitis voluptate, at pariatur
-        distinctio a sequi error eveniet dignissimos atque ducimus nisi
-        assumenda magni officiis, nihil, fugiat necessitatibus neque autem. Sed,
-        tempora consectetur. Minima aspernatur nihil quibusdam molestiae
-        accusamus suscipit ducimus illo cum nostrum unde est aperiam fuga quos
-        dignissimos provident nemo nam consequatur, odio aliquid numquam rerum,
-        praesentium veritatis doloremque explicabo! Possimus? Lorem ipsum dolor
-        sit amet consectetur adipisicing elit. Expedita aperiam, dicta delectus
-        cumque nulla amet soluta vero ullam, culpa harum unde id quis enim
-        reiciendis? Animi ducimus provident molestiae dicta! Excepturi
-        blanditiis nemo optio ea error, earum iure quas dolores autem porro
-        maiores ratione a iste hic nisi tempora soluta aut minus pariatur?
-        Excepturi nam voluptate praesentium, placeat totam ad? Consequuntur nam
-        fuga deleniti aspernatur cupiditate quam excepturi obcaecati ipsa,
-        voluptatum omnis quasi sed sint nisi accusantium pariatur nulla porro
-        dignissimos. Culpa doloremque labore magni possimus, blanditiis ducimus
-        similique eaque!
-      </template>
-      <template #footer>
-        <div class="flex">
-          <button class="btn-primary mr-3">Guardar</button>
-          <button class="btn-secondary">Cancelar</button>
+      <template #title>
+      <div class="flex flex-col">
+        <h1 class="text-indigo-600 text-xl font-semibold">
+          {{ homework_detail.title }}
+        </h1>
+        <div class="flex justify-between">
+          <small class="text-indigo-400 text-xs">
+            <i class="fa-solid fa-tag"></i>
+            {{ homework_detail.school_subject.name }}
+          </small>
+          <div class="flex flex-col space-y-1">
+            <small
+              class="text-xs px-2 rounded-md"
+              :class="
+                homework_detail.priority === 'Urgente'
+                  ? 'text-red-700 bg-red-100'
+                  : 'text-green-700 bg-green-100'
+              "
+              :title="'Prioridad: ' + homework_detail.priority"
+            >
+              Límite: {{ homework_detail.limit_date }}
+            </small>
+            <small class="text-xs px-2 rounded-md text-green-700 bg-green-100">
+              Entregado: {{ homework_detail.completed_date }}
+            </small>
+          </div>
         </div>
-      </template>
-    </DetailsModal>
+      </div>
+    </template>
+    <template #content>
+      <section class="mt-3">
+        <div>
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-circle-info mr-2"></i>
+            <span>Descripción</span>
+          </h1>
+          <div>
+            <p class="text-sm text-gray-500">
+              {{ homework_detail.description }}
+            </p>
+          </div>
+        </div>
+        <div class="mt-6">
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-paperclip mr-2"></i>
+            <span>Archivos adjuntos</span>
+          </h1>
+          <div
+            v-if="homework_detail.media.length"
+            class="mt-1 flex flex-col"
+          >
+            <AttachedFile
+              v-for="(file, index) in homework_detail.media"
+              :key="index"
+              :name="file.name"
+              :extension="file.mime_type.split('/')[1]"
+              :href="file.original_url"
+            />
+          </div>
+          <p v-else class="text-center text-gray-400 text-xs pt-3">
+            No hay recursos para esta tarea
+          </p>
+        </div>
+        <div class="mt-6">
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-paperclip mr-2"></i>
+            <span>Resultados de la tarea</span>
+          </h1>
+          <div class="mt-1 flex flex-col">
+            <AttachedFile
+              v-for="file in homework_detail.approved_collaboration.media"
+              :key="file.id"
+              :name="file.name"
+              :extension="file.mime_type.split('/')[1]"
+              :href="file.original_url"
+            />
+          </div>
+        </div>
+        <div class="mt-6">
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>
+            <span class="mr-3">Reclamo</span>
+            <span
+              v-if="homework_detail.approved_collaboration.claim.solution"
+              class="rounded-full px-2 py-1 bg-green-100 text-green-600 text-xs"
+              >Cerrado</span
+            >
+            <span
+              v-else
+              class="rounded-full px-2 py-px bg-red-100 text-red-600 text-xs"
+              >Abierto</span
+            >
+          </h1>
+          <div class="mt-1 flex flex-col">
+            <ClaimView :collaboration="homework_detail.approved_collaboration" />
+          </div>
+        </div>
+      </section>
+    </template>
+    <template #footer>
+      <div class="flex">
+        <DropupButton>
+          <template #links>
+            <span @click="prepairChat" class="dropup-link"
+              >Chatear con soporte</span
+            >
+          </template>
+        </DropupButton>
+        <button @click="side_modal = false" class="btn-secondary mx-2">
+          Cerrar
+        </button>
+      </div>
+    </template>
+  </DetailsModal>
   </AppLayout>
 </template>
 
@@ -56,10 +133,22 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import HomeworkTable from "@/Components/HomeworkTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
+import Avatar from "@/Components/Avatar.vue";
+import DialogModal from "@/Jetstream/DialogModal.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
+import DropupButton from "@/Components/DropupButton.vue";
+import ClaimView from "@/Components/ClaimView.vue";
 
 export default {
   data() {
+    
     return {
+      homework_detail: {},
+      side_modal: false,
+      dialog_modal: false,
+      show_chat: false,
+      chat: null,
       side_modal: false,
       tabs: [
        {
@@ -91,6 +180,12 @@ export default {
     Tabs,
     HomeworkTable,
     DetailsModal,
+    Avatar,
+    DialogModal,
+    AttachedFile,
+    MessagesModal,
+    DropupButton,
+    ClaimView
   },
   props: {
     homeworks: Object,
@@ -99,7 +194,11 @@ export default {
   methods: {
     showDetails() {
       this.side_modal = true;
-    }
+    },
+    showDetails(item) {
+      this.homework_detail = item;
+      this.side_modal = true;
+    },
   }
 };
 </script>

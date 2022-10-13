@@ -1,7 +1,9 @@
 <template>
   <div>
     <p class="text-sm">
-      <strong>{{ collaboration.homework.user.name }}</strong> -
+      <strong v-if="collaboration.homework">{{ collaboration.homework.user.name }} -</strong>
+            <strong v-else>Usted -</strong>
+
       {{ collaboration.claim.created_at.special }}
     </p>
     <p style="white-space: pre-line" class="text-xs">
@@ -23,8 +25,9 @@
       </p>
       <p style="white-space: pre-line" class="text-xs">
         {{ collaboration.claim.solution_details }}
-      </p>
-      <p class="text-indigo-600 px-2 text-sm mt-4">{{ collaboration.claim.solution }}</p>
+      </p> <br>
+      <strong class="text-sm">Solución -</strong>
+      <p class="text-indigo-600 px-2 text-sm">{{ collaboration.claim.solution }}</p>
     </div>
     <p v-else class="text-sm mt-3">
       Estamos evaluando el caso. Cuando tengamos una solución te avisaremos.
