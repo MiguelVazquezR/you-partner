@@ -50,15 +50,22 @@
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
               <i class="fa-solid fa-handshake-angle mr-2"></i>
-              <span>Colaborador</span>
+              <span class="mr-5">Colaborador</span>
             </h1>
-            <Avatar
-              :user="homework_detail.approved_collaboration.user"
-              :secondary_info="
-                'Entregó el: ' +
-                homework_detail.approved_collaboration.completed_date
-              "
-            />
+            <div class="flex items-center">
+              <Avatar
+                :user="homework_detail.approved_collaboration.user"
+                :secondary_info="
+                  'Entregó el: ' +
+                  homework_detail.approved_collaboration.completed_date
+                "
+              />
+              <span
+                v-if="homework_detail.approved_collaboration.payed_at.string"
+                class="text-green-600 text-sm ml-5"
+                >Pago liberado</span
+              >
+            </div>
           </div>
           <div class="mt-6">
             <h1 class="text-lg text-gray-600">
@@ -100,6 +107,35 @@
               No hay recursos para esta tarea
             </p>
           </div>
+          <div class="mt-6">
+            <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-star mr-2"></i>
+              <span>Calificación de colaboración</span>
+            </h1>
+            <div
+              v-if="homework_detail.approved_collaboration.rate"
+              class="mt-1 flex flex-col"
+            >
+              <div>
+                <template v-for="n in 5" :key="n">
+                  <i
+                    class="fa-solid fa-star"
+                    :class="
+                      n <= homework_detail.approved_collaboration.rate.stars
+                        ? 'text-yellow-500'
+                        : 'text-gray-400'
+                    "
+                  ></i>
+                </template>
+              </div>
+              <p class="mt-px text-sm">
+                {{ homework_detail.approved_collaboration.rate.comments }}
+              </p>
+            </div>
+            <p v-else class="text-center text-gray-400 text-xs pt-3">
+              No has calificado la colaboración
+            </p>
+          </div>
         </section>
       </template>
       <template #footer>
@@ -107,9 +143,26 @@
           <DropupButton>
             <template #links>
               <button @click="prepairChat" class="dropup-link">Mensajes</button>
-              <button class="dropup-link">Liberar pago a colaborador</button>
-              <button @click="showRate" class="dropup-link">Calificar colaboración</button>
-              <button class="dropup-link">Meter reclamo</button>
+              <button
+                v-if="!homework_detail.approved_collaboration.payed_at?.special"
+                @click="show_confirmation = true"
+                class="dropup-link"
+              >
+                Liberar pago a colaborador
+              </button>
+              <button
+                v-if="!homework_detail.approved_collaboration.rate"
+                @click="showRate"
+                class="dropup-link"
+              >
+                Calificar colaboración
+              </button>
+              <button
+                v-if="!homework_detail.approved_collaboration.payed_at?.special"
+                class="dropup-link"
+              >
+                Meter reclamo
+              </button>
             </template>
           </DropupButton>
           <button @click="side_modal = false" class="btn-secondary mx-2">
@@ -119,10 +172,7 @@
       </template>
     </DetailsModal>
     <!-- Modal -->
-    <DialogModal
-      :show="dialog_modal"
-      @close="hideModal"
-    >
+    <DialogModal :show="dialog_modal" @close="hideModal">
       <template #title>
         <div v-if="show_chat" class="font-bold text-gray-600">
           Mensajes <br />
@@ -139,10 +189,33 @@
       </template>
       <template #content>
         <MessagesModal :chat="chat" v-if="show_chat" />
-        <RateModal :homework="homework_detail" v-if="show_rate" />
+        <RateModal
+          :homework="homework_detail"
+          v-if="show_rate"
+          @cancel="hideModal"
+          @rated="addRate($event)"
+        />
       </template>
       <template #footer></template>
     </DialogModal>
+    <ConfirmationModal
+      :show="show_confirmation"
+      @close="show_confirmation = false"
+    >
+      <template #title>Liberar pago a colaborador</template>
+      <template #content>
+        Primero asegúrate de que todo esté en orden ya que al liberar el pago al
+        colaborador, ya no será posible generar un reclamo. Si no liberas el
+        pago, se liberará automáticamente 48 horas después de la fecha limite de
+        entrega que indicaste al subir tu tarea.
+      </template>
+      <template #footer>
+        <button @click="releasePayment" class="btn-danger mr-2">Liberar</button>
+        <button @click="show_confirmation = false" class="btn-secondary">
+          Cancelar
+        </button>
+      </template>
+    </ConfirmationModal>
   </AppLayout>
 </template>
 
@@ -154,6 +227,7 @@ import HomeworkTable from "@/Components/HomeworkTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
 import Avatar from "@/Components/Avatar.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
+import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
@@ -166,6 +240,7 @@ export default {
       side_modal: false,
       dialog_modal: false,
       show_chat: false,
+      show_confirmation: false,
       chat: null,
       tabs: [
         {
@@ -199,6 +274,7 @@ export default {
     DetailsModal,
     Avatar,
     DialogModal,
+    ConfirmationModal,
     AttachedFile,
     MessagesModal,
     DropupButton,
@@ -220,6 +296,25 @@ export default {
     showRate() {
       this.show_rate = true;
       this.dialog_modal = true;
+    },
+    addRate(rate) {
+      this.homework_detail.approved_collaboration.rate = rate;
+      this.hideModal();
+    },
+    async releasePayment() {
+      this.show_confirmation = false;
+      try {
+        const response = await axios.put(
+          route(
+            "collaborations.release-payment",
+            this.homework_detail.approved_collaboration.id
+          )
+        );
+        this.homework_detail.approved_collaboration.payed_at =
+          response.data.payed_at;
+      } catch (error) {
+        console.log(error);
+      }
     },
     prepairChat() {
       const chat = this.searchChatwithOwner();

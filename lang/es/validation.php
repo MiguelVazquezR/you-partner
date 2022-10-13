@@ -148,5 +148,7 @@ return [
         'promise_date' => 'fecha promesa',
         'resources' => 'recursos/archivos',
         'completed_comments' => 'comentarios',
+        'comments' => 'comentarios',
+        'stars' => 'estrellas',
     ],
 ];
