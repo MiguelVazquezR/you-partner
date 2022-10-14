@@ -96,3 +96,5 @@ Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name(
 Route::post('/chat/read-messages', [ChatController::class, 'readMessage'])->name('chat.read-message');
 
 Route::resource('rates', RateController::class)->middleware('auth');
+
+Route::resource('error-reports', ErrorReportController::class);
