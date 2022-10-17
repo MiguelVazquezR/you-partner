@@ -60,19 +60,13 @@ import JetValidationErrors from "@/Jetstream/ValidationErrors.vue"
 
 export default {
   data() {
- 
         const form = useForm({
         title: null,
         description: null,
-        limit_date: null,
-        priority: "",
         user_id: this.$page.props.user.id,
-        school_subject_id: "",
-        resources: null,
       })
 
       return {form}
-     
   },
   components: {
     AppLayout,
@@ -88,7 +82,7 @@ export default {
   },
   methods: {
      store() {
-      this.form.post(this.route('homeworks.store'));
+      this.form.post(route('homeworks.store'));
     },
   }
 };

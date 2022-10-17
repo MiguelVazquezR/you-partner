@@ -25,4 +25,9 @@ class ErrorReportController extends Controller
         return Inertia::render('ErrorReport/Index', compact('errors'));
 
     }
+
+    public function store(Request $request) 
+    {
+        
+    }
 }

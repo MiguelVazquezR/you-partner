@@ -1,8 +1,10 @@
 <template>
   <div>
     <p class="text-sm">
-      <strong v-if="collaboration.homework">{{ collaboration.homework.user.name }} -</strong>
-            <strong v-else>Usted -</strong>
+      <strong v-if="collaboration.homework"
+        >{{ collaboration.homework.user.name }} -</strong
+      >
+      <strong v-else>Usted -</strong>
 
       {{ collaboration.claim.created_at.special }}
     </p>
@@ -25,7 +27,8 @@
       </p>
       <p style="white-space: pre-line" class="text-xs">
         {{ collaboration.claim.solution_details }}
-      </p> <br>
+      </p>
+      <br />
       <strong class="text-sm">Solución -</strong>
       <p class="text-indigo-600 px-2 text-sm">{{ collaboration.claim.solution }}</p>
     </div>
