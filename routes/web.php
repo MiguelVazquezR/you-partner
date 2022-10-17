@@ -50,6 +50,7 @@ Route::get('/homeworks/completed', [HomeworkController::class, 'completed'])->na
 Route::get('/homeworks/claims', [HomeworkController::class, 'claims'])->name('homeworks.claims');
 Route::post('/homeworks/send-message', [HomeworkController::class, 'sendMessage'])->name('homeworks.send-message');
 Route::post('/homeworks/delete-file', [HomeworkController::class, 'deleteFile'])->name('homeworks.delete-file');
+Route::post('/homeworks/update-with-resources/{homework}', [HomeworkController::class, 'updateWithResources'])->name('homeworks.update-with-resources');
 
 Route::resource('/collaborations', CollaborationController::class)->except('show');
 Route::get('/collaborations/approve-pendent', [CollaborationController::class, 'approvePendent'])->name('collaborations.approve-pendent');

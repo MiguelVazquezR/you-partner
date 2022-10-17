@@ -177,17 +177,24 @@ export default {
   },
   methods: {
     update() {
-      this.$inertia.post(route("homeworks.update", this.homework), {
-        _method: "put", //support multipart/form-data request
-        title: this.form.title,
-        description: this.form.description,
-        limit_date: this.form.limit_date,
-        priority: this.form.priority,
-        user_id: this.$page.props.user.id,
-        school_subject_id: this.form.school_subject_id,
-        resources: this.form.resources,
-      });
+      if (this.form.resources.length)
+        this.form.post(route("homeworks.update-with-resources", this.homework.id));
+      else 
+        this.form.put(route("homeworks.update", this.homework.id));
+      // this.$inertia.post(route("homeworks.update", this.homework), {
+      //   _method: "put", //support multipart/form-data request
+      //   title: this.form.title,
+      //   description: this.form.description,
+      //   limit_date: this.form.limit_date,
+      //   priority: this.form.priority,
+      //   user_id: this.$page.props.user.id,
+      //   school_subject_id: this.form.school_subject_id,
+      //   any_resource: this.resources_form.resources.length,
+      // });
     },
+    // uploadResources() {
+    //   this.resources_form.post(route('homework.upload-resources'))
+    // },
     destroy() {
       this.form.delete(this.route("homeworks.destroy", this.homework));
     },

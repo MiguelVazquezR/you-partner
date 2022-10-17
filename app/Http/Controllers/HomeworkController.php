@@ -28,7 +28,7 @@ class HomeworkController extends Controller
             ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
-        // return $homeworks;
+
         return Inertia::render('Homework/Index', compact('homeworks', 'filters'));
     }
 
@@ -58,9 +58,16 @@ class HomeworkController extends Controller
     public function update(UpdateHomeworkRequest $request, Homework $homework)
     {
         $homework->update($request->validated());
+
+        return redirect()->route('homeworks.index')->with('message', 'Se ha creado la tarea correctamente!');
+    }
+
+    public function updateWithResources(UpdateHomeworkRequest $request, Homework $homework)
+    {
+        $homework->update($request->validated());
         $homework->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
 
-        return redirect()->route('homeworks.index'); //->with('message', 'Se ha creado la tarea correctamente!');
+        return redirect()->route('homeworks.index')->with('message', 'Se ha creado la tarea correctamente!');
     }
 
     public function destroy(Homework $homework)
@@ -116,7 +123,7 @@ class HomeworkController extends Controller
             ->latest('id')
             ->paginate());
 
-            return Inertia::render('Homework/Completed', compact('homeworks', 'filters'));
+        return Inertia::render('Homework/Completed', compact('homeworks', 'filters'));
     }
 
     public function claims(Request $request)
@@ -128,11 +135,11 @@ class HomeworkController extends Controller
                 $query->Has('claim');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'user', 'collaborations'=> ['user.collaborations','claim'], 'chats' => ['users', 'messages.user']])
+            ->with(['schoolSubject', 'user', 'collaborations' => ['user.collaborations', 'claim'], 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
-            
-            // return $homeworks;
+
+        // return $homeworks;
 
         return Inertia::render('Homework/Claims', compact('homeworks', 'filters'));
     }
