@@ -30,7 +30,7 @@
           <p class="my-1 font-bold">Total</p>
         </div>
         <div class="col-start-2 mx-5">
-          <p class="my-1">{{ collaboration.promise_date }}</p>
+          <p class="my-1 font-bold">{{ collaboration.promise_date }}</p>
           <p class="my-1 text-green-600">${{ collaboration.price }}</p>
           <p class="my-1 text-red-600">$0.00</p>
           <p class="my-1 font-bold text-green-600">

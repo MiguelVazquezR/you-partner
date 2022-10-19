@@ -65,7 +65,7 @@
         <p class="my-1">costo</p>
       </div>
       <div class="col-start-2">
-        <p class="my-1">{{ collaboration.promise_date }}</p>
+        <span class="my-1 bg-gray-300 font-bold">{{ collaboration.promise_date }}</span>
         <p class="my-1 text-green-600">${{ collaboration.price }}</p>
       </div>
     </div>

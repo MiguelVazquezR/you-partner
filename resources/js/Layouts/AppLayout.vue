@@ -10,6 +10,7 @@ import SideBar from "@/Components/SideBar.vue";
 
 defineProps({
   title: String,
+  dark_mode: '',
 });
 
 const showingNavigationDropdown = ref(false);
@@ -44,7 +45,7 @@ const logout = () => {
       <!-- Page Content -->
       <main class="col-span-5">
         <!-- nav -->
-        <nav class="bg-white border-b border-gray-100 dark:bg-gray-700">
+        <nav class="bg-white border-b dark:border-slate-700 border-gray-100 dark transition-dark dark:bg-slate-800">
           <!-- Primary Navigation Menu -->
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-end h-12">
@@ -62,7 +63,7 @@ const logout = () => {
                         transition
                       "
                     >
-                      <i class="fa-solid fa-bell text-lg text-indigo-400 mx-2"></i>
+                      <i class="fa-solid fa-bell text-lg text-indigo-400 hover:text-indigo-500 mx-2"></i>
                     </button>
                   </template>
 
@@ -86,7 +87,30 @@ const logout = () => {
                         transition
                       "
                     >
-                      <i class="fa-solid fa-gear text-lg text-indigo-400 mx-2"></i>
+                      <i class="fa-solid fa-gear text-lg text-indigo-400 hover:text-indigo-500 mx-2"></i>
+                    </button>
+                  </template>
+
+                  <template #content>
+                    <!-- Account Management -->
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                      Configuraciones
+                    </div>
+                  </template>
+                </JetDropdown>
+                <JetDropdown align="right" width="48">
+                  <template #trigger>
+                    <button
+                      class="
+                        flex
+                        text-sm
+                        border-2 border-transparent
+                        rounded-full
+                        focus:outline-none focus:border-gray-300
+                        transition
+                      "
+                    > <i v-if="dark_mode" class="fa-solid fa-sun text-lg text-indigo-400 mx-2 hover:text-indigo-500"></i>
+                      <i v-else class="fa-solid fa-moon text-lg text-indigo-400 mx-2 hover:text-indigo-500"></i>
                     </button>
                   </template>
 

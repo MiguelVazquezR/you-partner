@@ -120,27 +120,55 @@
       <template #footer>
         <div class="flex">
           <Link :href="route('homeworks.create')" class="btn-primary">Editar</Link>
-          <button @click="side_modal = false" class="btn-secondary mx-6">
+          <button @click="side_modal = false" class="btn-secondary mx-2">
             Cerrar
           </button>
         </div>
       </template>
     </DetailsModal>
-    <DialogModal :show="dialog_modal" @close="dialog_modal = false">
-      <template #title>Title</template>
-      <template #content> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae facilis cum ut aliquid eligendi id dolor eum magnam nemo nihil quaerat numquam nisi, voluptates excepturi aliquam quis accusantium modi similique.
-      Delectus sequi quas quia asperiores inventore laborum, doloremque quasi aliquam nobis eaque quis amet reiciendis beatae? Doloremque ipsa officia, delectus odit optio nostrum suscipit beatae autem explicabo modi earum repellendus!
-      Consequatur, architecto consequuntur nesciunt voluptate quidem aliquam officia quibusdam dolor omnis a et ut est voluptatem itaque voluptas minus. Fugit ducimus minima quisquam voluptate dolores maxime. Unde incidunt ducimus minus?
-      Accusantium natus, quisquam delectus expedita provident facilis ullam et nihil deserunt iste temporibus est corrupti suscipit soluta veritatis, porro velit aliquam maiores necessitatibus vel! Odio ad accusamus unde quibusdam et?
-      Facere aliquid ut labore mollitia a praesentium quia! Repellat eligendi quos, odit eum recusandae sed quam odio consequatur impedit. Eveniet ex laboriosam architecto nesciunt earum iste dolorem, impedit necessitatibus enim. 
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati enim nemo fugiat, vel corrupti quam harum omnis laborum reprehenderit, doloremque corporis magnam numquam a illo unde qui, ipsum adipisci cupiditate!
-      Consequatur modi corporis fugit dolorum veniam voluptatibus non adipisci? Tempore consequuntur recusandae dolor aliquam molestias necessitatibus ut a eos quasi, reiciendis cupiditate aliquid quo natus dolorem laudantium. Id, perferendis eum.
-      Quod necessitatibus omnis veritatis ea quisquam molestiae incidunt, corporis nostrum porro voluptatibus praesentium fugit alias expedita suscipit neque ducimus inventore nihil sunt eum doloremque. Nihil animi nostrum ullam facilis eaque.
-      Ullam sit accusamus nihil quibusdam, quaerat repellat. Alias, amet sequi sint libero quaerat optio, quis aliquid voluptas totam hic accusamus voluptates velit fuga repudiandae minus quasi error incidunt. Quisquam, quia!
-      Consectetur et, distinctio alias expedita dicta illo. Obcaecati vitae nesciunt molestiae fuga quibusdam ipsum debitis odio dolores. Eius quae impedit voluptas. Ea vitae, hic dicta harum veritatis quas quam ad.
+    <DialogModal
+      :show="dialog_modal"
+      @close="
+        dialog_modal = false;
+        show_applicants = false;
+        show_chat = false;
+        show_payment = false;
+      "
+    >
+      <template #title>
+        <div v-if="show_chat" class="font-bold text-gray-600">
+          Mensajes <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
+        </div>
+        <div v-else-if="show_applicants" class="font-bold text-gray-600">
+          Aplicantes a colaborar <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
+        </div>
+        <div v-else-if="show_payment" class="font-bold text-gray-600">
+          Pagar colaboración <br />
+          <span class="text-indigo-500 font-normal">
+            {{ homework_detail.title }}
+          </span>
+        </div>
       </template>
-      
-      <template #footer>Footer</template>
+      <template #content>
+        <MessagesModal :chat="chat_to_show" v-if="show_chat" />
+        <CollaborationModal
+          :collaboration="applicant_collaboration"
+          v-else-if="show_applicants"
+          @accepted="showPayment"
+        />
+        <PaymentModal
+          :collaboration="applicant_collaboration"
+          v-else-if="show_payment"
+          @cancel="show_payment = false; show_applicants = true"
+        />
+      </template>
+      <template #footer></template>
     </DialogModal>
   </AppLayout>
 </template>
@@ -154,6 +182,11 @@ import DetailsModal from "@/Components/DetailsModal.vue";
 import Avatar from "@/Components/Avatar.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
+import CollaborationModal from "@/Components/CollaborationModal.vue";
+import PaymentModal from "@/Components/PaymentModal.vue";
+import CollaborationApplicants from "@/Components/CollaborationApplicants.vue";
+import ChatList from "@/Components/ChatList.vue";
 
 
 export default {
@@ -162,6 +195,10 @@ export default {
       homework_detail: {},
       side_modal: false,
       dialog_modal: false,
+      show_applicants: false,
+      show_chat: false,
+      applicant_collaboration: null,
+      chat_to_show: null,
       tabs: [
         {
           label: "Todas",
@@ -195,6 +232,11 @@ export default {
     Avatar,
     DialogModal,
     AttachedFile,
+    MessagesModal,
+    CollaborationModal,
+    PaymentModal,
+    CollaborationApplicants,
+    ChatList,
   },
   props: {
     homeworks: Object,
@@ -204,6 +246,20 @@ export default {
     showDetails(event) {
       this.homework_detail = event;
       this.side_modal = true;
+    },
+     showChat(item) {
+      this.chat_to_show = item;
+      this.dialog_modal = true;
+      this.show_chat = true;
+    },
+    showApplicant(item) {
+      this.applicant_collaboration = item;
+      this.dialog_modal = true;
+      this.show_applicants = true;
+    },
+    showPayment() {
+      this.show_applicants = false;
+      this.show_payment = true;
     },
   },
 };
