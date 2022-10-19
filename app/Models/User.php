@@ -167,6 +167,6 @@ class User extends Authenticatable
 
     public function getRateAverage()
     {
-        $this->ratesToUser()->avg('stars');
+       return number_format($this->ratesToUser()->avg('stars'),1);
     }
 }

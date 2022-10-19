@@ -85,6 +85,12 @@
               >Abierto</span
             >
           </td>
+              <td v-if="collaboration.payed_at||collaboration.rate">
+            <div class="flex items-center" title="Cobrado">
+              <i title="Pago liberado" class="fa-solid fa-hand-holding-dollar text-green-600"></i> 
+              <i v-if="collaboration.rate" title="Tarea calificada" class="fa-solid fa-star text-yellow-500 ml-5">{{ collaboration.rate.stars }}</i> 
+            </div>
+          </td>
           <td class="pl-4">
             <button
               @click="showDetails(collaboration)"

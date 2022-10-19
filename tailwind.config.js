@@ -19,4 +19,15 @@ module.exports = {
     },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+
 };
+
+// module.exports = {
+//     darkMode: 'class',
+//     // ...
+//   }
+
+// module.exports = {
+//     darkMode: ['class', '[data-mode="dark"]'],
+//     // ...
+//   }

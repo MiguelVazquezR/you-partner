@@ -240,6 +240,7 @@ export default {
       side_modal: false,
       dialog_modal: false,
       show_chat: false,
+      show_rate: false,
       show_confirmation: false,
       chat: null,
       tabs: [

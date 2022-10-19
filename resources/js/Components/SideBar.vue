@@ -53,7 +53,7 @@
             <span class="mx-4 text-sm font-normal"> Biblioteca </span>
           </JetNavLink>
           <JetNavLink
-            :href="route('errors.index')"
+            :href="route('error-reports.index')"
             :active="route().current('errors.*')"
           >
             <span class="text-left">

@@ -23,7 +23,7 @@ class RateController extends Controller
 
     public function store(StoreRateRequest $request)
     {
-        $rate = Rate::create($request->Validated());
+        $rate = Rate::create($request->validated());
 
         return response()->json(['rate' => new RateResource($rate)]);
     }

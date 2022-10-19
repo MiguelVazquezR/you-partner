@@ -150,5 +150,8 @@ return [
         'completed_comments' => 'comentarios',
         'comments' => 'comentarios',
         'stars' => 'estrellas',
+        'subject' => 'titulo',
+        'content' => 'descripción',
+        'is_error' => 'tipo de reporte',
     ],
 ];

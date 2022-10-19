@@ -99,7 +99,7 @@
           <Link :href="route('homeworks.edit', homework_detail)" class="btn-primary"
             >Editar
           </Link>
-          <button @click="side_modal = false" class="btn-secondary mx-6">
+          <button @click="side_modal = false" class="btn-secondary mx-1">
             Cerrar
           </button>
         </div>

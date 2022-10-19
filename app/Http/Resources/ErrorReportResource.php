@@ -15,6 +15,7 @@ class ErrorReportResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'subject' => $this->subject,
             'content'=> $this->content,
             'user'=> UserResource::make($this->whenLoaded('user')),

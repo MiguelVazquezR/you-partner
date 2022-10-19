@@ -38,7 +38,7 @@
           </td>
           <td>
             <div
-            v-if="error.is_read"
+            v-if="error.is_read  == 1"
               class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded text-green-700 bg-green-100"
             >
               Revisado

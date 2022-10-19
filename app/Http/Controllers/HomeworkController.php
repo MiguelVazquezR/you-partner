@@ -28,6 +28,7 @@ class HomeworkController extends Controller
             ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
+
         // return $homeworks;
         return Inertia::render('Homework/Index', compact('homeworks', 'filters'));
     }
@@ -112,10 +113,11 @@ class HomeworkController extends Controller
                     ->whereNotNull('completed_date');
             })
             ->filter($filters)
-            ->with(['schoolSubject', 'collaborations' => ['user.collaborations', 'rate'], 'chats' => ['users', 'messages.user']])
+            ->with(['schoolSubject', 'collaborations' => ['user.collaborations', 'rate',], 'chats' => ['users', 'messages.user']])
             ->latest('id')
             ->paginate());
 
+            // return $homeworks;
             return Inertia::render('Homework/Completed', compact('homeworks', 'filters'));
     }
 

@@ -2,86 +2,82 @@
   <AppLayout title="Administrador">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
-    <ErrorsTable 
+      <ErrorsTable
         :errors="errors"
         :filters="filters"
         filterURL="/errors"
-        @details="showDetails($event)"/>
-        
+        @details="showDetails($event)"
+      />
     </div>
   </AppLayout>
 
   <DetailsModal :show="side_modal" @close="side_modal = false">
-      <template #title>
-        <div class="flex flex-col">
-          <h1 class="text-indigo-600 text-xl font-semibold">
-            {{ error_detail.is_error ? 'Error Report' : 'Sugestion Report' }}
-          </h1>
-          <div class="flex justify-between">
-             <Avatar :user="error_detail.user" />
-            <small
-              class="text-xs px-2 rounded-md"
-            >
-              Created: {{ error_detail.created_at.special }}
-            </small>
-          </div>
+    <template #title>
+      <div class="flex flex-col">
+        <h1 class="text-indigo-600 text-xl font-semibold">
+          {{ error_detail.is_error ? "Error Report" : "Sugestion Report" }}
+        </h1>
+        <div class="flex justify-between">
+          <small class="text-xs px-2 rounded-md">
+            Created: {{ error_detail.created_at.special }}
+          </small>
         </div>
-      </template>
-      <template #content>
-        <section class="mt-3">
+      </div>
+    </template>
+    <template #content>
+      <section class="mt-3">
+        <div>
+          <Avatar :user="error_detail.user" />
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-circle-info mr-2"></i>
+            <span>Description</span>
+          </h1>
           <div>
-            <h1 class="text-lg text-gray-600">
-              <i class="fa-solid fa-circle-info mr-2"></i>
-              <span>Description</span>
-            </h1>
-            <div>
-              <p class="text-sm text-gray-500">
-                {{ error_detail.content }}
-              </p>
-            </div>
-          </div>
-          <div class="mt-6">
-            <h1 class="text-lg text-gray-600">
-              <i class="fa-solid fa-paperclip mr-2"></i>
-              <span>Attached files</span>
-            </h1>
-            <div v-if="error_detail.media.length" class="mt-1 flex flex-col">
-              <AttachedFile
-                v-for="file in error_detail.media"
-                :key="file.id"
-                :name="file.name"
-                :extension="file.mime_type.split('/')[1]"
-                :href="file.original_url"
-              />
-            </div>
-            <p v-else class="text-center text-gray-400 text-xs pt-3">
-             there is not attached files for this report.
+            <p class="text-sm text-gray-500">
+              {{ error_detail.content }}
             </p>
           </div>
-        </section>
-      </template>
-      <template #footer>
-        <div class="flex">
-          <DropupButton>
-            <template #links>
-              <span @click="prepairChat" class="dropup-link">Send Message</span>
-              <span @click="showCollaborate" class="dropup-link"
-                >Mark as read</span>
-              <span @click="showCollaborate" class="dropup-link"
-                >Delete</span>
-            </template>
-          </DropupButton>
-          <button @click="side_modal = false" class="btn-secondary mx-2">
-            Cerrar
-          </button>
         </div>
-      </template>
-    </DetailsModal>
+        <div class="mt-6">
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-paperclip mr-2"></i>
+            <span>Attached files</span>
+          </h1>
+          <div v-if="error_detail.media.length" class="mt-1 flex flex-col">
+            <AttachedFile
+              v-for="file in error_detail.media"
+              :key="file.id"
+              :name="file.name"
+              :extension="file.mime_type.split('/')[1]"
+              :href="file.original_url"
+            />
+          </div>
+          <p v-else class="text-center text-gray-400 text-xs pt-3">
+            there is not attached files for this report.
+          </p>
+        </div>
+      </section>
+    </template>
+    <template #footer>
+      <div class="flex">
+        <DropupButton>
+          <template #links>
+            <span @click="prepairChat" class="dropup-link">Send Message</span>
+            <span @click="read" class="dropup-link">Mark as read</span>
+            <span @click="showCollaborate" class="dropup-link">Delete</span>
+          </template>
+        </DropupButton>
+        <button @click="side_modal = false" class="btn-secondary mx-2">
+          Cerrar
+        </button>
+      </div>
+    </template>
+  </DetailsModal>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import ErrorsTable from "@/Components/ErrorsTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
@@ -89,12 +85,11 @@ import DropupButton from "@/Components/DropupButton.vue";
 import Avatar from "@/Components/Avatar.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 
-
 export default {
   data() {
     return {
-      error_detail:{},
-        side_modal: false,
+      error_detail: {},
+      side_modal: false,
       tabs: [
         {
           label: "Finanzas",
@@ -132,15 +127,18 @@ export default {
     Avatar,
     AttachedFile,
   },
-  props:{
+  props: {
     users: Object,
     errors: Object,
   },
-  methods:{
+  methods: {
     showDetails(item) {
-      this.error_detail=item;
+      this.error_detail = item;
       this.side_modal = true;
     },
-  }
+    read() {
+      this.$inertia.put(route('error-reports.mark-as-read', this.error_detail.id));
+    },
+  },
 };
 </script>

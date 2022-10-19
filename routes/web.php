@@ -75,7 +75,6 @@ Route::get('/admin/errors', [AdminController::class,'errors'])->name('admin.erro
 
 Route::get('/library', [LibraryController::class,'index'])->name('library.index');
 
-Route::get('/errors', [ErrorReportController::class,'index'])->name('errors.index');
 
 Route::get('/profile/{user}', function (User $user){
     return Inertia::render('ProfileUser', [new UserResource($user)]);
@@ -98,3 +97,4 @@ Route::post('/chat/read-messages', [ChatController::class, 'readMessage'])->name
 Route::resource('rates', RateController::class)->middleware('auth');
 
 Route::resource('error-reports', ErrorReportController::class);
+Route::put('error-reports/mark-as-read/{error}', [ErrorReportController::class, 'markAsRead'])->name('error-reports.mark-as-read');

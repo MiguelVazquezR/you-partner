@@ -6,16 +6,18 @@
           Reportar error/Dejar sugerencia
         </p>
       </div>
-      <form @submit.prevent="store" class="mt-6">
+      <JetValidationErrors />
+      <form @submit="store" class="mt-6">
         <div class="lg:grid grid-cols-2 gap-x-3 section-container">
           <div class="mt-3">
             <Label value="Título" />
-            <Input v-model="form.title" type="text" class="w-full" />
+            <Input v-model="form.subject" type="text" class="w-full" />
           </div>
           <div class="flex justify-center">
             <div>
               <div class="form-check">
                 <input
+                v-model="form.is_error"
                   class="
                     form-check-input
                     appearance-none
@@ -38,6 +40,7 @@
                   type="radio"
                   name="bug"
                   id="bug"
+                  value="1"
                 />
                 <label
                   class="form-check-label inline-block text-gray-800"
@@ -48,6 +51,7 @@
               </div>
               <div class="form-check">
                 <input
+                v-model="form.is_error"
                   class="
                     form-check-input
                     appearance-none
@@ -70,7 +74,7 @@
                   type="radio"
                   name="bug"
                   id="sug"
-                  checked
+                  value="0"
                 />
                 <label
                   class="form-check-label inline-block text-gray-800"
@@ -84,7 +88,7 @@
           <div class="mt-3 col-span-2">
             <Label value="Descripción" />
             <textarea
-              v-model="form.description"
+              v-model="form.content"
               class="input w-full !h-20"
             ></textarea>
           </div>
@@ -121,9 +125,10 @@ import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
 export default {
   data() {
     const form = useForm({
-      title: null,
-      description: null,
-      user_id: this.$page.props.user.id,
+      subject: '',
+      content: '',
+      is_error: '',
+      resources: [],
     });
 
     return { form };
@@ -140,7 +145,8 @@ export default {
   props: {},
   methods: {
     store() {
-      this.form.post(route("homeworks.store"));
+      this.form.post(route("error-reports.store")
+      );
     },
   },
 };

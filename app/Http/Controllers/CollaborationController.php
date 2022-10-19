@@ -120,7 +120,7 @@ class CollaborationController extends Controller
             ->doesntHave('claim')
             ->whereNotNull('completed_date')
             ->filter($filters)
-            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']]])
+            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']],'rate'])
             ->latest('completed_date')
             ->paginate());
 
