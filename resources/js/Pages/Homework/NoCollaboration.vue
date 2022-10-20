@@ -1,7 +1,11 @@
 <template>
-  <AppLayout title="Tareas">
-    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+  <AppLayout :class="dark_mode" title="Tareas">
+    <div class="bg-white transition-dark dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
+      <button @click="toggleDark" class="btn-primary">
+      <i v-if="dark_mode" class="fa-solid fa-sun"></i>
+      <i v-else class="fa-solid fa-moon"></i>
+    </button>
       <div class="flex justify-end mt-3">
         <Link :href="route('homeworks.create')" class="btn-primary">
           + Crear
@@ -192,6 +196,7 @@ import ChatList from "@/Components/ChatList.vue";
 export default {
   data() {
     return {
+      dark_mode: '',
       homework_detail: {},
       side_modal: false,
       dialog_modal: false,
@@ -260,6 +265,13 @@ export default {
     showPayment() {
       this.show_applicants = false;
       this.show_payment = true;
+    },
+    toggleDark(){
+      if(this.dark_mode){
+        this.dark_mode = '';
+      }else{
+        this.dark_mode= 'dark';
+      }
     },
   },
 };

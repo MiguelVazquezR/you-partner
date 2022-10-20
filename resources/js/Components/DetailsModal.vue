@@ -31,7 +31,7 @@ const close = () => {
     @close="close"
   >
     <div>
-      <div class="flex justify-end px-1">
+      <div class="flex justify-end px-1 dark:bg-slate-900">
         <button
           @click="close"
           class="

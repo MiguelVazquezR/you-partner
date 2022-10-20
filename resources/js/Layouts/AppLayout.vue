@@ -10,7 +10,6 @@ import SideBar from "@/Components/SideBar.vue";
 
 defineProps({
   title: String,
-  dark_mode: '',
 });
 
 const showingNavigationDropdown = ref(false);
@@ -45,7 +44,7 @@ const logout = () => {
       <!-- Page Content -->
       <main class="col-span-5">
         <!-- nav -->
-        <nav class="bg-white border-b dark:border-slate-700 border-gray-100 dark transition-dark dark:bg-slate-800">
+        <nav class="bg-white border-b dark:border-slate-800 border-gray-100 dark transition-dark dark:bg-slate-900">
           <!-- Primary Navigation Menu -->
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-end h-12">
@@ -351,7 +350,7 @@ const logout = () => {
           </div>
         </nav>
         <!-- content -->
-        <div class="overflow-y-auto h-[calc(100vh-3rem)]">
+        <div class="overflow-y-auto h-[calc(100vh-3rem)] transition-dark dark:bg-slate-900">
           <slot />
         </div>
       </main>
