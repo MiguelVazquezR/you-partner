@@ -1,7 +1,7 @@
 <template>
   <!-- sidebar -->
-  <div class="h-screen hidden lg:block shadow-lg relative">
-    <div class="bg-white h-full dark:bg-gray-700">
+  <div class="h-screen hidden lg:block dark:shadow-indigo-500/100 shadow-lg relative">
+    <div class="bg-white h-full transition-dark dark:bg-slate-800">
       <div class="flex items-center justify-center pt-12 pb-2">
         <JetApplicationMark class="block h-14 w-auto" />
       </div>
@@ -53,7 +53,7 @@
             <span class="mx-4 text-sm font-normal"> Biblioteca </span>
           </JetNavLink>
           <JetNavLink
-            :href="route('errors.index')"
+            :href="route('error-reports.index')"
             :active="route().current('errors.*')"
           >
             <span class="text-left">

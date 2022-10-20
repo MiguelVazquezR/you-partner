@@ -15,9 +15,9 @@
           :key="error.id"
           class="focus:outline-none h-16 border border-gray-100 rounded"
         >
-          <td class="px-3">
-             <i class="fa-solid fa-bug text-green-700"></i>
-             <i class="fa-solid fa-thumbtack text-blue-600"></i>
+          <td >
+             <i v-if="error.is_error" title="Bug" class="text-lg fa-solid fa-bug text-green-600"></i>
+             <i v-else title="sugest" class="text-lg fa-solid fa-thumbtack text-blue-500"></i>
           </td>
           <td class="pr-5">
             <Avatar :user="error.user" />
@@ -27,6 +27,27 @@
               <p class="font-medium leading-none text-gray-700 mr-2">
                 {{ error.subject }}
               </p>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p class="font-medium leading-none text-gray-700 mr-2">
+                {{ error.created_at.special }}
+              </p>
+            </div>
+          </td>
+          <td>
+            <div
+            v-if="error.is_read  == 1"
+              class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded text-green-700 bg-green-100"
+            >
+              Revisado
+            </div>
+            <div
+            v-else
+              class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded text-red-700 bg-red-100"
+            >
+              Pendiente
             </div>
           </td>
           <td class="pl-4">

@@ -2,49 +2,74 @@
   <AppLayout title="Administrador">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
-    </div>
-    <ErrorsTable 
+      <ErrorsTable
         :errors="errors"
         :filters="filters"
         filterURL="/errors"
-        @details="showDetails($event)"/>
-        
+        @details="showDetails($event)"
+      />
+    </div>
   </AppLayout>
 
   <DetailsModal :show="side_modal" @close="side_modal = false">
-    <template #title> Título de mi modal </template>
+    <template #title>
+      <div class="flex flex-col">
+        <h1 class="text-indigo-600 text-xl font-semibold">
+          {{ error_detail.is_error ? "Error Report" : "Sugestion Report" }}
+        </h1>
+        <div class="flex justify-between">
+          <small class="text-xs px-2 rounded-md">
+            Created: {{ error_detail.created_at.special }}
+          </small>
+        </div>
+      </div>
+    </template>
     <template #content>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non quo autem
-      illo excepturi consectetur expedita possimus, omnis reprehenderit
-      dignissimos corrupti repudiandae modi similique, optio quos sit?
-      Aspernatur rerum eos deserunt! Lorem, ipsum dolor sit amet consectetur
-      adipisicing elit. Animi quaerat id possimus debitis ea alias ducimus
-      libero. Vitae quae deserunt quas aspernatur veritatis provident debitis,
-      exercitationem temporibus quasi optio sunt. Lorem ipsum dolor sit amet
-      consectetur adipisicing elit. Quia veniam quibusdam, sit deleniti neque
-      voluptates atque omnis commodi ea asperiores cumque, aspernatur deserunt
-      eos autem repudiandae magni inventore aperiam beatae. Quam repellat
-      quisquam veritatis voluptas saepe debitis voluptate, at pariatur
-      distinctio a sequi error eveniet dignissimos atque ducimus nisi assumenda
-      magni officiis, nihil, fugiat necessitatibus neque autem. Sed, tempora
-      consectetur. Minima aspernatur nihil quibusdam molestiae accusamus
-      suscipit ducimus illo cum nostrum unde est aperiam fuga quos dignissimos
-      provident nemo nam consequatur, odio aliquid numquam rerum, praesentium
-      veritatis doloremque explicabo! Possimus? Lorem ipsum dolor sit amet
-      consectetur adipisicing elit. Expedita aperiam, dicta delectus cumque
-      nulla amet soluta vero ullam, culpa harum unde id quis enim reiciendis?
-      Animi ducimus provident molestiae dicta! Excepturi blanditiis nemo optio
-      ea error, earum iure quas dolores autem porro maiores ratione a iste hic
-      nisi tempora soluta aut minus pariatur? Excepturi nam voluptate
-      praesentium, placeat totam ad? Consequuntur nam fuga deleniti aspernatur
-      cupiditate quam excepturi obcaecati ipsa, voluptatum omnis quasi sed sint
-      nisi accusantium pariatur nulla porro dignissimos. Culpa doloremque labore
-      magni possimus, blanditiis ducimus similique eaque!
+      <section class="mt-3">
+        <div>
+          <Avatar :user="error_detail.user" />
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-circle-info mr-2"></i>
+            <span>Description</span>
+          </h1>
+          <div>
+            <p class="text-sm text-gray-500">
+              {{ error_detail.content }}
+            </p>
+          </div>
+        </div>
+        <div class="mt-6">
+          <h1 class="text-lg text-gray-600">
+            <i class="fa-solid fa-paperclip mr-2"></i>
+            <span>Attached files</span>
+          </h1>
+          <div v-if="error_detail.media.length" class="mt-1 flex flex-col">
+            <AttachedFile
+              v-for="file in error_detail.media"
+              :key="file.id"
+              :name="file.name"
+              :extension="file.mime_type.split('/')[1]"
+              :href="file.original_url"
+            />
+          </div>
+          <p v-else class="text-center text-gray-400 text-xs pt-3">
+            there is not attached files for this report.
+          </p>
+        </div>
+      </section>
     </template>
     <template #footer>
       <div class="flex">
-        <button class="btn-primary mr-3">Guardar</button>
-        <button class="btn-secondary">Cancelar</button>
+        <DropupButton>
+          <template #links>
+            <span @click="prepairChat" class="dropup-link">Send Message</span>
+            <span @click="read" class="dropup-link">Mark as read</span>
+            <span @click="showCollaborate" class="dropup-link">Delete</span>
+          </template>
+        </DropupButton>
+        <button @click="side_modal = false" class="btn-secondary mx-2">
+          Cerrar
+        </button>
       </div>
     </template>
   </DetailsModal>
@@ -52,17 +77,19 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import ErrorsTable from "@/Components/ErrorsTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
-
+import DropupButton from "@/Components/DropupButton.vue";
+import Avatar from "@/Components/Avatar.vue";
+import AttachedFile from "@/Components/AttachedFile.vue";
 
 export default {
   data() {
     return {
-      error_detail:{},
-        side_modal: false,
+      error_detail: {},
+      side_modal: false,
       tabs: [
         {
           label: "Finanzas",
@@ -96,16 +123,22 @@ export default {
     Tabs,
     ErrorsTable,
     DetailsModal,
+    DropupButton,
+    Avatar,
+    AttachedFile,
   },
-  props:{
+  props: {
     users: Object,
     errors: Object,
   },
-  methods:{
+  methods: {
     showDetails(item) {
-      this.error_detail=item;
+      this.error_detail = item;
       this.side_modal = true;
     },
-  }
+    read() {
+      this.$inertia.put(route('error-reports.mark-as-read', this.error_detail.id));
+    },
+  },
 };
 </script>

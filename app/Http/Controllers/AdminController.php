@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ErrorReportResource;
 use App\Http\Resources\UserResource;
 use App\Models\Claim;
 use App\Models\Collaboration;
+use App\Models\ErrorReportModel;
 use App\Models\User;
 use Inertia\Inertia;
 
@@ -52,9 +54,25 @@ class AdminController extends Controller
             'users' => UserResource::collection($users)
         ]);
     }
-    public function errors()
-    {
 
-        return Inertia::render('Admin/Errors');
+    public function errors(Request $request)
+    {
+        $filters = $request->all('search');
+        $errors = ErrorReportResource::collection(ErrorReportModel::
+            filter($filters)
+            ->with('user')
+            ->latest()
+            ->paginate());
+
+            // return $errors;
+        return Inertia::render('Admin/Errors', compact('errors'));
+
     }
+
+    // public function errors()
+    // {
+        
+    //     return 
+    //     return Inertia::render('Admin/Errors');
+    // }
 }

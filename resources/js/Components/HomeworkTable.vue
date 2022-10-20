@@ -13,7 +13,7 @@
         <tr
           v-for="homework in homeworks.data"
           :key="homework.id"
-          class="focus:outline-none h-16 border border-gray-100 rounded"
+          class="focus:outline-none h-16 border transition-dark dark:border-slate-700 border-gray-100 rounded"
         >
           <td class="px-3">
             <StatusIcon :status="homework.status" />
@@ -29,13 +29,13 @@
           </td>
           <td>
             <div class="flex items-center pl-1">
-              <p class="font-medium leading-none text-gray-700 mr-2">
+              <p class="font-medium leading-none dark:text-gray-300 text-gray-700 mr-2">
                 {{ homework.title }}
               </p>
             </div>
           </td>
           <td class="pl-5">
-            <div class="flex items-center text-gray-600" title="Materia">
+            <div class="flex items-center dark:text-gray-300 text-gray-600" title="Materia">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none ml-2">
                 {{ homework.school_subject.name }}
@@ -44,21 +44,21 @@
           </td>
           <td class="pl-2">
             <div class="flex items-center"
-            :class="unreadMessages(homework) ? 'text-indigo-500' : 'text-gray-600'"
+            :class="unreadMessages(homework) ? 'text-indigo-500' :  'dark:text-gray-300 text-gray-600'"
              title="Preguntas o comentarios">
               <i class="fa-solid fa-comment-dots"></i>
               <p class="text-sm leading-none ml-2">{{ messagesFrom(homework).length }}</p>
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center text-gray-600" title="Archivos adjuntos">
+            <div class="flex items-center dark:text-gray-300 text-gray-600" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
               <p class="text-sm leading-none ml-2">{{ homework.media.length }}</p>
             </div>
           </td>
           <td class="pl-2">
             <div class="flex items-center" 
-            :class="unreadCollaborations(homework) ? 'text-indigo-500' : 'text-gray-600'"
+            :class="unreadCollaborations(homework) ? 'text-indigo-500' : 'dark:text-gray-300 text-gray-600'"
             title="Solicitudes de colaboración">
               <i class="fa-solid fa-user"></i>
               <p class="text-sm leading-none ml-2">{{ homework.collaborations.length }}</p>
@@ -67,16 +67,22 @@
           <td class="pl-2">
             <div
               class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
-              :class="homework.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
+              :class="homework.priority === 'Urgente' ? ' text-red-700 bg-red-100 dark:text-red-800 dark:bg-red-400' : 'text-green-700 bg-green-100 dark:text-green-800 dark:bg-green-400'"
               :title="'Prioridad: ' + homework.priority"
             >
               Límite: {{ homework.limit_date }}
             </div>
           </td>
+          <td >
+            <div v-if="homework.status === 3">
+              <i v-if="homework.approved_collaboration.payed_at.special" title="Pago liberado" class="fa-solid fa-hand-holding-dollar text-lg text-green-600"></i> 
+              <i v-if="homework.approved_collaboration.rate" title="Tarea calificada" class="fa-solid fa-star text-lg text-yellow-500 ml-5"></i>
+            </div>
+          </td>
           <td>
             <button
               @click="showDetails(homework)"
-              class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 text-sm leading-none text-gray-600 mr-4 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
+              class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 text-sm leading-none text-gray-600 mr-4 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 dark:text-gray-200 dark:bg-blue-900 dark:hover:bg-blue-700 focus:outline-none">
               Ver
             </button>
           </td>

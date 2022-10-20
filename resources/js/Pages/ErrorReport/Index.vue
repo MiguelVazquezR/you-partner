@@ -6,36 +6,100 @@
           Reportar error/Dejar sugerencia
         </p>
       </div>
-      <form @submit.prevent="store" class="mt-6">
+      <JetValidationErrors />
+      <form @submit="store" class="mt-6">
         <div class="lg:grid grid-cols-2 gap-x-3 section-container">
           <div class="mt-3">
             <Label value="Título" />
-            <Input v-model="form.title" type="text" class="w-full" />
+            <Input v-model="form.subject" type="text" class="w-full" />
           </div>
           <div class="flex justify-center">
-  <div>
-    <div class="form-check">
-      <input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-green-600 checked:border-green-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="bug" id="bug">
-      <label class="form-check-label inline-block text-gray-800" for="flexRadioDefault1">
-        Reportar Error
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-indigo-600 checked:border-indigo-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="bug" id="sug" checked>
-      <label class="form-check-label inline-block text-gray-800" for="flexRadioDefault2">
-        Dejar sugerencia
-      </label>
-    </div>
-  </div>
-</div>
+            <div>
+              <div class="form-check">
+                <input
+                v-model="form.is_error"
+                  class="
+                    form-check-input
+                    appearance-none
+                    rounded-full
+                    h-4
+                    w-4
+                    border border-gray-300
+                    bg-white
+                    checked:bg-green-600 checked:border-green-600
+                    focus:outline-none
+                    transition
+                    duration-200
+                    mt-1
+                    align-top
+                    bg-no-repeat bg-center bg-contain
+                    float-left
+                    mr-2
+                    cursor-pointer
+                  "
+                  type="radio"
+                  name="bug"
+                  id="bug"
+                  value="1"
+                />
+                <label
+                  class="form-check-label inline-block text-gray-800"
+                  for="flexRadioDefault1"
+                >
+                  Reportar Error
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                v-model="form.is_error"
+                  class="
+                    form-check-input
+                    appearance-none
+                    rounded-full
+                    h-4
+                    w-4
+                    border border-gray-300
+                    bg-white
+                    checked:bg-indigo-600 checked:border-indigo-600
+                    focus:outline-none
+                    transition
+                    duration-200
+                    mt-1
+                    align-top
+                    bg-no-repeat bg-center bg-contain
+                    float-left
+                    mr-2
+                    cursor-pointer
+                  "
+                  type="radio"
+                  name="bug"
+                  id="sug"
+                  value="0"
+                />
+                <label
+                  class="form-check-label inline-block text-gray-800"
+                  for="flexRadioDefault2"
+                >
+                  Dejar sugerencia
+                </label>
+              </div>
+            </div>
+          </div>
           <div class="mt-3 col-span-2">
             <Label value="Descripción" />
-            <textarea v-model="form.description" class="input w-full !h-20"></textarea>
+            <textarea
+              v-model="form.content"
+              class="input w-full !h-20"
+            ></textarea>
           </div>
           <div class="mt-3 col-span-2 w-1/2 mx-auto">
             <Label value="Archivos evidencia" />
             <FileUploader @input="form.resources = $event.target.files" />
-            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+            <progress
+              v-if="form.progress"
+              :value="form.progress.percentage"
+              max="100"
+            >
               {{ form.progress.percentage }}%
             </progress>
           </div>
@@ -56,17 +120,18 @@ import Input from "@/Jetstream/Input.vue";
 import InputFile from "@/Components/Common/InputFile.vue";
 import FileUploader from "@/Components/Common/FileUploader.vue";
 import Label from "@/Jetstream/Label.vue";
-import JetValidationErrors from "@/Jetstream/ValidationErrors.vue"
+import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
 
 export default {
   data() {
-        const form = useForm({
-        title: null,
-        description: null,
-        user_id: this.$page.props.user.id,
-      })
+    const form = useForm({
+      subject: '',
+      content: '',
+      is_error: '',
+      resources: [],
+    });
 
-      return {form}
+    return { form };
   },
   components: {
     AppLayout,
@@ -77,13 +142,12 @@ export default {
     JetValidationErrors,
     Link,
   },
-  props: {
-
-  },
+  props: {},
   methods: {
-     store() {
-      this.form.post(route('homeworks.store'));
+    store() {
+      this.form.post(route("error-reports.store")
+      );
     },
-  }
+  },
 };
 </script>
