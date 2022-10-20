@@ -90,10 +90,12 @@ export default {
     async rate() {
       try {
         const response = await axios.post(route("rates.store"), this.form);
-        this.processing = false;
         this.$emit("rated", response.data.rate);
       } catch (error) {
+        this.$page.props.errors = {message: 'Las estrellas y los comentarios son obligatorios'};
         console.log(error);
+      } finally {        
+        this.processing = false;
       }
     },
   },

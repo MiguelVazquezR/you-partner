@@ -2,11 +2,18 @@
   <AppLayout title="Ranking">
  <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
     <!-- <pricing-plans /> -->
-    </div>
+    <!-- </div>
     <h1 class="text-3xl font-semibold text-indigo-500">EN CONSTRUCCION... VIENE PRONTO</h1>
-    <i class="fa-solid fa-person-digging text-[95px] text-gray-400 mt-24 ml-48"></i>
+    <i class="fa-solid fa-person-digging text-[95px] text-gray-400 mt-24 ml-48"></i> -->
 
-
+    <button @click="counter ++" class="btn-primary">+</button>
+    <span> {{ counter }} </span>
+    <button  @click="counter --" class="btn-secondary">-</button>
+</div>
+  <div :class="'text-[' + textSize + 'px]'">
+<CursoVue :courses="courses" @crecerTexto="textSize=textSize+$event"/>
+<span>{{ textSize }}</span>
+  </div>
   </AppLayout>
 </template>
 
@@ -15,16 +22,38 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import PricingPlans from "@/Components/PricingPlans.vue";
+import CursoVue from "@/Components/CursoVue.vue";
 
 
 export default {
    data() {
-    
+    return {
+      counter: 0,
+      textSize:12,
+      courses:[
+        {
+        id:1,
+        name:'Vue.js',
+        price:'$50'
+        },
+        {
+        id:2,
+        name:'React',
+        price:'$150'
+        },
+        {
+        id:3,
+        name:'Laravel',
+        price:'$200'
+        },
+      ],
+    }
   },
   components: {
     AppLayout,
     Tabs,
     PricingPlans,
+    CursoVue
   },
   props:{
 

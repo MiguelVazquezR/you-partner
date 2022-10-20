@@ -2,6 +2,11 @@
   <AppLayout title="Mis tareas terminadas">
     <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
+      <div class="flex justify-end mt-3">
+        <Link :href="route('homeworks.create')" class="btn-primary">
+          + Crear
+        </Link>
+      </div>
       <HomeworkTable
         :homeworks="homeworks"
         :filters="filters"
@@ -63,8 +68,7 @@
               <span
                 v-if="homework_detail.approved_collaboration.payed_at.string"
                 class="text-green-600 text-sm ml-5"
-                >Pago liberado</span
-              >
+                >Pago liberado</span>
             </div>
           </div>
           <div class="mt-6">
@@ -248,6 +252,7 @@ export default {
       dialog_modal: false,
       show_chat: false,
       show_claim: false,
+      show_rate: false,
       show_confirmation: false,
       chat: null,
       tabs: [

@@ -50,6 +50,9 @@
           <div>
             <p class="text-sm text-gray-500">
               {{ collaboration_detail.homework.description }}
+                          <span v-if="collaboration_detail.payed_at.string"
+            class="text-green-600 text-sm ml-5 rounded-md bg-green-100">       
+            Pago liberado</span>
             </p>
           </div>
         </div>
@@ -89,6 +92,35 @@
             />
           </div>
         </div>
+         <div class="mt-6">
+            <h1 class="text-lg text-gray-600">
+              <i class="fa-solid fa-star mr-2"></i>
+              <span>Calificación de colaboración</span>
+            </h1>
+            <div
+              v-if="collaboration_detail.rate"
+              class="mt-1 flex flex-col"
+            >
+              <div>
+                <template v-for="n in 5" :key="n">
+                  <i
+                    class="fa-solid fa-star"
+                    :class="
+                      n <= collaboration_detail.rate.stars
+                        ? 'text-yellow-500'
+                        : 'text-gray-400'
+                    "
+                  ></i>
+                </template>
+              </div>
+              <p class="mt-px text-sm">
+                {{ collaboration_detail.rate.comments }}
+              </p>
+            </div>
+            <p v-else class="text-center text-gray-400 text-xs pt-3">
+              No has calificado la colaboración
+            </p>
+          </div>
       </section>
     </template>
     <template #footer>
