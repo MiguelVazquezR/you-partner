@@ -163,6 +163,7 @@
               </button>
               <button
                 v-if="!homework_detail.approved_collaboration.payed_at?.special"
+                @click="showClaim"
                 class="dropup-link"
               >
                 Meter reclamo
@@ -180,16 +181,16 @@
       <template #title>
         <div v-if="show_chat" class="font-bold text-gray-600">
           Mensajes <br />
-          <span class="text-indigo-500 font-normal">
-            {{ homework_detail.title }}
-          </span>
         </div>
         <div v-if="show_rate" class="font-bold text-gray-600">
           Calificar colaboración <br />
-          <span class="text-indigo-500 font-normal">
-            {{ homework_detail.title }}
-          </span>
         </div>
+        <div v-if="show_rate" class="font-bold text-gray-600">
+          Generar reclamo <br />
+        </div>
+        <span class="text-indigo-500 font-normal">
+          {{ homework_detail.title }}
+        </span>
       </template>
       <template #content>
         <MessagesModal :chat="chat" v-if="show_chat" />
@@ -198,6 +199,11 @@
           v-if="show_rate"
           @cancel="hideModal"
           @rated="addRate($event)"
+        />
+        <ClaimModal
+          :collaborator="homework_detail.approved_collaboration.user"
+          v-if="show_claim"
+          @cancel="hideModal"
         />
       </template>
       <template #footer></template>
@@ -236,6 +242,7 @@ import AttachedFile from "@/Components/AttachedFile.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
 import RateModal from "@/Components/RateModal.vue";
+import ClaimModal from "@/Components/ClaimModal.vue";
 
 export default {
   data() {
@@ -244,6 +251,7 @@ export default {
       side_modal: false,
       dialog_modal: false,
       show_chat: false,
+      show_claim: false,
       show_rate: false,
       show_confirmation: false,
       chat: null,
@@ -284,6 +292,7 @@ export default {
     MessagesModal,
     DropupButton,
     RateModal,
+    ClaimModal,
   },
   props: {
     homeworks: Object,
@@ -300,6 +309,10 @@ export default {
     },
     showRate() {
       this.show_rate = true;
+      this.dialog_modal = true;
+    },
+    showClaim() {
+      this.show_claim = true;
       this.dialog_modal = true;
     },
     addRate(rate) {
