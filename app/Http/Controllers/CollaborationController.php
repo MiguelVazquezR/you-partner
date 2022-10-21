@@ -13,6 +13,9 @@ use App\Models\Chat;
 use App\Models\Homework;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use MercadoPago\Entities\Preference;
+use MercadoPago\Entities\Shared\Item;
+use MercadoPago\SDK;
 
 class CollaborationController extends Controller
 {
@@ -170,25 +173,25 @@ class CollaborationController extends Controller
 
     public function payment(Collaboration $collaboration)
     {
+        // ***change namespaces from every php file in src folder**
+        // ***remove line 182 vendor/mercadopago-php/...RestClient.php**
+
         $collaboration = CollaborationResource::make(Collaboration::with('user', 'homework')->findOrFail($collaboration->id));
-        // SDK de Mercado Pago
-        // require base_path('/vendor/autoload.php');
-        // // Agrega credenciales
-        // MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+        // Agrega credenciales
+        SDK::setAccessToken(config('services.mercadopago.token'));
 
-        // // Crea un objeto de preferencia
-        // $preference = new MercadoPago\Preference();
-        // $key = config('services.mercadopago.key');
+        // Crea un objeto de preferencia
+        $preference = new Preference();
+        $publicKey = config('services.mercadopago.key');
+        
+        // Crea un ítem en la preferencia
+        $item = new Item();
+        $item->title = "Colaboración para tarea: ".$collaboration->homework->title;
+        $item->quantity = 1;
+        $item->unit_price = $collaboration->price;
+        $preference->items = array($item);
+        $preference->save();
 
-
-        // // Crea un ítem en la preferencia
-        // $item = new MercadoPago\Item();
-        // $item->title = 'Mi producto';
-        // $item->quantity = 1;
-        // $item->unit_price = 75.56;
-        // $preference->items = array($item);
-        // $preference->save();
-
-        return inertia('Collaborations/Payment', compact('collaboration'));
+        return inertia('Collaborations/Payment', compact('collaboration', 'publicKey', 'preference'));
     }
 }

@@ -14,6 +14,7 @@
         @routes
         @vite('resources/js/app.js')
         @inertiaHead
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
     </head>
     <body class="font-sans antialiased">
         @inertia
