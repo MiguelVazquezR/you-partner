@@ -120,7 +120,7 @@ class CollaborationController extends Controller
             ->doesntHave('claim')
             ->whereNotNull('completed_date')
             ->filter($filters)
-            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']],'rate'])
+            ->with(['user', 'homework' => ['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']], 'rate'])
             ->latest('completed_date')
             ->paginate());
 
@@ -166,5 +166,29 @@ class CollaborationController extends Controller
             'string' => now()->toDateTimeString(),
             'special' => now()->isoFormat('DD MMM, YYYY'),
         ]]);
+    }
+
+    public function payment(Collaboration $collaboration)
+    {
+        $collaboration = CollaborationResource::make(Collaboration::with('user', 'homework')->findOrFail($collaboration->id));
+        // SDK de Mercado Pago
+        // require base_path('/vendor/autoload.php');
+        // // Agrega credenciales
+        // MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+
+        // // Crea un objeto de preferencia
+        // $preference = new MercadoPago\Preference();
+        // $key = config('services.mercadopago.key');
+
+
+        // // Crea un ítem en la preferencia
+        // $item = new MercadoPago\Item();
+        // $item->title = 'Mi producto';
+        // $item->quantity = 1;
+        // $item->unit_price = 75.56;
+        // $preference->items = array($item);
+        // $preference->save();
+
+        return inertia('Collaborations/Payment', compact('collaboration'));
     }
 }

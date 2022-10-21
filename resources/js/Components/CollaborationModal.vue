@@ -70,7 +70,8 @@
       </div>
     </div>
   <div class="text-right">
-    <button class="btn-primary mx-2 my-4" @click="$emit('accepted')">Aceptar Colaboración</button>
+    <Link :href="route('payment', collaboration)" class="btn-primary mx-2 my-4">Aceptar Colaboración</Link>
+    <!-- <button class="btn-primary mx-2 my-4" @click="$emit('accepted')">Aceptar Colaboración</button> -->
     <!-- <button class="btn-secondary mx-2">Comentar</button> -->
   </div>
 </template>
@@ -78,6 +79,7 @@
 
 <script>
 import Avatar from "@/Components/Avatar.vue";
+import {Link} from "@inertiajs/inertia-vue3";
 
 export default {
   data() {
@@ -85,6 +87,7 @@ export default {
   },
   components: {
     Avatar,
+    Link,
   },
   props: {
     collaboration: Object,

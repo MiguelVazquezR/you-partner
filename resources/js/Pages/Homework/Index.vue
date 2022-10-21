@@ -132,12 +132,12 @@
             {{ homework_detail.title }}
           </span>
         </div>
-        <div v-else-if="show_payment" class="font-bold text-gray-600">
+        <!-- <div v-else-if="show_payment" class="font-bold text-gray-600">
           Pagar colaboración <br />
           <span class="text-indigo-500 font-normal">
             {{ homework_detail.title }}
           </span>
-        </div>
+        </div> -->
       </template>
       <template #content>
         <MessagesModal :chat="chat_to_show" v-if="show_chat" />
@@ -146,11 +146,11 @@
           v-else-if="show_applicants"
           @accepted="showPayment"
         />
-        <PaymentModal
+        <!-- <PaymentModal
           :collaboration="applicant_collaboration"
           v-else-if="show_payment"
           @cancel="show_payment = false; show_applicants = true"
-        />
+        /> -->
       </template>
       <template #footer></template>
     </DialogModal>
