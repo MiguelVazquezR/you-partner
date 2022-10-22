@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Mis tareas terminadas">
-    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+    <div class="bg-white transition-dark dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
       <div class="flex justify-end mt-3">
         <Link :href="route('homeworks.create')" class="btn-primary">

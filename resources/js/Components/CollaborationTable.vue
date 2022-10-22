@@ -13,7 +13,7 @@
         <tr
           v-for="collaboration in collaborations.data"
           :key="collaboration.id"
-          class="focus:outline-none h-16 border border-gray-100 rounded"
+          class="focus:outline-none h-16 border dark:border-slate-800 border-gray-100 rounded"
         >
           <td class="px-3">
              <StatusIcon :status="collaboration.status" />
@@ -23,13 +23,13 @@
           </td>
           <td>
             <div>
-              <p class="font-medium leading-none text-gray-700 mr-2">
+              <p class="font-medium leading-none dark:text-gray-300 text-gray-700 mr-2">
                 {{ collaboration.homework.title }}
               </p>
             </div>
           </td>
           <td class="pl-5">
-            <div class="flex items-center text-gray-600" title="Materia">
+            <div class="flex items-center dark:text-gray-300 text-gray-600" title="Materia">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none ml-2">
                 {{ collaboration.homework.school_subject.name }}
@@ -37,21 +37,21 @@
             </div>
           </td>
           <td v-if="!collaboration.claim" class="pl-2">
-            <div class="flex items-center mr-2" title="Mensajes">
+            <div class="flex items-center mr-2 dark:text-gray-300" title="Mensajes">
               <i class="fa-solid fa-comment-dots"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
+              <p class="text-sm leading-none dark:text-gray-300 text-gray-600 ml-2">0</p>
             </div>
           </td>
           <td v-else class="pl-2">
-            <div class="flex items-center mr-2" title="Mensajes de soporte">
+            <div class="flex items-center mr-2 dark:text-gray-300" title="Mensajes de soporte">
               <i class="fa-solid fa-headset"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
+              <p class="text-sm leading-none dark:text-gray-300 text-gray-600 ml-2">0</p>
             </div>
           </td>
           <td>
-            <div class="flex items-center" title="Cobrado">
+            <div class="flex items-center dark:text-gray-300" title="Cobrado">
               <i class="fa-solid fa-dollar-sign"></i>
-              <p class="text-sm leading-none text-gray-600">
+              <p class="text-sm leading-none dark:text-gray-300 text-gray-600">
                 {{ collaboration.price }} MXN
               </p>
             </div>
@@ -67,7 +67,7 @@
           <td v-if="!collaboration.claim" class="pl-2">
             <div
               class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
-              :class="collaboration.homework.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
+              :class="collaboration.homework.priority === 'Urgente' ? ' dark:text-red-900 dark:bg-red-500 text-red-700 bg-red-100' : 'dark:text-green-900 dark:bg-green-500 text-green-700 bg-green-100'"
               :title="'Prioridad: ' + collaboration.homework.priority"
             >
               Límite: {{ collaboration.homework.limit_date }}
@@ -76,12 +76,12 @@
           <td class="pl-2" v-if="collaboration.claim">
             <span
               v-if="collaboration.claim?.solution"
-              class="rounded-full px-2 py-1 bg-green-100 text-green-600 text-xs"
+              class="rounded-full px-2 py-1 dark:bg-green-500 dark:text-green-900 bg-green-100 text-green-600 text-xs"
               >Cerrado</span
             >
             <span
               v-else
-              class="rounded-full px-2 py-px bg-red-100 text-red-600 text-xs"
+              class="rounded-full px-2 py-px dark:bg-red-500 dark:text-red-900 bg-red-100 text-red-600 text-xs"
               >Abierto</span
             >
           </td>
@@ -105,6 +105,7 @@
                 rounded
                 hover:bg-gray-200
                 focus:outline-none
+                dark:text-gray-200 dark:bg-blue-900 dark:hover:bg-blue-700
               "
             >
               Ver

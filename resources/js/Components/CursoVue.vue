@@ -56,6 +56,12 @@
 <br>
 <button @click="$emit('crecerTexto', 2)" class="btn-secondary">Aunmentar tamaño</button>
 </div>
+<br>
+<router-link to="/dashboard">Home</router-link>
+<br>
+<p>numero de cambios en el dom:{{ changes }}</p>
+<br>
+<br>
 
 </template>
 
@@ -69,6 +75,7 @@ export default {
       Active2: true,
       color: "black",
       counter: 0,
+      changes:0,
 
       paises: [
         {
@@ -96,5 +103,18 @@ export default {
       this.capital = "";
     },
   },
+  beforeCreate(){
+
+  },
+  created() {
+    
+  },
+  mounted() {
+    
+  },
+  updated() {
+    // this.changes++;
+  },
+
 };
 </script>

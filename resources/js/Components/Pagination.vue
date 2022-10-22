@@ -14,7 +14,9 @@
           py-2
           text-sm
           border
+          dark:border-slate-800
           text-gray-400
+          dark:text-gray-300
         " v-html="link.label"></div>
       <Link :key="'link-' + key" v-else :href="link.url" class="
           inline-flex
@@ -24,7 +26,9 @@
           text-sm
           font-semibold
           border
-          " :class="link.active ? 'bg-indigo-200 text-gray-900  ' : ''" v-html="link.label" />
+          dark:border-slate-800
+          dark:text-gray-300
+          " :class="link.active ? 'dark:bg-slate-700 bg-indigo-200 text-gray-900  ' : ''" v-html="link.label" />
     </template>
   </nav>
 </template>

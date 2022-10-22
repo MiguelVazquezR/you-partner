@@ -3,14 +3,14 @@
     <div class="flex items-center py-2">
     <Link href="/profile/1" class="w-8 h-8 mr-2">
       <img
-        class="w-8 h-8 rounded-full ring-1 ring-offset-2 ring-indigo-400 hover:cursor-pointer"
+        class="w-8 h-8 rounded-full ring-2 ring-offset-2 ring-indigo-700 hover:cursor-pointer"
         :src="user.profile_photo_url"
         :alt="user.name"
       />
         </Link>
       <div class="flex flex-col">
-        <p class="text-gray-600 font-semibold text-xs truncate">{{ user.name }}</p>
-        <small v-if="secondary_info" class="text-xs text-gray-400">{{ secondary_info }}</small>
+        <p class="dark:text-gray-300 text-gray-600 font-semibold text-xs truncate">{{ user.name }}</p>
+        <small v-if="secondary_info" class="text-xs dark:text-gray-300 text-gray-400">{{ secondary_info }}</small>
       </div>
     </div>
   </div>

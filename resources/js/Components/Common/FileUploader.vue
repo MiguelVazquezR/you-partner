@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-10 px-6 bg-gray-100 border border-dashed rounded-md border-gray-300"
+    class="py-10 px-6 bg-gray-100 dark:bg-slate-700 dark:border-slate-500 dark:text-gray-300 border border-dashed rounded-md border-gray-300"
     @dragover="dragover"
     @dragleave="dragleave"
     @drop="drop"

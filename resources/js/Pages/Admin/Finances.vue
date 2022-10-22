@@ -1,17 +1,17 @@
 <template>
   <AppLayout title="Administrador">
-    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+    <div class="dark:bg-slate-900 bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
 <!-- --------BODY START------------------- -->
     <div class="grid grid-cols-2 gap-4 py-4 px-4">
 
 <!-- --------PANEL 1 START------------------- -->
-      <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-2 border-b max-h-60">
+      <div class="bg-white dark:bg-slate-800 dark:text-gray-300 rounded-lg shadow-md px-3 py-2 grid grid-cols-2 max-h-60">
         
         <h3 class="text-indigo-500 text-center">Ingresos</h3>
         <h3 class="text-indigo-500 text-center">Egresos</h3>
-        <hr class="col-span-full">
+        <hr class="col-span-full my-2">
       
         <!-- -----------IGRESOS COL START--------------- --> 
         <div class="overflow-y-auto grid grid-cols-2">
@@ -82,7 +82,7 @@
 <!-- --------PANEL 1 END------------------- -->
 
 <!-- --------PANEL 2 START------------------- -->
-        <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-2 border-b ">
+        <div class="bg-white dark:text-gray-300 dark:bg-slate-800 rounded-lg shadow-md px-3 py-2 grid grid-cols-2">
           tyklj
       </div>
  <!-- --------PANEL 2 END------------------- -->     
