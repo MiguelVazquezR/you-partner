@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Administrador">
-    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+    <div class="dark:bg-slate-900 bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
 
       </div>
@@ -8,7 +8,7 @@
     <div class="grid grid-cols-3 gap-4 py-4 px-4">
 
 <!-- --------PANEL 1 COMISIONES START------------------- -->
-      <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-2 border-b max-h-72">
+      <div class="bg-white rounded-lg dark:bg-slate-800 dark:text-gray-300 shadow-md px-3 py-2 grid grid-cols-2 max-h-72">
         
         <h3 class="text-indigo-500 text-center col-span-full">Comisiones</h3>
         <hr class="col-span-full">
@@ -49,7 +49,7 @@
 
 
  <!-- --------PANEL 3 RANKING START------------------- -->
-      <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-3 col-span-2 border-b max-h-72">
+      <div class="bg-white dark:bg-slate-800 dark:text-gray-300 rounded-lg shadow-md px-3 py-2 grid grid-cols-3 col-span-2 max-h-72">
         
         <h3 class="text-indigo-500 text-center col-span-full">Ranking</h3>
         <hr class="col-span-full">
@@ -93,7 +93,7 @@
  <!-- --------PANEL 3 RANKING END------------------- --> 
 
 <!-- --------PANEL 2 PUNTOS START------------------- -->
-      <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-2 border-b max-h-72">
+      <div class="bg-white dark:bg-slate-800 dark:text-gray-300 rounded-lg shadow-md px-3 py-2 grid grid-cols-2 max-h-72">
         
         <h3 class="text-indigo-500 text-center col-span-full">Puntos</h3>
         <hr class="col-span-full">
@@ -127,7 +127,7 @@
 
 
  <!-- --------PANEL 4 CUPONES START------------------- -->
-      <div class="bg-white rounded-lg shadow-md px-3 py-2 grid grid-cols-3 col-span-2 border-b max-h-72">
+      <div class="bg-white dark:bg-slate-800 dark:text-gray-300 rounded-lg shadow-md px-3 py-2 grid grid-cols-3 col-span-2 max-h-72">
         
         <h3 class="text-indigo-500 text-center col-span-full">Cupones</h3>
         <hr class="col-span-full">

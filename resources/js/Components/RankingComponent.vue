@@ -1,13 +1,13 @@
 <template>
     <!-- ------------INICIO DEL BODY---------------------- -->
     <div>
-    <h2 class="text-indigo-500 text-center mt-1 text-lg font-semibold">Ranking por de Colaboraciones</h2>
+    <h2 class="text-indigo-500  text-center mt-1 text-lg font-semibold">Ranking por de Colaboraciones</h2>
   
       <div class="grid lg:grid-cols-2 sm:grid-cols-1">
 
 <!-- ------------INICIO DEL PANEL 1 TOP 10---------------------- -->
 
-        <div class="my-6 mx-8 bg-white rounded-lg shadow-md max-h-screen col-span-2 lg:col-span-1">
+        <div class="my-6 mx-8 rounded-lg shadow-md max-h-screen col-span-2 lg:col-span-1">
         <h2 class="text-indigo-500 text-md font-bold text-center mt-2">TOP 10</h2>
         <hr class="mx-5">
 

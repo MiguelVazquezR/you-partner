@@ -47,6 +47,7 @@
                     grid grid-cols-4
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1
@@ -78,6 +79,7 @@
                     grid grid-cols-2
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1
@@ -103,6 +105,7 @@
                     grid grid-cols-4
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1
@@ -134,6 +137,7 @@
                     grid grid-cols-2
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1
@@ -215,6 +219,7 @@
                     grid grid-cols-4
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1
@@ -246,6 +251,7 @@
                     grid grid-cols-4
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1
@@ -278,6 +284,7 @@
                     grid grid-cols-2
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1
@@ -303,6 +310,7 @@
                     grid grid-cols-4
                     gap-x-3
                     hover:bg-indigo-50
+                    dark:hover:bg-slate-700
                     cursor-pointer
                     px-2
                     py-1

@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Ranking">
- <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+ <div class="bg-white py-4 dark:bg-slate-900 md:py-7 px-4 md:px-8 xl:px-10">
     <!-- <pricing-plans /> -->
     <!-- </div>
     <h1 class="text-3xl font-semibold text-indigo-500">EN CONSTRUCCION... VIENE PRONTO</h1>

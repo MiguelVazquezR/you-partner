@@ -13,7 +13,7 @@
         <tr
           v-for="homework in homeworks.data"
           :key="homework.id"
-          class="focus:outline-none h-16 border transition-dark dark:border-slate-800 border-gray-100 rounded"
+          class="focus:outline-none h-16 border dark:border-slate-800 border-gray-100 rounded"
         >
           <td class="px-3">
             <StatusIcon :status="homework.status" />
@@ -67,7 +67,7 @@
           <td class="pl-2">
             <div
               class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
-              :class="homework.priority === 'Urgente' ? ' text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-400' : 'text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-400'"
+              :class="homework.priority === 'Urgente' ? ' text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-500' : 'text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500'"
               :title="'Prioridad: ' + homework.priority"
             >
               Límite: {{ homework.limit_date }}

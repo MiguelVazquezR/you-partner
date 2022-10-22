@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Administrador">
-    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+    <div class="dark:bg-slate-900 bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
 
@@ -8,7 +8,7 @@
     <div class="grid grid-cols-2 grid-rows-2 gap-4 py-4 px-4">
 
 <!-- --------PANEL 1 nueva difusion START------------ -->
-       <div class="bg-white rounded-lg shadow-md px-3 py-2 border-b max-h-72">
+       <div class="bg-white dark:bg-slate-800 dark:text-gray-300 rounded-lg shadow-md px-3 py-2 max-h-72">
         
         <h3 class="text-indigo-500 text-center">Nueva Notificación</h3>
         <hr>
@@ -29,7 +29,7 @@
 
 
   <!-- --------PANEL 2 filtro START------------ -->
-       <div class="bg-white rounded-lg shadow-md px-3 py-2 border-b col-start-2 row-span-2">
+       <div class="bg-white dark:bg-slate-800 dark:text-gray-300 rounded-lg shadow-md px-3 py-2 col-start-2 row-span-2">
         
         <h3 class="text-indigo-500 text-center">Filtro de difusión</h3>
         <hr>
@@ -73,7 +73,7 @@
   <!-- --------PANEL 2 filtro END------------ -->   
 
   <!-- --------PANEL 3 BANNER START------------ -->
-       <div class="bg-white rounded-lg shadow-md px-3 py-2 border-b max-h-72">
+       <div class="dark:bg-slate-800 dark:text-gray-300 bg-white rounded-lg shadow-md px-3 py-2 max-h-72">
         
         <h3 class="text-indigo-500 text-center">Banner</h3>
         <hr>

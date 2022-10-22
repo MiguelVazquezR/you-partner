@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Ranking">
- <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+ <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
 
@@ -12,7 +12,7 @@
 
 <!-- ------------INICIO DEL PANEL 1 TOP 10---------------------- -->
 
-        <div class="my-6 mx-8 bg-white rounded-lg shadow-md max-h-screen col-span-2 lg:col-span-1">
+        <div class="my-6 mx-8 dark:bg-slate-800 bg-white rounded-lg shadow-md max-h-screen col-span-2 lg:col-span-1">
         <h2 class="text-indigo-500 text-md font-bold text-center mt-2">TOP 10</h2>
         <hr class="mx-5">
 
@@ -21,8 +21,8 @@
         <div class="">
 					<img src="https://source.unsplash.com/100x100/?portrait" alt="" class="object-cover w-9 h-9 rounded-full dark:bg-gray-500">
 				</div>
-        <span :class="rankProps(index).color" class="mr-1 bg-gray-300 rounded-md w-[60%] font-bold p-1">{{place.name}}</span>
-         <span class="inline-block bg-gray-600 rounded-md w-[15%] text-white font-bold p-1 text-center">{{ place.points }}</span> </li>
+        <span :class="rankProps(index).color" class="mr-1 bg-gray-300 dark:bg-slate-700 rounded-md w-[60%] font-bold p-1">{{place.name}}</span>
+         <span class="inline-block bg-gray-600 dark:text-gray-300 rounded-md w-[15%] text-white font-bold p-1 text-center">{{ place.points }}</span> </li>
       </ul>
         </div>
 

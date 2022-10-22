@@ -1,9 +1,9 @@
 <template>
-    <div class="bg-white rounded-lg shadow-md px-3 py-2">
+    <div class="bg-white rounded-lg shadow-md px-3 py-2 dark:bg-slate-800">
         <div class="text-indigo-500 text-center text-lg py-1 border-b">
             <slot name="title" />
         </div>
-        <div class="overflow-auto text-gray-600 pt-1 max-h-40">
+        <div class="overflow-auto text-gray-600 dark:text-gray-300 pt-1 max-h-40">
             <div v-if="items.length" class="text-sm">
                 <slot name="content" />
             </div>

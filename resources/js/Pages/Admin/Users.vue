@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Administrador">
-    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+    <div class="dark:bg-slate-900 bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
       <Tabs :tabs="tabs" />
     </div>
 
