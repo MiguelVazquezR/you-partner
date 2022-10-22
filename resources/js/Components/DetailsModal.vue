@@ -38,6 +38,7 @@ const close = () => {
             ml-auto
             text-gray-400
             hover:text-red-400 hover:bg-gray-200
+            dark:hover:text-red-600 dark:hover:bg-gray-800
             w-8
             h-8
             rounded-full

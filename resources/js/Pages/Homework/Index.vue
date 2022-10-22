@@ -31,8 +31,8 @@
               class="text-xs px-2 rounded-md"
               :class="
                 homework_detail.priority === 'Urgente'
-                  ? 'text-red-700 bg-red-100'
-                  : 'text-green-700 bg-green-100'
+                  ? 'text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-500'
+                  : 'text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500'
               "
               :title="'Prioridad: ' + homework_detail.priority"
             >
@@ -44,7 +44,7 @@
       <template #content>
         <section class="mt-3">
           <div>
-            <h1 class="text-lg text-gray-600">
+            <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-circle-info mr-2"></i>
               <span>Descripción</span>
             </h1>
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="mt-5">
-            <h1 class="text-lg text-gray-600">
+            <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-comment-dots mr-2"></i>
               <span>Preguntas y comentarios</span>
             </h1>
@@ -65,7 +65,7 @@
             />
           </div>
           <div class="mt-6">
-            <h1 class="text-lg text-gray-600">
+            <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-handshake-angle mr-2"></i>
               <span>Solicitudes de colaboración</span>
             </h1>
@@ -75,7 +75,7 @@
             />
           </div>
           <div class="mt-6">
-            <h1 class="text-lg text-gray-600">
+            <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-paperclip mr-2"></i>
               <span>Archivos adjuntos</span>
             </h1>

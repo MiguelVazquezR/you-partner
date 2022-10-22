@@ -21,6 +21,7 @@
           grid grid-cols-2
           gap-x-2
           hover:bg-gray-100
+          dark:hover:bg-slate-700
           cursor-pointer
           rounded
         "
@@ -33,7 +34,7 @@
       </div>
       <p
         v-if="!collaborations.length"
-        class="text-center text-gray-400 text-xs pt-3"
+        class="text-center dark:text-gray-300 text-gray-400 text-xs pt-3"
       >
         No tienes ninguna solicitud
       </p>

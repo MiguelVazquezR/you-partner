@@ -81,7 +81,7 @@ const maxWidthClass = computed(() => {
                     leave-from-class="translate-y-0"
                     leave-to-class="-translate-y-[100vh]"
                 >
-                    <div v-show="show" class="bg-white rounded-tl rounded-bl shadow-xl transform transition-all sm:w-full h-screen sm:ml-auto" :class="maxWidthClass">
+                    <div v-show="show" class="bg-white dark:bg-slate-900 rounded-tl rounded-bl shadow-xl transform transition-all sm:w-full h-screen sm:ml-auto" :class="maxWidthClass">
                         <slot v-if="show" />
                     </div>
                 </transition>
