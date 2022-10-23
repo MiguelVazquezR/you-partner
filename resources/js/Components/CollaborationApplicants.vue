@@ -26,7 +26,7 @@
           rounded
         "
         :class="{
-          'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 font-bold':
+          'border-l-4 border-l-indigo-500 bg-indigo-50 hover:bg-indigo-100 dark:bg-slate-800 font-bold':
             !item.read_at.relative,
         }"
       >

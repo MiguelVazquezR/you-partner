@@ -132,7 +132,7 @@
                   ></i>
                 </template>
               </div>
-              <p class="mt-px text-sm">
+              <p class="mt-px text-sm dark:text-gray-500">
                 {{ homework_detail.approved_collaboration.rate.comments }}
               </p>
             </div>

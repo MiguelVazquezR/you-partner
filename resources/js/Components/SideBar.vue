@@ -60,10 +60,10 @@
               <i class="fa-solid fa-headset"></i>
             </span>
             <span class="mx-4 text-sm font-normal">
-              Errores y sugerencias
+              Errores y sugerencias {{ $page.props.user}}
             </span>
           </JetNavLink>
-          <JetNavLink
+          <JetNavLink v-if="$page.props.user.is_admin"
             :href="route('admin.finances')"
             :active="route().current('admin.*')"
           >
