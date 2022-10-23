@@ -13,7 +13,7 @@
         <tr
           v-for="homework in homeworks.data"
           :key="homework.id"
-          class="focus:outline-none h-16 border border-gray-100 rounded"
+          class="focus:outline-none h-16 border dark:text-gray-300 dark:border-slate-800 border-gray-100 rounded"
         >
           <td class="px-3">
             <StatusIcon :status="homework.status" />
@@ -23,13 +23,13 @@
           </td>
           <td>
             <div class="flex items-center pl-1">
-              <p class="font-medium leading-none text-gray-700 mr-2 truncate">
+              <p class="font-medium leading-none dark:text-gray-300 text-gray-700 mr-2 truncate">
                 {{ homework.title }}
               </p>
             </div>
           </td>
           <td class="pl-5">
-            <div class="flex items-center text-gray-600" title="Materia">
+            <div class="flex items-center dark:text-gray-300 text-gray-600" title="Materia">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none ml-2">
                 {{ homework.school_subject.name }}
@@ -37,7 +37,7 @@
             </div>
           </td>
           <td class="pl-2">
-            <div class="flex items-center text-gray-600" title="Archivos adjuntos">
+            <div class="flex items-center dark:text-gray-300 text-gray-600" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
               <p class="text-sm leading-none ml-2">{{ homework.media.length }}</p>
             </div>
@@ -45,7 +45,7 @@
           <td class="pl-2">
             <div
               class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
-              :class="homework.priority === 'Urgente' ? 'text-red-700 bg-red-100' : 'text-green-700 bg-green-100'"
+              :class="homework.priority === 'Urgente' ? 'dark:text-red-900 dark:bg-red-500 text-red-700 bg-red-100' : 'dark:text-green-900 dark:bg-green-500 text-green-700 bg-green-100'"
               :title="'Prioridad: ' + homework.priority"
             >
               Límite: {{ homework.limit_date }}
@@ -54,7 +54,7 @@
           <td>
             <button
               @click="showDetails(homework)"
-              class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 text-sm leading-none text-gray-600 mr-4 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
+              class="dark:text-gray-200 dark:bg-blue-900 dark:hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 text-sm leading-none text-gray-600 mr-4 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
               Ver
             </button>
           </td>

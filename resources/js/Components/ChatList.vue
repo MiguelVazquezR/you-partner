@@ -20,6 +20,7 @@
           grid grid-cols-2
           gap-x-2
           hover:bg-gray-100
+          dark:hover:bg-slate-700
           cursor-pointer
           rounded
         "
@@ -35,7 +36,7 @@
             getLast(excludeMyMessages(item.messages)).created_at.relative
           "
         />
-        <p class="text-xs text-gray-600 truncate pt-2">
+        <p class="text-xs dark:text-gray-400 text-gray-600 truncate pt-2">
           {{ getLast(excludeMyMessages(item.messages)).content }}
         </p>
       </div>
