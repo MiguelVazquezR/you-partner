@@ -54,16 +54,16 @@
           </JetNavLink>
           <JetNavLink
             :href="route('error-reports.index')"
-            :active="route().current('errors.*')"
+            :active="route().current('error-reports.*')"
           >
             <span class="text-left">
               <i class="fa-solid fa-headset"></i>
             </span>
             <span class="mx-4 text-sm font-normal">
-              Errores y sugerencias {{ $page.props.user}}
+              Errores y sugerencias
             </span>
           </JetNavLink>
-          <JetNavLink v-if="$page.props.user.is_admin"
+          <JetNavLink
             :href="route('admin.finances')"
             :active="route().current('admin.*')"
           >

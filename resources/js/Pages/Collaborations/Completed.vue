@@ -1,13 +1,17 @@
 <template>
   <AppLayout title="Mis colaboraciones">
     <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" />
+      <header class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50">
+        <Tabs :tabs="tabs" class="my-5" />
+      </header>
+      <div class="mt-12">
       <CollaborationTable
         :collaborations="collaborations"
         :filters="filters"
         filterURL="/collaborations/in-process"
         @details="showDetails"
       />
+      </div>
     </div>
   </AppLayout>
   <DetailsModal :show="side_modal" @close="side_modal = false">

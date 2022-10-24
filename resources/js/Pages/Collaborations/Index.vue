@@ -1,13 +1,30 @@
 <template>
   <AppLayout title="Colaboraciones">
-    <div class="bg-white transition-dark dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" class="mb-8" />
-      <AvailableCollaborationsTable
-        :homeworks="homeworks"
-        :filters="filters"
-        filterURL="/collaborations"
-        @details="showDetails($event)"
-      />
+    <div
+      class="
+        bg-white
+        transition-dark
+        dark:bg-slate-900
+        py-4
+        md:py-7
+        px-4
+        md:px-8
+        xl:px-10
+      "
+    >
+      <header
+        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50"
+      >
+        <Tabs :tabs="tabs" class="my-5" />
+      </header>
+      <div class="mt-12">
+        <AvailableCollaborationsTable
+          :homeworks="homeworks"
+          :filters="filters"
+          filterURL="/collaborations"
+          @details="showDetails($event)"
+        />
+      </div>
     </div>
     <DetailsModal :show="side_modal" @close="side_modal = false">
       <template #title>
@@ -190,7 +207,7 @@ export default {
       this.show_collaborate = true;
       this.dialog_modal = true;
     },
-     showChat() {
+    showChat() {
       this.show_chat = true;
       this.dialog_modal = true;
     },

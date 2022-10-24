@@ -1,8 +1,10 @@
 <template>
   <AppLayout title="Tareas">
     <div class="bg-white transition-dark dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" />
-      <div class="flex justify-end mt-3">
+      <header class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50">
+        <Tabs :tabs="tabs" class="my-5" />
+      </header>
+      <div class="flex justify-end mt-12">
         <Link :href="route('homeworks.create')" class="btn-primary">
           + Crear
         </Link>
