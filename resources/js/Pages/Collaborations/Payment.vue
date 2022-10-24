@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="text-right">
-          <button class="cho-container mt-3"></button>
+          <div class="cho-container mt-3"></div>
           <!-- <button
             class="btn-primary mx-2 my-4"
             @click="processPayment"
