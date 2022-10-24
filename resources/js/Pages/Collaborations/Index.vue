@@ -1,13 +1,30 @@
 <template>
   <AppLayout title="Colaboraciones">
-    <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" class="mb-8" />
-      <AvailableCollaborationsTable
-        :homeworks="homeworks"
-        :filters="filters"
-        filterURL="/collaborations"
-        @details="showDetails($event)"
-      />
+    <div
+      class="
+        bg-white
+        transition-dark
+        dark:bg-slate-900
+        py-4
+        md:py-7
+        px-4
+        md:px-8
+        xl:px-10
+      "
+    >
+      <header
+        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50"
+      >
+        <Tabs :tabs="tabs" class="my-5" />
+      </header>
+      <div class="mt-12">
+        <AvailableCollaborationsTable
+          :homeworks="homeworks"
+          :filters="filters"
+          filterURL="/collaborations"
+          @details="showDetails($event)"
+        />
+      </div>
     </div>
     <DetailsModal :show="side_modal" @close="side_modal = false">
       <template #title>
@@ -24,8 +41,8 @@
               class="text-xs px-2 rounded-md"
               :class="
                 homework_detail.priority === 'Urgente'
-                  ? 'text-red-700 bg-red-100'
-                  : 'text-green-700 bg-green-100'
+                  ? 'text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-500'
+                  : 'text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500'
               "
               :title="'Prioridad: ' + homework_detail.priority"
             >
@@ -37,7 +54,7 @@
       <template #content>
         <section class="mt-3">
           <div>
-            <h1 class="text-lg text-gray-600">
+            <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-circle-info mr-2"></i>
               <span>Descripción</span>
             </h1>
@@ -48,7 +65,7 @@
             </div>
           </div>
           <div class="mt-6">
-            <h1 class="text-lg text-gray-600">
+            <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-paperclip mr-2"></i>
               <span>Archivos adjuntos</span>
             </h1>
@@ -190,7 +207,7 @@ export default {
       this.show_collaborate = true;
       this.dialog_modal = true;
     },
-     showChat() {
+    showChat() {
       this.show_chat = true;
       this.dialog_modal = true;
     },

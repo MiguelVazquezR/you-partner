@@ -1,12 +1,14 @@
 <template>
   <AppLayout title="Ranking">
  <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" />
+      <header class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50">
+        <Tabs :tabs="tabs" class="my-5" />
+      </header>
     </div>
 
 <!-- ------------INICIO DEL BODY---------------------- -->
     <div>
-    <h2 class="text-indigo-500 text-center mt-1 text-lg font-semibold">Ranking por de Colaboraciones</h2>
+    <h2 class="text-indigo-500 text-center mt-8 text-lg font-semibold">Ranking por de Colaboraciones</h2>
   
       <div class="grid lg:grid-cols-2 sm:grid-cols-1">
 

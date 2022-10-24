@@ -17,15 +17,15 @@
       }"
     ></i>
     <span
-      class="text-sm"
+      class="text-sm dark:text-gray-400"
       :class="{
-        'text-red-800': extension === 'pdf',
-        'text-blue-800': extension === 'doc' || extension === 'docx',
-        'text-orange-700': extension === 'ppt',
-        'text-green-800': extension === 'xls' || extension === 'xlsx',
-        'text-sky-800': extension === 'x-empty',
-        'text-purple-800': extension === 'x-rar',
-        'text-indigo-800': image_allowed.includes(extension),
+        '!text-red-800': extension === 'pdf',
+        '!text-blue-800': extension === 'doc' || extension === 'docx',
+        '!text-orange-700': extension === 'ppt',
+        '!text-green-800': extension === 'xls' || extension === 'xlsx',
+        '!text-sky-800': extension === 'x-empty',
+        '!text-purple-800': extension === 'x-rar',
+        '!text-indigo-700': image_allowed.includes(extension),
       }"
       >{{ name }}</span
     >

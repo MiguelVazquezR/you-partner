@@ -67,6 +67,7 @@ const logout = () => {
                         border-2 border-transparent
                         rounded-full
                         focus:outline-none focus:border-gray-300
+                        dark:focus:border-slate-600
                         transition
                       "
                     >
@@ -98,6 +99,7 @@ const logout = () => {
                         border-2 border-transparent
                         rounded-full
                         focus:outline-none focus:border-gray-300
+                        dark:focus:border-slate-600
                         transition
                       "
                     >
@@ -119,6 +121,7 @@ const logout = () => {
                     </div>
                   </template>
                 </JetDropdown>
+
                 <JetDropdown align="right" width="20">
                   <template #trigger>
                     <button
@@ -166,6 +169,7 @@ const logout = () => {
                     </div>
                   </template>
                 </JetDropdown>
+
                 <!-- profile Dropdown -->
                 <div class="ml-3 relative">
                   <JetDropdown align="right" width="48">

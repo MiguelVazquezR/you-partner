@@ -13,10 +13,13 @@
             h-16
             border border-gray-100
             bg-white
+            dark:border-slate-800
+            dark:bg-slate-900
+            transition-dark
             rounded
           "
         >
-          <td class="pl-1 bg-gray-300 text-center font-semibold ">{{ "id: " + user.id }}</td>
+          <td class="pl-1 dark:bg-slate-600 bg-gray-300 text-center font-semibold ">{{ "id: " + user.id }}</td>
           <td class="">
             <Avatar :user="user" />
           </td>
@@ -26,7 +29,7 @@
                 class="fa-regular fa-handshake mx-2 text-lg text-indigo-600"
                 title="Colaboraciones"
               ></i>
-              <p class="font-medium leading-none text-gray-700 mr-2">
+              <p class="font-medium leading-none dark:text-gray-300 text-gray-700 mr-2">
                 {{ user.collaborations.length }}
               </p>
             </div>
@@ -34,19 +37,19 @@
           <td class="">
             <div class="flex items-center">
               <i class="fa-regular fa-star text-lg text-yellow-500" title="Ranking"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
+              <p class="text-sm leading-none dark:text-gray-300 text-gray-600 ml-2">0</p>
             </div>
           </td>
           <td class="pl-2">
             <div class="flex items-center">
               <i class="fa-solid fa-circle-exclamation text-red-500 text-xl" title="Reclamos"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2"> {{ user.claims_by_user.length }} </p>
+              <p class="text-sm leading-none dark:text-gray-300 text-gray-600 ml-2"> {{ user.claims_by_user.length }} </p>
             </div>
           </td>
            <td class="pl-2">
             <div class="flex items-center">
               <i class="fa-solid fa-angles-up text-lg text-green-600" title="Nivel"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">{{ 0 }}</p>
+              <p class="text-sm leading-none dark:text-gray-300 text-gray-600 ml-2">{{ 0 }}</p>
             </div>
           </td>
           <td class="pl-2">
@@ -55,7 +58,7 @@
                 class="fa-solid fa-right-to-bracket text-lg"
                 title="Se unió el..."
               ></i>
-              <span class="text-sm leading-none text-gray-600 ml-2">
+              <span class="text-sm leading-none dark:text-gray-300 text-gray-600 ml-2">
                 {{ user.created_at }}
               </span>
             </div>
@@ -72,7 +75,7 @@
               "
             >
             <i class="fa-solid fa-cake-candles text-lg text-sky-300"></i>
-              {{user.birthdate}}
+              <span class="dark:text-gray-300">{{user.birthdate}}</span>
             </div>
           </td>
           <td class="pl-4">
@@ -90,6 +93,7 @@
                 rounded
                 hover:bg-gray-200
                 focus:outline-none
+                dark:text-gray-200 dark:bg-blue-900 dark:hover:bg-blue-700
               "
             >
               Ver

@@ -103,6 +103,7 @@
                 rounded
                 hover:bg-gray-200
                 focus:outline-none
+                dark:text-gray-200 dark:bg-blue-900 dark:hover:bg-blue-700
               "
             >
               Ver

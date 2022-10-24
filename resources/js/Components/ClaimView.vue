@@ -1,14 +1,14 @@
 <template>
   <div>
-    <p class="text-sm">
+    <p class="text-sm dark:text-gray-300">
       <strong v-if="collaboration.homework"
         >{{ collaboration.homework.user.name }} -</strong
       >
-      <strong v-else>Usted -</strong>
+      <strong class="dark:text-gray-300" v-else>Usted -</strong>
 
       {{ collaboration.claim.created_at.special }}
     </p>
-    <p style="white-space: pre-line" class="text-xs">
+    <p style="white-space: pre-line" class="text-xs dark:text-gray-500">
       {{ collaboration.claim.description }}
     </p>
     <div class="mt-2 flex flex-col">
@@ -21,18 +21,18 @@
       />
     </div>
     <div v-if="collaboration.claim.solution">
-      <p class="text-sm">
+      <p class="text-sm dark:text-gray-300">
         <strong>Soporte</strong> -
         {{ collaboration.claim.updated_at.special }}
       </p>
-      <p style="white-space: pre-line" class="text-xs">
+      <p style="white-space: pre-line" class="text-xs dark:text-gray-500">
         {{ collaboration.claim.solution_details }}
       </p>
       <br />
-      <strong class="text-sm">Solución -</strong>
+      <strong class="text-sm dark:text-gray-300">Solución -</strong>
       <p class="text-indigo-600 px-2 text-sm">{{ collaboration.claim.solution }}</p>
     </div>
-    <p v-else class="text-sm mt-3">
+    <p v-else class="text-sm mt-3 dark:text-gray-500">
       Estamos evaluando el caso. Cuando tengamos una solución te avisaremos.
     </p>
   </div>

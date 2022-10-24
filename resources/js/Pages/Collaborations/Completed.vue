@@ -1,13 +1,17 @@
 <template>
   <AppLayout title="Mis colaboraciones">
     <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" />
+      <header class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50">
+        <Tabs :tabs="tabs" class="my-5" />
+      </header>
+      <div class="mt-12">
       <CollaborationTable
         :collaborations="collaborations"
         :filters="filters"
         filterURL="/collaborations/in-process"
         @details="showDetails"
       />
+      </div>
     </div>
   </AppLayout>
   <DetailsModal :show="side_modal" @close="side_modal = false">
@@ -26,14 +30,14 @@
               class="text-xs px-2 rounded-md"
               :class="
                 collaboration_detail.homework.priority === 'Urgente'
-                  ? 'text-red-700 bg-red-100'
-                  : 'text-green-700 bg-green-100'
+                  ? 'text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-500'
+                  : 'text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500'
               "
               :title="'Prioridad: ' + collaboration_detail.homework.priority"
             >
               Límite: {{ collaboration_detail.homework.limit_date }}
             </small>
-            <small class="text-xs px-2 rounded-md text-green-700 bg-green-100">
+            <small class="text-xs px-2 rounded-md text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500">
               Entregado: {{ collaboration_detail.completed_date }}
             </small>
           </div>
@@ -43,21 +47,21 @@
     <template #content>
       <section class="mt-3">
         <div>
-          <h1 class="text-lg text-gray-600">
+          <h1 class="text-lg dark:text-gray-300 text-gray-600">
             <i class="fa-solid fa-circle-info mr-2"></i>
             <span>Descripción</span>
           </h1>
           <div>
             <p class="text-sm text-gray-500">
               {{ collaboration_detail.homework.description }}
-                          <span v-if="collaboration_detail.payed_at.string"
-            class="text-green-600 text-sm ml-5 rounded-md bg-green-100">       
-            Pago liberado</span>
             </p>
+                          <span v-if="collaboration_detail.payed_at.string"
+            class="text-green-600 text-sm ml-5 px-2 rounded-md bg-green-100 dark:text-green-900 dark:bg-green-500">       
+            Pago liberado</span>
           </div>
         </div>
         <div class="mt-6">
-          <h1 class="text-lg text-gray-600">
+          <h1 class="text-lg dark:text-gray-300 text-gray-600">
             <i class="fa-solid fa-paperclip mr-2"></i>
             <span>Archivos adjuntos</span>
           </h1>
@@ -78,7 +82,7 @@
           </p>
         </div>
         <div class="mt-6">
-          <h1 class="text-lg text-gray-600">
+          <h1 class="text-lg dark:text-gray-300 text-gray-600">
             <i class="fa-solid fa-paperclip mr-2"></i>
             <span>Resultados de la tarea</span>
           </h1>
@@ -93,7 +97,7 @@
           </div>
         </div>
          <div class="mt-6">
-            <h1 class="text-lg text-gray-600">
+            <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-star mr-2"></i>
               <span>Calificación de colaboración</span>
             </h1>
@@ -113,7 +117,7 @@
                   ></i>
                 </template>
               </div>
-              <p class="mt-px text-sm">
+              <p class="mt-px text-sm dark:text-gray-500">
                 {{ collaboration_detail.rate.comments }}
               </p>
             </div>

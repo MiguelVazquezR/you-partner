@@ -1,19 +1,19 @@
 <template>
   <AppLayout title="Ranking">
-      <div class="bg-gray-200">
+      <div class="bg-gray-200 transition-dark dark:bg-slate-900">
         <div class="container mx-auto mb-5 p-5">
           <div class="md:flex no-wrap md:-mx-2">
             <!-- Left Side -->
             <div class="w-full md:w-3/12 md:mx-2">
               <!-- Profile Card -->
-              <div :class="user.active? 'border-green-500 ' : 'border-red-500 '" class="bg-white p-3 border-t-4 shadow-md">
-                <div class="image overflow-hidden">
+              <div :class="user.active? 'border-green-500 ' : 'border-red-500 '" class="bg-white transition-dark dark:bg-slate-800 p-3 border-t-4 shadow-md">
+                <div class="image overflow-hidden h-64">
                   <img
                     class="h-auto w-3/5 mx-auto rounded-lg"
                     :src="user.profile_photo_url"
                   />
                 </div>
-                <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">
+                <h1 class="text-gray-900 dark:text-gray-300 font-bold text-xl leading-8 my-1">
                   {{ user.name }}
                 </h1>
                 <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">
@@ -22,6 +22,8 @@
                 <ul
                   class="
                     bg-gray-100
+                    transition-dark dark:bg-slate-800
+                    dark:text-gray-400
                     text-gray-600
                     hover:text-gray-900 hover:shadow
                     py-2
@@ -34,14 +36,15 @@
                 >
                   <li class="flex items-center py-3">
                     <span>Estatus</span>
-                    <span class="ml-auto"
+                    <span class="ml-auto " 
                       ><span
-                      :class="user.active? 'bg-green-500' : 'bg-red-500'"
+                      :class="user.active? 'bg-green-600' : 'bg-red-500'"
                         class="
                           py-1
                           px-2
                           rounded
-                          text-white text-sm
+                          text-white
+                          text-sm
                         "
                         >{{user.active? 'Activo' : 'Inactivo'}}</span
                       ></span
@@ -64,20 +67,22 @@
             <div class="w-full md:w-9/12 mx-2 h-64">
               <!-- Profile tab -->
               <!-- About Section -->
-              <div class="bg-white p-3 shadow-md rounded-sm border-t-4">
+              <div :class="user.active? 'border-green-500 ' : 'border-red-500 '" class="bg-white transition-dark dark:bg-slate-800 p-3 shadow-md rounded-sm border-t-4">
                 <div
+                
                   class="
                     flex
                     items-center
                     space-x-2
                     font-semibold
-                    text-gray-900
+                    text-gray-800
                     leading-8
                   "
+                 
                 >
                   <span clas="text-green-500">
                     <svg
-                      class="h-5"
+                      class="h-5 dark:text-gray-300"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -91,11 +96,11 @@
                       />
                     </svg>
                   </span>
-                  <span class="tracking-wide border-b-2"
+                  <span class="tracking-wide border-b-2 dark:text-gray-300"
                     >Información Personal</span
                   >
                 </div>
-                <div class="text-gray-600">
+                <div class="dark:text-gray-400 text-gray-600">
                   <div class="grid md:grid-cols-2 text-sm">
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-semibold">Escuela</div>
@@ -133,7 +138,7 @@
               <div class="my-4"></div>
 
               <!-- Raiting -->
-              <div class="bg-white p-3 shadow-md rounded-sm text-center">
+              <div class="bg-white transition-dark dark:bg-slate-800 p-3 shadow-md rounded-sm text-center">
               <div
                 class="
                   flex
@@ -147,16 +152,16 @@
                 <i
                   class="
                     fa-solid fa-square-poll-horizontal
-                    text-lg text-gray-700
+                    text-lg text-gray-700 dark:text-gray-300
                     pl-6
                   "
                 ></i>
-                <span class="tracking-wide border-b-2"
+                <span class="tracking-wide border-b-2 dark:text-gray-400"
                   >Calificación de Usuario</span
                 >
               </div>
-                <div class="grid grid-cols-2">
-                  <div>
+                <div class="grid grid-cols-2 mt-2">
+                  <div class="mr-2">
                     <ReviewUser />
                   </div>
 

@@ -30,7 +30,7 @@ const close = () => {
     :closeable="closeable"
     @close="close"
   >
-    <div class="px-6 py-4">
+    <div class="px-6 py-4 dark:bg-slate-900">
       <div class="text-lg flex justify-between">
         <slot name="title" />
         <button
@@ -39,6 +39,8 @@ const close = () => {
             ml-auto
             text-gray-400
             hover:text-red-400 hover:bg-gray-200
+            dark:text-gray-500
+            dark:hover:text-red-700 dark:hover:bg-slate-800
             w-8
             h-8
             flex
@@ -58,7 +60,7 @@ const close = () => {
       </div>
     </div>
 
-    <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-right">
+    <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-right dark:bg-slate-900">
       <slot name="footer" />
     </div>
   </Modal>

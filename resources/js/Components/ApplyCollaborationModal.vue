@@ -10,8 +10,11 @@
         px-4
         rounded-md
         divide-gray-400
-        bg-white-600
+        bg-white
         text-gray-600
+        dark:divide-indigo-600
+        dark:bg-slate-900
+        dark:text-gray-300
       "
     >
       <div class="flex justify-between">
@@ -20,12 +23,12 @@
       </div>
       <div class="p-2">
         <div class="mt-2">
-          <Label value="Costo ($MXN)" />
-          <Input v-model="form.price" type="number" class="w-full" />
+          <Label class="dark:text-gray-300" value="Costo ($MXN)" />
+          <Input v-model="form.price" type="number" class="input w-full" />
         </div>
         <div class="mt-2">
-          <Label value="Fecha promesa de entrega" />
-          <Input v-model="form.promise_date" type="date" class="w-full" />
+          <Label class="dark:text-gray-300" value="Fecha promesa de entrega" />
+          <Input v-model="form.promise_date" type="date" class="input w-full" />
         </div>
         <textarea
           v-model="form.comment"

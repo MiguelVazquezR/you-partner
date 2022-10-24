@@ -3,10 +3,10 @@
 <!-- follow me on twitter @asad_codes -->
 <div class="flex flex-wrap place-items-center">
     <!-- card -->
-    <div class="shadow-lg rounded-xl w-72 md:w-72 bg-gray-100 text-gray-600 relative overflow-hidden">
+    <div class=" rounded-sm w-72 md:w-72 dark:text-gray-400 dark:bg-slate-800 transition-dark bg-gray-100 text-gray-600 relative overflow-hidden">
 
             <div class="w-full">
-                <p class="text-gray-600 text-base  hover:text-gray-900 font-medium mb-2">
+                <p class="text-gray-600 dark:text-gray-300 text-base  hover:text-gray-900 font-medium mb-2">
                     Nivel <a class="text-sm text-blue-500 pl-5 underline" href="#detalles">Detalles</a>
                 </p>
                 <p class="text-gray-400 text-sm mb-4">
