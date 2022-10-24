@@ -8,6 +8,9 @@
       divide-gray-400
       bg-gray-600
       text-gray-100
+      dark:divide-indigo-600
+      dark:bg-gray-800
+      dark:text-gray-100
     "
   >
     <div class="flex justify-around p-2 border-b">
@@ -60,7 +63,7 @@
     </div>
   </div>
     <div class="w-4/5 grid grid-cols-2 text-sm mx-auto font-semibold mt-2">
-      <div class="col-start-1">
+      <div class="col-start-1 dark:text-gray-300">
         <p class="my-1">Entrega Pactada</p>
         <p class="my-1">costo</p>
       </div>

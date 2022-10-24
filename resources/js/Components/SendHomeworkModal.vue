@@ -11,6 +11,7 @@
         divide-y
         rounded-md
         divide-gray-400
+        dark:divide-indigo-600
         bg-white-600
         text-gray-600
       "

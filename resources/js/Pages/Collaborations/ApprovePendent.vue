@@ -1,13 +1,30 @@
 <template>
   <AppLayout title="Mis colaboraciones">
-    <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <Tabs :tabs="tabs" />
-      <CollaborationTable
-        :collaborations="collaborations"
-        :filters="filters"
-        filterURL="/collaborations/approve-pendent"
-        @details="showDetails"
-      />
+    <div
+      class="
+        bg-white
+        transition-dark
+        dark:bg-slate-900
+        py-4
+        md:py-7
+        px-4
+        md:px-8
+        xl:px-10
+      "
+    >
+      <header
+        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50"
+      >
+        <Tabs :tabs="tabs" class="my-5" />
+      </header>
+      <div class="mt-12">
+        <CollaborationTable
+          :collaborations="collaborations"
+          :filters="filters"
+          filterURL="/collaborations/approve-pendent"
+          @details="showDetails"
+        />
+      </div>
     </div>
   </AppLayout>
   <DetailsModal :show="side_modal" @close="side_modal = false">
@@ -25,8 +42,8 @@
             class="text-xs px-2 rounded-md"
             :class="
               collaboration_detail.homework.priority === 'Urgente'
-                ? 'text-red-700 bg-red-100'
-                : 'text-green-700 bg-green-100'
+                ? 'text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-500'
+                : 'text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500'
             "
             :title="'Prioridad: ' + collaboration_detail.homework.priority"
           >
@@ -38,7 +55,7 @@
     <template #content>
       <section class="mt-3">
         <div>
-          <h1 class="text-lg text-gray-600">
+          <h1 class="text-lg dark:text-gray-300 text-gray-600">
             <i class="fa-solid fa-circle-info mr-2"></i>
             <span>Descripción</span>
           </h1>
@@ -49,7 +66,7 @@
           </div>
         </div>
         <div class="mt-6">
-          <h1 class="text-lg text-gray-600">
+          <h1 class="text-lg dark:text-gray-300 text-gray-600">
             <i class="fa-solid fa-paperclip mr-2"></i>
             <span>Archivos adjuntos</span>
           </h1>
@@ -262,7 +279,9 @@ export default {
     },
     deleteCollaboration() {
       try {
-        this.$inertia.delete(route("collaborations.destroy", this.collaboration_detail));
+        this.$inertia.delete(
+          route("collaborations.destroy", this.collaboration_detail)
+        );
         this.show_confirmation = false;
         this.side_modal = false;
       } catch (error) {

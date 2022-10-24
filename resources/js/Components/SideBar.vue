@@ -54,7 +54,7 @@
           </JetNavLink>
           <JetNavLink
             :href="route('error-reports.index')"
-            :active="route().current('errors.*')"
+            :active="route().current('error-reports.*')"
           >
             <span class="text-left">
               <i class="fa-solid fa-headset"></i>

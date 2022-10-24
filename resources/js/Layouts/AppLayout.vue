@@ -59,6 +59,7 @@ const logout = () => {
                         border-2 border-transparent
                         rounded-full
                         focus:outline-none focus:border-gray-300
+                        dark:focus:border-slate-600
                         transition
                       "
                     >
@@ -83,6 +84,7 @@ const logout = () => {
                         border-2 border-transparent
                         rounded-full
                         focus:outline-none focus:border-gray-300
+                        dark:focus:border-slate-600
                         transition
                       "
                     >
@@ -97,29 +99,7 @@ const logout = () => {
                     </div>
                   </template>
                 </JetDropdown>
-                <JetDropdown align="right" width="48">
-                  <template #trigger>
-                    <button
-                      class="
-                        flex
-                        text-sm
-                        border-2 border-transparent
-                        rounded-full
-                        focus:outline-none focus:border-gray-300
-                        transition
-                      "
-                    > <i v-if="dark_mode" class="fa-solid fa-sun text-lg text-indigo-400 mx-2 hover:text-indigo-500"></i>
-                      <i v-else class="fa-solid fa-moon text-lg text-indigo-400 mx-2 hover:text-indigo-500"></i>
-                    </button>
-                  </template>
-
-                  <template #content>
-                    <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                      Configuraciones
-                    </div>
-                  </template>
-                </JetDropdown>
+                
                 <!-- profile Dropdown -->
                 <div class="ml-3 relative">
                   <JetDropdown align="right" width="48">
