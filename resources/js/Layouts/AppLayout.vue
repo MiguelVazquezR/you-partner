@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import JetBanner from "@/Jetstream/Banner.vue";
@@ -34,23 +34,31 @@ const logout = () => {
 <template>
   <div>
     <Head :title="title" />
-
     <JetBanner />
-
     <div class="overflow-y-hidden h-screen bg-gray-200 lg:grid lg:grid-cols-6">
       <aside>
-       <SideBar />
+        <SideBar />
       </aside>
       <!-- Page Content -->
       <main class="col-span-5">
         <!-- nav -->
-        <nav class="bg-white border-b dark:border-slate-800 border-gray-100 dark transition-dark dark:bg-slate-900">
+        <nav
+          class="
+            bg-white
+            border-b
+            dark:border-slate-800
+            border-gray-100
+            dark
+            transition-dark
+            dark:bg-slate-900
+          "
+        >
           <!-- Primary Navigation Menu -->
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-end h-12">
               <div class="hidden lg:flex sm:items-center sm:ml-6">
                 <!-- notifications -->
-                <JetDropdown align="right" width="48"> 
+                <JetDropdown align="right" width="48">
                   <template #trigger>
                     <button
                       class="
@@ -63,7 +71,14 @@ const logout = () => {
                         transition
                       "
                     >
-                      <i class="fa-solid fa-bell text-lg text-indigo-400 hover:text-indigo-500 mx-2"></i>
+                      <i
+                        class="
+                          fa-solid fa-bell
+                          text-lg text-indigo-400
+                          hover:text-indigo-500
+                          mx-2
+                        "
+                      ></i>
                     </button>
                   </template>
 
@@ -88,7 +103,14 @@ const logout = () => {
                         transition
                       "
                     >
-                      <i class="fa-solid fa-gear text-lg text-indigo-400 hover:text-indigo-500 mx-2"></i>
+                      <i
+                        class="
+                          fa-solid fa-gear
+                          text-lg text-indigo-400
+                          hover:text-indigo-500
+                          mx-2
+                        "
+                      ></i>
                     </button>
                   </template>
 
@@ -99,7 +121,55 @@ const logout = () => {
                     </div>
                   </template>
                 </JetDropdown>
-                
+
+                <JetDropdown align="right" width="20">
+                  <template #trigger>
+                    <button
+                      class="
+                        flex
+                        text-sm
+                        border-2 border-transparent
+                        rounded-full
+                        focus:outline-none focus:border-gray-300
+                        transition
+                      "
+                    >
+                      <i
+                        class="
+                          fa-solid fa-palette
+                          text-lg text-indigo-400
+                          hover:text-indigo-500
+                          mx-2
+                        "
+                      ></i>
+                    </button>
+                  </template>
+
+                  <template #content>
+                    <!-- Account Management -->
+                    <div class="block text-center px-4 py-2 text-xs text-gray-400">
+                      <i
+                        x-on:click="darkMode = false"
+                        class="
+                          fa-solid fa-sun
+                          text-indigo-400
+                          hover:text-indigo-500
+                          text-lg
+                        "
+                      ></i>
+                      <i
+                        x-on:click="darkMode = true"
+                        class="
+                          fa-solid fa-moon
+                          text-indigo-400
+                          hover:text-indigo-500
+                          text-lg
+                        "
+                      ></i>
+                    </div>
+                  </template>
+                </JetDropdown>
+
                 <!-- profile Dropdown -->
                 <div class="ml-3 relative">
                   <JetDropdown align="right" width="48">
@@ -330,7 +400,14 @@ const logout = () => {
           </div>
         </nav>
         <!-- content -->
-        <div class="overflow-y-auto h-[calc(100vh-3rem)] transition-dark dark:bg-slate-900">
+        <div
+          class="
+            overflow-y-auto
+            h-[calc(100vh-3rem)]
+            transition-dark
+            dark:bg-slate-900
+          "
+        >
           <slot />
         </div>
       </main>
