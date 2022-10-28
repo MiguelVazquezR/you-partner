@@ -30,11 +30,11 @@
           <Label class="dark:text-gray-300" value="Fecha promesa de entrega" />
           <Input v-model="form.promise_date" type="date" class="input w-full" />
         </div>
-        <textarea
+        <!-- <textarea
           v-model="form.comment"
           class="input !h-24 w-full mt-3"
           placeholder="Escribe un comentario (opcional)"
-        ></textarea>
+        ></textarea> -->
       </div>
       <div class="text-right">
         <button class="btn-primary mr-2 mt-3" v-if="!form.processing">

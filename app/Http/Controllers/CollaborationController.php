@@ -11,6 +11,7 @@ use App\Http\Resources\HomeworkResource;
 use App\Http\Resources\CollaborationResource;
 use App\Models\Chat;
 use App\Models\Homework;
+use App\Notifications\Collaborations\AppliedCollaborationNotification;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use MercadoPago\Entities\Preference;
@@ -45,7 +46,10 @@ class CollaborationController extends Controller
 
     public function store(StoreCollaborationRequest $request)
     {
-        Collaboration::create($request->validated());
+        $collaboration = Collaboration::create($request->validated());
+
+        $collaboration->homework->user->notify(new AppliedCollaborationNotification($collaboration->homework->title));
+
         return redirect()->route('collaborations.approve-pendent'); //->with('message', 'Aplicaste a una colaboración. Espera la aprobación');
     }
 

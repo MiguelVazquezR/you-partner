@@ -7,7 +7,9 @@ use App\Http\Requests\StoreChatRequest;
 use App\Http\Requests\UpdateChatRequest;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\MessageResource;
+use App\Models\Homework;
 use App\Models\Message;
+use App\Notifications\Chat\NewMessageNotification;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -57,6 +59,8 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request)
     {
+        $chat = Chat::find($request->chat_id);
+        $chat->homework->user->notify(new NewMessageNotification(auth()->user()->name, $chat->homework));
         $message = Message::create($request->all());
 
         return new MessageResource(Message::with('user')->find($message->id));
