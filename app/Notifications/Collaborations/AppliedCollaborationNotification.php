@@ -50,7 +50,8 @@ class AppliedCollaborationNotification extends Notification
     {
         return [
             'message' => "Tienes una nueva solicitud de colaboración para tu tarea: $this->homework_title",
-            'url' => route('homeworks.no-collaboration') . "?search=$this->homework_title"
+            'route_name' => 'homeworks.no-collaboration',
+            'filter' => $this->homework_title
         ];
     }
 

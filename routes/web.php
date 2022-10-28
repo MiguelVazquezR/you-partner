@@ -102,5 +102,5 @@ Route::resource('rates', RateController::class)->middleware('auth');
 Route::resource('error-reports', ErrorReportController::class);
 Route::put('error-reports/mark-as-read/{error}', [ErrorReportController::class, 'markAsRead'])->name('error-reports.mark-as-read');
 
-Route::get('notifications/{user}', [NotificationController::class, 'all'])->name('notifications.all');
-Route::put('notifications/{user}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
+Route::get('notifications/{user}', [NotificationController::class, 'all'])->middleware('auth')->name('notifications.all');
+Route::post('notifications/{user}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');

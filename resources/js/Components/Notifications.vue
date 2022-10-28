@@ -58,12 +58,12 @@
           :key="notification.id"
         >
           <div
-            :class="!notification.read_at ? 'font-bold text-gray-100 border-l-2 border-indigo-400 pl-2' : ''"
+            :class="!notification.read_at.relative ? 'font-bold text-gray-100 border-l-2 border-indigo-400 pl-2' : ''"
             class="text-gray-400 text-xs flex flex-col"
           >
             {{ notification.data.message }}
-            <span class="text-gray-400 text-[11px] pt-3">{{
-              notification.created_at
+            <span class="text-gray-400 text-[10px] pt-2">{{
+              notification.created_at.relative
             }}</span>
           </div>
         </JetDropdownLink>
@@ -102,13 +102,13 @@ export default {
       }
     },
     markAsRead(notification) {
-      Inertia.put(route('notifications.mark-as-read', notification));
+      Inertia.post(route('notifications.mark-as-read', notification));
     },
   },
   computed: {
     unreadNotifications() {
       return this.notifications.some(
-        (notification) => notification.read_at === null
+        (notification) => !notification.read_at.string
       );
     },
   },

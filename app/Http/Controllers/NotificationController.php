@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NotificationResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 
 class NotificationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function all(User $user)
     {
-        $notifications = $user->notifications;
+        $notifications = NotificationResource::collection($user->notifications);
         
         return response()->json(compact('notifications'));
     }
@@ -25,6 +21,6 @@ class NotificationController extends Controller
         $notification = DatabaseNotification::find($notification_id);
         $notification->markAsRead();
         
-        return redirect($notification->data['url']);
+        return redirect(route($notification->data['route_name']).'?search='.$notification->data['filter']);
     }
 }
