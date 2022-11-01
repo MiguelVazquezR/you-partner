@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ErrorReportController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\RateController;
 use App\Http\Resources\UserResource;
@@ -100,3 +101,6 @@ Route::resource('rates', RateController::class)->middleware('auth');
 
 Route::resource('error-reports', ErrorReportController::class);
 Route::put('error-reports/mark-as-read/{error}', [ErrorReportController::class, 'markAsRead'])->name('error-reports.mark-as-read');
+
+Route::get('notifications/{user}', [NotificationController::class, 'all'])->middleware('auth')->name('notifications.all');
+Route::post('notifications/{user}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');

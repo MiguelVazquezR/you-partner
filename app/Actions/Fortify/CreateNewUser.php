@@ -21,16 +21,28 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'academic_grade' => ['required', 'string', 'max:191'],
+            'school_name' => ['string', 'max:191'],
+            'state' => ['required', 'string', 'max:191'],
+            'birthdate' => ['required', 'date', 'before:today'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'academic_grade' => $input['academic_grade'],
+            'school_name' => $input['school_name'],
+            'state' => $input['state'],
+            'birthdate' => $input['birthdate'],
         ]);
+
+        $user->createAsStripeCustomer();
+
+        return $user;
     }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import JetBanner from "@/Jetstream/Banner.vue";
@@ -7,6 +7,7 @@ import JetDropdown from "@/Jetstream/Dropdown.vue";
 import JetDropdownLink from "@/Jetstream/DropdownLink.vue";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink.vue";
 import SideBar from "@/Components/SideBar.vue";
+import Notifications from "@/Components/Notifications.vue";
 
 defineProps({
   title: String,
@@ -58,69 +59,7 @@ const logout = () => {
             <div class="flex justify-end h-12">
               <div class="hidden lg:flex sm:items-center sm:ml-6">
                 <!-- notifications -->
-                <JetDropdown align="right" width="48">
-                  <template #trigger>
-                    <button
-                      class="
-                        flex
-                        text-sm
-                        border-2 border-transparent
-                        rounded-full
-                        focus:outline-none focus:border-gray-300
-                        dark:focus:border-slate-600
-                        transition
-                      "
-                    >
-                      <i
-                        class="
-                          fa-solid fa-bell
-                          text-lg text-indigo-400
-                          hover:text-indigo-500
-                          mx-2
-                        "
-                      ></i>
-                    </button>
-                  </template>
-
-                  <template #content>
-                    <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                      Notificaciones
-                    </div>
-                  </template>
-                </JetDropdown>
-                <!-- settings -->
-                <JetDropdown align="right" width="48">
-                  <template #trigger>
-                    <button
-                      class="
-                        flex
-                        text-sm
-                        border-2 border-transparent
-                        rounded-full
-                        focus:outline-none focus:border-gray-300
-                        dark:focus:border-slate-600
-                        transition
-                      "
-                    >
-                      <i
-                        class="
-                          fa-solid fa-gear
-                          text-lg text-indigo-400
-                          hover:text-indigo-500
-                          mx-2
-                        "
-                      ></i>
-                    </button>
-                  </template>
-
-                  <template #content>
-                    <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                      Configuraciones
-                    </div>
-                  </template>
-                </JetDropdown>
+                <Notifications />
 
                 <JetDropdown align="right" width="20">
                   <template #trigger>
@@ -155,6 +94,7 @@ const logout = () => {
                           text-indigo-400
                           hover:text-indigo-500
                           text-lg
+                          cursor-pointer
                         "
                       ></i>
                       <i
@@ -164,6 +104,7 @@ const logout = () => {
                           text-indigo-400
                           hover:text-indigo-500
                           text-lg
+                          cursor-pointer
                         "
                       ></i>
                     </div>
@@ -237,7 +178,7 @@ const logout = () => {
                       </div>
 
                       <JetDropdownLink :href="route('profile.show')">
-                        Profile
+                        Perfil
                       </JetDropdownLink>
 
                       <JetDropdownLink
@@ -251,7 +192,9 @@ const logout = () => {
 
                       <!-- Authentication -->
                       <form @submit.prevent="logout">
-                        <JetDropdownLink as="button"> Log Out </JetDropdownLink>
+                        <JetDropdownLink as="button">
+                          Cerrar sesión
+                        </JetDropdownLink>
                       </form>
                     </template>
                   </JetDropdown>
@@ -373,12 +316,12 @@ const logout = () => {
                 </div>
               </div>
 
-              <div class="mt-3 space-y-1">
+              <div class="mt-3 space-y-1 dark:text-gray-400">
                 <JetResponsiveNavLink
                   :href="route('profile.show')"
                   :active="route().current('profile.show')"
                 >
-                  Profile
+                  Perfil
                 </JetResponsiveNavLink>
 
                 <JetResponsiveNavLink
@@ -391,8 +334,8 @@ const logout = () => {
 
                 <!-- Authentication -->
                 <form method="POST" @submit.prevent="logout">
-                  <JetResponsiveNavLink as="button">
-                    Log Out
+                  <JetResponsiveNavLink as="button" class="dark:text-gray-400">
+                    Cerrar sesión
                   </JetResponsiveNavLink>
                 </form>
               </div>

@@ -48,18 +48,17 @@
           </div>
         </div>
         <div class="text-right">
-          <div class="cho-container mt-3"></div>
-          <!-- <button
+          <button
             class="btn-primary mx-2 my-4"
             @click="processPayment"
             v-if="!form.processing"
           >
             Pagar
-          </button> -->
-          <!-- <button class="btn-primary mr-2 mt-3" disabled v-else>
+          </button>
+          <button class="btn-primary mr-2 mt-3" disabled v-else>
             Procesando pago...
             <i class="fa-solid fa-circle-notch animate-spin ml-2"></i>
-          </button> -->
+          </button>
           <Link
             :href="route('homeworks.no-collaboration')"
             class="btn-secondary mx-2"
@@ -95,28 +94,12 @@ export default {
   },
   props: {
     publicKey: String,
-    preference: Object,
     collaboration: Object,
   },
   methods: {
     processPayment() {
       this.form.put(route("collaborations.approve", this.collaboration.id));
     },
-  },
-  mounted() {
-    const mp = new MercadoPago(this.publicKey, {
-      locale: "es-MX",
-    });
-
-    mp.checkout({
-      preference: {
-        id: this.preference.id,
-      },
-      render: {
-        container: ".cho-container",
-        label: "Pagar",
-      },
-    });
   },
 };
 </script>

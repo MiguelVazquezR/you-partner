@@ -30,6 +30,8 @@ onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 const widthClass = computed(() => {
     return {
         '48': 'w-48',
+        '60': 'w-60',
+        '72': 'w-72',
     }[props.width.toString()];
 });
 
@@ -70,7 +72,8 @@ const alignmentClasses = computed(() => {
                 style="display: none;"
                 @click="open = false"
             >
-                <div class="rounded-md ring-1 ring-black bg-white dark:bg-slate-700 ring-opacity-5" :class="contentClasses">
+                <div class="rounded-md bg-white dark:bg-slate-700" :class="contentClasses">
+
                     <slot name="content" />
                 </div>
             </div>
