@@ -1,6 +1,6 @@
 <template>
   <!-- sidebar -->
-  <div class="h-screen hidden lg:block shadow-gray-500/100 dark:shadow-indigo-500/100 shadow-xl relative">
+  <div class="h-screen hidden lg:block shadow-gray-500/70 dark:shadow-indigo-500/100 shadow-xl relative">
     <div class="bg-white h-full transition-dark dark:bg-slate-900">
       <div class="flex items-center justify-center pt-12 pb-2">
         <JetApplicationMark class="block h-14 w-auto" />

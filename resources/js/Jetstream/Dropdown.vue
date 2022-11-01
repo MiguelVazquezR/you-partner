@@ -73,6 +73,7 @@ const alignmentClasses = computed(() => {
                 @click="open = false"
             >
                 <div class="rounded-md bg-white dark:bg-slate-700" :class="contentClasses">
+
                     <slot name="content" />
                 </div>
             </div>
