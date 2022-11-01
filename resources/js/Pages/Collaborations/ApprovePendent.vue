@@ -13,7 +13,7 @@
       "
     >
       <header
-        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-50"
+        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30"
       >
         <Tabs :tabs="tabs" class="my-5" />
       </header>
