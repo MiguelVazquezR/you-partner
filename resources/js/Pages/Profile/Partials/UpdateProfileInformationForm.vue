@@ -139,7 +139,7 @@ const clearPhotoFileInput = () => {
                     id="name"
                     v-model="form.name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full input"
                     autocomplete="name"
                 />
                 <JetInputError :message="form.errors.name" class="mt-2" />
@@ -151,7 +151,7 @@ const clearPhotoFileInput = () => {
                     id="academic"
                     v-model="form.academic_grade"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full input"
                 />
                 <JetInputError :message="form.errors.name" class="mt-2" />
             </div>
@@ -162,7 +162,7 @@ const clearPhotoFileInput = () => {
                     id="state"
                     v-model="form.state"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full input"
                 />
                 <JetInputError :message="form.errors.name" class="mt-2" />
             </div>
@@ -173,7 +173,7 @@ const clearPhotoFileInput = () => {
                     id="school_name"
                     v-model="form.school_name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full input"
                 />
                 <JetInputError :message="form.errors.name" class="mt-2" />
             </div>
@@ -185,7 +185,7 @@ const clearPhotoFileInput = () => {
                     id="description"
                     v-model="form.description"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full input"
                 />
                 <JetInputError :message="form.errors.name" class="mt-2" />
             </div>
@@ -209,7 +209,7 @@ const clearPhotoFileInput = () => {
                     id="email"
                     v-model="form.email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full input"
                 />
                 <JetInputError :message="form.errors.email" class="mt-2" />
 

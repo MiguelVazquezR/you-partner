@@ -7,13 +7,17 @@
 }
 
 *::-webkit-scrollbar {
-	width: 10px;
+	width: 5px;
 	background: transparent;
 }
 
-
 *::-webkit-scrollbar-thumb {
-	background: #708199;
-	border-radius: 10px;
+	background: #6366f1;
+	border-radius: 2px;
+}
 
+
+*::-webkit-scrollbar-thumb:horizontal {
+	background: #6366f1;
+	border-radius: 2px;
 }
