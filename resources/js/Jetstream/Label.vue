@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-  <label class="block font-medium text-sm text-gray-700">
+  <label class="block font-medium text-sm text-gray-700 dark:text-gray-500">
     <span v-if="value">
         {{ value }}
         <span v-if="is_required" class="text-red-600">*</span>

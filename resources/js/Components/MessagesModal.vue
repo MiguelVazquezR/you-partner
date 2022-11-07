@@ -18,14 +18,14 @@
             class="max-w-[14rem] lg:max-w-md rounded-lg my-1 mx-3 p-2 pb-0"
             :class="
               message.user.id === $page.props.user.id
-                ? 'bg-indigo-200 text-right'
-                : 'bg-gray-200'
+                ? 'dark:bg-indigo-500 bg-indigo-200 text-right'
+                : 'bg-gray-200 dark:bg-gray-500'
             "
           >
             <p class="text-[13px]" style="white-space: pre-line">
               {{ message.content }}
             </p>
-            <span class="text-[11px] text-gray-500">{{
+            <span class="text-[11px] dark:text-gray-900 text-gray-500">{{
               message.created_at.relative
             }}</span>
           </div>
