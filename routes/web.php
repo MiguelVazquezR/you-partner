@@ -63,6 +63,7 @@ Route::post('/collaborations/update-p', [CollaborationController::class, 'update
 Route::put('/collaborations/approve/{collaboration}', [CollaborationController::class, 'approve'])->name('collaborations.approve');
 Route::put('/collaborations/release-payment/{collaboration}', [CollaborationController::class, 'releasePayment'])->name('collaborations.release-payment');
 Route::get('collaboration/{collaboration}/payment', [CollaborationController::class, 'payment'])->middleware('auth')->name('payment');
+Route::post('collaboration/payment-method-create', [CollaborationController::class, 'paymentMethodCreate'])->middleware('auth')->name('collaborations.payment-method.create');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');

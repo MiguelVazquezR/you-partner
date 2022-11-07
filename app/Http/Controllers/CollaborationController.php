@@ -12,11 +12,9 @@ use App\Http\Resources\CollaborationResource;
 use App\Models\Chat;
 use App\Models\Homework;
 use App\Notifications\Collaborations\AppliedCollaborationNotification;
+use App\Notifications\Collaborations\ApprovedCollaborationNotification;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use MercadoPago\Entities\Preference;
-use MercadoPago\Entities\Shared\Item;
-use MercadoPago\SDK;
 
 class CollaborationController extends Controller
 {
@@ -178,8 +176,18 @@ class CollaborationController extends Controller
     public function payment(Collaboration $collaboration)
     {
         $collaboration = CollaborationResource::make(Collaboration::with('user', 'homework')->findOrFail($collaboration->id));
-        $publicKey = config('stripe.key');
-
+        $publicKey = config('services.stripe.key');
+       
         return inertia('Collaborations/Payment', compact('collaboration', 'publicKey'));
+    }
+
+    public function paymentMethodCreate(Request $request)
+    {
+        auth()->user()->charge($request->price*100, $request->payment_method);
+        $collaboration = Collaboration::find($request->collaboration_id);
+        $collaboration->update(['approved_at' => now()]);
+        $collaboration->user->notify(new ApprovedCollaborationNotification($collaboration->homework->title)); 
+
+        return redirect()->route('homeworks.on-collaboration')->with('maessage', 'El pago se ha procesado correctamente!');
     }
 }
