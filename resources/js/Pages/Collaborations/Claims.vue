@@ -8,7 +8,7 @@
       <CollaborationTable
         :collaborations="collaborations"
         :filters="filters"
-        filterURL="/collaborations/in-process"
+        filterURL="/collaborations/claims"
         @details="showDetails"
       />
       </div>

@@ -1,16 +1,18 @@
 <template>
   <AppLayout title="Mis colaboraciones">
     <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <header class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30">
+      <header
+        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30"
+      >
         <Tabs :tabs="tabs" class="my-5" />
       </header>
       <div class="mt-12">
-      <CollaborationTable
-        :collaborations="collaborations"
-        :filters="filters"
-        filterURL="/collaborations/in-process"
-        @details="showDetails"
-      />
+        <CollaborationTable
+          :collaborations="collaborations"
+          :filters="filters"
+          filterURL="/collaborations/completed"
+          @details="showDetails"
+        />
       </div>
     </div>
   </AppLayout>
@@ -37,7 +39,16 @@
             >
               Límite: {{ collaboration_detail.homework.limit_date }}
             </small>
-            <small class="text-xs px-2 rounded-md text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500">
+            <small
+              class="
+                text-xs
+                px-2
+                rounded-md
+                text-green-700
+                bg-green-100
+                dark:text-green-900 dark:bg-green-500
+              "
+            >
               Entregado: {{ collaboration_detail.completed_date }}
             </small>
           </div>
@@ -55,9 +66,19 @@
             <p class="text-sm text-gray-500">
               {{ collaboration_detail.homework.description }}
             </p>
-                          <span v-if="collaboration_detail.payed_at.string"
-            class="text-green-600 text-sm ml-5 px-2 rounded-md bg-green-100 dark:text-green-900 dark:bg-green-500">       
-            Pago liberado</span>
+            <span
+              v-if="collaboration_detail.payed_at.string"
+              class="
+                text-green-600 text-sm
+                px-2
+                rounded-md
+                bg-green-100
+                dark:text-green-900 dark:bg-green-500
+              "
+            >
+              Pago liberado
+              </span>
+              <p class="text-green-600 text-xs">(ve al botón "Acciones/Pedir pago" para ingresar los datos necessarios para hacerte el depósito)</p>
           </div>
         </div>
         <div class="mt-6">
@@ -96,35 +117,32 @@
             />
           </div>
         </div>
-         <div class="mt-6">
-            <h1 class="text-lg dark:text-gray-300 text-gray-600">
-              <i class="fa-solid fa-star mr-2"></i>
-              <span>Calificación de colaboración</span>
-            </h1>
-            <div
-              v-if="collaboration_detail.rate"
-              class="mt-1 flex flex-col"
-            >
-              <div>
-                <template v-for="n in 5" :key="n">
-                  <i
-                    class="fa-solid fa-star"
-                    :class="
-                      n <= collaboration_detail.rate.stars
-                        ? 'text-yellow-500'
-                        : 'text-gray-400'
-                    "
-                  ></i>
-                </template>
-              </div>
-              <p class="mt-px text-sm dark:text-gray-500">
-                {{ collaboration_detail.rate.comments }}
-              </p>
+        <div class="mt-6">
+          <h1 class="text-lg dark:text-gray-300 text-gray-600">
+            <i class="fa-solid fa-star mr-2"></i>
+            <span>Calificación de colaboración</span>
+          </h1>
+          <div v-if="collaboration_detail.rate" class="mt-1 flex flex-col">
+            <div>
+              <template v-for="n in 5" :key="n">
+                <i
+                  class="fa-solid fa-star"
+                  :class="
+                    n <= collaboration_detail.rate.stars
+                      ? 'text-yellow-500'
+                      : 'text-gray-400'
+                  "
+                ></i>
+              </template>
             </div>
-            <p v-else class="text-center text-gray-400 text-xs pt-3">
-              No has calificado la colaboración
+            <p class="mt-px text-sm dark:text-gray-500">
+              {{ collaboration_detail.rate.comments }}
             </p>
           </div>
+          <p v-else class="text-center text-gray-400 text-xs pt-3">
+            No hay calificación para mostrar
+          </p>
+        </div>
       </section>
     </template>
     <template #footer>
