@@ -59,8 +59,6 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $chat = Chat::find($request->chat_id);
-        $chat->homework->user->notify(new NewMessageNotification(auth()->user()->name, $chat->homework));
         $message = Message::create($request->all());
 
         return new MessageResource(Message::with('user')->find($message->id));
