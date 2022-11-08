@@ -8,6 +8,7 @@ import JetDropdownLink from "@/Jetstream/DropdownLink.vue";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink.vue";
 import SideBar from "@/Components/SideBar.vue";
 import Notifications from "@/Components/Notifications.vue";
+import FlashBanner from "@/Components/FlashBanner.vue";
 
 defineProps({
   title: String,
@@ -33,9 +34,10 @@ const logout = () => {
 </script>
 
 <template>
-  <div>
+  <div class="relative">
     <Head :title="title" />
-    <JetBanner />
+    <!-- flash message -->
+    <FlashBanner />
     <div class="overflow-y-hidden h-screen bg-gray-200 lg:grid lg:grid-cols-6">
       <aside>
         <SideBar />
@@ -86,7 +88,9 @@ const logout = () => {
 
                   <template #content>
                     <!-- Account Management -->
-                    <div class="block text-center px-4 py-2 text-xs text-gray-400">
+                    <div
+                      class="block text-center px-4 py-2 text-xs text-gray-400"
+                    >
                       <i
                         x-on:click="darkMode = false"
                         class="

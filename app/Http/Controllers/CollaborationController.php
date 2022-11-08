@@ -48,7 +48,7 @@ class CollaborationController extends Controller
 
         $collaboration->homework->user->notify(new AppliedCollaborationNotification($collaboration->homework->title));
 
-        return redirect()->route('collaborations.approve-pendent'); //->with('message', 'Aplicaste a una colaboración. Espera la aprobación');
+        return redirect()->route('collaborations.approve-pendent')->with('message', 'Aplicaste a una colaboración. Espera la aprobación');
     }
 
     public function show(Collaboration $collaboration)
@@ -84,7 +84,7 @@ class CollaborationController extends Controller
     public function destroy(Collaboration $collaboration)
     {
         $collaboration->delete();
-        return redirect()->route('collaborations.approve-pendent');
+        return redirect()->route('collaborations.approve-pendent')->with('message', 'Se eliminó la colaboración');
     }
 
     // My views (tabs) ----------------
@@ -188,6 +188,6 @@ class CollaborationController extends Controller
         $collaboration->update(['approved_at' => now()]);
         $collaboration->user->notify(new ApprovedCollaborationNotification($collaboration->homework->title)); 
 
-        return redirect()->route('homeworks.on-collaboration')->with('maessage', 'El pago se ha procesado correctamente!');
+        return redirect()->route('homeworks.on-collaboration')->with('message', 'El pago se ha procesado correctamente!');
     }
 }
