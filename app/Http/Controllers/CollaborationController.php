@@ -13,6 +13,7 @@ use App\Models\Chat;
 use App\Models\Homework;
 use App\Notifications\Collaborations\AppliedCollaborationNotification;
 use App\Notifications\Collaborations\ApprovedCollaborationNotification;
+use App\Notifications\Collaborations\CollaborationRealesedPaymentNotification;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -165,6 +166,8 @@ class CollaborationController extends Controller
     public function releasePayment(Collaboration $collaboration)
     {
         $collaboration->update(['payed_at' => now()]);
+
+        $collaboration->user->notify(new CollaborationRealesedPaymentNotification($collaboration->homework->title));
 
         return response()->json(['payed_at' => [
             'relative' => now()->diffForHumans(),

@@ -218,8 +218,7 @@
       <template #content>
         Primero asegúrate de que todo esté en orden ya que al liberar el pago al
         colaborador, ya no será posible generar un reclamo. Si no liberas el
-        pago, se liberará automáticamente 48 horas después de la fecha limite de
-        entrega que indicaste al subir tu tarea.
+        pago, se liberará automáticamente 48 horas después de haberse hecho la entrega.
       </template>
       <template #footer>
         <button @click="releasePayment" class="btn-danger mr-2">Liberar</button>

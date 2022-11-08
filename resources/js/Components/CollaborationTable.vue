@@ -101,6 +101,7 @@
                 text-gray-600
                 py-3
                 px-5
+                mr-2
                 bg-gray-100
                 rounded
                 hover:bg-gray-200
