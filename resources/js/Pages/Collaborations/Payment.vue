@@ -6,7 +6,7 @@
         collaboration.homework.title
       }}</span>
     </h1>
-    <div class="section-container mx-6 my-4">
+    <div class="section-container mx-6 my-4 dark:bg-slate-800">
       <div
         class="
           container
@@ -17,6 +17,8 @@
           divide-y
           rounded-md
           divide-gray-400
+          dark:bg-slate-800
+          dark:text-gray-300
         "
       >
         <div class="flex justify-between">
