@@ -44,7 +44,7 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-Route::resource('/homeworks', HomeworkController::class)->except('show');
+Route::resource('/homeworks', HomeworkController::class)->except('index', 'show');
 Route::get('/homeworks/no-collaboration', [HomeworkController::class, 'noCollaboration'])->name('homeworks.no-collaboration');
 Route::get('/homeworks/on-collaboration', [HomeworkController::class, 'onCollaboration'])->name('homeworks.on-collaboration');
 Route::get('/homeworks/completed', [HomeworkController::class, 'completed'])->name('homeworks.completed');

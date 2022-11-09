@@ -1,7 +1,20 @@
 <template>
   <AppLayout title="Tareas">
-    <div class="bg-white transition-dark dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <header class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30">
+    <div
+      class="
+        bg-white
+        transition-dark
+        dark:bg-slate-900
+        py-4
+        md:py-7
+        px-4
+        md:px-8
+        xl:px-10
+      "
+    >
+      <header
+        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30"
+      >
         <Tabs :tabs="tabs" class="my-5" />
       </header>
       <div class="flex justify-end mt-12">
@@ -98,7 +111,9 @@
       </template>
       <template #footer>
         <div class="flex">
-          <Link :href="route('homeworks.edit', homework_detail)" class="btn-primary"
+          <Link
+            :href="route('homeworks.edit', homework_detail)"
+            class="btn-primary"
             >Editar
           </Link>
           <button @click="side_modal = false" class="btn-secondary mx-1">
@@ -181,10 +196,6 @@ export default {
       applicant_collaboration: null,
       chat_to_show: null,
       tabs: [
-        {
-          label: "Todas",
-          url: "homeworks.index",
-        },
         {
           label: "Pendientes",
           url: "homeworks.no-collaboration",

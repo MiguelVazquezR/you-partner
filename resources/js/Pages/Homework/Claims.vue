@@ -158,10 +158,6 @@ export default {
       chat: null,
       side_modal: false,
       tabs: [
-       {
-          label: "Todas",
-          url: "homeworks.index",
-        },
         {
           label: "Pendientes",
           url: "homeworks.no-collaboration",

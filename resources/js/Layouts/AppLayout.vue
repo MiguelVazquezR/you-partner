@@ -271,7 +271,7 @@ const logout = () => {
                 Panel de información
               </JetResponsiveNavLink>
               <JetResponsiveNavLink
-                :href="route('homeworks.index')"
+                :href="route('homeworks.no-collaboration')"
                 :active="route().current('homeworks.*')"
               >
                 Mis tareas

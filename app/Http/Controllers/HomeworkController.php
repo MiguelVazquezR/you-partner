@@ -47,7 +47,7 @@ class HomeworkController extends Controller
         // request()->session()->flash('flash.banner', 'Se ha creado la tarea correctamente!');
         // request()->session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route('homeworks.index')->with('message', 'Se ha creado la tarea correctamente!');
+        return redirect()->route('homeworks.no-collaboration')->with('message', 'Se ha creado la tarea correctamente!');
     }
 
     public function edit(Homework $homework)
@@ -62,7 +62,7 @@ class HomeworkController extends Controller
     {
         $homework->update($request->validated());
 
-        return redirect()->route('homeworks.index')->with('message', 'Se ha actualizado la tarea correctamente!');
+        return redirect()->route('homeworks.no-collaboration')->with('message', 'Se ha actualizado la tarea correctamente!');
     }
 
     public function updateWithResources(UpdateHomeworkRequest $request, Homework $homework)
@@ -70,14 +70,14 @@ class HomeworkController extends Controller
         $homework->update($request->validated());
         $homework->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
 
-        return redirect()->route('homeworks.index')->with('message', 'Se ha actualizado la tarea correctamente!');
+        return redirect()->route('homeworks.no-collaboration')->with('message', 'Se ha actualizado la tarea correctamente!');
     }
 
     public function destroy(Homework $homework)
     {
         $homework->delete();
 
-        return redirect()->route('homeworks.index')->with('message', 'Se ha eliminado la tarea correctamente!');
+        return redirect()->route('homeworks.no-collaboration')->with('message', 'Se ha eliminado la tarea correctamente!');
     }
 
     // My views (tabs) --------------------

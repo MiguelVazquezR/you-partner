@@ -77,8 +77,11 @@
               "
             >
               Pago liberado
-              </span>
-              <p class="text-green-600 text-xs">(ve al botón "Acciones/Pedir pago" para ingresar los datos necessarios para hacerte el depósito)</p>
+              <p class="text-green-600 text-xs">
+                (ve al botón "Acciones/Pedir pago" para ingresar los datos
+                necessarios para hacerte el depósito)
+              </p>
+            </span>
           </div>
         </div>
         <div class="mt-6">
