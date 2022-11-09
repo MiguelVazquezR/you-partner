@@ -84,6 +84,7 @@ export default {
 
     };
   },
+  emits: ['details'],
   components: {
     Pagination,
     Avatar,

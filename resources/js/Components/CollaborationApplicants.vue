@@ -49,6 +49,7 @@ export default {
   props: {
     collaborations: Array,
   },
+  emits: ['showApplicant'],
   components: {
     Avatar,
   },

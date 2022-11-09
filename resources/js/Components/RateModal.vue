@@ -78,6 +78,7 @@ export default {
       processing: false,
     };
   },
+  emits: ['cancel', 'rated'],
   components: {
     Avatar,
     RatingStars,

@@ -52,6 +52,7 @@ export default {
   data() {
     return {};
   },
+  emits: ['cancel'],
   components: {
     Avatar,
     FileUploader,

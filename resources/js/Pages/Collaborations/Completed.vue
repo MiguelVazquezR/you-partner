@@ -77,11 +77,14 @@
               "
             >
               Pago liberado
-              <p class="text-green-600 text-xs">
-                (ve al botón "Acciones/Pedir pago" para ingresar los datos
-                necessarios para hacerte el depósito)
-              </p>
             </span>
+            <p
+              v-if="collaboration_detail.payed_at.string"
+              class="text-green-600 text-xs"
+            >
+              (ve al botón "Acciones/Pedir pago" para ingresar los datos
+              necessarios para hacerte el depósito)
+            </p>
           </div>
         </div>
         <div class="mt-6">

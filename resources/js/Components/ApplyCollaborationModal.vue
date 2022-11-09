@@ -71,6 +71,7 @@ export default {
 
     return { form };
   },
+  emits: ['cancel'],
   components: {
     Avatar,
     Input,

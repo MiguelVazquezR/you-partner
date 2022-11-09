@@ -87,6 +87,7 @@ import InputSearch from "@/Components/Common/InputSearch.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
+  emits: ['details'],
   components: {
     Pagination,
     Avatar,

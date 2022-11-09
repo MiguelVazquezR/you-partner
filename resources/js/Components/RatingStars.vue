@@ -20,6 +20,7 @@ export default {
             rate: 0,
         }
     },
+    emits: ['selected'],
     methods:{
         selectStars() {
             this.rate = this.pos;
