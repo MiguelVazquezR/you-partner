@@ -1,7 +1,7 @@
 <template>
   <AppLayout title="Pago de colaboración">
     <div class="lg:grid grid-cols-2 gap-4">
-      <div class="section-container mx-6 my-4">
+      <div class="section-container mx-6 my-4 dark:bg-slate-800">
         <div
           class="
             container
@@ -12,6 +12,8 @@
             divide-y
             rounded-md
             divide-gray-400
+            dark:bg-slate-800
+            dark:text-gray-300
           "
         >
           <div class="flex justify-between">
@@ -24,6 +26,37 @@
               placeholder="Codigo de descuento"
             />
             <button class="btn-primary mx-2 my-4">Canjear</button> -->
+    <h1 class="text-gray-600 mx-8 my-4 font-bold">
+      Pago de colaboracion para tarea:
+      <span class="text-indigo-500 font-normal">{{
+        collaboration.homework.title
+      }}</span>
+    </h1>
+    <div class="section-container mx-6 my-4 dark:bg-slate-800">
+      <div
+        class="
+          container
+          flex flex-col
+          w-full
+          px-4
+          mx-auto
+          divide-y
+          rounded-md
+          divide-gray-400
+          dark:bg-slate-800
+          dark:text-gray-300
+        "
+      >
+        <div class="flex justify-between">
+          <Avatar :user="collaboration.user" secondary_info="Colaborador" />
+        </div>
+        <div class="p-4 space-y-2 text-sm">
+          <input
+            type="text"
+            class="input w-3/4"
+            placeholder="Codigo de descuento"
+          />
+          <button class="btn-primary mx-2 my-4">Canjear</button>
 
             <div class="grid grid-cols-2">
               <div class="col-start-1 mx-5">
@@ -65,17 +98,17 @@
           </div> -->
         </div>
       </div>
-      <div class="section-container mx-6 my-4">
+      <div class="section-container mx-6 my-4 dark:bg-slate-800 dark:text-gray-300">
         <div class="flex justify-between items-center">
           <h1 class="mb-3 font-bold">Método de Pago</h1>
           <img src="@/resources/images/we-accept.png" class="h-8" />
         </div>
         <form id="card-form">
           <div>
-            <Label value="Nombre de titular" />
+            <Label class="dark:text-gray-300" value="Nombre de titular" />
             <input
               id="card-holder-name"
-              class="input w-full mb-3"
+              class="input w-full mb-3 dark:text-gray-300"
               type="text"
               placeholder="Ingrese el nombre del titular de la tarjeta"
               required
@@ -83,8 +116,8 @@
           </div>
 
           <!-- Stripe Elements Placeholder -->
-          <Label value="Tarjeta" />
-          <div class="w-full mb-3 border rounded-md p-3">
+          <Label class="dark:text-gray-300" value="Tarjeta" />
+          <div class="w-full mb-3 border rounded-md p-3 dark:bg-indigo-400">
             <div id="card-element"></div>
 
             <span class="text-red-500 italic text-sm" id="card-error"></span>
