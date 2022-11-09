@@ -18,7 +18,7 @@ class MessageResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'user' =>  $this->whenLoaded('user'),
-            'chat' => $this->whenLoaded('chat'),
+            'chat' => ChatResource::make($this->whenLoaded('chat')),
             'read_at' => [
                 'relative' => $this->read_at?->diffForHumans(),
                 'string' => $this->read_at?->toDateTimeString(),

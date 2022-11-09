@@ -13,6 +13,7 @@ use App\Models\Chat;
 use App\Models\Homework;
 use App\Notifications\Collaborations\AppliedCollaborationNotification;
 use App\Notifications\Collaborations\ApprovedCollaborationNotification;
+use App\Notifications\Collaborations\CollaborationCompletedNotification;
 use App\Notifications\Collaborations\CollaborationRealesedPaymentNotification;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -68,7 +69,7 @@ class CollaborationController extends Controller
     }
 
     /**
-     * update collaboration with multiple resources
+     * update collaboration with multiple resources. Set collaboration completed
      */
     public function updateP(UpdateCollaborationRequest $request)
     {
@@ -78,7 +79,11 @@ class CollaborationController extends Controller
             'completed_comments' => $validated_data['completed_comments'],
             'completed_date' => now()->toDateString(),
         ]);
+
         $collaboration->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
+
+        $collaboration->homework->user->notify(new CollaborationCompletedNotification($collaboration->homework->title));
+
         return redirect()->route('collaborations.completed')->with('message', 'Colaboración completada');
     }
 

@@ -1,7 +1,20 @@
 <template>
   <AppLayout title="Tareas">
-    <div class="bg-white transition-dark dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <header class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30">
+    <div
+      class="
+        bg-white
+        transition-dark
+        dark:bg-slate-900
+        py-4
+        md:py-7
+        px-4
+        md:px-8
+        xl:px-10
+      "
+    >
+      <header
+        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30"
+      >
         <Tabs :tabs="tabs" class="my-5" />
       </header>
       <div class="flex justify-end mt-12">
@@ -10,7 +23,7 @@
         </Link>
       </div>
       <HomeworkTable
-        :homeworks="homeworks" 
+        :homeworks="homeworks"
         :filters="filters"
         filterURL="/homeworks"
         canEdit
@@ -98,7 +111,9 @@
       </template>
       <template #footer>
         <div class="flex">
-          <Link :href="route('homeworks.edit', homework_detail)" class="btn-primary"
+          <Link
+            :href="route('homeworks.edit', homework_detail)"
+            class="btn-primary"
             >Editar
           </Link>
           <button @click="side_modal = false" class="btn-secondary mx-1">
@@ -170,7 +185,6 @@ import PaymentModal from "@/Components/PaymentModal.vue";
 import CollaborationApplicants from "@/Components/CollaborationApplicants.vue";
 import ChatList from "@/Components/ChatList.vue";
 
-
 export default {
   data() {
     return {
@@ -183,10 +197,6 @@ export default {
       chat_to_show: null,
       tabs: [
         {
-          label: "Todas",
-          url: "homeworks.index",
-        },
-        {
           label: "Pendientes",
           url: "homeworks.no-collaboration",
         },
@@ -198,7 +208,7 @@ export default {
           label: "Terminados",
           url: "homeworks.completed",
         },
-         {
+        {
           label: "Reclamos",
           url: "homeworks.claims",
         },
@@ -225,11 +235,11 @@ export default {
     filters: Object,
   },
   methods: {
-    showDetails(event) {
-      this.homework_detail = event;
+    showDetails(item) {
+      this.homework_detail = item;
       this.side_modal = true;
     },
-     showChat(item) {
+    showChat(item) {
       this.chat_to_show = item;
       this.dialog_modal = true;
       this.show_chat = true;

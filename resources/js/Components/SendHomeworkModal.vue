@@ -50,7 +50,6 @@
   </form>
 </template>
 
-
 <script>
 import Avatar from "@/Components/Avatar.vue";
 import RatingStars from "@/Components/RatingStars.vue";

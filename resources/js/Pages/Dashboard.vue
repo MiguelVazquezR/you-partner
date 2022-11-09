@@ -28,7 +28,7 @@
                 {{ all_homeworks_uploaded }}
               </h2>
               <small class="text-gray-400"
-                >Desde {{ $page.props.user.created_at.split('T')[0] }}</small
+                >Desde {{ $page.props.user.created_at.split("T")[0] }}</small
               >
             </template>
           </DashboardPanelSmall>
@@ -42,7 +42,7 @@
             <template #content>
               <div v-for="item in homework_expired" :key="item.id">
                 <Link
-                  :href="route('homeworks.index') + '?search=' + item.title"
+                  :href="route(routes.homeworks[item.status]) + '?search=' + item.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -74,7 +74,11 @@
             <template #content>
               <div v-for="item in unread_messages" :key="item.id">
                 <Link
-                  :href="route('homeworks.index') + '?search=' + item.chat.homework.title"
+                  :href="
+                    route(routes.homeworks[item.chat.homework.status]) +
+                    '?search=' +
+                    item.chat.homework.title
+                  "
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -86,7 +90,10 @@
                     rounded-md
                   "
                 >
-                  <Avatar :user="item.user" :secondary_info="item.created_at.relative" />
+                  <Avatar
+                    :user="item.user"
+                    :secondary_info="item.created_at.relative"
+                  />
                   <span class="mt-2 truncate">{{ item.content }}</span>
                 </Link>
               </div>
@@ -100,7 +107,7 @@
             <template #content>
               <div v-for="item in homeworks_recently_completed" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')+'?search='+item.title"
+                  :href="route(routes.homeworks[item.status]) + '?search=' + item.title"
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -132,7 +139,11 @@
             <template #content>
               <div v-for="item in apllies_to_collaborate" :key="item.id">
                 <Link
-                  :href="route('homeworks.index')+'?search='+item.homework.title"
+                  :href="
+                    route(routes.homeworks[item.homework.status]) +
+                    '?search=' +
+                    item.homework.title
+                  "
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -148,7 +159,9 @@
                     :user="item.user"
                     :secondary_info="item.created_at.relative"
                   />
-                  <span class="mt-2 truncate text-sm">{{ item.homework.title }}</span>
+                  <span class="mt-2 truncate text-sm">{{
+                    item.homework.title
+                  }}</span>
                 </Link>
               </div>
             </template>
@@ -200,7 +213,7 @@
                 <span class="text-2xl"> ${{ total_profit }} </span>
               </div>
               <small class="text-gray-400">
-                Desde {{ $page.props.user.created_at.split('T')[0] }}
+                Desde {{ $page.props.user.created_at.split("T")[0] }}
               </small>
             </template>
           </DashboardPanelSmall>
@@ -214,7 +227,11 @@
             <template #content>
               <div v-for="item in collaborations_in_process" :key="item.id">
                 <Link
-                  :href="route('collaborations.in-process')+'?search='+item.homework.title"
+                  :href="
+                    route('collaborations.in-process') +
+                    '?search=' +
+                    item.homework.title
+                  "
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -246,7 +263,11 @@
             <template #content>
               <div v-for="item in collaborations_to_approve" :key="item.id">
                 <Link
-                  :href="route('collaborations.approve-pendent')+'?search='+item.homework.title"
+                  :href="
+                    route('collaborations.approve-pendent') +
+                    '?search=' +
+                    item.homework.title
+                  "
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -259,11 +280,14 @@
                   "
                 >
                   <span class="col-span-3 truncate">
-                    {{item.completed_date}}
+                    {{ item.completed_date }}
                     <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
-                  <span class="text-gray-400 text-right" title="Fecha aplicación">
+                  <span
+                    class="text-gray-400 text-right"
+                    title="Fecha aplicación"
+                  >
                     <i class="fa-solid fa-calendar-day"></i>
                     {{ item.created_at.relative }}</span
                   >
@@ -279,7 +303,7 @@
             <template #content>
               <div v-for="item in unread_messages_c" :key="item.id">
                 <Link
-                  :href="route('collaborations.index')"
+                  :href="route(routes.collaborations[item.chat.homework.approved_collaboration.status])"
                   class="
                     grid grid-cols-2
                     gap-x-3
@@ -291,7 +315,10 @@
                     rounded-md
                   "
                 >
-                  <Avatar :user="item.user" :secondary_info="item.created_at.relative" />
+                  <Avatar
+                    :user="item.user"
+                    :secondary_info="item.created_at.relative"
+                  />
                   <span class="mt-2 truncate">{{ item.content }}</span>
                 </Link>
               </div>
@@ -305,7 +332,11 @@
             <template #content>
               <div v-for="item in collaborations_claims" :key="item.id">
                 <Link
-                  :href="route('collaborations.claims')+'?search='+item.homework.title"
+                  :href="
+                    route('collaborations.claims') +
+                    '?search=' +
+                    item.homework.title
+                  "
                   class="
                     grid grid-cols-4
                     gap-x-3
@@ -321,7 +352,10 @@
                     <StatusIcon :status="item.status" />
                     {{ item.homework.title }}
                   </span>
-                  <span class="text-gray-400 text-right" title="Fecha de creación">
+                  <span
+                    class="text-gray-400 text-right"
+                    title="Fecha de creación"
+                  >
                     <i class="fa-solid fa-calendar-day"></i>
                     {{ item.created_at.relative }}</span
                   >
@@ -344,6 +378,26 @@ import Avatar from "@/Components/Avatar.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
+  data() {
+    return {
+      routes: {
+        homeworks: [
+          "homeworks.no-collaboration",
+          "homeworks.on-collaboration",
+          "homeworks.on-collaboration",
+          "homeworks.completed",
+          "homeworks.claims",
+        ],
+        collaborations: [
+          "collaborations.index",
+          "collaborations.approve-pendent",
+          "collaborations.in-process",
+          "collaborations.completed",
+          "collaborations.claims",
+        ]
+      },
+    };
+  },
   components: {
     AppLayout,
     DashboardPanel,

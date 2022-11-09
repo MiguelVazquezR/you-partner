@@ -17,7 +17,7 @@
             <span class="mx-4 text-sm font-normal"> Panel de información </span>
           </JetNavLink>
           <JetNavLink
-            :href="route('homeworks.index')"
+            :href="route('homeworks.no-collaboration')"
             :active="route().current('homeworks.*')"
           >
             <span class="text-left">

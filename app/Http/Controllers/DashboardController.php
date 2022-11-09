@@ -35,7 +35,7 @@ class DashboardController extends Controller
             'collaborations_in_process' => CollaborationResource::collection($collaborations->filter(fn ($item) => $item->approved_at && !$item->completed_date)->values()),
             'collaborations_to_approve' => CollaborationResource::collection($collaborations->filter(fn ($item) => !$item->approved_at && !$item->canceled_at)->values()),
             'collaborations_claims' => CollaborationResource::collection($collaborations->filter(fn ($item) => $item->claim && !$item->claim->solution)->values()),
-            'unread_messages_c' => MessageResource::collection(Message::unread('collaborations')->with('user')->get()),
+            'unread_messages_c' => MessageResource::collection(Message::unread('collaborations')->with('user', 'chat.homework')->get()),
             'profit_month' => auth()->user()->monthlyEarnings(now()->month),
             'profit_last_month' => auth()->user()->monthlyEarnings(now()->subMonths(1)->month),
             'money_locked_collaborations' => auth()->user()->collaborationsWithMoneyLocked()->count(),
