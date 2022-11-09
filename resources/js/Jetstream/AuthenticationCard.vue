@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-200"
+    class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-800"
   >
     <div>
       <slot name="logo" />
@@ -8,7 +8,7 @@
 
     <div class="relative mt-20">
       <div
-        class="w-32 h-32 rounded-full bg-gray-300 opacity-90 absolute -top-16 right-0 border border-indigo-400"
+        class="w-32 h-32 rounded-full bg-slate-800 opacity-90 absolute -top-16 right-0 border border-indigo-600"
       >
       </div>
       <div class="absolute -top-8 right-8">
@@ -17,13 +17,13 @@
         </svg>
       </div>
       <div
-        class="w-24 h-24 rounded-full bg-gray-300 opacity-90 absolute -top-20 right-24 border border-indigo-400"
+        class="w-24 h-24 rounded-full bg-slate-800 opacity-90 absolute -top-20 right-24 border border-indigo-600"
       ></div>
       <div class="w-24 h-24 absolute -top-[8.3rem] right-[4.5rem]">
         <JetApplicationMark class="w-1/2" />
       </div>
       <div
-        class="w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-400 shadow-md overflow-hidden sm:rounded-lg border-2 border-indigo-400"
+        class="w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-900 shadow-md overflow-hidden sm:rounded-lg border-2 border-indigo-400"
       >
         <slot />
       </div>

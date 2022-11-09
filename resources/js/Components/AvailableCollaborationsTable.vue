@@ -45,9 +45,10 @@
           <td class="pl-2">
             <div
               class="inline py-3 px-3 text-sm focus:outline-none leading-none rounded"
-              :class="homework.priority === 'Urgente' ? 'dark:text-red-900 dark:bg-red-500 text-red-700 bg-red-100' : 'dark:text-green-900 dark:bg-green-500 text-green-700 bg-green-100'"
+              :class="homework.priority === 'Urgente' ? 'dark:text-red-500 text-red-700' : 'dark:text-green-500 text-green-700'"
               :title="'Prioridad: ' + homework.priority"
             >
+            <i class="mr-2 text-lg fa-solid fa-calendar-days"></i>
               Límite: {{ homework.limit_date }}
             </div>
           </td>

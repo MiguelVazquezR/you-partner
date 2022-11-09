@@ -1,7 +1,7 @@
 <template>
   <AppLayout title="Pago de colaboración">
     <div class="lg:grid grid-cols-2 gap-4">
-      <div class="section-container mx-6 my-4">
+      <div class="section-container mx-6 my-4 dark:bg-slate-800">
         <div
           class="
             container
@@ -12,6 +12,8 @@
             divide-y
             rounded-md
             divide-gray-400
+            dark:bg-slate-800
+            dark:text-gray-300
           "
         >
           <div class="flex justify-between">
@@ -65,17 +67,17 @@
           </div> -->
         </div>
       </div>
-      <div class="section-container mx-6 my-4">
+      <div class="section-container mx-6 my-4 dark:bg-slate-800 dark:text-gray-300">
         <div class="flex justify-between items-center">
           <h1 class="mb-3 font-bold">Método de Pago</h1>
           <img src="@/resources/images/we-accept.png" class="h-8" />
         </div>
         <form id="card-form">
           <div>
-            <Label value="Nombre de titular" />
+            <Label class="dark:text-gray-300" value="Nombre de titular" />
             <input
               id="card-holder-name"
-              class="input w-full mb-3"
+              class="input w-full mb-3 dark:text-gray-300"
               type="text"
               placeholder="Ingrese el nombre del titular de la tarjeta"
               required
@@ -83,8 +85,8 @@
           </div>
 
           <!-- Stripe Elements Placeholder -->
-          <Label value="Tarjeta" />
-          <div class="w-full mb-3 border rounded-md p-3">
+          <Label class="dark:text-gray-300" value="Tarjeta" />
+          <div class="w-full mb-3 border rounded-md p-3 dark:bg-indigo-400">
             <div id="card-element"></div>
 
             <span class="text-red-500 italic text-sm" id="card-error"></span>
