@@ -217,6 +217,7 @@ const logout = () => {
                     text-gray-400
                     hover:text-gray-500 hover:bg-gray-100
                     focus:outline-none focus:bg-gray-100 focus:text-gray-500
+                    dark:bg-slate-700 dark:text-gray-300
                     transition
                   "
                   @click="
@@ -229,7 +230,7 @@ const logout = () => {
                     fill="none"
                     viewBox="0 0 24 24"
                   >
-                    <path
+                    <path 
                       :class="{
                         hidden: showingNavigationDropdown,
                         'inline-flex': !showingNavigationDropdown,
@@ -239,7 +240,7 @@ const logout = () => {
                       stroke-width="2"
                       d="M4 6h16M4 12h16M4 18h16"
                     />
-                    <path
+                    <path class="text-red-700"
                       :class="{
                         hidden: !showingNavigationDropdown,
                         'inline-flex': showingNavigationDropdown,
@@ -311,7 +312,7 @@ const logout = () => {
                 </div>
 
                 <div>
-                  <div class="font-medium text-base text-gray-800">
+                  <div class="font-medium text-base text-gray-800 dark:text-gray-300">
                     {{ $page.props.user.name }}
                   </div>
                   <div class="font-medium text-sm text-gray-500">
