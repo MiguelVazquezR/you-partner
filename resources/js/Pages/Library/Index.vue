@@ -22,7 +22,6 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import PricingPlans from "@/Components/PricingPlans.vue";
-import CursoVue from "@/Components/CursoVue.vue";
 
 
 export default {
