@@ -156,6 +156,7 @@ export default {
       item_to_delete: {},
     };
   },
+  emits: ['details'],
   components: {
     Pagination,
     Avatar,

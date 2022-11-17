@@ -54,6 +54,7 @@ export default {
   props: {
     chats: Array,
   },
+  emits: ['showChat'],
   components: {
     Avatar,
   },
