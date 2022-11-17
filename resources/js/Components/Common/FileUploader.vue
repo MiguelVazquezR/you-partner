@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-10 px-6 bg-gray-100 dark:bg-slate-700 dark:border-slate-500 dark:text-gray-300 border border-dashed rounded-md border-gray-300"
+    class="py-6 px-6 bg-gray-100 dark:bg-slate-700 dark:border-slate-500 dark:text-gray-300 border border-dashed rounded-md border-gray-300"
     @dragover="dragover"
     @dragleave="dragleave"
     @drop="drop"
@@ -10,7 +10,7 @@
       multiple
       name="fields[assetsFieldHandle][]"
       id="assetsFieldHandle"
-      class="w-px h-px opacity-0 overflow-hidden absolute"
+      class="w-[2px] h-px opacity-0 overflow-hidden absolute"
       @change="onChange"
       ref="file"
       accept=".pdf,.jpg,.jpeg,.png,.xls,.ppt,.zip,.doc,.docx,.xslx,.txt"

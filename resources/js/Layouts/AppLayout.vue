@@ -63,6 +63,8 @@ const logout = () => {
                 <!-- notifications -->
                 <Notifications />
 
+                <!-- dark mode palette -->
+
                 <JetDropdown align="right" width="20">
                   <template #trigger>
                     <button
@@ -205,6 +207,60 @@ const logout = () => {
                 </div>
               </div>
 
+              <JetDropdown align="right" width="20" class="flex mt-2 lg:hidden">
+                  <template #trigger>
+                    <button
+                      class="
+                        flex
+                        text-sm
+                        border-2 border-transparent
+                        rounded-full
+                        focus:outline-none focus:border-gray-300
+                        transition
+                      "
+                    >
+                      <i
+                        class="
+                          fa-solid fa-palette
+                          text-lg text-indigo-400
+                          hover:text-indigo-500
+                          mx-2
+                        "
+                      ></i>
+                    </button>
+                  </template>
+
+                  <template #content>
+                    <!-- Account Management -->
+                    <div
+                      class="block text-center px-4 py-2 text-xs text-gray-400"
+                    >
+                      <i
+                        x-on:click="darkMode = false"
+                        class="
+                          fa-solid fa-sun
+                          text-indigo-400
+                          hover:text-indigo-500
+                          text-lg
+                          cursor-pointer
+                        "
+                      ></i>
+                      <i
+                        x-on:click="darkMode = true"
+                        class="
+                          fa-solid fa-moon
+                          text-indigo-400
+                          hover:text-indigo-500
+                          text-lg
+                          cursor-pointer
+                        "
+                      ></i>
+                    </div>
+                  </template>
+                </JetDropdown>
+
+                <Notifications class="flex mt-2 lg:hidden mr-1"/>
+
               <!-- Hamburger -->
               <div class="-mr-2 flex items-center lg:hidden">
                 <button
@@ -240,7 +296,7 @@ const logout = () => {
                       stroke-width="2"
                       d="M4 6h16M4 12h16M4 18h16"
                     />
-                    <path class="text-red-700"
+                    <path class="dark:text-red-700"
                       :class="{
                         hidden: !showingNavigationDropdown,
                         'inline-flex': showingNavigationDropdown,
@@ -294,6 +350,18 @@ const logout = () => {
                 :active="route().current('library.*')"
               >
                 Biblioteca
+              </JetResponsiveNavLink>
+              <JetResponsiveNavLink
+                :href="route('error-reports.index')"
+                :active="route().current('error-reports.*')"
+              >
+                Errores y sugerencias
+              </JetResponsiveNavLink>
+              <JetResponsiveNavLink
+                :href="route('admin.finances')"
+                :active="route().current('admin.*')"
+              >
+                Administrador
               </JetResponsiveNavLink>
             </div>
 

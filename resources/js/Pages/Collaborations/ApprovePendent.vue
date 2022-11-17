@@ -13,11 +13,11 @@
       "
     >
       <header
-        class="flex fixed bg-white dark:bg-slate-900 w-full top-[49px] z-30"
+        class="flex bg-white dark:bg-slate-900 w-full"
       >
-        <Tabs :tabs="tabs" class="my-5" />
+        <Tabs :tabs="tabs" />
       </header>
-      <div class="mt-12">
+      <div class="mt-10">
         <CollaborationTable
           :collaborations="collaborations"
           :filters="filters"

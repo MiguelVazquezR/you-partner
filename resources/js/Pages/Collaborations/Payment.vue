@@ -1,13 +1,12 @@
 <template>
   <AppLayout title="Pago de colaboración">
     <div class="lg:grid grid-cols-2 gap-4">
-      <div class="section-container mx-6 my-4 dark:bg-slate-800">
+      <div class="section-container mx-4 my-4 dark:bg-slate-800">
         <div
           class="
             container
             flex flex-col
             w-full
-            px-4
             mx-auto
             divide-y
             rounded-md
@@ -19,26 +18,26 @@
           <div class="flex justify-between">
             <Avatar :user="collaboration.user" secondary_info="Colaborador" />
           </div>
-          <div class="p-4 space-y-2 text-sm">
+          <div class="p-2 space-y-2 text-sm">
             <!-- <input
               type="text"
               class="input w-3/4"
               placeholder="Codigo de descuento"
             />
             <button class="btn-primary mx-2 my-4">Canjear</button> -->
-    <h1 class="text-gray-600 mx-8 my-4 font-bold">
+    <h1 class="text-gray-600 mx-2 my-4 font-bold">
       Pago de colaboracion para tarea:
       <span class="text-indigo-500 font-normal">{{
         collaboration.homework.title
       }}</span>
     </h1>
-    <div class="section-container mx-6 my-4 dark:bg-slate-800">
+    <div class="section-container my-4 dark:bg-slate-800">
       <div
         class="
           container
           flex flex-col
           w-full
-          px-4
+          lg:px-4
           mx-auto
           divide-y
           rounded-md
@@ -59,14 +58,14 @@
           <button class="btn-primary mx-2 my-4">Canjear</button>
 
             <div class="grid grid-cols-2">
-              <div class="col-start-1 mx-5">
+              <div class="col-start-1 lg:mx-5">
                 <p class="my-1">Nombre de tarea</p>
                 <p class="my-1">Entrega pactada</p>
                 <p class="my-1">Costo</p>
                 <!-- <p class="my-1">Descuento</p> -->
                 <!-- <p class="my-1 font-bold">Total</p> -->
               </div>
-              <div class="col-start-2 mx-5">
+              <div class="col-start-2">
                 <p class="my-1 font-bold">{{ collaboration.homework.title }}</p>
                 <p class="my-1 font-bold">{{ collaboration.promise_date }}</p>
                 <p class="my-1 text-green-600">${{ collaboration.price }}</p>
@@ -98,8 +97,8 @@
           </div> -->
         </div>
       </div>
-      <div class="section-container mx-6 my-4 dark:bg-slate-800 dark:text-gray-300">
-        <div class="flex justify-between items-center">
+      <div class="section-container my-4 dark:bg-slate-800 dark:text-gray-300">
+        <div class="lg:flex justify-between items-center">
           <h1 class="mb-3 font-bold">Método de Pago</h1>
           <img src="@/resources/images/we-accept.png" class="h-8" />
         </div>
@@ -117,7 +116,7 @@
 
           <!-- Stripe Elements Placeholder -->
           <Label class="dark:text-gray-300" value="Tarjeta" />
-          <div class="w-full mb-3 border rounded-md p-3 dark:bg-indigo-400">
+          <div class="w-full mb-3 border rounded-md p-3 dark:bg-gray-700">
             <div id="card-element"></div>
 
             <span class="text-red-500 italic text-sm" id="card-error"></span>
@@ -126,6 +125,9 @@
           <button id="card-button" class="btn-primary">Procesar pago</button>
         </form>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   </AppLayout>
 </template>
