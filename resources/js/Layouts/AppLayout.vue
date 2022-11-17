@@ -339,7 +339,7 @@ const logout = () => {
               >
                 Colaborar
               </JetResponsiveNavLink>
-              <JetResponsiveNavLink
+              <!-- <JetResponsiveNavLink
                 :href="route('ranking.index')"
                 :active="route().current('ranking.*')"
               >
@@ -350,7 +350,7 @@ const logout = () => {
                 :active="route().current('library.*')"
               >
                 Biblioteca
-              </JetResponsiveNavLink>
+              </JetResponsiveNavLink> -->
               <JetResponsiveNavLink
                 :href="route('error-reports.index')"
                 :active="route().current('error-reports.*')"

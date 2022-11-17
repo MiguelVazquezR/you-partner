@@ -34,7 +34,7 @@
             </span>
             <span class="mx-4 text-sm font-normal"> Colaborar </span>
           </JetNavLink>
-          <JetNavLink
+          <!-- <JetNavLink
             :href="route('ranking.index')"
             :active="route().current('ranking.*')"
           >
@@ -42,8 +42,8 @@
               <i class="fa-solid fa-ranking-star"></i>
             </span>
             <span class="mx-4 text-sm font-normal"> Ranking </span>
-          </JetNavLink>
-          <JetNavLink
+          </JetNavLink> -->
+          <!-- <JetNavLink
             :href="route('library.index')"
             :active="route().current('library.*')"
           >
@@ -51,7 +51,7 @@
               <i class="fa-solid fa-book"></i>
             </span>
             <span class="mx-4 text-sm font-normal"> Biblioteca </span>
-          </JetNavLink>
+          </JetNavLink> -->
           <JetNavLink
             :href="route('error-reports.index')"
             :active="route().current('error-reports.*')"
