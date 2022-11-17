@@ -1,11 +1,11 @@
 <template>
-  <div class="flex justify-between items-center py-1 mt-2">
-    <Pagination :pagination="homeworks" />
+  <div class="lg:flex justify-between items-center py-1 mt-2 space-x-1">
     <InputSearch
       :filters="filters"
       :filterURL="filterURL"
-      class="mb-2 ml-4 flex-1"
+      class="mb-2 flex-1"
     />
+    <Pagination :pagination="homeworks" />
   </div>
   <div class="overflow-x-auto text-sm">
     <table v-if="homeworks.data.length" class="w-full whitespace-nowrap">
