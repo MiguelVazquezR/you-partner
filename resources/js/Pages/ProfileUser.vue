@@ -103,31 +103,31 @@
                 <div class="dark:text-gray-400 text-gray-600">
                   <div class="grid md:grid-cols-2 text-sm">
                     <div class="grid grid-cols-2">
-                      <div class="px-4 py-2 font-semibold">Escuela</div>
+                      <div class="px-4 py-2 font-bold text-white">Escuela:</div>
                       <div class="px-4 py-2">{{ user.school_name }}</div>
                     </div>
                     <div class="grid grid-cols-2">
-                      <div class="px-4 py-2 font-semibold">Colaboraciones</div>
+                      <div class="px-4 py-2 font-bold text-white">Colaboraciones:</div>
                       <div class="px-4 py-2">{{ 5 }}</div>
                     </div>
                     <div class="grid grid-cols-2">
-                      <div class="px-4 py-2 font-semibold">
-                        Fecha de Nacimiento
+                      <div class="px-4 py-2 font-bold text-white">
+                        Fecha de Nacimiento:
                       </div>
                       <div class="px-4 py-2">{{ user.birthdate.split("T",[1]) }}</div>
                     </div>
                     <div class="grid grid-cols-2">
-                      <div class="px-4 py-2 font-semibold">Tareas subidas</div>
+                      <div class="px-4 py-2 font-bold text-white">Tareas subidas:</div>
                       <div class="px-4 py-2">{{ 10 }}</div>
                     </div>
                     <div class="grid grid-cols-2">
-                      <div class="px-4 py-2 font-semibold">Grado académico</div>
+                      <div class="px-4 py-2 font-bold text-white">Grado académico:</div>
                       <div class="px-4 py-2">
                         {{ user.academic_grade }}
                       </div>
                     </div>
                     <div class="grid grid-cols-2">
-                      <div class="px-4 py-2 font-semibold">Reclamos</div>
+                      <div class="px-4 py-2 font-bold text-white">Reclamos:</div>
                       <div class="px-4 py-2">{{ 0 }}</div>
                     </div>
                   </div>
@@ -160,8 +160,8 @@
                   >Calificación de Usuario</span
                 >
               </div>
-                <div class="grid grid-cols-2 mt-2">
-                  <div class="mr-2">
+                <div class="grid lg:grid-cols-2 mt-2 ">
+                  <div class="mr-2 my-2">
                     <ReviewUser />
                   </div>
 

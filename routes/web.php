@@ -82,6 +82,7 @@ Route::get('/library', [LibraryController::class,'index'])->name('library.index'
 
 Route::get('/profile/{user}', function (User $user){
     return Inertia::render('ProfileUser', [new UserResource($user)]);
+    // return $user;
 })->name('profile-view');
 
 Route::get('/privacy-policy', function (){
