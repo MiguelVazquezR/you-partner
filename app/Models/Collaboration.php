@@ -20,6 +20,9 @@ class Collaboration extends Model implements HasMedia
         'canceled_at',
         'read_at',
         'payed_at',
+        'payment_released_at',
+        'bank_number',
+        'bank_name',
         'cancel_reason',
         'completed_comments',
         'user_id',
@@ -34,7 +37,7 @@ class Collaboration extends Model implements HasMedia
         'canceled_at',
         'read_at',
         'payed_at',
-
+        'payment_released_at',
     ];
 
     // Relationships -------------------

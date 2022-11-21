@@ -1,9 +1,7 @@
 <template>
   <AppLayout title="Mis colaboraciones">
     <div class="bg-white dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
-      <header
-        class="flex bg-white dark:bg-slate-900 w-full"
-      >
+      <header class="flex bg-white dark:bg-slate-900 w-full">
         <Tabs :tabs="tabs" />
       </header>
       <div class="mt-12">
@@ -67,7 +65,7 @@
               {{ collaboration_detail.homework.description }}
             </p>
             <span
-              v-if="collaboration_detail.payed_at.string"
+              v-if="collaboration_detail.payment_released_at.string"
               class="
                 text-green-600 text-sm
                 px-2
@@ -79,11 +77,11 @@
               Pago liberado
             </span>
             <p
-              v-if="collaboration_detail.payed_at.string"
+              v-if="collaboration_detail.payment_released_at.string"
               class="text-green-600 text-xs"
             >
-              (ve al botón "Acciones/Pedir pago" para ingresar los datos
-              necessarios para hacerte el depósito)
+              (ve al botón "Acciones/Ingresar datos para depósito" para ingresar
+              los datos necessarios para hacerte el depósito)
             </p>
           </div>
         </div>
@@ -156,6 +154,12 @@
         <DropupButton>
           <template #links>
             <span @click="prepairChat" class="dropup-link">Mensajes</span>
+            <span
+              @click="showPaymentForm"
+              v-if="collaboration_detail.payment_released_at.string"
+              class="dropup-link"
+              >Ingresar datos para depósito</span
+            >
           </template>
         </DropupButton>
         <button @click="side_modal = false" class="btn-secondary mx-2">
@@ -173,9 +177,16 @@
           {{ collaboration_detail.homework.title }}
         </span>
       </div>
+      <div v-if="show_payment_form" class="font-bold text-gray-600">
+        Introducir datos para depósito <br />
+        <span class="text-indigo-500 font-normal">
+          {{ collaboration_detail.homework.title }}
+        </span>
+      </div>
     </template>
     <template #content>
       <MessagesModal :chat="chat" v-if="show_chat" />
+      <PymentFormModal :collaboration="collaboration_detail" v-if="show_payment_form" @cancel="hideModal" />
     </template>
     <template #footer></template>
   </DialogModal>
@@ -191,6 +202,7 @@ import DropupButton from "@/Components/DropupButton.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
+import PymentFormModal from "@/Components/PymentFormModal.vue";
 
 export default {
   data() {
@@ -199,6 +211,7 @@ export default {
       chat: {},
       dialog_modal: false,
       show_chat: false,
+      show_payment_form: false,
       show_send_homework: false,
       side_modal: false,
       show_confirmation: false,
@@ -236,6 +249,7 @@ export default {
     MessagesModal,
     DialogModal,
     AttachedFile,
+    PymentFormModal,
   },
   props: {
     collaborations: Object,
@@ -248,6 +262,10 @@ export default {
     },
     showChat() {
       this.show_chat = true;
+      this.dialog_modal = true;
+    },
+    showPaymentForm() {
+      this.show_payment_form = true;
       this.dialog_modal = true;
     },
     prepairChat() {
@@ -318,6 +336,7 @@ export default {
     hideModal() {
       this.show_send_homework = false;
       this.show_chat = false;
+      this.show_payment_form = false;
       this.dialog_modal = false;
     },
   },

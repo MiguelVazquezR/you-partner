@@ -23,7 +23,6 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import PricingPlans from "@/Components/PricingPlans.vue";
 
-
 export default {
    data() {
     return {

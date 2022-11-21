@@ -1,5 +1,5 @@
 .section-container {
-    @apply px-6 py-4 rounded-lg bg-white shadow-lg;
+    @apply px-6 py-4 rounded-lg bg-white shadow-lg dark:bg-slate-800 dark:text-gray-300;
 }
 
 .transition-dark{

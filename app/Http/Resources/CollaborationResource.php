@@ -40,6 +40,11 @@ class CollaborationResource extends JsonResource
                 'string' => $this->payed_at?->toDateTimeString(),
                 'special' => $this->payed_at?->isoFormat('DD MMM, YYYY'),
             ],
+            'payment_released_at' => [
+                'relative' => $this->payment_released_at?->diffForHumans(),
+                'string' => $this->payment_released_at?->toDateTimeString(),
+                'special' => $this->payment_released_at?->isoFormat('DD MMM, YYYY'),
+            ],
             'cancel_reason' => $this->cancel_reason,
             'completed_comments' => $this->completed_comments,
             'user' =>  UserResource::make($this->whenLoaded('user')),
@@ -53,6 +58,8 @@ class CollaborationResource extends JsonResource
             ],
             'status' => $this->status(),
             'media' => $this->getMedia()->all(),
+            'bank_number' => $this->bank_number,
+            'bank_name' => $this->bank_name,
         ];
     }
 }
