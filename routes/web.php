@@ -64,6 +64,7 @@ Route::put('/collaborations/approve/{collaboration}', [CollaborationController::
 Route::put('/collaborations/release-payment/{collaboration}', [CollaborationController::class, 'releasePayment'])->name('collaborations.release-payment');
 Route::get('collaboration/{collaboration}/payment', [CollaborationController::class, 'payment'])->middleware('auth')->name('payment');
 Route::post('collaboration/payment-method-create', [CollaborationController::class, 'paymentMethodCreate'])->middleware('auth')->name('collaborations.payment-method.create');
+Route::post('collaboration/store-bank-data', [CollaborationController::class, 'storeBankData'])->middleware('auth')->name('collaborations.store-bank-data');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');
@@ -80,9 +81,11 @@ Route::get('/admin/errors', [AdminController::class,'errors'])->name('admin.erro
 Route::get('/library', [LibraryController::class,'index'])->name('library.index');
 
 
-Route::get('/profile/{user}', function (User $user){
-    return Inertia::render('ProfileUser', [new UserResource($user)]);
+Route::get('/profile/{user}', function ($user_id){
+    $user = User::with('collaborations', 'homeworks')->find($user_id);
+    $user = new UserResource($user);
     // return $user;
+    return Inertia::render('ProfileUser', compact('user'));
 })->name('profile-view');
 
 Route::get('/privacy-policy', function (){

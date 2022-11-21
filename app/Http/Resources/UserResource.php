@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             'active' => $this->active ? 'Si' : 'No',
             'description' => $this->description,
             'collaborations' => CollaborationResource::collection($this->whenLoaded('collaborations')),
+            'homeworks' => HomeworkResource::collection($this->whenLoaded('homeworks')),
             'claims_by_user' => $this->claimsByUser(),
             'claims_to_user' => $this->claimsToUser(),
             'canceled_collaborations' => $this->canceledCollaborations(),

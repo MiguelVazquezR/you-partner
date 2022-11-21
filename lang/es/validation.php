@@ -153,5 +153,7 @@ return [
         'subject' => 'titulo',
         'content' => 'descripción',
         'is_error' => 'tipo de reporte',
+        'bank_number' => 'número de tarjeta',
+        'bank_name' => 'nombre de banco',
     ],
 ];

@@ -52,7 +52,7 @@
                   </li>
                   <li class="flex items-center py-3">
                     <span>Miembro desde</span>
-                    <span class="ml-auto">{{ user.created_at.split('T',[1]) }}</span>
+                    <span class="ml-auto">{{ user.created_at.special }}</span>
                   </li>
                   <li class="flex items-center py-3">
                     <LevelBar />
@@ -108,17 +108,17 @@
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-bold text-white">Colaboraciones:</div>
-                      <div class="px-4 py-2">{{ 5 }}</div>
+                      <div class="px-4 py-2">{{ user.collaborations.length }}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-bold text-white">
                         Fecha de Nacimiento:
                       </div>
-                      <div class="px-4 py-2">{{ user.birthdate.split("T",[1]) }}</div>
+                      <div class="px-4 py-2">{{ user.birthdate }}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-bold text-white">Tareas subidas:</div>
-                      <div class="px-4 py-2">{{ 10 }}</div>
+                      <div class="px-4 py-2">{{ user.homeworks.length }}</div>
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-bold text-white">Grado académico:</div>
@@ -128,7 +128,7 @@
                     </div>
                     <div class="grid grid-cols-2">
                       <div class="px-4 py-2 font-bold text-white">Reclamos:</div>
-                      <div class="px-4 py-2">{{ 0 }}</div>
+                      <div class="px-4 py-2">{{ user.claims_to_user.length }}</div>
                     </div>
                   </div>
                 </div>
