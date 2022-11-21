@@ -28,7 +28,7 @@ defineProps({
             <i class="text-white fas fa-bars"></i>
           </button>
         </div>
-        <div
+        <!-- <div
           class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none hidden"
           id="example-collapse-navbar"
         >
@@ -76,7 +76,7 @@ defineProps({
             </li>
             <li class="flex items-center"></li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </nav>
     <main>
@@ -105,24 +105,20 @@ defineProps({
                 <div>
                   <Link
                     :href="route('login')"
-                    class="text-lg text-gray-300 font-bold mr-2"
+                    class="text-lg text-white font-bold mr-2 hover:text-gray-300"
                   >
                     Ingresar
-                    <i
-                      class="fa-solid fa-right-to-bracket text-gray-600 text-center inline-flex items-center justify-center w-10 h-10 mb-2 shadow-lg rounded-full bg-white hover:scale-110 hover:cursor-pointer"
-                    ></i>
+                    
                   </Link>
                 </div>
                 <br />
                 <div>
                   <Link
                     :href="route('register')"
-                    class="text-lg text-gray-300 font-bold mr-2"
+                    class="text-lg text-white font-bold mr-2 hover:text-gray-300"
                   >
                     Crear una cuenta
-                    <i
-                      class="fa-solid fa-user-plus text-gray-600 text-center inline-flex items-center justify-center w-10 h-10 mb-2 shadow-lg rounded-full bg-white hover:scale-110 hover:cursor-pointer"
-                    ></i>
+                    
                   </Link>
                 </div>
               </div>
@@ -149,14 +145,14 @@ defineProps({
           </svg>
         </div>
       </div>
-      <section class="pb-20 bg-gray-300 -mt-24">
+      <section class="pb-20 bg-gray-400 -mt-24">
         <div class="container mx-auto px-4">
           <div class="flex flex-wrap">
             <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
               <div
                 class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
               >
-                <div class="px-4 py-5 flex-auto hover:shadow-2xl">
+                <div class="px-4 py-5 flex-auto hover:shadow-xl hover:shadow-gray-600/100">
                   <div
                     class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400"
                   >
@@ -175,7 +171,7 @@ defineProps({
               <div
                 class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
               >
-                <div class="px-4 py-5 flex-auto hover:shadow-2xl">
+                <div class="px-4 py-5 flex-auto hover:shadow-xl hover:shadow-gray-600/100">
                   <div
                     class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-green-400"
                   >
@@ -193,7 +189,7 @@ defineProps({
               <div
                 class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
               >
-                <div class="px-4 py-5 flex-auto hover:shadow-2xl">
+                <div class="px-4 py-5 flex-auto hover:shadow-xl hover:shadow-gray-600/100">
                   <div
                     class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-blue-400"
                   >
@@ -481,8 +477,8 @@ defineProps({
         </svg>
       </div>
       <div class="container mx-auto px-4">
-        <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-4">
+        <div class="flex justify-center flex-wrap">
+          <!-- <div class="w-full lg:w-6/12 px-4">
             <h4 class="text-3xl font-semibold">Encuentranos en...</h4>
             <h5 class="text-lg mt-0 mb-2 text-gray-700">
               Encuentranos en todas platoformas...
@@ -512,7 +508,7 @@ defineProps({
                 <i class="flex fa-brands fa-instagram"></i>
               </button>
             </div>
-          </div>
+          </div> -->
           <div class="w-full lg:w-6/12 px-4">
             <div class="flex flex-wrap items-top mb-6">
               <div class="w-full lg:w-4/12 px-4 ml-auto">
