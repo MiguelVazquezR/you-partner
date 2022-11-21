@@ -31,7 +31,6 @@ class CollaborationController extends Controller
         $filters = $request->all('search');
         $homeworks = HomeworkResource::collection(Homework::noCollaborationApproved($exclude_if_i_applied_to_collaborate)
             ->filter($filters)
-            ->where('user_id', '<>', auth()->id())
             ->with(['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']])
             ->latest()
             ->paginate());

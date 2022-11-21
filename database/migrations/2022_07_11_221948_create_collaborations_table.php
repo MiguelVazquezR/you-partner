@@ -23,9 +23,12 @@ return new class extends Migration
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('canceled_at')->nullable();
             $table->timestamp('read_at')->nullable();
+            $table->timestamp('payment_released_at')->nullable();
             $table->timestamp('payed_at')->nullable();
             $table->text('cancel_reason')->nullable();
             $table->text('completed_comments')->nullable();
+            $table->string('bank_number', 20)->nullable();
+            $table->string('bank_name')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('homework_id')->constrained()->onDelete('cascade');
 

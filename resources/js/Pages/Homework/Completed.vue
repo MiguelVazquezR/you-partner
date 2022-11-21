@@ -68,7 +68,7 @@
                 "
               />
               <span
-                v-if="homework_detail.approved_collaboration.payed_at.string"
+                v-if="homework_detail.approved_collaboration.payment_released_at.string"
                 class="text-green-600 text-sm ml-5"
                 >Pago liberado</span>
             </div>
@@ -150,7 +150,7 @@
             <template #links>
               <button @click="prepairChat" class="dropup-link">Mensajes</button>
               <button
-                v-if="!homework_detail.approved_collaboration.payed_at?.special"
+                v-if="!homework_detail.approved_collaboration.payment_released_at?.special"
                 @click="show_confirmation = true"
                 class="dropup-link"
               >
@@ -164,7 +164,7 @@
                 Calificar colaboración
               </button>
               <button
-                v-if="!homework_detail.approved_collaboration.payed_at?.special"
+                v-if="!homework_detail.approved_collaboration.payment_released_at?.special"
                 @click="showClaim"
                 class="dropup-link"
               >
@@ -325,8 +325,8 @@ export default {
             this.homework_detail.approved_collaboration.id
           )
         );
-        this.homework_detail.approved_collaboration.payed_at =
-          response.data.payed_at;
+        this.homework_detail.approved_collaboration.payment_released_at =
+          response.data.payment_released_at;
       } catch (error) {
         console.log(error);
       }

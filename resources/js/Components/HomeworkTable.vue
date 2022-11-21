@@ -76,7 +76,7 @@
           </td>
           <td >
             <div v-if="homework.status === 3">
-              <i v-if="homework.approved_collaboration.payed_at.special" title="Pago liberado" class="fa-solid fa-hand-holding-dollar text-lg text-green-600"></i> 
+              <i v-if="homework.approved_collaboration.payment_released_at.special" title="Pago liberado" class="fa-solid fa-hand-holding-dollar text-lg text-green-600"></i> 
               <i v-if="homework.approved_collaboration.rate" title="Tarea calificada" class="fa-solid fa-star text-lg text-yellow-500 ml-5"></i>
             </div>
           </td>
