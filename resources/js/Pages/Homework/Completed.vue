@@ -203,7 +203,7 @@
           @rated="addRate($event)"
         />
         <ClaimModal
-          :collaborator="homework_detail.approved_collaboration.user"
+          :collaboration="homework_detail.approved_collaboration"
           v-if="show_claim"
           @cancel="hideModal"
         />

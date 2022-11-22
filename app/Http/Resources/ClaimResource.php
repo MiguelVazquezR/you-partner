@@ -15,6 +15,7 @@ class ClaimResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'status' => $this->status,
             'refund' => $this->refund,
             'collaboration' => CollaborationResource::make($this->whenLoaded('collaboration')),

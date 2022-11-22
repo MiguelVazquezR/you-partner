@@ -11,7 +11,8 @@
     <p style="white-space: pre-line" class="text-xs dark:text-gray-500">
       {{ collaboration.claim.description }}
     </p>
-    <div class="mt-2 flex flex-col">
+    <div class="my-3 flex flex-col">
+      <h1 class="text-gray-700 dark:text-gray-400 font-bold">Recursos testigos</h1>
       <AttachedFile
         v-for="file in collaboration.claim.media"
         :key="file.id"
@@ -39,7 +40,12 @@
 </template>
 
 <script>
+import AttachedFile from "@/Components/AttachedFile.vue";
+
 export default {
+  components: {
+    AttachedFile,
+  },
   props: {
     collaboration: Object,
   },
