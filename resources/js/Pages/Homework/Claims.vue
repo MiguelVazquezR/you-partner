@@ -271,12 +271,13 @@ export default {
     filters: Object,
   },
   methods: {
-    showDetails() {
-      this.side_modal = true;
-    },
     showDetails(item) {
       this.homework_detail = item;
       this.side_modal = true;
+    },
+    showChat() {
+      this.show_chat = true;
+      this.dialog_modal = true;
     },
     deleteClaim() {
       try {
@@ -288,6 +289,67 @@ export default {
         );
         this.show_confirmation = false;
         this.side_modal = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    prepairChat() {
+      const chat = this.searchChatwithOwner();
+      if (chat === undefined) {
+        this.createChat();
+      } else {
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
+      }
+    },
+    excludeMyMessages(messages) {
+      return messages.filter(
+        (message) => message.user.id !== this.$page.props.user.id
+      );
+    },
+    isAnyUnread(messages) {
+      if (messages.length) {
+        return this.excludeMyMessages(messages).some(
+          (message) => !message.read_at.special
+        );
+      }
+    },
+    markAsRead(chat) {
+      axios
+        .post(route("chat.read-message"), {
+          chat_id: chat.id,
+        })
+        .then((response) => {
+          this.homework_detail.chats = [response.data];
+          this.chat = response.data;
+          this.showChat();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    searchChatwithOwner() {
+      const auth_user_id = this.$page.props.user.id;
+      if (this.homework_detail.chats.length) {
+        return this.homework_detail.chats.find((chat) =>
+          chat.users.some((user) => user.id === auth_user_id)
+        );
+      }
+      return undefined;
+    },
+    async createChat() {
+      try {
+        const response = await axios.post(route("chat.store"), {
+          chat_mate_id: this.homework_detail.approved_collaboration.user.id,
+          homework_id: this.homework_detail.id,
+        });
+        this.chat = response.data;
+        this.homework_detail.chats = [response.data];
+        this.showChat();
       } catch (error) {
         console.log(error);
       }
