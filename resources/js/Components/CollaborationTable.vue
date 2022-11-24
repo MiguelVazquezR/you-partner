@@ -25,7 +25,7 @@
           <td class="px-3">
             <StatusIcon :status="collaboration.status" />
           </td>
-          <td class="pr-5">
+          <td class="pr-10">
             <Avatar :user="collaboration.homework.user" />
           </td>
           <td>
@@ -152,12 +152,22 @@
               >Abierto</span
             >
           </td>
-          <td v-if="collaboration.payment_released_at || collaboration.rate">
-            <div class="flex items-center" title="Cobrado">
+          <td>
+            <div class="flex items-center">
               <i
-                v-if="collaboration.payment_released_at.special"
-                title="Pago liberado"
+                v-if="collaboration.payed_at.special"
+                title="Pago realizado"
                 class="fa-solid fa-hand-holding-dollar text-green-600"
+              ></i>
+              <i
+                v-else-if="collaboration.bank_number"
+                title="Esperando pago"
+                class="fa-solid fa-hand-holding-dollar text-gray-500"
+              ></i>
+              <i
+                v-else-if="collaboration.payment_released_at.special"
+                class="fa-solid fa-unlock-keyhole text-green-600"
+                title="Pago liberado"
               ></i>
               <i
                 v-if="collaboration.rate"

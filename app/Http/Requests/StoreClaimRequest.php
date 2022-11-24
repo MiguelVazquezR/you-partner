@@ -13,7 +13,7 @@ class StoreClaimRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreClaimRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'collaboration_id' => 'required|numeric',
+            'description' => 'required|max:191',
         ];
     }
 }

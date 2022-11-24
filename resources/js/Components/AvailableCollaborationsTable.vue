@@ -5,7 +5,7 @@
       :filterURL="filterURL"
       class="mb-2 flex-1"
     />
-    <Pagination :pagination="homeworks" />
+    <!-- <Pagination :pagination="homeworks" /> -->
   </div>
   <div class="overflow-x-auto text-sm">
     <table v-if="homeworks.data.length" class="w-full whitespace-nowrap">
@@ -73,7 +73,6 @@ import Pagination from "@/Components/Pagination.vue";
 import Avatar from "@/Components/Avatar.vue";
 import InputSearch from "@/Components/Common/InputSearch.vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
 import DangerButton from "@/Jetstream/DangerButton.vue";
 import SecondaryButton from "@/Jetstream/SecondaryButton.vue";
 import StatusIcon from "@/Components/StatusIcon.vue";

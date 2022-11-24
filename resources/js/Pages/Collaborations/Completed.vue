@@ -64,25 +64,85 @@
             <p class="text-sm text-gray-500">
               {{ collaboration_detail.homework.description }}
             </p>
-            <span
-              v-if="collaboration_detail.payment_released_at.string"
-              class="
-                text-green-600 text-sm
-                px-2
-                rounded-md
-                bg-green-100
-                dark:text-green-900 dark:bg-green-500
-              "
-            >
-              Pago liberado
-            </span>
-            <p
-              v-if="collaboration_detail.payment_released_at.string"
-              class="text-green-600 text-xs"
-            >
-              (ve al botón "Acciones/Ingresar datos para depósito" para ingresar
-              los datos necessarios para hacerte el depósito)
-            </p>
+            <div class="mt-3" v-if="collaboration_detail.payed_at.string">
+              <span
+                class="
+                  text-green-600 text-sm
+                  px-2
+                  rounded-md
+                  bg-green-100
+                  dark:text-green-900 dark:bg-green-500
+                "
+              >
+                Pago realizado
+              </span>
+              <p
+                class="text-green-600 text-xs"
+              >
+               Te hemos enviado un correo con el comprobante del depósito.
+               Muchas gracias por tus colaboraciones
+               <i class="fa-regular fa-face-smile-beam m-1"></i>
+              </p>
+            </div>
+            <div class="mt-3" v-else-if="collaboration_detail.bank_number">
+              <span
+                class="
+                  text-yellow-600 text-sm
+                  px-2
+                  rounded-md
+                  bg-yellow-100
+                  dark:text-yellow-900 dark:bg-yellow-500
+                "
+              >
+                Pago en proceso
+              </span>
+              <p
+                class="text-yellow-600 text-xs"
+              >
+                Tu depósito se verá reflejado a más tardar 24 hrs después de ingresar tus
+                datos. <br>
+                Número de tarjeta: <strong>{{collaboration_detail.bank_number}}</strong><br>
+                Banco: <strong>{{collaboration_detail.bank_name}}</strong>
+              </p>
+            </div>
+            <div class="mt-3" v-else-if="collaboration_detail.payment_released_at.string">
+              <span
+                class="
+                  text-green-600 text-sm
+                  px-2
+                  rounded-md
+                  bg-green-100
+                  dark:text-green-900 dark:bg-green-500
+                "
+              >
+                Pago liberado
+              </span>
+              <p
+                class="text-green-600 text-xs"
+              >
+                (ve al botón "Acciones/Ingresar datos para depósito" para
+                ingresar los datos necessarios y hacerte el depósito)
+              </p>
+            </div>
+            <div class="mt-3" v-else>
+              <span
+                class="
+                  text-blue-600 text-sm
+                  px-2
+                  rounded-md
+                  bg-blue-100
+                  dark:text-blue-900 dark:bg-blue-500
+                "
+              >
+                Esperando liberación de pago
+              </span>
+              <p
+                class="text-blue-600 text-xs"
+              >
+                El propietario está revisando los resultados de tu colaboración para poder liberar
+                el pago. Si no lo libera en 48 hrs. Se liberará automáticamente
+              </p>
+            </div>
           </div>
         </div>
         <div class="mt-6">
@@ -156,7 +216,7 @@
             <span @click="prepairChat" class="dropup-link">Mensajes</span>
             <span
               @click="showPaymentForm"
-              v-if="collaboration_detail.payment_released_at.string"
+              v-if="collaboration_detail.payment_released_at.string && !collaboration_detail.bank_number"
               class="dropup-link"
               >Ingresar datos para depósito</span
             >
@@ -186,7 +246,11 @@
     </template>
     <template #content>
       <MessagesModal :chat="chat" v-if="show_chat" />
-      <PymentFormModal :collaboration="collaboration_detail" v-if="show_payment_form" @cancel="hideModal" />
+      <PymentFormModal
+        :collaboration="collaboration_detail"
+        v-if="show_payment_form"
+        @cancel="hideModal"
+      />
     </template>
     <template #footer></template>
   </DialogModal>

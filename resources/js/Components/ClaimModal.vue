@@ -1,11 +1,12 @@
 <template>
+  <ValidationErrors />
   <div class="container mt-2">
     <h1 class="text-justify text-red-500 font-bold text-xs">
       Antes de iniciar el reclamo, asegúrate de tener evidencias y explica bien
       tu inconformidad para poder evaluar con más rapidéz tu caso. Si nos
       percatamos de que la/el colaborador(a) hizo bien su trabajo pero quieres
-      sacar ventaja, se te pondrá un punto malo. Al acumular 3 puntos malos, se
-      suspenderá tu cuenta permanentemente.
+      sacar ventaja, se te amonestará e incluso se te podría suspender la cuenta
+      indefinidamente.
       <a
         :href="route('terms-of-service')"
         target="_blank"
@@ -28,38 +29,71 @@
       dark:bg-gray-900 dark:text-gray-100
     "
   >
-    <Avatar :user="collaborator" secondary_info="Colaborador" />
-
-    <div class="p-2 text-center border-b">
-      <textarea
-        class="input !h-28 w-full"
-        placeholder="Escribe un comentario"
-      ></textarea>
-    </div>
-    <div class="text-right mt-3">
-      <button class="btn-primary mr-2">Enviar</button>
-      <button @click="$emit('cancel')" class="btn-secondary">Cancelar</button>
-    </div>
+    <Avatar :user="collaboration.user" secondary_info="Colaborador" />
+    <form @submit.prevent="storeClaim">
+      <div class="p-2 text-center">
+        <textarea
+          v-model="form.description"
+          class="input !h-28 w-full"
+          placeholder="Escribe un comentario"
+        ></textarea>
+      </div>
+      <div class="p-2 border-b">
+        <Label class="dark:text-gray-300" value="Archivos o recursos testigo" />
+        <FileUploader @input="form.resources = $event.target.files" />
+      </div>
+      <div class="text-right mt-3">
+        <button class="btn-primary mx-2" v-if="!form.processing">
+          Enviar
+        </button>
+        <button class="btn-primary mr-2" disabled v-else>
+          Cargando...
+          <i class="fa-solid fa-circle-notch animate-spin ml-2"></i>
+        </button>
+        <button
+          type="button"
+          class="btn-secondary mx-2"
+          @click="$emit('cancel')"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
 import Avatar from "@/Components/Avatar.vue";
+import Label from "@/Jetstream/Label.vue";
+import ValidationErrors from "@/Jetstream/ValidationErrors.vue";
 import FileUploader from "@/Components/Common/FileUploader.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   data() {
-    return {};
+    const form = useForm({
+      description: null,
+      resources: null,
+      collaboration_id: this.collaboration.id,
+    });
+
+    return { form };
   },
-  emits: ['cancel'],
+  emits: ["cancel"],
+  methods: {
+    storeClaim() {
+      this.form.post(route("claims.store"));
+    },
+  },
   components: {
     Avatar,
     FileUploader,
+    Label,
+    ValidationErrors,
     Link,
   },
   props: {
-    collaborator: Object
+    collaboration: Object,
   },
 };
 </script>

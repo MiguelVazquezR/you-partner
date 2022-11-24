@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Claim;
 use App\Http\Requests\StoreClaimRequest;
 use App\Http\Requests\UpdateClaimRequest;
+use App\Notifications\Claims\NewClaimCreatedNotification;
 
 class ClaimController extends Controller
 {
@@ -12,7 +13,7 @@ class ClaimController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         //
@@ -36,7 +37,13 @@ class ClaimController extends Controller
      */
     public function store(StoreClaimRequest $request)
     {
-        //
+        $claim = Claim::create($request->validated());
+
+        $claim->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
+
+        $claim->collaboration->user->notify(new NewClaimCreatedNotification($claim->collaboration->homework->title));
+
+        return redirect()->route('homeworks.claims')->with('message', 'Se ha registrado el reclamo, haremos lo posible para solucionarlo');
     }
 
     /**
@@ -81,6 +88,7 @@ class ClaimController extends Controller
      */
     public function destroy(Claim $claim)
     {
-        //
+        $claim->delete();
+        return redirect()->route('homeworks.claims')->with('message', 'Se eliminó el reclamo');
     }
 }

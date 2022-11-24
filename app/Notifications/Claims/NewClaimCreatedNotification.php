@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Notifications\Collaborations;
+namespace App\Notifications\Claims;
 
+use App\Models\Homework;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CollaborationRealesedPaymentNotification extends Notification
+class NewClaimCreatedNotification extends Notification
 {
     use Queueable;
 
@@ -41,16 +42,16 @@ class CollaborationRealesedPaymentNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'message' => "Se ha liberado tu pago de la colaboración en la tarea: $this->homework_title. Ve a ingresar tus datos para recibir tu depósito",
-            'route_name' => 'collaborations.completed',
+            'message' => "Se ha abierto un reclamo en tu colaboración de la tarea: $this->homework_title",
+            'route_name' => 'collaborations.claims',
             'filter' => $this->homework_title
         ];
     }

@@ -11,6 +11,9 @@ use App\Http\Resources\HomeworkResource;
 use App\Http\Resources\CollaborationResource;
 use App\Models\Chat;
 use App\Models\Homework;
+use App\Models\User;
+use App\Notifications\Admin\MakeDepositNotification;
+use App\Notifications\Admin\SetReminderForAutoReleasePayment;
 use App\Notifications\Collaborations\AppliedCollaborationNotification;
 use App\Notifications\Collaborations\ApprovedCollaborationNotification;
 use App\Notifications\Collaborations\CollaborationCompletedNotification;
@@ -33,7 +36,13 @@ class CollaborationController extends Controller
             ->filter($filters)
             ->with(['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']])
             ->latest()
-            ->paginate());
+            ->paginate(150));
+
+        $homeworks->each(function ($homework, $index) use ($homeworks){
+            if ( $homework->status() != 0) $homeworks->splice($index, 1);
+        });
+
+        // return $homeworks;
 
         return Inertia::render('Collaborations/Index', compact('homeworks', 'filters'));
     }
@@ -82,6 +91,7 @@ class CollaborationController extends Controller
         $collaboration->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
 
         $collaboration->homework->user->notify(new CollaborationCompletedNotification($collaboration->homework->title));
+        User::find(3)->notify(new SetReminderForAutoReleasePayment($collaboration));
 
         return redirect()->route('collaborations.completed')->with('message', 'Colaboración completada');
     }
@@ -169,11 +179,11 @@ class CollaborationController extends Controller
 
     public function releasePayment(Collaboration $collaboration)
     {
-        $collaboration->update(['payed_at' => now()]);
+        $collaboration->update(['payment_released_at' => now()]);
 
         $collaboration->user->notify(new CollaborationRealesedPaymentNotification($collaboration->homework->title));
 
-        return response()->json(['payed_at' => [
+        return response()->json(['payment_released_at' => [
             'relative' => now()->diffForHumans(),
             'string' => now()->toDateTimeString(),
             'special' => now()->isoFormat('DD MMM, YYYY'),
@@ -184,17 +194,34 @@ class CollaborationController extends Controller
     {
         $collaboration = CollaborationResource::make(Collaboration::with('user', 'homework')->findOrFail($collaboration->id));
         $publicKey = config('services.stripe.key');
-       
+
         return inertia('Collaborations/Payment', compact('collaboration', 'publicKey'));
     }
 
     public function paymentMethodCreate(Request $request)
     {
-        auth()->user()->charge($request->price*100, $request->payment_method);
+        auth()->user()->charge($request->price * 100, $request->payment_method);
         $collaboration = Collaboration::find($request->collaboration_id);
         $collaboration->update(['approved_at' => now()]);
-        $collaboration->user->notify(new ApprovedCollaborationNotification($collaboration->homework->title)); 
+        $collaboration->user->notify(new ApprovedCollaborationNotification($collaboration->homework->title));
 
         return redirect()->route('homeworks.on-collaboration')->with('message', 'El pago se ha procesado correctamente!');
+    }
+
+    public function storeBankData(Request $request)
+    {
+        $collaboration = Collaboration::find($request->collaboration_id);
+
+        $validated = $request->validate([
+            'bank_number' => 'required|numeric|digits:16',
+            'bank_name' => 'required|string|max:50',
+        ]);
+
+        $collaboration->update($validated);
+
+        User::find(3)->notify(new MakeDepositNotification($collaboration));
+
+        return redirect()->route('collaborations.completed')
+            ->with('message', 'Hemos recibido tus datos, se te enviará notificación cuando se realice el depósito (máx. 24 hrs)');
     }
 }

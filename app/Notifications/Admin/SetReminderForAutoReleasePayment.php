@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Notifications\Collaborations;
+namespace App\Notifications\Admin;
 
+use App\Models\Collaboration;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CollaborationRealesedPaymentNotification extends Notification
+class SetReminderForAutoReleasePayment extends Notification
 {
     use Queueable;
 
@@ -16,7 +17,7 @@ class CollaborationRealesedPaymentNotification extends Notification
      *
      * @return void
      */
-    public function __construct(public $homework_title)
+    public function __construct(public Collaboration $collaboration)
     {
         //
     }
@@ -41,17 +42,17 @@ class CollaborationRealesedPaymentNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'message' => "Se ha liberado tu pago de la colaboración en la tarea: $this->homework_title. Ve a ingresar tus datos para recibir tu depósito",
-            'route_name' => 'collaborations.completed',
-            'filter' => $this->homework_title
+            'message' => "Poner recordatorio para liberar pago el " . now()->addDays(2) . " de la colaboración {$this->collaboration->id}",
+            'route_name' => 'dashboard',
+            'filter' => ''
         ];
     }
 
