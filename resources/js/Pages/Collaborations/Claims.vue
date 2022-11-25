@@ -156,7 +156,7 @@
               >Chatear con soporte</span
             >
             <span @click="prepairChat" class="dropup-link"
-              >Chatear con colaborador</span
+              >Chatear con duaño de tarea</span
             >
           </template>
         </DropupButton>
@@ -169,11 +169,11 @@
   <!-- Modal -->
   <DialogModal :show="dialog_modal" @close="hideModal">
     <template #title>
-      <div v-if="show_chat" class="font-bold text-gray-600">
-        Mensajes <br />
-        <span class="text-indigo-500 font-normal">
+      <div class="flex flex-col">
+        <div v-if="show_chat" class="font-bold text-gray-600">Chat</div>
+        <p class="text-indigo-500 font-normal text-sm">
           {{ collaboration_detail.homework.title }}
-        </span>
+        </p>
       </div>
     </template>
     <template #content>
@@ -202,7 +202,6 @@ export default {
       chat: null,
       dialog_modal: false,
       show_chat: false,
-      show_support_chat: false,
       show_send_homework: false,
       side_modal: false,
       show_confirmation: false,
@@ -268,6 +267,19 @@ export default {
         }
       }
     },
+    prepairSupportChat() {
+      const chat = this.searchChatwithSupport();
+      if (chat === undefined) {
+        this.createSupportChat();
+      } else {
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
+      }
+    },
     excludeMyMessages(messages) {
       return messages.filter(
         (message) => message.user.id !== this.$page.props.user.id
@@ -307,6 +319,28 @@ export default {
       try {
         const response = await axios.post(route("chat.store"), {
           chat_mate_id: this.collaboration_detail.user.id,
+          homework_id: this.collaboration_detail.homework.id,
+        });
+        this.chat = response.data;
+        this.collaboration_detail.homework.chats = [response.data];
+        this.showChat();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    searchChatwithSupport() {
+      const auth_user_id = this.$page.props.user.id;
+      if (this.collaboration_detail.homework.chats.length) {
+        return this.collaboration_detail.homework.chats.find((chat) =>
+          chat.users.some((user) => user.id === 3)
+        );
+      }
+      return undefined;
+    },
+    async createSupportChat() {
+      try {
+        const response = await axios.post(route("chat.store"), {
+          chat_mate_id: 3,
           homework_id: this.collaboration_detail.homework.id,
         });
         this.chat = response.data;

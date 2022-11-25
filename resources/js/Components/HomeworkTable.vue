@@ -60,6 +60,22 @@
               </p>
             </div>
           </td>
+          <td v-if="homework.status === 4" class="pl-2">
+            <div
+              class="flex items-center"
+              :class="
+                unreadSupportMessages(homework)
+                  ? 'text-indigo-500'
+                  : 'dark:text-gray-300 text-gray-600'
+              "
+              title="Mensajes de soporte"
+            >
+              <i class="fa-solid fa-headset"></i>
+              <p class="text-sm leading-none ml-2">
+                {{ messagesFromSingleChat(getSupportChat(homework)).length }}
+              </p>
+            </div>
+          </td>
           <td class="pl-2">
             <div
               class="flex items-center"
@@ -68,11 +84,14 @@
                   ? 'text-indigo-500'
                   : 'dark:text-gray-300 text-gray-600'
               "
-              title="Preguntas o comentarios"
+              title="Mensajes de colaborador(es)"
             >
               <i class="fa-solid fa-comment-dots"></i>
               <p class="text-sm leading-none ml-2">
-                {{ messagesFrom(homework).length }}
+                {{
+                  messagesFromMultipleChats(getChatsExcludingSupport(homework))
+                    .length
+                }}
               </p>
             </div>
           </td>
@@ -273,20 +292,44 @@ export default {
     showDetails(prop) {
       this.$emit("details", prop);
     },
-    messagesFrom(homework) {
+    messagesFromMultipleChats(chats) {
       let messages = [];
-      if (homework.chats.length) {
+
+      if (chats.length) {
         const user_id = this.$page.props.user.id;
-        homework.chats.forEach(function (chat) {
+        chats.forEach(function (chat) {
           chat.messages.forEach(function (message) {
             if (message.user.id != user_id) messages.push(message);
           });
         });
       }
+
+      return messages;
+    },
+    messagesFromSingleChat(chat) {
+      let messages = [];
+
+      if (chat != undefined) {
+        const user_id = this.$page.props.user.id;
+        chat.messages.forEach(function (message) {
+          if (message.user.id != user_id) messages.push(message);
+        });
+      }
+
       return messages;
     },
     unreadMessages(homework) {
-      const messages = this.messagesFrom(homework);
+      const messages = this.messagesFromMultipleChats(
+        this.getChatsExcludingSupport(homework)
+      );
+      if (messages.length) {
+        return messages.some((message) => !message.read_at.special);
+      }
+    },
+    unreadSupportMessages(homework) {
+      const messages = this.messagesFromSingleChat(
+        this.getSupportChat(homework)
+      );
       if (messages.length) {
         return messages.some((message) => !message.read_at.special);
       }
@@ -297,6 +340,16 @@ export default {
           (collaboration) => !collaboration.read_at.relative
         );
       }
+    },
+    getSupportChat(homework) {
+      return homework.chats.find(
+        (chat) => chat.users[0].id === 3 || chat.users[1].id === 3
+      );
+    },
+    getChatsExcludingSupport(homework) {
+      return homework.chats.filter(
+        (chat) => chat.users[0].id !== 3 && chat.users[1].id !== 3
+      );
     },
   },
 };
