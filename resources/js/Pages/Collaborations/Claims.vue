@@ -331,9 +331,8 @@ export default {
     searchChatwithSupport() {
       const auth_user_id = this.$page.props.user.id;
       if (this.collaboration_detail.homework.chats.length) {
-        return this.collaboration_detail.homework.chats.find((chat) =>
-          chat.users.some((user) => user.id === 3)
-        );
+        let support_chats = this.collaboration_detail.homework.chats.filter( chat => chat.users[0].id == 3 || chat.users[1].id == 3 );
+        return support_chats.find( chat => chat.users.some(user => user.id === auth_user_id) );
       }
       return undefined;
     },

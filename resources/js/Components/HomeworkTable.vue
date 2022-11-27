@@ -342,8 +342,12 @@ export default {
       }
     },
     getSupportChat(homework) {
-      return homework.chats.find(
+      const auth_user_id = this.$page.props.user.id;
+      let support_chats = homework.chats.filter(
         (chat) => chat.users[0].id === 3 || chat.users[1].id === 3
+      );
+      return support_chats.find((chat) =>
+        chat.users.some((user) => user.id === auth_user_id)
       );
     },
     getChatsExcludingSupport(homework) {

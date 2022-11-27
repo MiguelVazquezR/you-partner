@@ -210,9 +210,9 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import HomeworkTable from "@/Components/HomeworkTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
-import Avatar from "@/Components/Avatar.vue";
 import DialogModal from "@/Jetstream/DialogModal.vue";
 import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import Avatar from "@/Components/Avatar.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
@@ -366,10 +366,8 @@ export default {
     searchChatwithSupport() {
       const auth_user_id = this.$page.props.user.id;
       if (this.homework_detail.chats.length) {
-        console.log(this.homework_detail.chats.filter( chat => chat.users[0].id == 3 || chat.users[1].id == 3 ));
-        return this.homework_detail.chats.filter((chat) =>
-          chat.users.some((user) => user.id === 3)
-        );
+        let support_chats = this.homework_detail.chats.filter( chat => chat.users[0].id == 3 || chat.users[1].id == 3 );
+        return support_chats.find( chat => chat.users.some(user => user.id === auth_user_id) );
       }
       return undefined;
     },

@@ -8,10 +8,17 @@
         <tr
           v-for="claim in claims.data"
           :key="claim.id"
-          class="focus:outline-none h-16 border border-gray-100 bg-white rounded"
+          class="
+            focus:outline-none
+            h-16
+            border border-gray-100
+            bg-white
+            rounded
+          "
         >
           <td class="px-1 text-center">
-          <i class="fa-solid fa-circle-exclamation text-red-500 text-xl"></i></td>
+            <i class="fa-solid fa-circle-exclamation text-red-500 text-xl"></i>
+          </td>
           <td class="pr-5">
             <Avatar :user="claim.collaboration.homework.user" />
           </td>
@@ -51,7 +58,9 @@
           <td class="pl-2">
             <div class="flex items-center" title="Fecha de reclamo">
               <i class="fa-regular fa-calendar"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">{{ claim.created_at }}</p>
+              <p class="text-sm leading-none text-gray-600 ml-2">
+                {{ claim.created_at.special }}
+              </p>
             </div>
           </td>
           <td class="pl-2">
@@ -67,7 +76,7 @@
                 rounded
                 text-center
               "
-              v-if="claim.status=='Abierto'"
+              v-if="claim.status == 'Abierto'"
             >
               {{ claim.status }}
             </div>
@@ -90,7 +99,7 @@
           </td>
           <td class="pl-4">
             <button
-              @click="showDetails(claim)"
+              @click="showDetails(claim.collaboration.homework)"
               class="
                 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300
                 text-sm
@@ -128,6 +137,10 @@ import DangerButton from "@/Jetstream/DangerButton.vue";
 import SecondaryButton from "@/Jetstream/SecondaryButton.vue";
 
 export default {
+  data() {
+    return {};
+  },
+  emits: ["details"],
   components: {
     Pagination,
     Avatar,
@@ -140,6 +153,10 @@ export default {
   props: {
     claims: Object,
   },
-  methods: {},
+  methods: {
+    showDetails(prop) {
+      this.$emit("details", prop);
+    },
+  },
 };
 </script>

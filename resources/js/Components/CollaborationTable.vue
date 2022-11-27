@@ -131,33 +131,7 @@
               Límite: {{ collaboration.homework.limit_date }}
             </div>
           </td>
-          <td class="pl-2" v-if="collaboration.claim">
-            <span
-              v-if="collaboration.claim?.solution"
-              class="
-                rounded-full
-                px-2
-                py-1
-                dark:bg-green-500 dark:text-green-900
-                bg-green-100
-                text-green-600 text-xs
-              "
-              >Cerrado</span
-            >
-            <span
-              v-else
-              class="
-                rounded-full
-                px-2
-                py-px
-                dark:bg-red-500 dark:text-red-900
-                bg-red-100
-                text-red-600 text-xs
-              "
-              >Abierto</span
-            >
-          </td>
-          <td>
+          <td class="pl-4">
             <div class="flex items-center">
               <i
                 v-if="collaboration.payed_at.special"
@@ -182,6 +156,32 @@
                 <small>{{ collaboration.rate.stars }}</small>
               </i>
             </div>
+          </td>
+          <td v-if="collaboration.claim">
+            <span
+              v-if="collaboration.claim?.solution"
+              class="
+                rounded-full
+                px-2
+                py-1
+                dark:bg-green-500 dark:text-green-900
+                bg-green-100
+                text-green-600 text-xs
+              "
+              >Cerrado</span
+            >
+            <span
+              v-else
+              class="
+                rounded-full
+                px-2
+                py-px
+                dark:bg-red-500 dark:text-red-900
+                bg-red-100
+                text-red-600 text-xs
+              "
+              >Abierto</span
+            >
           </td>
           <td class="pl-4">
             <button
@@ -283,8 +283,12 @@ export default {
       }
     },
     getSupportChat(homework) {
-      return homework.chats.find(
+      const auth_user_id = this.$page.props.user.id;
+      let support_chats = homework.chats.filter(
         (chat) => chat.users[0].id === 3 || chat.users[1].id === 3
+      );
+      return support_chats.find((chat) =>
+        chat.users.some((user) => user.id === auth_user_id)
       );
     },
     getChatsExcludingSupport(homework) {
