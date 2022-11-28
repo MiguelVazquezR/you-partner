@@ -172,18 +172,16 @@
     <!-- Modal -->
     <DialogModal :show="dialog_modal" @close="hideModal">
       <template #title>
-        <div v-if="show_support_chat" class="font-bold text-gray-600">
-          Chat con soporte <br />
+        <div class="flex flex-col">
+          <div v-if="show_chat" class="font-bold text-gray-600">
+            Chat
+          </div>
+          <p class="text-indigo-500 font-normal text-sm">
+            {{ homework_detail.title }}
+          </p>
         </div>
-        <div v-if="show_chat" class="font-bold text-gray-600">
-          Chat con colaborador <br />
-        </div>
-        <span class="text-indigo-500 font-normal">
-          {{ homework_detail.title }}
-        </span>
       </template>
       <template #content>
-        <MessagesModal :chat="support_chat" v-if="show_support_chat" />
         <MessagesModal :chat="chat" v-if="show_chat" />
       </template>
       <template #footer></template>
@@ -212,10 +210,10 @@ import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import HomeworkTable from "@/Components/HomeworkTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
-import Avatar from "@/Components/Avatar.vue";
-import DialogModal from "@/Jetstream/DialogModal.vue";
 import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import Avatar from "@/Components/Avatar.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
+import DialogModal from "@/Jetstream/DialogModal.vue";
 import MessagesModal from "@/Components/MessagesModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
 import ClaimView from "@/Components/ClaimView.vue";
@@ -227,10 +225,8 @@ export default {
       side_modal: false,
       dialog_modal: false,
       show_confirmation: false,
-      show_support_chat: false,
       show_chat: false,
       chat: null,
-      support_chat: null,
       side_modal: false,
       tabs: [
         {
@@ -271,12 +267,13 @@ export default {
     filters: Object,
   },
   methods: {
-    showDetails() {
-      this.side_modal = true;
-    },
     showDetails(item) {
       this.homework_detail = item;
       this.side_modal = true;
+    },
+    showChat() {
+      this.show_chat = true;
+      this.dialog_modal = true;
     },
     deleteClaim() {
       try {
@@ -288,6 +285,101 @@ export default {
         );
         this.show_confirmation = false;
         this.side_modal = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    prepairChat() {
+      const chat = this.searchChatwithOwner();
+      if (chat === undefined) {
+        this.createChat();
+      } else {
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
+      }
+    },
+    prepairSupportChat() {
+      const chat = this.searchChatwithSupport();
+      if (chat === undefined) {
+        this.createSupportChat();
+      } else {
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
+      }
+    },
+    excludeMyMessages(messages) {
+      return messages.filter(
+        (message) => message.user.id !== this.$page.props.user.id
+      );
+    },
+    isAnyUnread(messages) {
+      if (messages.length) {
+        return this.excludeMyMessages(messages).some(
+          (message) => !message.read_at.special
+        );
+      }
+    },
+    markAsRead(chat) {
+      axios
+        .post(route("chat.read-message"), {
+          chat_id: chat.id,
+        })
+        .then((response) => {
+          this.homework_detail.chats = [response.data];
+          this.chat = response.data;
+          this.showChat();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    searchChatwithOwner() {
+      const auth_user_id = this.$page.props.user.id;
+      if (this.homework_detail.chats.length) {
+        return this.homework_detail.chats.find((chat) =>
+          chat.users.some((user) => user.id === auth_user_id)
+        );
+      }
+      return undefined;
+    },
+    async createChat() {
+      try {
+        const response = await axios.post(route("chat.store"), {
+          chat_mate_id: this.homework_detail.approved_collaboration.user.id,
+          homework_id: this.homework_detail.id,
+        });
+        this.chat = response.data;
+        this.homework_detail.chats = [response.data];
+        this.showChat();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    searchChatwithSupport() {
+      const auth_user_id = this.$page.props.user.id;
+      if (this.homework_detail.chats.length) {
+        let support_chats = this.homework_detail.chats.filter( chat => chat.users[0].id == 3 || chat.users[1].id == 3 );
+        return support_chats.find( chat => chat.users.some(user => user.id === auth_user_id) );
+      }
+      return undefined;
+    },
+    async createSupportChat() {
+      try {
+        const response = await axios.post(route("chat.store"), {
+          chat_mate_id: 3,
+          homework_id: this.homework_detail.id,
+        });
+        this.chat = response.data;
+        this.homework_detail.chats = [response.data];
+        this.showChat();
       } catch (error) {
         console.log(error);
       }

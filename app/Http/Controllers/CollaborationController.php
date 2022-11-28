@@ -18,6 +18,7 @@ use App\Notifications\Collaborations\AppliedCollaborationNotification;
 use App\Notifications\Collaborations\ApprovedCollaborationNotification;
 use App\Notifications\Collaborations\CollaborationCompletedNotification;
 use App\Notifications\Collaborations\CollaborationRealesedPaymentNotification;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -38,8 +39,8 @@ class CollaborationController extends Controller
             ->latest()
             ->paginate(150));
 
-        $homeworks->each(function ($homework, $index) use ($homeworks){
-            if ( $homework->status() != 0) $homeworks->splice($index, 1);
+        $homeworks->each(function ($homework, $index) use ($homeworks) {
+            if ($homework->status() != 0) $homeworks->splice($index, 1);
         });
 
         // return $homeworks;
@@ -200,12 +201,15 @@ class CollaborationController extends Controller
 
     public function paymentMethodCreate(Request $request)
     {
-        auth()->user()->charge($request->price * 100, $request->payment_method);
-        $collaboration = Collaboration::find($request->collaboration_id);
-        $collaboration->update(['approved_at' => now()]);
-        $collaboration->user->notify(new ApprovedCollaborationNotification($collaboration->homework->title));
-
-        return redirect()->route('homeworks.on-collaboration')->with('message', 'El pago se ha procesado correctamente!');
+        try {
+            auth()->user()->charge($request->price * 100, $request->payment_method);
+            $collaboration = Collaboration::find($request->collaboration_id);
+            $collaboration->update(['approved_at' => now()]);
+            $collaboration->user->notify(new ApprovedCollaborationNotification($collaboration->homework->title));
+            return redirect()->route('homeworks.on-collaboration')->with('message', 'El pago se ha procesado correctamente!');
+        } catch (Exception $e) {
+            return redirect()->route('homeworks.no-collaboration')->with('error', 'Ocurrió un error al procesar el pago. Puede ser por fondos insuficientes, CVC incorrecto, tarjeta caducada o número de la tarjeta incorrecto.');
+        }
     }
 
     public function storeBankData(Request $request)

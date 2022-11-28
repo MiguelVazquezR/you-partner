@@ -1,16 +1,27 @@
 <template>
   <AppLayout title="Mis colaboraciones">
-    <div class="bg-white transition-dark dark:bg-slate-900 py-4 md:py-7 px-4 md:px-8 xl:px-10">
+    <div
+      class="
+        bg-white
+        transition-dark
+        dark:bg-slate-900
+        py-4
+        md:py-7
+        px-4
+        md:px-8
+        xl:px-10
+      "
+    >
       <header class="flex bg-white dark:bg-slate-900 w-full">
         <Tabs :tabs="tabs" />
       </header>
       <div class="mt-12">
-      <CollaborationTable
-        :collaborations="collaborations"
-        :filters="filters"
-        filterURL="/collaborations/claims"
-        @details="showDetails"
-      />
+        <CollaborationTable
+          :collaborations="collaborations"
+          :filters="filters"
+          filterURL="/collaborations/claims"
+          @details="showDetails"
+        />
       </div>
     </div>
   </AppLayout>
@@ -37,7 +48,16 @@
             >
               Límite: {{ collaboration_detail.homework.limit_date }}
             </small>
-            <small class="text-xs px-2 rounded-md text-green-700 bg-green-100 dark:text-green-900 dark:bg-green-500">
+            <small
+              class="
+                text-xs
+                px-2
+                rounded-md
+                text-green-700
+                bg-green-100
+                dark:text-green-900 dark:bg-green-500
+              "
+            >
               Entregado: {{ collaboration_detail.completed_date }}
             </small>
           </div>
@@ -99,12 +119,26 @@
             <span class="mr-3">Reclamo</span>
             <span
               v-if="collaboration_detail.claim.solution"
-              class="rounded-full px-2 py-1 bg-green-100 text-green-600 text-xs dark:text-green-900 dark:bg-red-500"
+              class="
+                rounded-full
+                px-2
+                py-1
+                bg-green-100
+                text-green-600 text-xs
+                dark:text-green-900 dark:bg-red-500
+              "
               >Cerrado</span
             >
             <span
               v-else
-              class="rounded-full px-2 py-px bg-red-100 text-red-600 text-xs dark:text-black dark:bg-red-500"
+              class="
+                rounded-full
+                px-2
+                py-px
+                bg-red-100
+                text-red-600 text-xs
+                dark:text-black dark:bg-red-500
+              "
               >Abierto</span
             >
           </h1>
@@ -118,8 +152,11 @@
       <div class="flex">
         <DropupButton>
           <template #links>
-            <span @click="prepairChat" class="dropup-link"
+            <span @click="prepairSupportChat" class="dropup-link"
               >Chatear con soporte</span
+            >
+            <span @click="prepairChat" class="dropup-link"
+              >Chatear con propietario de tarea</span
             >
           </template>
         </DropupButton>
@@ -132,11 +169,11 @@
   <!-- Modal -->
   <DialogModal :show="dialog_modal" @close="hideModal">
     <template #title>
-      <div v-if="show_chat" class="font-bold text-gray-600">
-        Mensajes <br />
-        <span class="text-indigo-500 font-normal">
+      <div class="flex flex-col">
+        <div v-if="show_chat" class="font-bold text-gray-600">Chat</div>
+        <p class="text-indigo-500 font-normal text-sm">
           {{ collaboration_detail.homework.title }}
-        </span>
+        </p>
       </div>
     </template>
     <template #content>
@@ -162,7 +199,7 @@ export default {
   data() {
     return {
       collaboration_detail: {},
-      chat: {},
+      chat: null,
       dialog_modal: false,
       show_chat: false,
       show_send_homework: false,
@@ -213,24 +250,63 @@ export default {
       this.collaboration_detail = item;
       this.side_modal = true;
     },
-    prepairChat() {
-      const chat = this.searchChat();
-      if (chat === undefined) {
-        this.createChat();
-      } else {
-        this.chat = chat;
-        this.showChat();
-      }
-    },
     showChat() {
       this.show_chat = true;
       this.dialog_modal = true;
     },
-    showSendHomework() {
-      this.show_send_homework = true;
-      this.dialog_modal = true;
+    prepairChat() {
+      const chat = this.searchChatwithOwner();
+      if (chat === undefined) {
+        this.createChat();
+      } else {
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
+      }
     },
-    searchChat() {
+    prepairSupportChat() {
+      const chat = this.searchChatwithSupport();
+      if (chat === undefined) {
+        this.createSupportChat();
+      } else {
+        if (this.isAnyUnread(chat.messages)) {
+          this.markAsRead(chat);
+        } else {
+          this.chat = chat;
+          this.showChat();
+        }
+      }
+    },
+    excludeMyMessages(messages) {
+      return messages.filter(
+        (message) => message.user.id !== this.$page.props.user.id
+      );
+    },
+    isAnyUnread(messages) {
+      if (messages.length) {
+        return this.excludeMyMessages(messages).some(
+          (message) => !message.read_at.special
+        );
+      }
+    },
+    markAsRead(chat) {
+      axios
+        .post(route("chat.read-message"), {
+          chat_id: chat.id,
+        })
+        .then((response) => {
+          this.collaboration_detail.homework.chats = [response.data];
+          this.chat = response.data;
+          this.showChat();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    searchChatwithOwner() {
       const auth_user_id = this.$page.props.user.id;
       if (this.collaboration_detail.homework.chats.length) {
         return this.collaboration_detail.homework.chats.find((chat) =>
@@ -242,7 +318,28 @@ export default {
     async createChat() {
       try {
         const response = await axios.post(route("chat.store"), {
-          homework_owner_id: this.collaboration_detail.homework.user.id,
+          chat_mate_id: this.collaboration_detail.user.id,
+          homework_id: this.collaboration_detail.homework.id,
+        });
+        this.chat = response.data;
+        this.collaboration_detail.homework.chats = [response.data];
+        this.showChat();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    searchChatwithSupport() {
+      const auth_user_id = this.$page.props.user.id;
+      if (this.collaboration_detail.homework.chats.length) {
+        let support_chats = this.collaboration_detail.homework.chats.filter( chat => chat.users[0].id == 3 || chat.users[1].id == 3 );
+        return support_chats.find( chat => chat.users.some(user => user.id === auth_user_id) );
+      }
+      return undefined;
+    },
+    async createSupportChat() {
+      try {
+        const response = await axios.post(route("chat.store"), {
+          chat_mate_id: 3,
           homework_id: this.collaboration_detail.homework.id,
         });
         this.chat = response.data;
@@ -255,6 +352,7 @@ export default {
     hideModal() {
       this.show_send_homework = false;
       this.show_chat = false;
+      this.show_support_chat = false;
       this.dialog_modal = false;
     },
   },

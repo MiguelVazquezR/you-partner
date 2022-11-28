@@ -155,5 +155,6 @@ return [
         'is_error' => 'tipo de reporte',
         'bank_number' => 'número de tarjeta',
         'bank_name' => 'nombre de banco',
+        'limit_date' => 'fecha límite',
     ],
 ];

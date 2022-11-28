@@ -54,7 +54,26 @@
               </p>
             </div>
           </td>
-          <td v-if="!collaboration.claim" class="px-2">
+          <td v-if="collaboration.homework.status === 4" class="pl-2">
+            <div
+              class="flex items-center"
+              :class="
+                unreadSupportMessages(collaboration.homework)
+                  ? 'text-indigo-500'
+                  : 'dark:text-gray-300 text-gray-600'
+              "
+              title="Mensajes de soporte"
+            >
+              <i class="fa-solid fa-headset"></i>
+              <p class="text-sm leading-none ml-2">
+                {{
+                  messagesFromSingleChat(getSupportChat(collaboration.homework))
+                    .length
+                }}
+              </p>
+            </div>
+          </td>
+          <td class="pl-2">
             <div
               class="flex items-center"
               :class="
@@ -62,33 +81,19 @@
                   ? 'text-indigo-500'
                   : 'dark:text-gray-300 text-gray-600'
               "
-              title="Preguntas o comentarios"
+              title="Mensajes de colaborador(es)"
             >
               <i class="fa-solid fa-comment-dots"></i>
               <p class="text-sm leading-none ml-2">
-                {{ messagesFrom(collaboration.homework).length }}
+                {{
+                  messagesFromMultipleChats(
+                    getChatsExcludingSupport(collaboration.homework)
+                  ).length
+                }}
               </p>
             </div>
           </td>
-          <td v-else class="pl-2">
-            <div
-              class="flex items-center mr-2 dark:text-gray-300"
-              title="Mensajes de soporte"
-            >
-              <i class="fa-solid fa-headset"></i>
-              <p
-                class="
-                  text-sm
-                  leading-none
-                  dark:text-gray-300
-                  text-gray-600
-                  ml-2
-                "
-              >
-                0
-              </p>
-            </div>
-          </td>
+          <td class="pl-2"></td>
           <td>
             <div class="flex items-center dark:text-gray-300" title="Cobrado">
               <i class="fa-solid fa-dollar-sign"></i>
@@ -126,33 +131,7 @@
               Límite: {{ collaboration.homework.limit_date }}
             </div>
           </td>
-          <td class="pl-2" v-if="collaboration.claim">
-            <span
-              v-if="collaboration.claim?.solution"
-              class="
-                rounded-full
-                px-2
-                py-1
-                dark:bg-green-500 dark:text-green-900
-                bg-green-100
-                text-green-600 text-xs
-              "
-              >Cerrado</span
-            >
-            <span
-              v-else
-              class="
-                rounded-full
-                px-2
-                py-px
-                dark:bg-red-500 dark:text-red-900
-                bg-red-100
-                text-red-600 text-xs
-              "
-              >Abierto</span
-            >
-          </td>
-          <td>
+          <td class="pl-4">
             <div class="flex items-center">
               <i
                 v-if="collaboration.payed_at.special"
@@ -177,6 +156,32 @@
                 <small>{{ collaboration.rate.stars }}</small>
               </i>
             </div>
+          </td>
+          <td v-if="collaboration.claim">
+            <span
+              v-if="collaboration.claim?.solution"
+              class="
+                rounded-full
+                px-2
+                py-1
+                dark:bg-green-500 dark:text-green-900
+                bg-green-100
+                text-green-600 text-xs
+              "
+              >Cerrado</span
+            >
+            <span
+              v-else
+              class="
+                rounded-full
+                px-2
+                py-px
+                dark:bg-red-500 dark:text-red-900
+                bg-red-100
+                text-red-600 text-xs
+              "
+              >Abierto</span
+            >
           </td>
           <td class="pl-4">
             <button
@@ -235,23 +240,61 @@ export default {
     showDetails(item) {
       this.$emit("details", item);
     },
-    messagesFrom(homework) {
+    messagesFromMultipleChats(chats) {
       let messages = [];
-      if (homework.chats.length) {
+
+      if (chats.length) {
         const user_id = this.$page.props.user.id;
-        homework.chats.forEach(function (chat) {
+        chats.forEach(function (chat) {
           chat.messages.forEach(function (message) {
             if (message.user.id != user_id) messages.push(message);
           });
         });
       }
+
+      return messages;
+    },
+    messagesFromSingleChat(chat) {
+      let messages = [];
+
+      if (chat != undefined) {
+        const user_id = this.$page.props.user.id;
+        chat.messages.forEach(function (message) {
+          if (message.user.id != user_id) messages.push(message);
+        });
+      }
+
       return messages;
     },
     unreadMessages(homework) {
-      const messages = this.messagesFrom(homework);
+      const messages = this.messagesFromMultipleChats(
+        this.getChatsExcludingSupport(homework)
+      );
       if (messages.length) {
         return messages.some((message) => !message.read_at.special);
       }
+    },
+    unreadSupportMessages(homework) {
+      const messages = this.messagesFromSingleChat(
+        this.getSupportChat(homework)
+      );
+      if (messages.length) {
+        return messages.some((message) => !message.read_at.special);
+      }
+    },
+    getSupportChat(homework) {
+      const auth_user_id = this.$page.props.user.id;
+      let support_chats = homework.chats.filter(
+        (chat) => chat.users[0].id === 3 || chat.users[1].id === 3
+      );
+      return support_chats.find((chat) =>
+        chat.users.some((user) => user.id === auth_user_id)
+      );
+    },
+    getChatsExcludingSupport(homework) {
+      return homework.chats.filter(
+        (chat) => chat.users[0].id !== 3 && chat.users[1].id !== 3
+      );
     },
   },
 };

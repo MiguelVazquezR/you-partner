@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ClaimResource;
 use App\Http\Resources\ErrorReportResource;
 use App\Http\Resources\UserResource;
 use App\Models\Claim;
@@ -18,7 +19,7 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function finances()
     {
 
@@ -33,8 +34,7 @@ class AdminController extends Controller
 
     public function claims()
     {
-
-        $claims = Claim::with(['collaboration.homework' => ['schoolSubject', 'user']])->paginate();
+        $claims = ClaimResource::collection(Claim::with(['collaboration.homework' => ['chats' => ['users', 'messages.user'], 'schoolSubject', 'user']])->paginate());
         return Inertia::render('Admin/Claims', compact('claims'));
     }
 
@@ -48,7 +48,7 @@ class AdminController extends Controller
     {
 
         $users = User::with('level', 'collaborations')->paginate();
-        
+
         // return UserResource::collection($users);
         return Inertia::render('Admin/Users', [
             'users' => UserResource::collection($users)
@@ -58,20 +58,18 @@ class AdminController extends Controller
     public function errors(Request $request)
     {
         $filters = $request->all('search');
-        $errors = ErrorReportResource::collection(ErrorReportModel::
-            filter($filters)
+        $errors = ErrorReportResource::collection(ErrorReportModel::filter($filters)
             ->with('user')
             ->latest()
             ->paginate());
 
-            // return $errors;
+        // return $errors;
         return Inertia::render('Admin/Errors', compact('errors'));
-
     }
 
     // public function errors()
     // {
-        
+
     //     return 
     //     return Inertia::render('Admin/Errors');
     // }

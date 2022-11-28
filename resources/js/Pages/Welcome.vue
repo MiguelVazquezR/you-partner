@@ -12,7 +12,7 @@ defineProps({
 <template>
   <Head title="Bienvenido" />
   <div class="text-gray-800 antialiased">
-    <nav
+    <!-- <nav
       class="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3"
     >
       <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -28,7 +28,7 @@ defineProps({
             <i class="text-white fas fa-bars"></i>
           </button>
         </div>
-        <!-- <div
+        <div
           class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none hidden"
           id="example-collapse-navbar"
         >
@@ -76,9 +76,9 @@ defineProps({
             </li>
             <li class="flex items-center"></li>
           </ul>
-        </div> -->
+        </div>
       </div>
-    </nav>
+    </nav> -->
     <main>
       <div
         class="relative pt-16 pb-32 flex content-center items-center justify-center"

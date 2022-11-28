@@ -1,5 +1,5 @@
 .btn-primary {
-    @apply px-2 py-1 font-semibold border rounded border-indigo-500 text-indigo-500 hover:bg-indigo-500 disabled:border-gray-500 disabled:text-gray-500 hover:disabled:border-gray-500 hover:disabled:dark:bg-transparent hover:text-white transition duration-200;
+    @apply px-2 py-1 font-semibold border rounded border-indigo-500 text-indigo-500 hover:bg-indigo-500 disabled:border-gray-500 disabled:text-gray-500 hover:disabled:border-gray-500 hover:disabled:bg-transparent hover:disabled:dark:bg-transparent hover:text-white transition duration-200;
 }
 
 .btn-secondary {
