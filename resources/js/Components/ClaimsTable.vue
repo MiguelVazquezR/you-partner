@@ -29,7 +29,7 @@
               </p>
             </div>
           </td>
-          <td class="pl-2">
+          <td class="pl-3">
             <div class="flex items-center" title="Materia">
               <i class="fa-solid fa-tag"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
@@ -37,25 +37,53 @@
               </p>
             </div>
           </td>
-          <td class="pl-2">
-            <div class="flex items-center" title="Preguntas o comentarios">
-              <i class="fa-solid fa-comment-dots"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
+          <td class="pl-3">
+            <div
+              class="flex items-center"
+              :class="
+                unreadOwnerMessages(claim.collaboration.homework)
+                  ? 'text-indigo-500'
+                  : 'dark:text-gray-300 text-gray-600'
+              "
+              title="Mensajes de propietario de la tarea"
+            >
+              <i class="fa-solid fa-user-graduate"></i>
+              <p class="text-sm leading-none text-gray-600 ml-1">
+                {{
+                  messagesFromSingleChat(
+                    getOwnerChat(claim.collaboration.homework)
+                  ).length
+                }}
+              </p>
             </div>
           </td>
-          <td class="pl-2">
+          <td class="pl-3">
+            <div
+              class="flex items-center"
+              :class="
+                unreadCollaboratorMessages(claim.collaboration.homework)
+                  ? 'text-indigo-500'
+                  : 'dark:text-gray-300 text-gray-600'
+              "
+              title="Mensajes de colaborador"
+            >
+              <i class="fa-solid fa-user-tie"></i>
+              <p class="text-sm leading-none text-gray-600 ml-1">
+                {{
+                  messagesFromSingleChat(
+                    getCollaboratorChat(claim.collaboration.homework)
+                  ).length
+                }}
+              </p>
+            </div>
+          </td>
+          <td class="pl-3">
             <div class="flex items-center" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">0</p>
+              <p class="text-sm leading-none text-gray-600 ml-1">0</p>
             </div>
           </td>
-          <td class="pl-2">
-            <div class="flex items-center" title="Solicitudes de colaboración">
-              <i class="fa-solid fa-user"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">2</p>
-            </div>
-          </td>
-          <td class="pl-2">
+          <td class="pl-3">
             <div class="flex items-center" title="Fecha de reclamo">
               <i class="fa-regular fa-calendar"></i>
               <p class="text-sm leading-none text-gray-600 ml-2">
@@ -63,38 +91,32 @@
               </p>
             </div>
           </td>
-          <td class="pl-2">
+          <td class="pl-3">
             <div
               class="
-                py-3
-                px-3
-                text-sm
-                focus:outline-none
-                leading-none
-                text-red-700
+                rounded-full
+                px-2
+                py-px
+                dark:bg-red-300 dark:text-red-900
                 bg-red-100
-                rounded
-                text-center
+                text-red-600 text-xs
               "
-              v-if="claim.status == 'Abierto'"
+              v-if="!claim.solution"
             >
-              {{ claim.status }}
+              Abierto
             </div>
             <div
               class="
-                py-3
-                px-3
-                text-sm
-                focus:outline-none
-                leading-none
-                text-green-700
+                rounded-full
+                px-2
+                py-px
+                dark:bg-green-300 dark:text-green-900
                 bg-green-100
-                rounded
-                text-center
+                text-green-600 text-xs
               "
               v-else
             >
-              {{ claim.status }}
+              Cerrado
             </div>
           </td>
           <td class="pl-4">
@@ -156,6 +178,50 @@ export default {
   methods: {
     showDetails(prop) {
       this.$emit("details", prop);
+    },
+    messagesFromSingleChat(chat) {
+      let messages = [];
+
+      if (chat != undefined) {
+        const user_id = this.$page.props.user.id;
+        chat.messages.forEach(function (message) {
+          if (message.user.id != user_id) messages.push(message);
+        });
+      }
+
+      return messages;
+    },
+    unreadOwnerMessages(homework) {
+      const messages = this.messagesFromSingleChat(this.getOwnerChat(homework));
+      if (messages.length) {
+        return messages.some((message) => !message.read_at.special);
+      }
+    },
+    unreadCollaboratorMessages(homework) {
+      const messages = this.messagesFromSingleChat(
+        this.getCollaboratorChat(homework)
+      );
+      if (messages.length) {
+        return messages.some((message) => !message.read_at.special);
+      }
+    },
+    getOwnerChat(homework) {
+      let support_chats = homework.chats.filter(
+        (chat) => chat.users[0].id === 3 || chat.users[1].id === 3
+      );
+      return support_chats.find((chat) =>
+        chat.users.some((user) => user.id === homework.user.id)
+      );
+    },
+    getCollaboratorChat(homework) {
+      let support_chats = homework.chats.filter(
+        (chat) => chat.users[0].id === 3 || chat.users[1].id === 3
+      );
+      return support_chats.find((chat) =>
+        chat.users.some(
+          (user) => user.id === homework.approved_collaboration.user.id
+        )
+      );
     },
   },
 };

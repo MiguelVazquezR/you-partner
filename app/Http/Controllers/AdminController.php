@@ -34,7 +34,7 @@ class AdminController extends Controller
 
     public function claims()
     {
-        $claims = ClaimResource::collection(Claim::with(['collaboration.homework' => ['schoolSubject', 'user']])->paginate());
+        $claims = ClaimResource::collection(Claim::with(['collaboration.homework' => ['chats' => ['users', 'messages.user'], 'schoolSubject', 'user']])->paginate());
         return Inertia::render('Admin/Claims', compact('claims'));
     }
 

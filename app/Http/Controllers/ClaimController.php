@@ -6,6 +6,7 @@ use App\Models\Claim;
 use App\Http\Requests\StoreClaimRequest;
 use App\Http\Requests\UpdateClaimRequest;
 use App\Notifications\Claims\NewClaimCreatedNotification;
+use Illuminate\Http\Request;
 
 class ClaimController extends Controller
 {
@@ -68,16 +69,18 @@ class ClaimController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateClaimRequest  $request
-     * @param  \App\Models\Claim  $claim
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateClaimRequest $request, Claim $claim)
+    public function update(Request $request, Claim $claim)
     {
-        //
+        $validated = $request->validate([
+            'solution_details' => 'required',
+            'solution' => 'required|string|max:100',
+            'refund' => 'required|numeric|min:0',
+            'claim_id' => 'required|numeric|min:1',
+        ]);
+
+        $claim->update($validated + ['status' => 'Cerrado']);
+
+        return redirect()->route('admin.claims')->with('message', 'Se ha enviado la solución al reclamo');
     }
 
     /**

@@ -156,7 +156,7 @@
               >Chatear con soporte</span
             >
             <span @click="prepairChat" class="dropup-link"
-              >Chatear con duaño de tarea</span
+              >Chatear con propietario de tarea</span
             >
           </template>
         </DropupButton>

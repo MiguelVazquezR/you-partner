@@ -142,13 +142,13 @@
         <div class="flex">
           <DropupButton>
             <template #links>
-              <span @click="prepairSupportChat" class="dropup-link"
-                >Chatear con dueño de tarea</span
+              <span @click="prepairOwnerChat" class="dropup-link"
+                >Chatear con propietario de tarea</span
               >
-              <span @click="prepairChat" class="dropup-link"
+              <span @click="prepairCollaboratorChat" class="dropup-link"
                 >Chatear con colaborador</span
               >
-              <span @click="show_confirmation = true" class="dropup-link"
+              <span v-if="!homework_detail.approved_collaboration.claim.solution" @click="showSolutionModal" class="dropup-link"
                 >Solucionar</span
               >
             </template>
@@ -159,6 +159,29 @@
         </div>
       </template>
     </DetailsModal>
+    <DialogModal :show="dialog_modal" @close="hideModal">
+      <template #title>
+        <div class="flex flex-col">
+          <div v-if="show_chat" class="font-bold text-gray-600">Chat</div>
+          <div v-if="show_solution_modal" class="font-bold text-gray-600">
+            Solución <br />
+          </div>
+          <p class="text-indigo-500 font-normal text-sm">
+            {{ homework_detail.title }}
+          </p>
+        </div>
+      </template>
+      <template #content>
+        <MessagesModal :chat="chat" v-if="show_chat" />
+        <SolutionModal
+          :claim="homework_detail.approved_collaboration.claim"
+          :price="homework_detail.approved_collaboration.price"
+          v-if="show_solution_modal"
+          @cancel="hideModal"
+        />
+      </template>
+      <template #footer></template>
+    </DialogModal>
   </AppLayout>
 </template>
 
@@ -172,6 +195,9 @@ import DropupButton from "@/Components/DropupButton.vue";
 import Avatar from "@/Components/Avatar.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
 import ClaimView from "@/Components/ClaimView.vue";
+import DialogModal from "@/Jetstream/DialogModal.vue";
+import MessagesModal from "@/Components/MessagesModal.vue";
+import SolutionModal from "@/Components/SolutionModal.vue";
 
 export default {
   data() {
@@ -179,8 +205,10 @@ export default {
       homework_detail: {},
       side_modal: false,
       show_chat: false,
+      show_solution_modal: false,
       chat: null,
       side_modal: false,
+      dialog_modal: false,
       tabs: [
         {
           label: "Finanzas",
@@ -218,6 +246,9 @@ export default {
     Avatar,
     AttachedFile,
     ClaimView,
+    DialogModal,
+    MessagesModal,
+    SolutionModal,
   },
   props: {
     claims: Object,
@@ -231,10 +262,14 @@ export default {
       this.show_chat = true;
       this.dialog_modal = true;
     },
+    showSolutionModal() {
+      this.show_solution_modal = true;
+      this.dialog_modal = true;
+    },
     prepairOwnerChat() {
       const chat = this.searchChatwithOwner();
       if (chat === undefined) {
-        this.createChat();
+        this.createChat(this.homework_detail.user.id);
       } else {
         if (this.isAnyUnread(chat.messages)) {
           this.markAsRead(chat);
@@ -245,9 +280,9 @@ export default {
       }
     },
     prepairCollaboratorChat() {
-      const chat = this.searchChatwithSupport();
+      const chat = this.searchChatwithCollaborator();
       if (chat === undefined) {
-        this.createSupportChat();
+        this.createChat(this.homework_detail.approved_collaboration.user.id);
       } else {
         if (this.isAnyUnread(chat.messages)) {
           this.markAsRead(chat);
@@ -284,26 +319,15 @@ export default {
         });
     },
     searchChatwithOwner() {
-      const auth_user_id = this.$page.props.user.id;
       if (this.homework_detail.chats.length) {
-        return this.homework_detail.chats.find((chat) =>
-          chat.users.some((user) => user.id === auth_user_id)
+        let support_chats = this.homework_detail.chats.filter(
+          (chat) => chat.users[0].id == 3 || chat.users[1].id == 3
+        );
+        return support_chats.find((chat) =>
+          chat.users.some((user) => user.id === this.homework_detail.user.id)
         );
       }
       return undefined;
-    },
-    async createChat() {
-      try {
-        const response = await axios.post(route("chat.store"), {
-          chat_mate_id: this.homework_detail.approved_collaboration.user.id,
-          homework_id: this.homework_detail.id,
-        });
-        this.chat = response.data;
-        this.homework_detail.chats = [response.data];
-        this.showChat();
-      } catch (error) {
-        console.log(error);
-      }
     },
     searchChatwithCollaborator() {
       const auth_user_id = this.$page.props.user.id;
@@ -312,7 +336,10 @@ export default {
           (chat) => chat.users[0].id == 3 || chat.users[1].id == 3
         );
         return support_chats.find((chat) =>
-          chat.users.some((user) => user.id === auth_user_id)
+          chat.users.some(
+            (user) =>
+              user.id === this.homework_detail.approved_collaboration.user.id
+          )
         );
       }
       return undefined;
@@ -331,8 +358,8 @@ export default {
       }
     },
     hideModal() {
-      this.show_support_chat = false;
       this.show_chat = false;
+      this.show_solution_modal = false;
       this.dialog_modal = false;
     },
   },
