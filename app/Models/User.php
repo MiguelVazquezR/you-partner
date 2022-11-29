@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ClaimResource;
+use App\Http\Resources\CollaborationResource;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -134,11 +136,22 @@ class User extends Authenticatable
 
     public function totalEarnings()
     {
-        $collaborations = $this->collaborations()->get();
-        $payed = $collaborations->filter(fn ($item) => $item->payed_at)->sum('price');
-        $refund = Claim::whereHas('collaboration', function ($q) {
-            $q->where('user_id', $this->id);
-        })->get('refund')->sum('refund');
+        $payed = $this->collaborations
+            ->filter(fn ($item) => $item->payed_at)
+            ->sum(function ($collaboration_payed) {
+                $net_pay = $collaboration_payed->price * (1 - ($collaboration_payed->tax / 100));
+                return $net_pay;
+            });
+
+        $refund = Claim::whereNotNull('solution')
+            ->whereHas('collaboration', function ($q) {
+                $q->where('user_id', $this->id);
+            })
+            ->get()
+            ->sum(function ($claim_solved) {
+                $refunded = $claim_solved->collaboration->netPrice() * ($claim_solved->refund / 100);
+                return $refunded;
+            });
 
         return number_format(($payed - $refund), 2);
     }

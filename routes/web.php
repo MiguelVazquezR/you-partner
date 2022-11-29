@@ -85,10 +85,10 @@ Route::get('/library', [LibraryController::class,'index'])->name('library.index'
 
 
 Route::get('/profile/{user}', function ($user_id){
-    $user = User::with('collaborations', 'homeworks')->find($user_id);
-    $user = new UserResource($user);
+    $user_ = User::with('collaborations', 'homeworks')->find($user_id);
+    $user_ = new UserResource($user_);
     // return $user;
-    return Inertia::render('ProfileUser', compact('user'));
+    return Inertia::render('ProfileUser', ['user' => $user_]);
 })->name('profile-view');
 
 Route::get('/privacy-policy', function (){

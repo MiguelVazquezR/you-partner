@@ -95,18 +95,27 @@
           </td>
           <td class="pl-2"></td>
           <td>
-            <div class="flex items-center dark:text-gray-300" title="Cobrado">
+            <div
+              class="flex items-center dark:text-gray-300"
+              :title="
+                'Por cobrar $' +
+                collaboration.price +
+                ' - ' +
+                collaboration.tax +
+                '% de comisión'
+              "
+            >
               <i class="fa-solid fa-dollar-sign"></i>
               <p class="text-sm leading-none dark:text-gray-300 text-gray-600">
-                {{ collaboration.price }} MXN
+                {{ collaboration.net_price }} MXN
               </p>
             </div>
           </td>
           <td v-if="collaboration.claim?.refund" class="pl-2">
-            <div class="flex items-center text-red-700" title="Penalizado">
+            <div class="flex items-center text-red-700" :title="'Penalizado ' + collaboration.claim.refund + '%'">
               -<i class="fa-solid fa-dollar-sign"></i>
               <p class="text-sm leading-none">
-                {{ collaboration.claim.refund }} MXN
+                {{ (collaboration.claim.refund / 100) * collaboration.net_price }} MXN
               </p>
             </div>
           </td>
@@ -293,7 +302,7 @@ export default {
     },
     getChatsExcludingSupport(homework) {
       return homework.chats.filter(
-        (chat) => chat.users[0].id !== 3 && chat.users[1].id !== 3
+        (chat) => chat.users[0]?.id !== 3 && chat.users[1]?.id !== 3
       );
     },
   },

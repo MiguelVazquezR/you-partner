@@ -17,6 +17,7 @@ class CollaborationResource extends JsonResource
         return [
             'id' => $this->id,
             'price' => $this->price,
+            'net_price' => $this->netPrice(),
             'tax' => $this->tax,
             'promise_date' => $this->promise_date?->isoFormat('DD MMM, YYYY'),
             'completed_date' => $this->completed_date?->isoFormat('DD MMM, YYYY'),

@@ -69,6 +69,11 @@ class Collaboration extends Model implements HasMedia
         elseif ($this->claim?->count()) return 4; //claim
         else return 3; //complete
     }
+    
+    public function netPrice()
+    {
+        return $this->price * (1 - ($this->tax / 100));
+    }
 
     // query scopes
     public function scopeFilter($query, $filters)

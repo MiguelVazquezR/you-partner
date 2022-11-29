@@ -18,6 +18,7 @@ class ClaimResource extends JsonResource
             'id' => $this->id,
             'status' => $this->status,
             'refund' => $this->refund,
+            'refund_money' => $this->collaboration->netPrice() * ($this->refund / 100),
             'collaboration' => CollaborationResource::make($this->whenLoaded('collaboration')),
             'description' => $this->description,
             'solution_details' => $this->solution_details,
