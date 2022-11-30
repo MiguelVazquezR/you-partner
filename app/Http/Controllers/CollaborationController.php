@@ -17,6 +17,7 @@ use App\Notifications\Admin\SetReminderForAutoReleasePayment;
 use App\Notifications\Collaborations\AppliedCollaborationNotification;
 use App\Notifications\Collaborations\ApprovedCollaborationNotification;
 use App\Notifications\Collaborations\CollaborationCompletedNotification;
+use App\Notifications\Collaborations\CollaborationPayedNotification;
 use App\Notifications\Collaborations\CollaborationRealesedPaymentNotification;
 use Exception;
 use Illuminate\Http\Request;
@@ -34,8 +35,9 @@ class CollaborationController extends Controller
         $exclude_if_i_applied_to_collaborate = true;
         $filters = $request->all('search');
         $homeworks = HomeworkResource::collection(Homework::noCollaborationApproved($exclude_if_i_applied_to_collaborate)
-            ->where('user_id', '!=', auth()->id())
-            ->filter($filters)
+        ->whereDate('limit_date', '>=', today())
+        ->where('user_id', '!=', auth()->id())
+        ->filter($filters)
             ->with(['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']])
             ->latest()
             ->paginate(150));
@@ -229,4 +231,17 @@ class CollaborationController extends Controller
         return redirect()->route('collaborations.completed')
             ->with('message', 'Hemos recibido tus datos, se te enviará notificación cuando se realice el depósito (máx. 24 hrs)');
     }
+    
+    public function payed(Request $request)
+    {
+        $collaboration = Collaboration::find($request->collaboration_id);
+
+        $collaboration->update(['payed_at' => now()]);
+
+        $collaboration->user->notify(new CollaborationPayedNotification($collaboration->homework->title));
+
+        return redirect()->route('admin.collaborations')
+            ->with('message', 'Se ha marcado como pagada la colaboración. No olvides mandar correo al colaborador');
+    }
+
 }

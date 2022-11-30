@@ -124,12 +124,18 @@ class User extends Authenticatable
     public function monthlyEarnings($month)
     {
         $collaborations = $this->collaborations()->get();
-        $payed_month = $collaborations->filter(fn ($item) => $item->completed_date?->month == $month && $item->payed_at)->sum('price');
+        $payed_month = $collaborations->filter(fn ($item) => $item->completed_date?->month == $month && $item->payed_at)->sum(function ($item) {
+            return $item->netPrice();
+        });
         $refund_month = Claim::whereHas('collaboration', function ($q) {
             $q->where('user_id', $this->id);
         })
             ->whereMonth('created_at', $month)
-            ->get('refund')->sum('refund');
+            ->get()
+            ->sum(function ($claim_solved) {
+                $refunded = $claim_solved->collaboration->netPrice() * ($claim_solved->refund / 100);
+                return $refunded;
+            });
 
         return number_format(($payed_month - $refund_month), 2);
     }
@@ -164,7 +170,10 @@ class User extends Authenticatable
 
     public function moneyLocked()
     {
-        $total = $this->collaborationsWithMoneyLocked()->sum('price');
+        $total = $this->collaborationsWithMoneyLocked()->sum(function ($item) {
+            return $item->netPrice();
+        });
+
         return number_format($total, 2);
     }
 

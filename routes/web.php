@@ -66,6 +66,7 @@ Route::put('/collaborations/release-payment/{collaboration}', [CollaborationCont
 Route::get('collaboration/{collaboration}/payment', [CollaborationController::class, 'payment'])->middleware('auth')->name('payment');
 Route::post('collaboration/payment-method-create', [CollaborationController::class, 'paymentMethodCreate'])->middleware('auth')->name('collaborations.payment-method.create');
 Route::post('collaboration/store-bank-data', [CollaborationController::class, 'storeBankData'])->middleware('auth')->name('collaborations.store-bank-data');
+Route::post('collaboration/payed', [CollaborationController::class, 'payed'])->middleware('auth')->name('collaborations.payed');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');
@@ -78,6 +79,7 @@ Route::get('/admin/claims', [AdminController::class,'claims'])->name('admin.clai
 Route::get('/admin/notifications', [AdminController::class,'notifications'])->name('admin.notifications');
 Route::get('/admin/users', [AdminController::class,'users'])->name('admin.users');
 Route::get('/admin/errors', [AdminController::class,'errors'])->name('admin.errors');
+Route::get('/admin/collaborations', [AdminController::class,'collaborations'])->name('admin.collaborations');
 
 Route::resource('/claims', ClaimController::class)->except('show');
 
