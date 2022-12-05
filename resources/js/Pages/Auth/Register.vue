@@ -82,6 +82,7 @@ const grades = [
   "Programador apps móviles",
   "Química",
   "Robótica",
+  "Recursos Humanos",
   "Transporte",
   "Telecomunicaciones",
   "Textil",
@@ -173,6 +174,7 @@ const submit = () => {
             rounded-md
             shadow-sm
             placeholder:text-gray-400 placeholder:text-sm
+            input
           "
           required
         >
@@ -184,7 +186,7 @@ const submit = () => {
       </div>
 
       <div class="mt-1">
-        <JetLabel for="academic_grade" value="Grado Académico" is_required />
+        <JetLabel for="academic_grade" value="Área de Especialidad" is_required />
         <select
           name="academic_grade"
           v-model="form.academic_grade"
@@ -201,6 +203,7 @@ const submit = () => {
             rounded-md
             shadow-sm
             placeholder:text-gray-400 placeholder:text-sm
+            input
           "
           required
         >
@@ -230,6 +233,7 @@ const submit = () => {
             rounded-md
             shadow-sm
             placeholder:text-gray-400 placeholder:text-sm
+            input
           "
         />
       </div>

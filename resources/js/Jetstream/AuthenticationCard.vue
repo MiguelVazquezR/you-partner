@@ -23,7 +23,7 @@
         <JetApplicationMark class="w-1/2" />
       </div>
       <div
-        class="w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-900 shadow-md overflow-hidden sm:rounded-lg border-2 border-indigo-400"
+        class="w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-900 shadow-lg shadow-indigo-700/100 overflow-hidden rounded-lg border-2 border-indigo-400"
       >
         <slot />
       </div>

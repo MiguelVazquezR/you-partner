@@ -95,17 +95,17 @@ defineProps({
             <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
               <div class="pr-12">
                 <h1 class="text-white font-semibold text-5xl">
-                  ¡Con tu ayuda lo lograremos!
+                  ¡Forma parte de nuestro grupo estudiantil!
                 </h1>
                 <p class="mt-4 text-lg text-gray-300">
-                  ¡Colabora con la comunidad y aprendamos juntos! <br />
-                  Aprovecha el tiempo libre para apoyar a los demás generando ganancias.
+                  Colabora con la comunidad. <br />
+                  Aprovecha el tiempo libre y tus conocimientos para apoyar a los demás generando ganancias!
                 </p>
                 <br /><br />
                 <div>
                   <Link
                     :href="route('login')"
-                    class="text-lg text-white font-bold mr-2 hover:text-gray-300"
+                    class="text-xl text-cyan-600 font-extrabold mr-2 hover:text-cyan-400"
                   >
                     Ingresar
                     
@@ -115,7 +115,7 @@ defineProps({
                 <div>
                   <Link
                     :href="route('register')"
-                    class="text-lg text-white font-bold mr-2 hover:text-gray-300"
+                    class="text-xl text-cyan-600 font-extrabold mr-2 hover:text-cyan-400"
                   >
                     Crear una cuenta
                     
@@ -198,7 +198,7 @@ defineProps({
                   <h6 class="text-xl font-semibold">Seguridad</h6>
                   <p class="mt-2 mb-4 text-gray-600">
                     Tu información estará siempre bien protegida y no se tolerará ninguna
-                    falta de respeto hacia la comunidad.
+                    falta de respeto hacia los integrantes de la comunidad.
                   </p>
                 </div>
               </div>
@@ -302,7 +302,7 @@ defineProps({
                 </div>
                 <h3 class="text-3xl font-semibold">Genera rendimientos desde casa</h3>
                 <p class="mt-4 text-lg leading-relaxed text-gray-600">
-                  Genera rendimientos desde la comodidad de tu casa dedicandoel tiempo que
+                  Genera rendimientos desde la comodidad de tu casa dedicando el tiempo que
                   tengas disponible ayudando a la comunidad con sus actividades
                   académicas. <br />
                   ¿Cómo funciona?
@@ -385,11 +385,11 @@ defineProps({
               <div class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
                 En Youpartner Puedes conocer gente del sector estudiantil de todo México e
                 interactuar con ellos. Puedes brindar ayuda con tus conocimientos de
-                cualquier materia y/o pedir apoyp a la comunidad con cualquier actividad
-                que tengas y así aprender todos en colaboración.
+                cualquier materia y/o pedir apoyo a la comunidad con cualquier actividad
+                que tengas.
                 <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
                   Además puedes generar ingresos con tus colaboraciones desde tu casa!
-                  Regístrate totalmente gratis, sé parte de nuestra sociedad y comienza a
+                  Regístrate totalmente gratis. Sé parte de nuestra sociedad y comienza a
                   colaborar!
                 </p>
               </div>
@@ -414,6 +414,10 @@ defineProps({
                 <i class="fa-regular fa-file-powerpoint text-white text-2xl"></i>
                 <h6 class="text-xl mt-5 font-semibold text-white">Presentaciones</h6>
               </div>
+              <div class="w-full lg:w-3/12 px-4 text-center">
+                <i class="fa-solid fa-circle-info text-white text-2xl"></i>
+                <h6 class="text-xl mt-5 font-semibold text-white">Asesorías</h6>
+              </div>
             </div>
           </div>
           <!-- ------------------------------------------------------------------------>
@@ -425,7 +429,7 @@ defineProps({
                 >
                   <i class="fa-solid fa-right-to-bracket"></i>
                 </div>
-                Ingresa y Colabora!
+                Ingresa y Colabora
               </Link>
             </div>
             <div class="w-full lg:w-6/12 px-4 text-center">
@@ -438,7 +442,7 @@ defineProps({
                 >
                   <i class="fa-solid fa-user-plus"></i>
                 </div>
-                Registrate Ahora!
+                Registrate Ahora
               </Link>
             </div>
           </div>
@@ -547,12 +551,12 @@ defineProps({
                     </Link>
                   </li>
                   <li>
-                    <Link
+                    <!-- <Link
                       :href="route('contact')"
                       class="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm hover:underline"
                     >
                       Contáctanos
-                    </Link>
+                    </Link> -->
                   </li>
                 </ul>
               </div>

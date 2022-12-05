@@ -35,9 +35,9 @@ import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
           </h1>
           <p class="text-justify">
             <h2 class="text-indigo-500 font-semibold my-2">Información general</h2>
-            Este sitio web es operado por You partner. En todo el sitio, los términos
-            “nosotros”, “nos” y “nuestro” se refieren a You partner con nombre
-            comercial You partner ofrece este sitio web, incluyendo toda la
+            Este sitio web es operado por YouPartner. En todo el sitio, los términos
+            “nosotros”, “nos” y “nuestro” se refieren a YouPartner con nombre
+            comercial YouPartner ofrece este sitio web, incluyendo toda la
             información, herramientas y servicios disponibles para ti en este
             sitio, el usuario, está condicionado a la aceptación de todos los
             términos, condiciones, políticas y notificaciones aquí establecidos.
@@ -137,10 +137,10 @@ import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
             este sitio es nulo donde esté prohibido. No garantizamos que la
             calidad de los productos, servicios, información u otro material
             comprado u obtenido por ti cumpla con tus expectativas, o que
-            cualquier error en el Servicio será corregido. You partner se
-            compromete a proporcionar los mejores productos o servicios que cumpla con
-            nuestros estándares de aseo de la moda, así como cumplir con la más
-            alta seguridad de la salud y los requisitos reglamentarios
+            cualquier error en el Servicio será corregido. YouPartner se
+            compromete a proporcionar los mejores productos y/o servicios que cumpla con
+            nuestros estándares de calidad, así como cumplir con la más
+            alta seguridad y los requisitos reglamentarios
             aplicables relacionados. En el caso de que alguno de nuestros
             productos o servicios no cumpla con los más altos estándares, no nos hacemos
             responsables de los daños resultantes de la falta de uso o defecto
@@ -296,7 +296,7 @@ import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
             de ningún tipo, ya sea expresa o implícita, incluidas todas las
             garantías o condiciones implícitas de comercialización, calidad
             comercializable, la aptitud para un propósito particular,
-            durabilidad, título y no infracción. En ningún caso You partner,
+            durabilidad, título y no infracción. En ningún caso YouPartner,
             nuestros directores, funcionarios, empleados, afiliados, agentes,
             contratistas, internos, proveedores, prestadores de servicios o
             licenciantes serán responsables por cualquier daño, pérdida,
@@ -321,7 +321,7 @@ import JetAuthenticationCardLogo from "@/Jetstream/AuthenticationCardLogo.vue";
             por la ley. 
             <h2 class="text-indigo-500 font-semibold my-2">Sección 14 – Indemnización</h2>
             Aceptas indemnizar, defender
-            y mantener indemne You partner y nuestras matrices, subsidiarias,
+            y mantener indemne YouPartner y nuestras matrices, subsidiarias,
             afiliados, socios, funcionarios, directores, agentes, contratistas,
             concesionarios, proveedores de servicios, subcontratistas,
             proveedores, internos y empleados, de cualquier reclamo o demanda,
