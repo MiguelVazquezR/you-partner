@@ -235,6 +235,7 @@ const submit = () => {
             placeholder:text-gray-400 placeholder:text-sm
             input
           "
+          placeholder="¿En qué escuela estás o de cual egresaste?"
         />
       </div>
 

@@ -8,7 +8,7 @@ config:
 hosts:
   youpartner:
     remote_user: root
-    hostname: xphere.com.mx
+    hostname: youpartner.xphere.com.mx
     deploy_path: '/var/www/{{hostname}}'
 
 tasks:

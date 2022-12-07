@@ -99,7 +99,7 @@ defineProps({
                 </h1>
                 <p class="mt-4 text-lg text-gray-300">
                   Colabora con la comunidad. <br />
-                  Aprovecha el tiempo libre y tus conocimientos para apoyar a los demás generando ganancias!
+                  Aprovecha el tiempo libre y tus conocimientos para apoyar a los demás generando ganancias
                 </p>
                 <br /><br />
                 <div>
@@ -212,21 +212,21 @@ defineProps({
                 <i class="fas fa-user-friends text-xl"></i>
               </div>
               <h3 class="text-3xl mb-2 font-semibold leading-normal">
-                Sé parte de nuestro colectivo de estudiantes!
+                Sé parte de nuestro colectivo de estudiantes
               </h3>
               <p class="text-lg font-light leading-relaxed mt-2 mb-4 text-gray-700">
-                Somos una red social integrada por estudiantes de diferentes escuelas de
+                Somos una red integrada por estudiantes de diferentes escuelas de
                 todo México que tiene como fin la colaboración de unos con otros mientras
-                generas ganacias por tu ayuda y aportes!
+                generas ganacias por tu ayuda y aportes
               </p>
               <p class="text-lg font-light leading-relaxed mt-0 mb-4 text-gray-700">
                 Sólo tienes que registrarte totalmente gratis e ingresar para comenzar a
-                pedir ayuda o colaborar con la comunidad!
+                pedir ayuda o colaborar con la comunidad
               </p>
               <Link
                 :href="route('register')"
                 class="font-bold text-teal-700 mt-8 text-2xl py-2 px-3 rouded hover:text-teal-500 underline"
-                >REGISTRATE!
+                >¡REGISTRATE!
               </Link>
             </div>
             <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
@@ -252,7 +252,7 @@ defineProps({
                     ></polygon>
                   </svg>
                   <h4 class="text-xl font-bold text-white">
-                    Colabora y obten beneficios!
+                    ¡Colabora y obten beneficios!
                   </h4>
                   <p class="text-md font-light mt-2 text-white">
                     Sube de nivel colaborando con la comunidad obten multiples beneficios
@@ -331,7 +331,7 @@ defineProps({
                       </div>
                       <div>
                         <h4 class="text-gray-600">
-                          Busca una tarea con la que puedas colaborar
+                          Busca y aplica a una tarea con la que puedas colaborar
                         </h4>
                       </div>
                     </div>
@@ -345,7 +345,7 @@ defineProps({
                         </span>
                       </div>
                       <div>
-                        <h4 class="text-gray-600">Gana dinero!</h4>
+                        <h4 class="text-gray-600">Espera la apobación de tu solicitud y genera ingresos</h4>
                       </div>
                     </div>
                   </li>
@@ -390,7 +390,7 @@ defineProps({
                 <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
                   Además puedes generar ingresos con tus colaboraciones desde tu casa!
                   Regístrate totalmente gratis. Sé parte de nuestra sociedad y comienza a
-                  colaborar!
+                  colaborar
                 </p>
               </div>
             </div>

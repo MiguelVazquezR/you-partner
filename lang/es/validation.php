@@ -156,5 +156,6 @@ return [
         'bank_number' => 'número de tarjeta',
         'bank_name' => 'nombre de banco',
         'limit_date' => 'fecha límite',
+        'terms' => 'Términos y condiciones',
     ],
 ];
