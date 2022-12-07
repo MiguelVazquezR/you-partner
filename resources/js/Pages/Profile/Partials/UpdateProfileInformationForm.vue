@@ -193,13 +193,13 @@ const clearPhotoFileInput = () => {
             <!--se unió -->
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="description" value="Se unió" />
-                <p class="mt-1">{{ props.user.created_at.split('T',[1]) }}</p> 
+                <p class="mt-1">{{ props.user.created_at.split('T',1)[0] }}</p> 
             </div>
 
             <!--Borthdate -->
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="birthdate" value="Cumpleaños" />
-                <p class="mt-1">{{ props.user.birthdate.split('T',[1])}}</p> 
+                <p class="mt-1">{{ props.user.birthdate.split('T',1)[0]}}</p> 
             </div>
 
             <!-- Email -->
@@ -215,21 +215,20 @@ const clearPhotoFileInput = () => {
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2">
-                        Your email address is unverified.
-
+                        <p class="text-red-400">Tu correo electrónico no está verificado</p>
                         <Link
                             :href="route('verification.send')"
                             method="post"
                             as="button"
-                            class="underline text-gray-600 hover:text-gray-900"
+                            class="underline text-gray-600 hover:text-gray-400"
                             @click.prevent="sendEmailVerification"
                         >
-                            Click here to re-send the verification email.
+                            Click aquí para reenviar link de verificación.
                         </Link>
                     </p>
 
                     <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600">
-                        A new verification link has been sent to your email address.
+                        Un nuevo link de verificación ha sido enviado al correo proporcionado.
                     </div>
                 </div>
             </div>

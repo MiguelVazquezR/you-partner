@@ -141,7 +141,6 @@ const submit = () => {
           type="date"
           class="mt-1 block w-full"
           required
-          autofocus
         />
       </div>
 

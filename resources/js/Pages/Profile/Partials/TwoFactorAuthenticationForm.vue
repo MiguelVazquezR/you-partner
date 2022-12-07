@@ -116,15 +116,15 @@ const disableTwoFactorAuthentication = () => {
 
         <template #content>
             <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium dark:text-gray-300 text-gray-900">
-                You have enabled two factor authentication.
+                Has activado la autenticación de dos factores
             </h3>
 
             <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium dark:text-gray-300 text-gray-900">
-                Ha habilitado la autenticación de dos factores.
+                Has habilitado la autenticación de dos factores.
             </h3>
 
             <h3 v-else class="text-lg font-medium text-gray-900 dark:text-gray-300">
-                No ha habilitado la autenticación de dos factores.
+                No has habilitado la autenticación de dos factores.
             </h3>
 
             <div class="mt-3 max-w-xl text-sm text-gray-600 dark:text-gray-500">
