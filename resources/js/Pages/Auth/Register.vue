@@ -141,7 +141,6 @@ const submit = () => {
           type="date"
           class="mt-1 block w-full"
           required
-          autofocus
         />
       </div>
 
@@ -235,6 +234,7 @@ const submit = () => {
             placeholder:text-gray-400 placeholder:text-sm
             input
           "
+          placeholder="¿En qué escuela estás o de cual egresaste?"
         />
       </div>
 

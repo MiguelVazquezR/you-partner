@@ -14,6 +14,8 @@ use App\Http\Controllers\RateController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -44,6 +46,22 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+// Route::get('/email/verify', function () {
+//     return view('auth.verify-email');
+// })->middleware('auth')->name('verification.notice');
+
+// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfill();
+ 
+//     return redirect('/dashboard');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
+
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
+ 
+//     return back()->with('message', 'Verification link sent!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::resource('/homeworks', HomeworkController::class)->except('index', 'show');
 Route::get('/homeworks/no-collaboration', [HomeworkController::class, 'noCollaboration'])->name('homeworks.no-collaboration');
@@ -86,12 +104,12 @@ Route::resource('/claims', ClaimController::class)->except('show');
 Route::get('/library', [LibraryController::class,'index'])->name('library.index');
 
 
-Route::get('/profile/{user}', function ($user_id){
-    $user_ = User::with('collaborations', 'homeworks')->find($user_id);
-    $user_ = new UserResource($user_);
-    // return $user;
-    return Inertia::render('ProfileUser', ['user' => $user_]);
-})->name('profile-view');
+// Route::get('/profile/{user}', function ($user_id){
+//     $user_ = User::with('collaborations', 'homeworks')->find($user_id);
+//     $user_ = new UserResource($user_);
+//     // return $user;
+//     return Inertia::render('ProfileUser', ['user' => $user_]);
+// })->name('profile-view');
 
 Route::get('/privacy-policy', function (){
     return Inertia::render('PrivacyPolicy');
@@ -107,10 +125,10 @@ Route::resource('chat', ChatController::class);
 Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
 Route::post('/chat/read-messages', [ChatController::class, 'readMessage'])->name('chat.read-message');
 
-Route::resource('rates', RateController::class)->middleware('auth');
+Route::resource('rates', RateController::class)->middleware(['auth', 'verified']);
 
 Route::resource('error-reports', ErrorReportController::class);
 Route::put('error-reports/mark-as-read/{error}', [ErrorReportController::class, 'markAsRead'])->name('error-reports.mark-as-read');
 
-Route::get('notifications/{user}', [NotificationController::class, 'all'])->middleware('auth')->name('notifications.all');
+Route::get('notifications/{user}', [NotificationController::class, 'all'])->middleware(['auth', 'verified'])->name('notifications.all');
 Route::post('notifications/{user}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');

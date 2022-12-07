@@ -32,7 +32,7 @@ defineProps({
           "
         >
           <h1 class="font-bold text-4xl text-center">Aviso de privacidad integral</h1>
-          YouPartner, portal de internet www.xphere.youpartner.com, es el responsable del uso y protección de sus
+          YouPartner, portal de internet www.youpartner.xphere.com, es el responsable del uso y protección de sus
           datos personales, y al respecto le informamos lo siguiente:
            <h2 class="text-indigo-500 font-semibold my-2">¿Para qué fines utilizaremos sus datos personales?</h2>
           Los datos personales que recabamos de usted, los utilizaremos para las siguientes finalidades
