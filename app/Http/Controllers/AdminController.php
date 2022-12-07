@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ClaimResource;
+use App\Http\Resources\CollaborationResource;
 use App\Http\Resources\ErrorReportResource;
 use App\Http\Resources\UserResource;
 use App\Models\Claim;
@@ -67,10 +68,11 @@ class AdminController extends Controller
         return Inertia::render('Admin/Errors', compact('errors'));
     }
 
-    // public function errors()
-    // {
-
-    //     return 
-    //     return Inertia::render('Admin/Errors');
-    // }
+    public function collaborations(Request $request)
+    {
+        $collaborations = CollaborationResource::collection(Collaboration::doesntHave('claim')
+            ->with(['homework' => ['schoolSubject', 'user'], 'user'])
+            ->paginate());
+        return Inertia::render('Admin/Collaborations', compact('collaborations'));
+    }
 }

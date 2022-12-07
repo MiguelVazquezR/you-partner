@@ -187,7 +187,6 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/inertia-vue3";
 import Tabs from "@/Components/Tabs.vue";
 import ClaimsTable from "@/Components/ClaimsTable.vue";
 import DetailsModal from "@/Components/DetailsModal.vue";
@@ -203,7 +202,6 @@ export default {
   data() {
     return {
       homework_detail: {},
-      side_modal: false,
       show_chat: false,
       show_solution_modal: false,
       chat: null,
@@ -217,6 +215,10 @@ export default {
         {
           label: "Configuraciones",
           url: "admin.configurations",
+        },
+        {
+          label: "Colaboraciones",
+          url: "admin.collaborations",
         },
         {
           label: "Reclamos",

@@ -59,7 +59,7 @@
                 title="Se unió el..."
               ></i>
               <span class="text-sm leading-none dark:text-gray-300 text-gray-600 ml-2">
-                {{ user.created_at }}
+                {{ user.created_at.string }}
               </span>
             </div>
           </td>
