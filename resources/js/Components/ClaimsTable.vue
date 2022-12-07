@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center py-1 mt-2">
     <Pagination :pagination="claims" />
   </div>
-  <div class="overflow-x-auto text-sm px-4">
+  <div class="overflow-x-auto text-sm px-4 dark:text-gray-300">
     <table v-if="claims.data.length" class="w-full whitespace-nowrap">
       <tbody>
         <tr
@@ -12,7 +12,7 @@
             focus:outline-none
             h-16
             border border-gray-100
-            bg-white
+            dark:border-slate-800
             rounded
           "
         >
@@ -24,7 +24,7 @@
           </td>
           <td>
             <div class="flex items-center pl-1">
-              <p class="font-medium leading-none text-gray-700 mr-2">
+              <p class="font-medium leading-none text-gray-700 mr-2 dark:text-gray-200">
                 {{ claim.collaboration.homework.title }}
               </p>
             </div>
@@ -32,7 +32,7 @@
           <td class="pl-3">
             <div class="flex items-center" title="Materia">
               <i class="fa-solid fa-tag"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
+              <p class="text-sm leading-none text-gray-600 ml-2 dark:text-gray-300">
                 {{ claim.collaboration.homework.school_subject.name }}
               </p>
             </div>
@@ -48,7 +48,7 @@
               title="Mensajes de propietario de la tarea"
             >
               <i class="fa-solid fa-user-graduate"></i>
-              <p class="text-sm leading-none text-gray-600 ml-1">
+              <p class="text-sm leading-none text-gray-600 ml-1 dark:text-gray-300">
                 {{
                   messagesFromSingleChat(
                     getOwnerChat(claim.collaboration.homework)
@@ -68,7 +68,7 @@
               title="Mensajes de colaborador"
             >
               <i class="fa-solid fa-user-tie"></i>
-              <p class="text-sm leading-none text-gray-600 ml-1">
+              <p class="text-sm leading-none text-gray-600 ml-1 dark:text-gray-300">
                 {{
                   messagesFromSingleChat(
                     getCollaboratorChat(claim.collaboration.homework)
@@ -80,13 +80,13 @@
           <td class="pl-3">
             <div class="flex items-center" title="Archivos adjuntos">
               <i class="fa-solid fa-paperclip"></i>
-              <p class="text-sm leading-none text-gray-600 ml-1">0</p>
+              <p class="text-sm leading-none text-gray-600 ml-1 dark:text-gray-300">0</p>
             </div>
           </td>
           <td class="pl-3">
             <div class="flex items-center" title="Fecha de reclamo">
               <i class="fa-regular fa-calendar"></i>
-              <p class="text-sm leading-none text-gray-600 ml-2">
+              <p class="text-sm leading-none text-gray-600 ml-2 dark:text-gray-300">
                 {{ claim.created_at.special }}
               </p>
             </div>

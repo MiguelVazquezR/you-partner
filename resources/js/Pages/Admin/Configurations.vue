@@ -199,6 +199,10 @@ export default {
           url: "admin.claims",
         },
         {
+          label: "Colaboraciones",
+          url: "admin.collaborations",
+        },
+        {
           label: "Notificaciones",
           url: "admin.notifications",
         },

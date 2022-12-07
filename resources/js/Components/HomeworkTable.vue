@@ -351,9 +351,12 @@ export default {
       );
     },
     getChatsExcludingSupport(homework) {
-      return homework.chats.filter(
-        (chat) => chat.users[0].id !== 3 && chat.users[1].id !== 3
-      );
+      if(homework.chats.length)
+        return homework.chats.filter(
+          chat => chat.users[0]?.id !== 3 && chat.users[1]?.id !== 3
+        );
+
+        return [];
     },
   },
 };

@@ -5,7 +5,6 @@
         >{{ collaboration.homework.user.name }} -</strong
       >
       <strong class="dark:text-gray-300" v-else>Usted -</strong>
-
       {{ collaboration.claim.created_at.special }}
     </p>
     <p style="white-space: pre-line" class="text-xs dark:text-gray-500">
@@ -20,6 +19,7 @@
         :extension="file.mime_type.split('/')[1]"
         :href="file.original_url"
       />
+      <p v-if="!collaboration.claim.media.length" class="text-xs dark:text-gray-500">No adjuntó ningun archivo</p>
     </div>
     <div v-if="collaboration.claim.solution">
       <p class="text-sm dark:text-gray-300">

@@ -26,13 +26,13 @@ class ErrorReportController extends Controller
         $report = ErrorReportModel::create($request->validated() + ['user_id' => auth()->id()]);
         $report->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
 
-        return back()->with('message','Se ha enviado tu reporte. Muchas gracias por tu retroalimentación');
+        return redirect()->route('error-reports.index')->with('message','Se ha enviado tu reporte. Muchas gracias por tu retroalimentación');
     }
     
     public function markAsRead(ErrorReportModel $error) 
     {
         $error->update(['is_read'  => 1]);
-        return back()->with('message', 'Marcado como leido');
+        return redirect()->route('error-reports.index')->with('message', 'Marcado como leido');
     }
 
 }
