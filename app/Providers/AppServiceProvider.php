@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         JsonResource::withoutWrapping();
 
-        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+        VerifyEmail::toMailUsing(function ($notifiablel) {
             return (new MailMessage)
                 ->subject('Verificación de correo electrónico')
                 ->line('Click al botón de abajo para verificar tu correo.')
