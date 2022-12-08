@@ -65,10 +65,10 @@ Route::post('/collaborations/read-collaboration', [CollaborationController::clas
 Route::post('/collaborations/update-p', [CollaborationController::class, 'updateP'])->name('collaborations.update-p');
 Route::put('/collaborations/approve/{collaboration}', [CollaborationController::class, 'approve'])->name('collaborations.approve');
 Route::put('/collaborations/release-payment/{collaboration}', [CollaborationController::class, 'releasePayment'])->name('collaborations.release-payment');
-Route::get('collaboration/{collaboration}/payment', [CollaborationController::class, 'payment'])->middleware('auth')->name('payment');
-Route::post('collaboration/payment-method-create', [CollaborationController::class, 'paymentMethodCreate'])->middleware('auth')->name('collaborations.payment-method.create');
-Route::post('collaboration/store-bank-data', [CollaborationController::class, 'storeBankData'])->middleware('auth')->name('collaborations.store-bank-data');
-Route::post('collaboration/payed', [CollaborationController::class, 'payed'])->middleware('auth')->name('collaborations.payed');
+Route::get('collaboration/{collaboration}/payment', [CollaborationController::class, 'payment'])->name('payment');
+Route::post('collaboration/payment-method-create', [CollaborationController::class, 'paymentMethodCreate'])->name('collaborations.payment-method.create');
+Route::post('collaboration/store-bank-data', [CollaborationController::class, 'storeBankData'])->name('collaborations.store-bank-data');
+Route::post('collaboration/payed', [CollaborationController::class, 'payed'])->name('collaborations.payed');
 
 Route::get('/ranking', [RankingController::class,'ranking'])->name('ranking.index');
 Route::get('/ranking/awards', [RankingController::class,'awards'])->name('ranking.awards');
@@ -109,10 +109,10 @@ Route::resource('chat', ChatController::class);
 Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.send-message');
 Route::post('/chat/read-messages', [ChatController::class, 'readMessage'])->name('chat.read-message');
 
-Route::resource('rates', RateController::class)->middleware(['auth', 'verified']);
+Route::resource('rates', RateController::class)->middleware(['auth']);
 
 Route::resource('error-reports', ErrorReportController::class);
 Route::put('error-reports/mark-as-read/{error}', [ErrorReportController::class, 'markAsRead'])->name('error-reports.mark-as-read');
 
-Route::get('notifications/{user}', [NotificationController::class, 'all'])->middleware(['auth', 'verified'])->name('notifications.all');
+Route::get('notifications/{user}', [NotificationController::class, 'all'])->middleware(['auth'])->name('notifications.all');
 Route::post('notifications/{user}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
