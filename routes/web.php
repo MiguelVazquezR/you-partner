@@ -11,13 +11,14 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\RateController;
-use App\Http\Resources\UserResource;
-use App\Models\User;
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
+use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,3 +117,23 @@ Route::put('error-reports/mark-as-read/{error}', [ErrorReportController::class, 
 
 Route::get('notifications/{user}', [NotificationController::class, 'all'])->middleware(['auth'])->name('notifications.all');
 Route::post('notifications/{user}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
+
+// Email Verification...
+$enableViews = config('fortify.views', true);
+$verificationLimiter = config('fortify.limiters.verification', '6,1');
+
+    if (Features::enabled(Features::emailVerification())) {
+        if ($enableViews) {
+            Route::get('/email/verify', [EmailVerificationPromptController::class, '__invoke'])
+                ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+                ->name('verification.notice');
+        }
+
+        Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+            ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'), 'signed', 'throttle:'.$verificationLimiter])
+            ->name('verification.verify');
+
+        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'), 'throttle:'.$verificationLimiter])
+            ->name('verification.send');
+    }
