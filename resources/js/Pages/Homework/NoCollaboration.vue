@@ -25,7 +25,7 @@
       <HomeworkTable
         :homeworks="homeworks"
         :filters="filters"
-        filterURL="/homeworks"
+        filterURL="/homeworks/no-collaboration"
         canEdit
         canDelete
         @details="showDetails($event)"

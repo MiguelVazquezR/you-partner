@@ -120,8 +120,7 @@
               <p
                 class="text-green-600 text-xs"
               >
-                (ve al botón "Acciones/Ingresar datos para depósito" para
-                ingresar los datos necessarios y hacerte el depósito)
+                (ve al botón "Acciones/Ingresar datos para depósito")
               </p>
             </div>
             <div class="mt-3" v-else>

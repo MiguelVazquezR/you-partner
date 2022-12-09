@@ -22,6 +22,10 @@
         <Avatar :user="$page.props.user" />
       </div>
       <div class="p-2">
+        <p class="text-blue-600 dark:text-blue-400 text-sm">
+          <i class="fa-solid fa-circle-info mr-1"></i>
+          La plataforma te retendrá el {{homework_owner.level.tax}}% de comisión por el uso de la misma
+        </p>
         <div class="mt-2">
           <Label class="dark:text-gray-300" value="Costo ($MXN)" />
           <Input v-model="form.price" type="number" class="input w-full" />

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateCollaborationRequest;
 use App\Http\Resources\HomeworkResource;
 
 use App\Http\Resources\CollaborationResource;
+use App\Mail\ProofOfPaymentMailable;
 use App\Models\Chat;
 use App\Models\Homework;
 use App\Models\User;
@@ -21,6 +22,7 @@ use App\Notifications\Collaborations\CollaborationPayedNotification;
 use App\Notifications\Collaborations\CollaborationRealesedPaymentNotification;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class CollaborationController extends Controller
@@ -38,7 +40,7 @@ class CollaborationController extends Controller
         ->whereDate('limit_date', '>=', today())
         ->where('user_id', '!=', auth()->id())
         ->filter($filters)
-            ->with(['schoolSubject', 'user', 'media', 'chats' => ['users', 'messages.user']])
+            ->with(['schoolSubject', 'user.level', 'media', 'chats' => ['users', 'messages.user']])
             ->latest()
             ->paginate(150));
 
@@ -95,7 +97,7 @@ class CollaborationController extends Controller
         $collaboration->addAllMediaFromRequest()->each(fn ($file) => $file->toMediaCollection());
 
         $collaboration->homework->user->notify(new CollaborationCompletedNotification($collaboration->homework->title));
-        User::find(3)->notify(new SetReminderForAutoReleasePayment($collaboration));
+        User::where('email', 'soporte@youpartner.xphere.com.mx')->first()->notify(new SetReminderForAutoReleasePayment($collaboration));
 
         return redirect()->route('collaborations.completed')->with('message', 'Colaboración completada');
     }
@@ -226,7 +228,7 @@ class CollaborationController extends Controller
 
         $collaboration->update($validated);
 
-        User::find(3)->notify(new MakeDepositNotification($collaboration));
+        User::where('email', 'soporte@youpartner.xphere.com.mx')->first()->notify(new MakeDepositNotification($collaboration));
 
         return redirect()->route('collaborations.completed')
             ->with('message', 'Hemos recibido tus datos, se te enviará notificación cuando se realice el depósito (máx. 24 hrs)');
@@ -240,8 +242,11 @@ class CollaborationController extends Controller
 
         $collaboration->user->notify(new CollaborationPayedNotification($collaboration->homework->title));
 
+        $data = ['user_name' => $collaboration->user->name, 'homework_name' => $collaboration->homework->title];
+        Mail::to('miguelvz26.mv@gmail.com')->send(new ProofOfPaymentMailable($data));
+
         return redirect()->route('admin.collaborations')
-            ->with('message', 'Se ha marcado como pagada la colaboración. No olvides mandar correo al colaborador');
+            ->with('message', 'Se ha marcado como pagada la colaboración. No olvides corroborar que el correo se haya mandado correctamente');
     }
 
 }

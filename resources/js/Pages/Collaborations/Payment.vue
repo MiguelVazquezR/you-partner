@@ -18,18 +18,18 @@
             <Avatar :user="collaboration.user" secondary_info="Colaborador" />
           </div>
           <div class="p-4 space-y-2 text-sm">
-            <div class="grid grid-cols-2">
-              <div class="col-start-1 mx-5">
+              <div class="grid grid-cols-2">
                 <p class="my-1">Nombre de tarea</p>
-                <p class="my-1">Entrega pactada</p>
-                <p class="my-1">Costo</p>
-              </div>
-              <div class="col-start-2 mx-5">
                 <p class="my-1 font-bold">{{ collaboration.homework.title }}</p>
+              </div>
+              <div class="grid grid-cols-2">
+                <p class="my-1">Entrega pactada</p>
                 <p class="my-1 font-bold">{{ collaboration.promise_date }}</p>
+              </div>
+              <div class="grid grid-cols-2">
+                <p class="my-1">Costo</p>
                 <p class="my-1 text-green-600">${{ collaboration.price }}</p>
               </div>
-            </div>
           </div>
         </div>
       </div>
