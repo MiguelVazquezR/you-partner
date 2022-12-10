@@ -130,9 +130,9 @@ import JetValidationErrors from "@/Jetstream/ValidationErrors.vue";
 export default {
   data() {
     const form = useForm({
-      subject: '',
-      content: '',
-      is_error: '',
+      subject: null,
+      content: null,
+      is_error: 1,
       resources: [],
     });
 

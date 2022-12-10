@@ -127,6 +127,10 @@
           collaboration_detail.user.email
         }}</strong>
         con la imagen comprobando el depósito.
+        <div class="mt-3 w-full">
+            <Label class="dark:text-gray-300" value="Comprobante de pago" />
+            <FileUploader @input="form.file = $event.target.files[0]" />
+        </div>
       </template>
       <template #footer>
         <button class="btn-danger" @click="markAsPayed">Continuar</button>
@@ -146,12 +150,15 @@ import DetailsModal from "@/Components/DetailsModal.vue";
 import DropupButton from "@/Components/DropupButton.vue";
 import Avatar from "@/Components/Avatar.vue";
 import AttachedFile from "@/Components/AttachedFile.vue";
+import FileUploader from "@/Components/Common/FileUploader.vue";
 import ConfirmationModal from "@/Jetstream/ConfirmationModal.vue";
+import Label from "@/Jetstream/Label.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   data() {
     const form = useForm({
+      file: null,
       collaboration_id: null,
     });
 
@@ -201,6 +208,8 @@ export default {
     Avatar,
     AttachedFile,
     ConfirmationModal,
+    FileUploader,
+    Label,
   },
   props: {
     collaborations: Object,

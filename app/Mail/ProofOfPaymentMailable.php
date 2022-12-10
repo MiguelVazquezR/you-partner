@@ -29,6 +29,10 @@ class ProofOfPaymentMailable extends Mailable
     public function build()
     {
         return $this->subject('Comprobante de pago')
+            ->attach($this->data['file']->getRealPath(), [
+                'as' => 'Comprobante',
+                'mime' => $this->data['file']->getMimeType(),
+            ])
             ->markdown('mails.proof-of-payment', ['data' => $this->data]);
     }
 }

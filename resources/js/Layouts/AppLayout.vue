@@ -8,6 +8,7 @@ import JetDropdownLink from "@/Jetstream/DropdownLink.vue";
 import JetResponsiveNavLink from "@/Jetstream/ResponsiveNavLink.vue";
 import SideBar from "@/Components/SideBar.vue";
 import Notifications from "@/Components/Notifications.vue";
+import ApplicationLogo from "@/Jetstream/ApplicationLogo.vue";
 import FlashBanner from "@/Components/FlashBanner.vue";
 
 defineProps({
@@ -58,14 +59,158 @@ const logout = () => {
         >
           <!-- Primary Navigation Menu -->
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-end h-12">
-              <div class="hidden lg:flex sm:items-center sm:ml-6">
-                <!-- notifications -->
-                <Notifications />
-
-                <!-- dark mode palette -->
-
-                <JetDropdown align="right" width="20">
+            <div class="flex justify-between lg:block py-1">
+              <img src="@/resources/images/logo_claro.png" class="w-1/3 lg:hidden" alt="LOGO" />
+              <div class="flex justify-end h-12">
+                <div class="hidden lg:flex sm:items-center sm:ml-6">
+                  <!-- notifications -->
+                  <Notifications />
+  
+                  <!-- dark mode palette -->
+  
+                  <JetDropdown align="right" width="20">
+                    <template #trigger>
+                      <button
+                        class="
+                          flex
+                          text-sm
+                          border-2 border-transparent
+                          rounded-full
+                          focus:outline-none focus:border-gray-300
+                          transition
+                        "
+                      >
+                        <i
+                          class="
+                            fa-solid fa-palette
+                            text-lg text-indigo-400
+                            hover:text-indigo-500
+                            mx-2
+                          "
+                        ></i>
+                      </button>
+                    </template>
+  
+                    <template #content>
+                      <!-- Account Management -->
+                      <div
+                        class="block text-center px-4 py-2 text-xs text-gray-400"
+                      >
+                        <i
+                          x-on:click="darkMode = false"
+                          class="
+                            fa-solid fa-sun
+                            text-indigo-400
+                            hover:text-indigo-500
+                            text-lg
+                            cursor-pointer
+                          "
+                        ></i>
+                        <i
+                          x-on:click="darkMode = true"
+                          class="
+                            fa-solid fa-moon
+                            text-indigo-400
+                            hover:text-indigo-500
+                            text-lg
+                            cursor-pointer
+                          "
+                        ></i>
+                      </div>
+                    </template>
+                  </JetDropdown>
+  
+                  <!-- profile Dropdown -->
+                  <div class="ml-3 relative">
+                    <JetDropdown align="right" width="48">
+                      <template #trigger>
+                        <button
+                          v-if="$page.props.jetstream.managesProfilePhotos"
+                          class="
+                            flex
+                            text-sm
+                            border-2 border-transparent
+                            rounded-full
+                            focus:outline-none focus:border-gray-300
+                            transition
+                          "
+                        >
+                          <img
+                            class="h-8 w-8 rounded-full object-cover"
+                            :src="$page.props.user.profile_photo_url"
+                            :alt="$page.props.user.name"
+                          />
+                        </button>
+  
+                        <span v-else class="inline-flex rounded-md">
+                          <button
+                            type="button"
+                            class="
+                              inline-flex
+                              items-center
+                              px-3
+                              py-2
+                              border border-transparent
+                              text-sm
+                              leading-4
+                              font-medium
+                              rounded-md
+                              text-gray-500
+                              bg-white
+                              hover:text-gray-700
+                              focus:outline-none
+                              transition
+                            "
+                          >
+                            {{ $page.props.user.name }}
+  
+                            <svg
+                              class="ml-2 -mr-0.5 h-4 w-4"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </button>
+                        </span>
+                      </template>
+  
+                      <template #content>
+                        <!-- Account Management -->
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                          Manage Account
+                        </div>
+  
+                        <JetDropdownLink :href="route('profile.show')">
+                          Perfil
+                        </JetDropdownLink>
+  
+                        <JetDropdownLink
+                          v-if="$page.props.jetstream.hasApiFeatures"
+                          :href="route('api-tokens.index')"
+                        >
+                          API Tokens
+                        </JetDropdownLink>
+  
+                        <div class="border-t border-gray-100" />
+  
+                        <!-- Authentication -->
+                        <form @submit.prevent="logout">
+                          <JetDropdownLink as="button">
+                            Cerrar sesión
+                          </JetDropdownLink>
+                        </form>
+                      </template>
+                    </JetDropdown>
+                  </div>
+                </div>
+  
+                <JetDropdown align="right" width="20" class="flex mt-2 lg:hidden">
                   <template #trigger>
                     <button
                       class="
@@ -87,7 +232,7 @@ const logout = () => {
                       ></i>
                     </button>
                   </template>
-
+  
                   <template #content>
                     <!-- Account Management -->
                     <div
@@ -116,199 +261,58 @@ const logout = () => {
                     </div>
                   </template>
                 </JetDropdown>
-
-                <!-- profile Dropdown -->
-                <div class="ml-3 relative">
-                  <JetDropdown align="right" width="48">
-                    <template #trigger>
-                      <button
-                        v-if="$page.props.jetstream.managesProfilePhotos"
-                        class="
-                          flex
-                          text-sm
-                          border-2 border-transparent
-                          rounded-full
-                          focus:outline-none focus:border-gray-300
-                          transition
-                        "
-                      >
-                        <img
-                          class="h-8 w-8 rounded-full object-cover"
-                          :src="$page.props.user.profile_photo_url"
-                          :alt="$page.props.user.name"
-                        />
-                      </button>
-
-                      <span v-else class="inline-flex rounded-md">
-                        <button
-                          type="button"
-                          class="
-                            inline-flex
-                            items-center
-                            px-3
-                            py-2
-                            border border-transparent
-                            text-sm
-                            leading-4
-                            font-medium
-                            rounded-md
-                            text-gray-500
-                            bg-white
-                            hover:text-gray-700
-                            focus:outline-none
-                            transition
-                          "
-                        >
-                          {{ $page.props.user.name }}
-
-                          <svg
-                            class="ml-2 -mr-0.5 h-4 w-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </button>
-                      </span>
-                    </template>
-
-                    <template #content>
-                      <!-- Account Management -->
-                      <div class="block px-4 py-2 text-xs text-gray-400">
-                        Manage Account
-                      </div>
-
-                      <JetDropdownLink :href="route('profile.show')">
-                        Perfil
-                      </JetDropdownLink>
-
-                      <JetDropdownLink
-                        v-if="$page.props.jetstream.hasApiFeatures"
-                        :href="route('api-tokens.index')"
-                      >
-                        API Tokens
-                      </JetDropdownLink>
-
-                      <div class="border-t border-gray-100" />
-
-                      <!-- Authentication -->
-                      <form @submit.prevent="logout">
-                        <JetDropdownLink as="button">
-                          Cerrar sesión
-                        </JetDropdownLink>
-                      </form>
-                    </template>
-                  </JetDropdown>
-                </div>
-              </div>
-
-              <JetDropdown align="right" width="20" class="flex mt-2 lg:hidden">
-                <template #trigger>
+  
+                <Notifications class="flex mt-2 lg:hidden mr-1" />
+  
+                <!-- Hamburger -->
+                <div class="-mr-2 flex items-center lg:hidden">
                   <button
                     class="
-                      flex
-                      text-sm
-                      border-2 border-transparent
-                      rounded-full
-                      focus:outline-none focus:border-gray-300
+                      inline-flex
+                      items-center
+                      justify-center
+                      p-2
+                      rounded-md
+                      text-gray-400
+                      hover:text-gray-500 hover:bg-gray-100
+                      focus:outline-none focus:bg-gray-100 focus:text-gray-500
+                      dark:bg-slate-700 dark:text-gray-300
                       transition
                     "
+                    @click="
+                      showingNavigationDropdown = !showingNavigationDropdown
+                    "
                   >
-                    <i
-                      class="
-                        fa-solid fa-palette
-                        text-lg text-indigo-400
-                        hover:text-indigo-500
-                        mx-2
-                      "
-                    ></i>
+                    <svg
+                      class="h-6 w-6"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        :class="{
+                          hidden: showingNavigationDropdown,
+                          'inline-flex': !showingNavigationDropdown,
+                        }"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                      <path
+                        class="dark:text-red-700"
+                        :class="{
+                          hidden: !showingNavigationDropdown,
+                          'inline-flex': showingNavigationDropdown,
+                        }"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
                   </button>
-                </template>
-
-                <template #content>
-                  <!-- Account Management -->
-                  <div
-                    class="block text-center px-4 py-2 text-xs text-gray-400"
-                  >
-                    <i
-                      x-on:click="darkMode = false"
-                      class="
-                        fa-solid fa-sun
-                        text-indigo-400
-                        hover:text-indigo-500
-                        text-lg
-                        cursor-pointer
-                      "
-                    ></i>
-                    <i
-                      x-on:click="darkMode = true"
-                      class="
-                        fa-solid fa-moon
-                        text-indigo-400
-                        hover:text-indigo-500
-                        text-lg
-                        cursor-pointer
-                      "
-                    ></i>
-                  </div>
-                </template>
-              </JetDropdown>
-
-              <Notifications class="flex mt-2 lg:hidden mr-1" />
-
-              <!-- Hamburger -->
-              <div class="-mr-2 flex items-center lg:hidden">
-                <button
-                  class="
-                    inline-flex
-                    items-center
-                    justify-center
-                    p-2
-                    rounded-md
-                    text-gray-400
-                    hover:text-gray-500 hover:bg-gray-100
-                    focus:outline-none focus:bg-gray-100 focus:text-gray-500
-                    dark:bg-slate-700 dark:text-gray-300
-                    transition
-                  "
-                  @click="
-                    showingNavigationDropdown = !showingNavigationDropdown
-                  "
-                >
-                  <svg
-                    class="h-6 w-6"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      :class="{
-                        hidden: showingNavigationDropdown,
-                        'inline-flex': !showingNavigationDropdown,
-                      }"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                    <path
-                      class="dark:text-red-700"
-                      :class="{
-                        hidden: !showingNavigationDropdown,
-                        'inline-flex': showingNavigationDropdown,
-                      }"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+                </div>
               </div>
             </div>
           </div>

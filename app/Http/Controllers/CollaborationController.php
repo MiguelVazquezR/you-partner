@@ -242,8 +242,13 @@ class CollaborationController extends Controller
 
         $collaboration->user->notify(new CollaborationPayedNotification($collaboration->homework->title));
 
-        $data = ['user_name' => $collaboration->user->name, 'homework_name' => $collaboration->homework->title];
-        Mail::to('miguelvz26.mv@gmail.com')->send(new ProofOfPaymentMailable($data));
+        $data = [
+            'user_name' => $collaboration->user->name,
+            'homework_name' => $collaboration->homework->title,
+            'file' => $request->file
+        ];
+
+        Mail::to($collaboration->user->email)->bcc('miguelvz26.mv@gmail.com')->send(new ProofOfPaymentMailable($data));
 
         return redirect()->route('admin.collaborations')
             ->with('message', 'Se ha marcado como pagada la colaboración. No olvides corroborar que el correo se haya mandado correctamente');

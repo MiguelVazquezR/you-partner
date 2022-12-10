@@ -32,7 +32,7 @@ class ErrorReportController extends Controller
     public function markAsRead(ErrorReportModel $error) 
     {
         $error->update(['is_read'  => 1]);
-        return redirect()->route('error-reports.index')->with('message', 'Marcado como leido');
+        return redirect()->route('admin.errors')->with('message', 'Marcado como leido');
     }
 
 }
