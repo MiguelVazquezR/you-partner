@@ -111,7 +111,7 @@ defineProps({
                     
                   </Link>
                 </div>
-                <br />
+                <br/>
                 <div>
                   <Link
                     :href="route('register')"
@@ -120,6 +120,17 @@ defineProps({
                     Crear una cuenta
                     
                   </Link>
+                </div>
+                  <br/>
+                <div>
+                  <a
+                    href="@/../../public/files/MANUAL_DE_USO_YOUPARTNER.pdf"
+                    target="_blank"
+                    class="text-xl text-cyan-600 font-extrabold mr-2 hover:text-cyan-400"
+                  >
+                    Manual de uso
+                    
+                  </a>
                 </div>
               </div>
             </div>
@@ -235,7 +246,7 @@ defineProps({
               >
                 <img
                   alt="..."
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1051&amp;q=80"
+                  src="@/../../public/images/students2.png"
                   class="w-full align-middle rounded-t-lg"
                 />
                 <blockquote class="relative p-8 mb-4">
@@ -290,7 +301,7 @@ defineProps({
               <img
                 alt="..."
                 class="max-w-full rounded-lg shadow-lg"
-                src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80"
+                src="@/../../public/images/homeStudent.jpg"
               />
             </div>
             <div class="w-full md:w-5/12 ml-auto mr-auto px-4">

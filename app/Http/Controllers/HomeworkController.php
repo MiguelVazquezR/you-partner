@@ -86,6 +86,7 @@ class HomeworkController extends Controller
         $filters = $request->all('search');
 
         $homeworks = HomeworkResource::collection(auth()->user()->homeworks()
+            ->whereDate('limit_date', '>=', now())
             ->noCollaborationApproved()
             ->filter($filters)
             ->with(['schoolSubject', 'collaborations.user.collaborations', 'chats' => ['users', 'messages.user']])
