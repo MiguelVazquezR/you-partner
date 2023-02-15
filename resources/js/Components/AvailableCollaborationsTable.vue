@@ -18,7 +18,7 @@
           <td class="px-3">
             <StatusIcon :status="homework.status" />
           </td>
-          <td class="pr-5">
+          <td class="pr-9">
             <Avatar :user="homework.user"/>
           </td>
           <td>

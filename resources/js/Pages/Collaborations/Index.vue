@@ -52,7 +52,7 @@
         </div>
       </template>
       <template #content>
-        <section class="mt-3">
+        <section class="my-4">
           <div>
             <h1 class="text-lg dark:text-gray-300 text-gray-600">
               <i class="fa-solid fa-circle-info mr-2"></i>
