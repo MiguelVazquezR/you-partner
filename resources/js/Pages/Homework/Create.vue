@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Crear Tarea">
-    <div class="px-8 mt-3">
+    <div class="px-7 mt-2">
       <JetValidationErrors />
       <div class="flex items-center">
         <Link :href="route('homeworks.no-collaboration')" class="flex items-center text-indigo-600">
@@ -11,9 +11,9 @@
           Crear nueva tarea
         </p>
       </div>
-      <form @submit.prevent="store" class="mt-6">
+      <form @submit.prevent="store" class="mt-3">
         <div class="lg:grid grid-cols-2 gap-x-3 section-container transition-dark dark:bg-slate-900">
-          <div class="mt-3">
+          <div class="mt-2">
             <Label class="dark:text-gray-300" value="Título" />
             <Input v-model="form.title" type="text" class="w-full input" />
           </div>
@@ -42,8 +42,8 @@
             <Label class="dark:text-gray-300" value="Fecha límite de entrega" />
             <Input v-model="form.limit_date" type="date" class="input w-full" />
           </div>
-          <div class="mt-3 col-span-2 w-1/2 mx-auto">
-            <Label class="dark:text-gray-300" value="Archivos o recursos de la tarea" />
+          <div class="mt-3 col-span-2 w-full mx-auto">
+            <Label class="dark:text-gray-300 text-center" value="Archivos o recursos de la tarea" />
             <FileUploader @input="form.resources = $event.target.files" />
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%

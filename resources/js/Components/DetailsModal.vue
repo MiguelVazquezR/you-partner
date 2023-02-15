@@ -30,7 +30,7 @@ const close = () => {
     :closeable="closeable"
     @close="close"
   >
-    <div>
+    <div class="">
       <div class="flex justify-end px-1 dark:bg-slate-900">
         <button
           @click="close"
@@ -57,7 +57,7 @@ const close = () => {
         <slot name="content" />
       </div>
 
-      <div class="px-8 py-2 h-12">
+      <div class="px-8 h-12">
         <slot name="footer" />
       </div>
     </div>

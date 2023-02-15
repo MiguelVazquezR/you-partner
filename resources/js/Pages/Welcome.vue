@@ -124,7 +124,7 @@ defineProps({
                   <br/>
                 <div>
                   <a
-                    href="@/../../public/files/MANUAL_DE_USO_YOUPARTNER.pdf"
+                    href="https://drive.google.com/file/d/1r6xtokFpXKqG0K7gKk-XGUIbaAyscyxk/view?usp=share_link"
                     target="_blank"
                     class="text-xl text-cyan-600 font-extrabold mr-2 hover:text-cyan-400"
                   >

@@ -11,9 +11,11 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\RateController;
+use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\User;
 
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
@@ -89,12 +91,12 @@ Route::resource('/claims', ClaimController::class)->except('show');
 Route::get('/library', [LibraryController::class,'index'])->name('library.index');
 
 
-// Route::get('/profile/{user}', function ($user_id){
-//     $user_ = User::with('collaborations', 'homeworks')->find($user_id);
-//     $user_ = new UserResource($user_);
-//     // return $user;
-//     return Inertia::render('ProfileUser', ['user' => $user_]);
-// })->name('profile-view');
+Route::get('/profile/{user}', function ($user_id){
+    $user_ = User::with('collaborations', 'homeworks')->find($user_id);
+    $user_ = new UserResource($user_);
+    // return $user;
+    return Inertia::render('ProfileUser', ['user' => $user_]);
+})->name('profile-view');
 
 Route::get('/privacy-policy', function (){
     return Inertia::render('PrivacyPolicy');

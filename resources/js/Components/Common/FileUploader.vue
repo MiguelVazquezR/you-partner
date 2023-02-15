@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-6 px-6 bg-gray-100 dark:bg-slate-700 dark:border-slate-500 dark:text-gray-300 border border-dashed rounded-md border-gray-300"
+    class="py-3 px-2 bg-gray-100 dark:bg-slate-700 dark:border-slate-500 dark:text-gray-300 border border-dashed rounded-md border-gray-300"
     @dragover="dragover"
     @dragleave="dragleave"
     @drop="drop"
@@ -17,7 +17,7 @@
     />
 
     <label for="assetsFieldHandle" class="block cursor-pointer text-sm text-center">
-      Arrastra tus archivos o da <span class="underline">click aqui</span> para
+     <span class="hidden lg:block"> Arrastra tus archivos o da </span> <span class="underline">click aqui</span> para
       abrir el explorador de carpetas
     </label>
     <ul class="mt-4 lg:grid grid-cols-3 text-center" v-if="this.filelist.length" v-cloak>
