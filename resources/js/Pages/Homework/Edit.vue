@@ -202,7 +202,7 @@ export default {
       this.show_confirmation = false;
       axios
         .post(route("homeworks.delete-file"), {
-          file_id: this.media[this.file_to_delete].id,
+          file_id: this.media[this. ].id,
           homework_id: this.homework.id
         })
         .then(() => {
